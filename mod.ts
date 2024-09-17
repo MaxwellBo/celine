@@ -1,10 +1,8 @@
 // deno-lint-ignore-file ban-types
 
-import { Inspector, Runtime } from "https://esm.run/@observablehq/runtime";
-import * as stdlib from "https://esm.run/@observablehq/stdlib";
-// import type { Document } from "https://types.deno.dev/v1";
+import { Inspector, Runtime } from "npm:@observablehq/runtime@5.9.9";
+import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
 
-// @ts-ignore no runtime
 export const library: any = new stdlib.Library();
 
 type CellVisibility = "hidden" | "visible";
@@ -19,7 +17,6 @@ class CelineModule {
   }
 
   static usingNewRuntime(document: any): CelineModule {
-    // @ts-ignore no runtime
     const runtime = new Runtime();;
     const module = runtime.module();
     return new CelineModule(document, module);
