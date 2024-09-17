@@ -7,7 +7,7 @@ export const library: any = new stdlib.Library();
 
 type CellVisibility = "hidden" | "visible";
 
-class CelineModule {
+export class CelineModule {
   public document: any;
   public module: any;
 
@@ -100,12 +100,15 @@ class CelineModule {
 
   public mutable<T>(name: string, value: T): typeof Mutable<T> {
     const m = Mutable(value);
+    // @ts-ignore
     this.cell(name, m);
+    // @ts-ignore
     return m;
   }
 }
 
-function Mutable<T>(value: T) {
+function Mutable<T>(value: T): Object
+{
   let change: any;
   return Object.defineProperty(
     library.Generators.observe((_: any) => {
@@ -120,7 +123,7 @@ function Mutable<T>(value: T) {
   );
 }
 
-export function initContentEditableScripts(document: any) {
+export function initContenteditableScripts(document: any) {
   function reevaluate(event: any) {
     const old = event.target;
     const neww = document.createElement("script");
