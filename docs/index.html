@@ -1,104 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celine Library Demo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .cell {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .mutable {
-            background-color: #f0f0f0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>celine</title>
 </head>
+
 <body>
-    <h1>Celine Library Demo</h1>
+  <h1>celine</h1>
 
-    <div id="demo"></div>
+  <style class="echo">
+    .echo {
+      display: block;
+      font-family: monospace;
+      padding: 8px;
+      border: 1px solid black;
+      white-space: pre;
+    }
+  </style>
 
-    <script type="module">
-        import { CelineModule, contenteditableEchoScriptsReevaluateOnBlur } from 'https://jsr.io/@celine/celine';
+  <script type="module" class="echo">
+    import { CelineModule, library, contenteditableEchoScriptsReevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine';
+    window.celine = CelineModule.usingNewRuntime(document);
+    window.library = library;
+    contenteditableEchoScriptsReevaluateOnBlur(document);
+  </script>
 
-        const module = CelineModule.usingNewRuntime(document);
-        contenteditableEchoScriptsReevaluateOnBlur(document);
-
-        // Basic cell
-        module.cell("hello", () => {
-            const div = document.createElement('div');
-            div.className = 'cell';
-            div.textContent = 'Hello, Celine!';
-            return div;
-        });
-
-        // Viewof example with a slider
-        module.viewof("slider", () => {
-            const input = document.createElement('input');
-            input.type = 'range';
-            input.min = '0';
-            input.max = '100';
-            input.value = '50';
-            return input;
-        });
-
-        module.cell("sliderValue", ["slider"], (slider) => {
-            const div = document.createElement('div');
-            div.className = 'cell';
-            div.textContent = `Slider value: ${slider}`;
-            return div;
-        });
-
-        // Mutable state example
-        const count = module.mutable("count", 0);
-
-        module.cell("counter", ["count"], (count) => {
-            const div = document.createElement('div');
-            div.className = 'cell mutable';
-            
-            const value = document.createElement('p');
-            value.textContent = `Count: ${count}`;
-            
-            const button = document.createElement('button');
-            button.textContent = 'Increment';
-            button.onclick = () => { count.value++; };
-            
-            div.appendChild(value);
-            div.appendChild(button);
-            return div;
-        });
-
-        // Contenteditable cell
-        const editableCell = document.createElement('script');
-        editableCell.id = 'editable';
-        editableCell.className = 'echo';
-        editableCell.setAttribute('contenteditable', 'true');
-        editableCell.textContent = `
-cell("editable", () => {
-    const div = document.createElement('div');
-    div.className = 'cell';
-    div.textContent = 'This cell is editable. Try changing the text!';
-    return div;
-});`;
-        document.body.appendChild(editableCell);
-
-        // Initialize contenteditable scripts
-
-        // Render all cells
-        const demoDiv = document.getElementById('demo');
-        ['hello', 'viewof slider', 'sliderValue', 'counter', 'editable'].forEach(cellName => {
-            const cellDiv = document.createElement('div');
-            cellDiv.id = cellName;
-            demoDiv.appendChild(cellDiv);
-        });
-    </script>
+  <script type="module" class="echo" id="counter" contenteditable="true">
+    celine.cell("counter", async function* () {
+      let i = 0;
+      while (true) {
+        await library.Promises.delay(1000);
+        yield i++;
+      }
+    });
+  </script>
 </body>
+
 </html>

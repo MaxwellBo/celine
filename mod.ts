@@ -17,7 +17,7 @@ export class CelineModule {
   }
 
   static usingNewRuntime(document: any): CelineModule {
-    const runtime = new Runtime();;
+    const runtime = new Runtime();
     const module = runtime.module();
     return new CelineModule(document, module);
   }
