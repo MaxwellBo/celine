@@ -6,6 +6,15 @@
     "https://esm.run/@observablehq/stdlib": "https://cdn.jsdelivr.net/npm/@observablehq/stdlib/+esm"
   },
   "remote": {
+    "https://cdn.jsdelivr.net/npm/@observablehq/inspector@5.0.1/+esm": "1e292a1c538cddc0400f6d0d4c3413278d8b54c91fd1bbe3fc8a994f36437dcb",
+    "https://cdn.jsdelivr.net/npm/@observablehq/runtime/+esm": "87d202ec6622c5916cc3a81878aff15178af51486aed2153afea04d88dbcc1fe",
+    "https://cdn.jsdelivr.net/npm/@observablehq/stdlib/+esm": "bd6f9bdcdfb00c6b2b608267be90f00adc2d7df39893e9c6818f1a0934edf364",
+    "https://cdn.jsdelivr.net/npm/@observablehq/stdlib@5.8.8/+esm": "bd6f9bdcdfb00c6b2b608267be90f00adc2d7df39893e9c6818f1a0934edf364",
+    "https://cdn.jsdelivr.net/npm/d3-array@3.2.4/+esm": "3024aea860a103c3660ff54db3de4783cbe863f4f036bb13348669936fec11e3",
+    "https://cdn.jsdelivr.net/npm/d3-dsv@3.0.1/+esm": "72f20f31cbd8a8a094a8b219b3eb141f499b2fc05e158836f32970c6baf1a1a9",
+    "https://cdn.jsdelivr.net/npm/d3-require@1.3.0/+esm": "e0e9c6c7a185169f34c4203318e18a779bcb2ac2a9a736721b868cb6bc6213fc",
+    "https://cdn.jsdelivr.net/npm/internmap@2.0.3/+esm": "a2a6f711e62b7d68af42551c89ecc7895573d9d6e41ed5e31357bd7b7133d4a5",
+    "https://cdn.jsdelivr.net/npm/isoformat@0.2.1/+esm": "c5ed1936e3a53b6ca7f2e6e47404a152742eec704e34d4c0c6dab339eafa16ad",
     "https://deno.land/std@0.224.0/assert/_constants.ts": "a271e8ef5a573f1df8e822a6eb9d09df064ad66a4390f21b3e31f820a38e0975",
     "https://deno.land/std@0.224.0/assert/assert.ts": "09d30564c09de846855b7b071e62b5974b001bb72a4b797958fe0660e7849834",
     "https://deno.land/std@0.224.0/assert/assert_almost_equals.ts": "9e416114322012c9a21fa68e187637ce2d7df25bcbdbfd957cd639e65d3cf293",

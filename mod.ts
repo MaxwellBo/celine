@@ -1,88 +1,145 @@
-// celine.ts
+// deno-lint-ignore-file ban-types
 
-import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
-import * as stdlib from 'https://esm.run/@observablehq/stdlib';
+import { Inspector, Runtime } from "https://esm.run/@observablehq/runtime";
+import * as stdlib from "https://esm.run/@observablehq/stdlib";
+// import type { Document } from "https://types.deno.dev/v1";
 
-const library = new stdlib.Library();
-const runtime = new Runtime();
-const module = runtime.module();
+// @ts-ignore no runtime
+export const library: any = new stdlib.Library();
 
-export function cell(name: string, inputsOrDefinition: string[] | Function, maybeDefinition?: Function, observe: boolean = true) {
-  const variable = module._scope.get(name) || module.variable(observe ? observer(name) : undefined);
+type CellVisibility = "hidden" | "visible";
 
-  if (maybeDefinition) {
-    const inputs = inputsOrDefinition as string[];
-    const definition = maybeDefinition;
-    variable.define(name, inputs, definition);
-  } else {
-    const definition = inputsOrDefinition as Function;
-    variable.define(name, definition);
+class CelineModule {
+  public document: any;
+  public module: any;
+
+  constructor(document: any, module: any) {
+    this.document = document;
+    this.module = module;
+  }
+
+  static usingNewRuntime(document: any): CelineModule {
+    // @ts-ignore no runtime
+    const runtime = new Runtime();;
+    const module = runtime.module();
+    return new CelineModule(document, module);
+  }
+
+  private observer(name: string) {
+    const div = this.document.createElement("div");
+    const currentScript = this.document.getElementById(name);
+
+    if (!currentScript) {
+      throw new Error(`No script with id ${name} found`);
+    }
+
+    currentScript.parentNode.insertBefore(div, currentScript);
+    return new Inspector(div);
+  }
+
+  public cell(name: string, inputs: string[], definition: Function): void;
+  public cell(name: string, definition: Function): void;
+  public cell(
+    name: string,
+    inputsOrDefinition: string[] | Function,
+    maybeDefinition?: Function,
+  ): void {
+    this._cell("visible", name, inputsOrDefinition, maybeDefinition);
+  }
+
+  public hidden(name: string, inputs: string[], definition: Function): void;
+  public hidden(name: string, definition: Function): void;
+  public hidden(
+    name: string,
+    inputsOrDefinition: string[] | Function,
+    maybeDefinition?: Function,
+  ): void {
+    this._cell("hidden", name, inputsOrDefinition, maybeDefinition);
+  }
+
+  private _cell(
+    visible: CellVisibility,
+    name: string,
+    inputsOrDefinition: string[] | Function,
+    maybeDefinition?: Function,
+  ) {
+    const variable = this.module._scope.get(name) ||
+      this.module.variable(visible === "visible" ? this.observer(name) : undefined);
+
+    const inputs: string[] = Array.isArray(inputsOrDefinition)
+      ? inputsOrDefinition
+      : [];
+    const definition: Function = Array.isArray(inputsOrDefinition)
+      ? maybeDefinition as Function
+      : inputsOrDefinition;
+
+    if (inputs && definition) {
+      variable.define(name, inputs, definition);
+    } else {
+      variable.define(name, definition);
+    }
+  }
+
+  public viewof(name: string, inputs: string[], definition: Function): void;
+  public viewof(name: string, definition: Function): void;
+  public viewof(
+    name: string,
+    inputsOrDefinition: string[] | Function,
+    maybeDefinition?: Function,
+  ): void {
+    this._cell(
+      "visible",
+      `viewof ${name}`,
+      inputsOrDefinition,
+      maybeDefinition,
+    );
+    this._cell(
+      "hidden",
+      name,
+      [`viewof ${name}`],
+      (inpt: any) => library.Generators.input(inpt),
+    );
+  }
+
+  public mutable<T>(name: string, value: T): typeof Mutable<T> {
+    const m = Mutable(value);
+    this.cell(name, m);
+    return m;
   }
 }
 
-function observer(name: string) {
-  const div = document.createElement("div");
-  const currentScript = document.getElementById(name);
-  currentScript?.parentNode?.insertBefore(div, currentScript);
-  return new Inspector(div);
+function Mutable<T>(value: T) {
+  let change: any;
+  return Object.defineProperty(
+    library.Generators.observe((_: any) => {
+      change = _;
+      if (value !== undefined) change(value);
+    }),
+    "value",
+    {
+      get: () => value,
+      set: (x) => void change(value = x),
+    },
+  );
 }
 
-export function viewof(name: string, inputsOrDefinition: string[] | Function, maybeDefinition?: Function) {
-  cell(`viewof ${name}`, inputsOrDefinition, maybeDefinition);
-  cell(name, [`viewof ${name}`], (inpt: any) => library.Generators.input(inpt), false);
-}
+export function initContentEditableScripts(document: any) {
+  function reevaluate(event: any) {
+    const old = event.target;
+    const neww = document.createElement("script");
+    neww.textContent = old.textContent;
 
-class Mutable<T> {
-  private _value: T;
-  private change: ((value: T) => void) | undefined;
+    for (let i = 0; i < old.attributes.length; i++) {
+      neww.setAttribute(old.attributes[i].name, old.attributes[i].value || "");
+    }
+    // register the blur listener again (given we've made a new script element)
+    neww.addEventListener("blur", reevaluate);
 
-  constructor(initialValue: T) {
-    this._value = initialValue;
-    Object.defineProperty(this, "value", {
-      get: () => this._value,
-      set: (x: T) => { if (this.change) this.change(this._value = x); }
-    });
+    old.parentNode.insertBefore(neww, old);
+    old.parentNode.removeChild(old);
   }
 
-  *[Symbol.iterator]() {
-    yield* library.Generators.observe((change) => {
-      this.change = change;
-      if (this._value !== undefined) change(this._value);
-    });
-  }
-}
-
-export function mutable<T>(name: string, value: T): Mutable<T> {
-  const m = new Mutable(value);
-  cell(name, m);
-  return m;
-}
-
-export function reevaluate(event: FocusEvent) {
-  const old = event.target as HTMLScriptElement;
-  const newScript = document.createElement('script');
-  newScript.textContent = old.textContent;
-  
-  for (let i = 0; i < old.attributes.length; i++) {
-    newScript.setAttribute(old.attributes[i].name, old.attributes[i].value || '');
-  }
-  newScript.addEventListener('blur', reevaluate as EventListener);
-  
-  old.parentNode?.insertBefore(newScript, old);
-  old.parentNode?.removeChild(old);
-}
-
-// Helper function to initialize contenteditable scripts
-export function initContentEditableScripts() {
-  document.querySelectorAll('script.echo').forEach((script) => {
-    script.addEventListener('blur', reevaluate as EventListener);
+  document.querySelectorAll("script.echo").forEach((script: any) => {
+    script.addEventListener("blur", reevaluate as EventListener);
   });
-}
-
-// Export library for convenience
-export { library };
-
-// Learn more at https://deno.land/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
 }
