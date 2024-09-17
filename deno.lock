@@ -1,5 +1,10 @@
 {
   "version": "3",
+  "redirects": {
+    "https://deno.land/std/testing/asserts.ts": "https://deno.land/std@0.224.0/testing/asserts.ts",
+    "https://esm.run/@observablehq/runtime": "https://cdn.jsdelivr.net/npm/@observablehq/runtime/+esm",
+    "https://esm.run/@observablehq/stdlib": "https://cdn.jsdelivr.net/npm/@observablehq/stdlib/+esm"
+  },
   "remote": {
     "https://deno.land/std@0.224.0/assert/_constants.ts": "a271e8ef5a573f1df8e822a6eb9d09df064ad66a4390f21b3e31f820a38e0975",
     "https://deno.land/std@0.224.0/assert/assert.ts": "09d30564c09de846855b7b071e62b5974b001bb72a4b797958fe0660e7849834",
