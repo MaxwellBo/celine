@@ -27,10 +27,13 @@
     <div id="demo"></div>
 
     <script type="module">
-        import { cell, viewof, mutable, initContentEditableScripts } from 'https://jsr.io/@celine/celine';
+        import { CelineModule, contenteditableEchoScriptsReevaluateOnBlur } from 'https://jsr.io/@celine/celine';
+
+        const module = CelineModule.usingNewRuntime(document);
+        contenteditableEchoScriptsReevaluateOnBlur(document);
 
         // Basic cell
-        cell("hello", () => {
+        module.cell("hello", () => {
             const div = document.createElement('div');
             div.className = 'cell';
             div.textContent = 'Hello, Celine!';
@@ -38,7 +41,7 @@
         });
 
         // Viewof example with a slider
-        viewof("slider", () => {
+        module.viewof("slider", () => {
             const input = document.createElement('input');
             input.type = 'range';
             input.min = '0';
@@ -47,7 +50,7 @@
             return input;
         });
 
-        cell("sliderValue", ["slider"], (slider) => {
+        module.cell("sliderValue", ["slider"], (slider) => {
             const div = document.createElement('div');
             div.className = 'cell';
             div.textContent = `Slider value: ${slider}`;
@@ -55,9 +58,9 @@
         });
 
         // Mutable state example
-        const count = mutable("count", 0);
+        const count = module.mutable("count", 0);
 
-        cell("counter", ["count"], (count) => {
+        module.cell("counter", ["count"], (count) => {
             const div = document.createElement('div');
             div.className = 'cell mutable';
             
@@ -88,7 +91,6 @@ cell("editable", () => {
         document.body.appendChild(editableCell);
 
         // Initialize contenteditable scripts
-        initContentEditableScripts();
 
         // Render all cells
         const demoDiv = document.getElementById('demo');

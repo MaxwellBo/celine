@@ -123,7 +123,7 @@ function Mutable<T>(value: T): Object
   );
 }
 
-export function contenteditableScriptsReevaluateOnBlur(document: any) {
+export function contenteditableEchoScriptsReevaluateOnBlur(document: any) {
   function reevaluate(event: any) {
     const old = event.target;
     const neww = document.createElement("script");
