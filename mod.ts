@@ -123,7 +123,7 @@ function Mutable<T>(value: T): Object
   );
 }
 
-export function initContenteditableScripts(document: any) {
+export function contenteditableScriptsReevaluateOnBlur(document: any) {
   function reevaluate(event: any) {
     const old = event.target;
     const neww = document.createElement("script");
@@ -139,7 +139,7 @@ export function initContenteditableScripts(document: any) {
     old.parentNode.removeChild(old);
   }
 
-  document.querySelectorAll("script.echo").forEach((script: any) => {
+  document.querySelectorAll("script.echo[contenteditable='true']").forEach((script: any) => {
     script.addEventListener("blur", reevaluate as EventListener);
   });
 }
