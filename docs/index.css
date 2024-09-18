@@ -18,6 +18,7 @@
   font-weight: var(--font-weight-normal);
   font-style: normal;
   font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "ss02";
   font-size: 16px;
 }
 
@@ -107,6 +108,10 @@ hr:after {
 
 a {
   text-decoration-thickness: var(--border-thickness);
+}
+
+a:hover {
+  background-color: var(--background-color-alt);
 }
 
 a:link, a:visited {
