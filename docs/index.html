@@ -60,6 +60,23 @@ Add this script and style tag to your HTML file:
   background-color: darkslategray;
 }
 
+.observablehq {
+  margin-top: 1rem;
+}
+
+@keyframes blink {
+  67% {
+    opacity: 0;
+  }
+}
+.observablehq--running::before {
+  content: 'LOADING';
+  animation: blink 1s step-end infinite;
+}
+
+.observablehq--error {
+  color: #d00;
+}
 </style>
 
 <br />
@@ -128,30 +145,6 @@ celine.cell("sword", ["ref"], (ref) => {
   return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
 });
 </script>
-
-
-<h3>Support styling</h3>
-
-<style class="echo" contenteditable="true">
-@keyframes blink {
-  67% {
-    opacity: 0;
-  }
-}
-
-.observablehq {
-  margin-top: 1rem;
-}
-
-.observablehq--running::before {
-  content: 'LOADING';
-  animation: blink 1s step-end infinite;
-}
-
-.observablehq--error {
-  color: #d00;
-}
-</style>
 
 </body>
 </html>
