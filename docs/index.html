@@ -4,7 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>celine</title>
+  <title>@celine/celine</title>
+
+  <!-- <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> -->
+
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="index.css" />
 
   <style>
     script.echo::before {
@@ -23,27 +29,73 @@
       content: "<\/style>";
     }
 
-    [contenteditable] {
-      border: 3px inset;
+    /*
+      Josh's Custom CSS Reset
+      https://www.joshwcomeau.com/css/custom-css-reset/
+    */
+    *, *::before, *::after {
+      box-sizing: border-box;
     }
-
+    * {
+      margin: 0;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+    }
+    img, picture, video, canvas, svg {
+      display: block;
+      max-width: 100%;
+    }
+    input, button, textarea, select {
+      font: inherit;
+    }
+    #root, #__next {
+      isolation: isolate;
+    }
   </style>
 </head>
 
 <body>
-<h1>celine</h1>
-<p><b>A microlibrary for building reactive HTML notebooks</b></p>
+<table class="header">
+  <tbody>
+    <tr>
+    <th colspan="4" rowspan="2" class="width-auto">
+      <h1 class="title">@celine/celine</h1>
+      <span class="subtitle">A microlibrary for building reactive HTML notebooks</span>
+    </th>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <th class="width-min">Author</th>
+    <td class="width-auto"><a href="https://maxbo.me"><cite>Max Bo</cite></a></td>
+    <th>Updated</th>
+    <td class="width-min"><time style="white-space: pre;">2024-09-18</time></td>
+  </tr>
+  <tr>
+    <th>GitHub</th>
+    <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a></td>
+    <th class="width-min">License</th>
+    <td>MIT</td>
+  </tr>
+  <tr>
+    <th>JSR</th>
+    <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a></td>
+    <th>Version</th>
+    <td class="width-min">v0.1.7</td>
+  </tr>
+</tbody></table>
+<main>
+<p><code>@celine/celine</code> was born out of an article I wrote, <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><quote>Reactive HTML notebooks (2024)</quote></a></p>
 
-<p>celine was born out of an article I wrote, <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><quote>Reactive HTML notebooks (2024)</quote></a>.</p>
-
-<p>It wraps a subset of <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a>.</p>
-
-<p><a href="https://jsr.io/@celine/celine">jsr.io/@celine/celine</a></p>
-<p><a href="https://github.com/MaxwellBo/celine">MaxwellBo/celine</a></p>
+<p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a>.</p>
 
 <h2>Installation</h2>
 
-Add this script and style tag to your HTML file:
+Add this <code>script</code> and <code>style</code> tag to your HTML file:
 
 <style class="echo">
 /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
@@ -60,7 +112,7 @@ Add this script and style tag to your HTML file:
   font-feature-settings: "colr", "calt";
   white-space: pre;
   color: ivory;
-  background-color: darkslategray;
+  background-color: rgb(28, 28, 28);
 }
 
 .observablehq {
@@ -99,9 +151,9 @@ reevaluateOnBlur(document, 'echo');
 
 <h2>Usage</h2>
 
-<i>All cells are editable</i>
+<i>All cells are <code>contenteditable</code></i>
 
-<h3>cells</h3>
+<h3><code>cell</code>s</h3>
 
 <script type="module" class="echo" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
@@ -128,7 +180,7 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 </script>
 
 
-<h3>viewofs</h3>
+<h3><code>viewof</code>s</h3>
 
 <script type="module" class="echo" id="viewof name" contenteditable="true">
 celine.viewof("name", () => {
@@ -142,7 +194,7 @@ celine.cell("greeting", ["name"], (name) => {
 });
 </script>
 
-<h3>mutables</h3>
+<h3><code>mutable</code>s</h3>
 
 <script type="module" class="echo" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
@@ -164,5 +216,6 @@ celine.cell("sword", ["ref"], (ref) => {
 });
 </script>
 
+</main>
 </body>
 </html>
