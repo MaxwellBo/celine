@@ -110,7 +110,7 @@
 
 <h2>Installation</h2>
 
-<p>Add the following <code>script</code> and <code>style</code> elements to your HTML file:</p>
+<p>Add the following <code>style</code> and <code>script</code> elements to your HTML file. Customize to your liking.</p>
 
 <style class="echo">
 /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
@@ -166,7 +166,9 @@ reevaluateOnBlur(document, 'echo');
 
 <h2>Usage</h2>
 
-<i>All of the following <code>script</code>s are <code>contenteditable</code> and reevaluate on blur.</i>
+<p>Ensure the <code>script</code> <code>id</code> attribute matches the <code>cell</code> name.</p>
+
+<p>All of the following <code>script</code>s are <code>contenteditable</code> and reevaluate on blur.</p>
 
 <h3><code>cell</code>s</h3>
 
@@ -196,6 +198,8 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 
 
 <h3><code>viewof</code>s</h3>
+
+<p>Ensure the <code>script</code> <code>id</code> is prefixed with <code>viewof</code>.</p>
 
 <script type="module" class="echo" id="viewof name" contenteditable="true">
 celine.viewof("name", () => {
