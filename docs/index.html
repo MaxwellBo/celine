@@ -26,130 +26,130 @@
     [contenteditable] {
       border: 3px inset;
     }
+
   </style>
 </head>
 
 <body>
-  <h1>celine</h1>
-  <a href="https://maxbo.me/a-html-file-is-all-you-need.html">https://maxbo.me/a-html-file-is-all-you-need.html</a>
-  <br />
-  <a href="https://jsr.io/@celine/celine">https://jsr.io/@celine/celine</a>
-  <br />
+<h1>celine</h1>
+<a href="https://maxbo.me/a-html-file-is-all-you-need.html">https://maxbo.me/a-html-file-is-all-you-need.html</a>
+<br />
+<a href="https://jsr.io/@celine/celine">https://jsr.io/@celine/celine</a>
+<br />
 
-  <h2>Installation</h2>
+<h2>Installation</h2>
 
-  Paste these into your HTML file
+Paste these into your HTML file
 
-  <script type="module" class="echo">
-    import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.1.7';
-    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-    import * as htl from 'https://esm.run/htl@0.3.1';
+<script type="module" class="echo">
+import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.1.7';
+import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+import * as htl from 'https://esm.run/htl@0.3.1';
 
-    window.celine = CelineModule.usingNewObservableRuntime(document);
-    window.library = celine.library;
-    window.Inputs = Inputs;
-    window.htl = htl;
+window.celine = CelineModule.usingNewObservableRuntime(document);
+window.library = celine.library;
+window.Inputs = Inputs;
+window.htl = htl;
 
-    reevaluateOnBlur(document, 'echo');
-  </script>
+reevaluateOnBlur(document, 'echo');
+</script>
 
-  <style class="echo">
-    /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
-    @font-face {
-      font-family: 'FontWithASyntaxHighlighter';
-      src:
-        url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
-    }
+<style class="echo">
+/* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
 
-    .echo {
-      display: block;
-      font-family: 'FontWithASyntaxHighlighter', monospace;
-      white-space: pre;
-      color: ivory;
-      background-color: darkslategrey;
-      margin-bottom: 1rem;
-      margin-top: 0.2rem;
-      padding: 0.5rem 1rem 1rem 1rem;
-      overflow: auto;
-    }
-  </style>
+.echo {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  font-size: 0.9rem;
+  color: ivory;
+  background-color: darkslategray;
+}
 
-  <h2>Usage</h2>
+</style>
 
-  <i>All cells are editable</i>
+<h2>Usage</h2>
 
-  <h3>Reactive cells</h3>
+<i>All cells are editable</i>
 
-  <script type="module" class="echo" id="counter" contenteditable="true">
-    celine.cell("counter", async function* () {
-      let i = 0;
-      while (true) {
-        await library.Promises.delay(1000);
-        yield i++;
-      }
-    });
-  </script>
+<h3>Reactive cells</h3>
 
-  <script type="module" class="echo" id="fizzbuzz" contenteditable="true">
-    celine.cell("fizzbuzz", ["counter"], (counter) => {
-      if (counter % 3 === 0 && counter % 5 === 0) {
-        return htl.html`<b style="color: purple">FizzBuzz</b>`;
-      } else if (counter % 3 === 0) {
-        return htl.html`<b style="color: red">Fizz</b>`;
-      } else if (counter % 5 === 0) {
-        return htl.html`<b style="color: blue">Buzz</b>`;
-      } else {
-        return htl.html`<b>${counter}</b>`;
-      }
-    });
-  </script>
+<script type="module" class="echo" id="counter" contenteditable="true">
+celine.cell("counter", async function* () {
+  let i = 0;
+  while (true) {
+    await library.Promises.delay(1000);
+    yield i++;
+  }
+});
+</script>
 
-  <h3>Mutables</h3>
+<script type="module" class="echo" id="fizzbuzz" contenteditable="true">
+celine.cell("fizzbuzz", ["counter"], (counter) => {
+  if (counter % 3 === 0 && counter % 5 === 0) {
+    return htl.html`<b style="color: purple">FizzBuzz</b>`;
+  } else if (counter % 3 === 0) {
+    return htl.html`<b style="color: red">Fizz</b>`;
+  } else if (counter % 5 === 0) {
+    return htl.html`<b style="color: blue">Buzz</b>`;
+  } else {
+    return htl.html`<b>${counter}</b>`;
+  }
+});
+</script>
 
-  <script type="module" class="echo" id="ref" contenteditable="true">
-    window.ref = celine.mutable("ref", 3)
-  </script>
+<h3>Mutables</h3>
 
-
-  <script type="module" class="echo" id="viewof increment" contenteditable="true">
-    celine.viewof("increment", () => {
-      const increment = () => ++ref.value;
-      const reset = () => ref.value = 0;
-
-      return Inputs.button([["Increment", increment], ["Reset", reset]]);
-    });
-  </script>
-
-  <script type="module" class="echo" id="sword" contenteditable="true">
-    celine.cell("sword", ["ref"], (ref) => {
-      return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
-    });
-  </script>
+<script type="module" class="echo" id="ref" contenteditable="true">
+window.ref = celine.mutable("ref", 3)
+</script>
 
 
-  <h3>Support styling</h3>
+<script type="module" class="echo" id="viewof increment" contenteditable="true">
+celine.viewof("increment", () => {
+  const increment = () => ++ref.value;
+  const reset = () => ref.value = 0;
 
-  <style>
-    @keyframes blink {
-      67% {
-        opacity: 0;
-      }
-    }
+  return Inputs.button([["Increment", increment], ["Reset", reset]]);
+});
+</script>
 
-    .observablehq {
-      margin-top: 1rem;
-    }
+<script type="module" class="echo" id="sword" contenteditable="true">
+celine.cell("sword", ["ref"], (ref) => {
+  return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
+});
+</script>
 
-    .observablehq--running::before {
-      content: 'LOADING';
-      animation: blink 1s step-end infinite;
-    }
 
-    .observablehq--error {
-      color: #d00;
-    }
-  </style>
+<h3>Support styling</h3>
+
+<style>
+@keyframes blink {
+  67% {
+    opacity: 0;
+  }
+}
+
+.observablehq {
+  margin-top: 1rem;
+}
+
+.observablehq--running::before {
+  content: 'LOADING';
+  animation: blink 1s step-end infinite;
+}
+
+.observablehq--error {
+  color: #d00;
+}
+</style>
 
 </body>
-
 </html>
