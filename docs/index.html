@@ -16,6 +16,8 @@
 
   <h2>Installation</h2>
 
+  Paste this into any script module in your HTML file:
+
   <script type="module" class="echo">
     import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.1.7';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
@@ -35,9 +37,18 @@
   <i>All cells are editable</i>
   
   <style class="echo">
+    /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
+    @font-face {
+      font-family: 'FontWithASyntaxHighlighter';
+      src: 
+        url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') 
+        format('woff2')
+      ;
+    }
+
     .echo {
       display: block;
-      font-family: monospace;
+      font-family: 'FontWithASyntaxHighlighter', monospace;
       padding: 8px;
       border: 1px solid black;
       white-space: pre;
@@ -91,6 +102,31 @@
       return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
     });
   </script>
+
+
+  <h3>Support styling</h3>
+
+  <style>
+    @keyframes blink {
+      67% {
+        opacity: 0;
+      }
+    }
+
+    .observablehq {
+      margin-top: 1rem;
+    }
+
+    .observablehq--running::before {
+      content: 'LOADING';
+      animation: blink 1s step-end infinite;
+    }
+
+    .observablehq--error {
+      color: #d00;
+    }
+
+  </style>
 
 </body>
 
