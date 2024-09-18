@@ -88,7 +88,7 @@
     <th class="width-min">Author</th>
     <td class="width-auto"><a href="https://maxbo.me"><cite>Max Bo</cite></a></td>
     <th>Updated</th>
-    <td class="width-min"><time style="white-space: pre;">2024-09-18</time></td>
+    <td class="width-min"><time style="white-space: pre;" id="updated">?</time></td>
   </tr>
   <tr>
     <th>GitHub</th>
@@ -100,9 +100,19 @@
     <th>JSR</th>
     <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a></td>
     <th>Version</th>
-    <td class="width-min">v0.1.7</td>
+    <td class="width-min" id="version">?</td>
   </tr>
 </tbody></table>
+
+<script type="module">
+  fetch("https://npm.jsr.io/@jsr/celine__celine")
+    .then(d => d.json())
+    .then(resp => {
+      document.getElementById("version").textContent = resp["dist-tags"].latest;
+      document.getElementById("updated").textContent = new Date(resp.time.modified).toDateString();
+    })
+</script>
+
 <main>
 <p><code>@celine/celine</code> is the library I promised everyone I'd release after I published <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><q>Reactive HTML notebooks (2024)</q></a>.</p>
 
