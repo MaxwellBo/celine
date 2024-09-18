@@ -98,7 +98,7 @@ reevaluateOnBlur(document, 'echo');
 
 <i>All cells are editable</i>
 
-<h3>Reactive cells</h3>
+<h3>cells</h3>
 
 <script type="module" class="echo" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
@@ -124,7 +124,22 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
-<h3>Mutables</h3>
+
+<h3>viewofs</h3>
+
+<script type="module" class="echo" id="viewof name" contenteditable="true">
+celine.viewof("name", () => {
+  return Inputs.text({placeholder: "What's your name?"});
+});
+</script>
+
+<script type="module" class="echo" id="greeting" contenteditable="true">
+celine.cell("greeting", ["name"], (name) => {
+  return htl.html`Hello, <b>${name}</b>!`;
+});
+</script>
+
+<h3>mutables</h3>
 
 <script type="module" class="echo" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
