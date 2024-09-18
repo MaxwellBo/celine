@@ -10,17 +10,19 @@
     script.echo::before {
       content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
     }
-    script.echo::after { 
-      content: "<\/script>"; 
+
+    script.echo::after {
+      content: "<\/script>";
     }
 
-    style.echo::before { 
+    style.echo::before {
       content: "<style class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
     }
-    style.echo::after { 
-      content: "<\/style>"; 
+
+    style.echo::after {
+      content: "<\/style>";
     }
-    
+
     [contenteditable] {
       border: 3px inset;
     }
@@ -55,10 +57,8 @@
     /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
     @font-face {
       font-family: 'FontWithASyntaxHighlighter';
-      src: 
-        url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') 
-        format('woff2')
-      ;
+      src:
+        url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
     }
 
     .echo {
@@ -67,6 +67,10 @@
       white-space: pre;
       color: ivory;
       background-color: darkslategrey;
+      margin-bottom: 1rem;
+      margin-top: 0.2rem;
+      padding: 0.5rem 1rem 1rem 1rem;
+      overflow: auto;
     }
   </style>
 
@@ -144,7 +148,6 @@
     .observablehq--error {
       color: #d00;
     }
-
   </style>
 
 </body>
