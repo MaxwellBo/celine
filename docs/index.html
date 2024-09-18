@@ -178,13 +178,13 @@ window.htl = htl;
 reevaluateOnBlur(document, 'echo');
 </script>
 
-<h2>Usage</h2>
-
-<p>Ensure the <code>script</code> <code>id</code> attribute matches the <code>cell</code> name.</p>
-
 <p>All of the following <code>script</code>s are <code>contenteditable</code> and reevaluate on blur.</p>
 
-<h3><code>cell</code>s</h3>
+<h2><code>cell</code></h2>
+
+The <code>cell</code> constructor declares a reactive cell that can depend on other cells.
+
+<p>Ensure the <code>script</code> <code>id</code> is the <code>NAME</code> parameterized to the <code>cell</code> constructor.</p>
 
 <script type="module" class="echo" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
@@ -211,13 +211,13 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 </script>
 
 
-<h3><code>viewof</code>s</h3>
+<h2><code>viewof</code></h2>
 
-<code>viewof</code> is designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.
+<p>The <code>viewof</code> constructor is a special constructor designed to work with with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
-<p>It declares 2 reactive <code>cell</code>s: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the DOM element itself.</p>
+<p><p>It declares 2 reactive cells: the <code>NAME</code> cell and the <code>viewof NAME</code> cell - one for the value, and one for the DOM element itself.</p>
 
-<p>Ensure the <code>script</code> <code>id</code> is of the <code>viewof NAME</code> form.</p>
+<p>Ensure the <code>script</code> <code>id</code> is of the form <code>viewof NAME</code> to display the input.</p>
 
 <p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs">Syncronized Inputs</a> guide.</p>
 
@@ -233,7 +233,9 @@ celine.cell("greeting", ["name"], (name) => {
 });
 </script>
 
-<h3><code>mutable</code>s</h3>
+<h2><code>mutable</code></h2>
+
+<code>mutable</code> is a cell constructor that both declares a cell and returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
 
 <script type="module" class="echo" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
@@ -257,6 +259,15 @@ celine.cell("sword", ["ref"], (ref) => {
 
 
 <h2>TeX, Markdown, Graphviz</h2>
+
+<p>There are many useful utilities inside of the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
+
+<script type="module" class="echo" id="lib" contenteditable="true">
+celine.cell("lib", () => {
+  return celine.library;
+});
+</script>
+
 
 <script type="module" class="echo" id="tex" contenteditable="true">
 celine.cell("tex", async () => {
