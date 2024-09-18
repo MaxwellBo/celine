@@ -10,6 +10,7 @@ type CellVisibility = "hidden" | "visible";
 export class CelineModule {
   public document: any;
   public module: any;
+  public library = library;
 
   constructor(document: any, module: any) {
     this.document = document;

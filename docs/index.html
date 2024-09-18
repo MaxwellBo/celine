@@ -14,6 +14,26 @@
   <a href="https://jsr.io/@celine/celine">https://jsr.io/@celine/celine</a>
   <br />
 
+  <h2>Installation</h2>
+
+  <script type="module" class="echo">
+    import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.1.7';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+
+    window.celine = CelineModule.usingNewObservableRuntime(document);
+    window.library = celine.library;
+    window.Inputs = Inputs;
+    window.htl = htl;
+
+    reevaluateOnBlur(document, 'echo');
+  </script>
+
+
+  <h2>Usage</h2>
+
+  <i>All cells are editable</i>
+  
   <style class="echo">
     .echo {
       display: block;
@@ -24,20 +44,10 @@
     }
   </style>
 
-  <script type="module" class="echo">
-    import * as celine from 'https://esm.sh/jsr/@celine/celine@0.1.5';
-    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-    import * as htl from 'https://esm.run/htl@0.3.1';
-
-    celine.reevaluateOnBlur(document, 'echo');
-    window.inline = celine.CelineModule.usingNewObservableRuntime(document);
-    window.Inputs = Inputs;
-    window.htl = htl;
-    window.library = library;
-  </script>
+  <h3>Reactive cells</h3>
 
   <script type="module" class="echo" id="counter" contenteditable="true">
-    inline.cell("counter", async function* () {
+    celine.cell("counter", async function* () {
       let i = 0;
       while (true) {
         await library.Promises.delay(1000);
@@ -47,7 +57,7 @@
   </script>
 
   <script type="module" class="echo" id="fizzbuzz" contenteditable="true">
-    cell("fizzbuzz", ["counter"], (counter) => {
+    celine.cell("fizzbuzz", ["counter"], (counter) => {
       if (counter % 3 === 0 && counter % 5 === 0) {
         return htl.html`<b style="color: purple">FizzBuzz</b>`;
       } else if (counter % 3 === 0) {
@@ -60,14 +70,15 @@
     });
   </script>
 
+  <h3>Mutables</h3>
 
   <script type="module" class="echo" id="ref" contenteditable="true">
-    window.ref = mutable("ref", 3)
+    window.ref = celine.mutable("ref", 3)
   </script>
 
 
   <script type="module" class="echo" id="viewof increment" contenteditable="true">
-    viewof("increment", () => {
+    celine.viewof("increment", () => {
       const increment = () => ++ref.value;
       const reset = () => ref.value = 0;
 
@@ -76,12 +87,10 @@
   </script>
 
   <script type="module" class="echo" id="sword" contenteditable="true">
-    cell("sword", ["ref"], (ref) => {
+    celine.cell("sword", ["ref"], (ref) => {
       return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
     });
   </script>
-
-
 
 </body>
 
