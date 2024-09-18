@@ -25,14 +25,19 @@
   </style>
 
   <script type="module" class="echo">
-    import { CelineModule, library, contenteditableEchoScriptsReevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine';
-    window.celine = CelineModule.usingNewRuntime(document);
+    import * as celine from 'https://esm.sh/jsr/@celine/celine@0.1.5';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+
+    celine.reevaluateOnBlur(document, 'echo');
+    window.inline = celine.CelineModule.usingNewObservableRuntime(document);
+    window.Inputs = Inputs;
+    window.htl = htl;
     window.library = library;
-    contenteditableEchoScriptsReevaluateOnBlur(document);
   </script>
 
   <script type="module" class="echo" id="counter" contenteditable="true">
-    celine.cell("counter", async function* () {
+    inline.cell("counter", async function* () {
       let i = 0;
       while (true) {
         await library.Promises.delay(1000);
@@ -40,6 +45,44 @@
       }
     });
   </script>
+
+  <script type="module" class="echo" id="fizzbuzz" contenteditable="true">
+    cell("fizzbuzz", ["counter"], (counter) => {
+      if (counter % 3 === 0 && counter % 5 === 0) {
+        return htl.html`<b style="color: purple">FizzBuzz</b>`;
+      } else if (counter % 3 === 0) {
+        return htl.html`<b style="color: red">Fizz</b>`;
+      } else if (counter % 5 === 0) {
+        return htl.html`<b style="color: blue">Buzz</b>`;
+      } else {
+        return htl.html`<b>${counter}</b>`;
+      }
+    });
+  </script>
+
+
+  <script type="module" class="echo" id="ref" contenteditable="true">
+    window.ref = mutable("ref", 3)
+  </script>
+
+
+  <script type="module" class="echo" id="viewof increment" contenteditable="true">
+    viewof("increment", () => {
+      const increment = () => ++ref.value;
+      const reset = () => ref.value = 0;
+
+      return Inputs.button([["Increment", increment], ["Reset", reset]]);
+    });
+  </script>
+
+  <script type="module" class="echo" id="sword" contenteditable="true">
+    cell("sword", ["ref"], (ref) => {
+      return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
+    });
+  </script>
+
+
+
 </body>
 
 </html>

@@ -16,7 +16,7 @@ export class CelineModule {
     this.module = module;
   }
 
-  static usingNewRuntime(document: any): CelineModule {
+  static usingNewObservableRuntime(document: any): CelineModule {
     const runtime = new Runtime();
     const module = runtime.module();
     return new CelineModule(document, module);
@@ -123,7 +123,7 @@ function Mutable<T>(value: T): Object
   );
 }
 
-export function contenteditableEchoScriptsReevaluateOnBlur(document: any) {
+export function reevaluateOnBlur(document: any, className: string) {
   function reevaluate(event: any) {
     const old = event.target;
     const neww = document.createElement("script");
@@ -139,7 +139,7 @@ export function contenteditableEchoScriptsReevaluateOnBlur(document: any) {
     old.parentNode.removeChild(old);
   }
 
-  document.querySelectorAll("script.echo[contenteditable='true']").forEach((script: any) => {
+  document.querySelectorAll(`script.${className}[contenteditable='true']`).forEach((script: any) => {
     script.addEventListener("blur", reevaluate as EventListener);
   });
 }
