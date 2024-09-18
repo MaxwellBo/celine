@@ -89,13 +89,13 @@
   </tr>
 </tbody></table>
 <main>
-<p><code>@celine/celine</code> was born out of an article I wrote, <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><quote>Reactive HTML notebooks (2024)</quote></a></p>
+<p><code>@celine/celine</code> is the library I promised everyone I'd release after I published <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><q>Reactive HTML notebooks (2024)</q></a>.</p>
 
-<p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a>.</p>
+<p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for notebook construction.</p>
 
 <h2>Installation</h2>
 
-Add this <code>script</code> and <code>style</code> tag to your HTML file:
+<p>Add the following <code>script</code> and <code>style</code> elements to your HTML file:</p>
 
 <style class="echo">
 /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
@@ -111,8 +111,8 @@ Add this <code>script</code> and <code>style</code> tag to your HTML file:
   font-family: "FontWithASyntaxHighlighter", monospace;
   font-feature-settings: "colr", "calt";
   white-space: pre;
-  color: ivory;
-  background-color: rgb(28, 28, 28);
+  color: #eee;
+  background-color: #222;
 }
 
 .observablehq {
@@ -151,7 +151,7 @@ reevaluateOnBlur(document, 'echo');
 
 <h2>Usage</h2>
 
-<i>All cells are <code>contenteditable</code></i>
+<i>All of the following <code>script</code>s are <code>contenteditable</code> and reevaluate on blur.</i>
 
 <h3><code>cell</code>s</h3>
 
