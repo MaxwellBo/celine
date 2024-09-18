@@ -5,6 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>celine</title>
+
+  <style>
+    script.echo::before {
+      content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+    }
+    script.echo::after { 
+      content: "<\/script>"; 
+    }
+
+    style.echo::before { 
+      content: "<style class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
+    }
+    style.echo::after { 
+      content: "<\/style>"; 
+    }
+    
+    [contenteditable] {
+      border: 3px inset;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,7 +36,7 @@
 
   <h2>Installation</h2>
 
-  Paste this into any script module in your HTML file:
+  Paste these into your HTML file
 
   <script type="module" class="echo">
     import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.1.7';
@@ -31,17 +51,12 @@
     reevaluateOnBlur(document, 'echo');
   </script>
 
-
-  <h2>Usage</h2>
-
-  <i>All cells are editable</i>
-  
   <style class="echo">
     /* https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/ */
     @font-face {
       font-family: 'FontWithASyntaxHighlighter';
       src: 
-        url('FontWithASyntaxHighlighter-Regular.woff2') 
+        url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') 
         format('woff2')
       ;
     }
@@ -54,6 +69,10 @@
       background-color: darkslategrey;
     }
   </style>
+
+  <h2>Usage</h2>
+
+  <i>All cells are editable</i>
 
   <h3>Reactive cells</h3>
 
