@@ -122,7 +122,7 @@ p {
   margin-bottom: var(--line-height);
 }
 
-strong {
+strong, b{
   font-weight: var(--font-weight-bold);
 }
 em {
