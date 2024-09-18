@@ -23,9 +23,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #fff;
+    --text-color: #eee;
     --text-color-alt: #aaa;
-    --background-color: #000;
+    --background-color: #111;
     --background-color-alt: #333;
   }
 }
