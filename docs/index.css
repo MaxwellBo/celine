@@ -122,10 +122,10 @@ p {
   margin-bottom: var(--line-height);
 }
 
-strong, b{
+strong, b {
   font-weight: var(--font-weight-bold);
 }
-em {
+em, i {
   font-style: italic;
 }
 
@@ -238,7 +238,7 @@ code {
   background-color: var(--background-color-alt)
 }
 
-q {
+cite {
   font-style: italic;
 }
 
