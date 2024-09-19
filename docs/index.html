@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
-  <link rel="stylesheet" href="reset.css" />
   <link rel="stylesheet" href="index.css" />
 
   <meta name="description" content="A microlibrary for building reactive HTML notebooks">
@@ -54,9 +53,6 @@
     * {
       margin: 0;
     }
-    html, body {
-      height: 100%;
-    }
     body {
       -webkit-font-smoothing: antialiased;
     }
@@ -66,6 +62,9 @@
     }
     input, button, textarea, select {
       font: inherit;
+    }
+    p, h1, h2, h3, h4, h5, h6 {
+      overflow-wrap: break-word;
     }
     #root, #__next {
       isolation: isolate;
