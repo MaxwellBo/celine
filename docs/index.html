@@ -124,7 +124,7 @@
 
 <p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for notebook construction.</p>
 
-<h2>Installation</h2>
+<h2><a href="#installation" id="installation" style="text-decoration: none;">##</a> Installation</h2>
 
 <p>Add the following <code>style</code> and <code>script</code> elements to your HTML file. Customize to your liking.</p>
 
@@ -184,7 +184,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <p>All of the following <code>script</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
 
-<h2><code>cell</code></h2>
+<h2><a href="#cell" id="cell" style="text-decoration: none;">##</a> <code>cell</code></h2>
 
 <p>The <code>cell</code> constructor declares a reactive cell that can depend on other cells.</p>
 
@@ -217,7 +217,7 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 </script>
 
 
-<h2><code>viewof</code></h2>
+<h2><a href="#viewof" id="viewof" style="text-decoration: none;">##</a> <code>viewof</code></h2>
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
@@ -239,7 +239,7 @@ celine.cell("greeting", ["name"], (name) => {
 });
 </script>
 
-<h2><code>mutable</code></h2>
+<h2><a href="#mutable" id="mutable" style="text-decoration: none;">##</a> <code>mutable</code></h2>
 
 <code>mutable</code> is a cell constructor that both declares a cell and returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
 
@@ -264,7 +264,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h2>TeX, Markdown, Graphviz</h2>
+<h2><a href="#tmg" id="tmg" style="text-decoration: none;">##</a> TeX, Markdown, Graphviz</h2>
 
 <p>There are many useful utilities inside of the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
@@ -321,7 +321,7 @@ digraph G {
 </script>
 
 
-<h2>Observable Plot</h2>
+<h2><a href="#plot" id="plot" style="text-decoration: none;">##</a> Observable Plot</h2>
 
 <script type="module" class="echo" id="plot" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
