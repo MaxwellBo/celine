@@ -115,12 +115,10 @@
 
 <main>
 <p>
-  <code>@celine/celine</code> is the library I promised everyone I'd release after I published <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><q>Reactive HTML notebooks (2024)</q></a>^. 
+  <code>@celine/celine</code> is the library I promised everyone I'd release in <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><q>Reactive HTML notebooks (2024)</q></a>^. 
 </p> 
 
 <p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for notebook construction.</p>
-
-<p>^ If you haven't already read that article, I <strong>strongly</strong> recommend you do so before continuing.</p>
 
 <h2>Installation</h2>
 
@@ -184,7 +182,9 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <h2><code>cell</code></h2>
 
-The <code>cell</code> constructor declares a reactive cell that can depend on other cells.
+<p>The <code>cell</code> constructor declares a reactive cell that can depend on other cells.</p>
+
+<p>The definition can return values of type <code>T</code>, <code>Promise&lt;T&gt;</code>, <code>Iterator&lt;T&gt;</code>, or <code>AsyncIterator&lt;T&gt;</code>.</p>
 
 <p>Ensure the <code>script</code> <code>id</code> is the <code>NAME</code> parameterized to the <code>cell</code> constructor.</p>
 
