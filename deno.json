@@ -1,6 +1,6 @@
 {
   "name": "@celine/celine",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "exports": "./mod.ts",
   "tasks": {
     "dev": "deno run --watch mod.ts"

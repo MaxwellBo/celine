@@ -181,17 +181,17 @@ window.htl = htl;
 reevaluateOnBlur(document, /*class=*/'echo');
 </script>
 
-<br />
+<h2><a href="#api" id="api" style="text-decoration: none;">##</a> API</h2>
 
 <p>All of the following <code>script</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
 
-<h2><a href="#cell" id="cell" style="text-decoration: none;">##</a> <code>cell</code></h2>
+<h3><a href="#cell" id="cell" style="text-decoration: none;">###</a> <code>celine.cell(name, [inputs, ]definition)</code></h3>
 
 <p>The <code>cell</code> constructor declares a reactive cell that can depend on other cells.</p>
 
 <p>The definition can return values of type <code>T</code>, <code>Promise&lt;T&gt;</code>, <code>Iterator&lt;T&gt;</code>, or <code>AsyncIterator&lt;T&gt;</code>.</p>
 
-<p>Ensure the <code>script</code> <code>id</code> is the <code>NAME</code> parameterized to the <code>cell</code> constructor.</p>
+<p>Ensure the <code>script</code> <code>id</code> is the <code>name</code> parameterized to the <code>cell</code> constructor.</p>
 
 <script type="module" class="echo" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
@@ -217,14 +217,13 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
-
-<h2><a href="#viewof" id="viewof" style="text-decoration: none;">##</a> <code>viewof</code></h2>
+<h3><a href="#viewof" id="viewof" style="text-decoration: none;">###</a> <code>celine.viewof(name, [inputs, ]definition)</code></h3>
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
-<p><p>It declares 2 reactive cells: the <code>NAME</code> cell and the <code>viewof NAME</code> cell - one for the value, and one for the DOM element itself.</p>
+<p><p>It declares 2 reactive cells: the <code>name</code> cell and the <code>viewof name</code> cell - one for the value, and one for the DOM element itself.</p>
 
-<p>Ensure the <code>script</code> <code>id</code> is of the form <code>viewof NAME</code> to display the input.</p>
+<p>Ensure the <code>script</code> <code>id</code> is of the form <code>viewof name</code> to display the input.</p>
 
 <p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs">Syncronized Inputs</a> guide.</p>
 
@@ -240,7 +239,19 @@ celine.cell("greeting", ["name"], (name) => {
 });
 </script>
 
-<h2><a href="#mutable" id="mutable" style="text-decoration: none;">##</a> <code>mutable</code></h2>
+
+<h3><a href="#silent" id="silent" style="text-decoration: none;">###</a> <code>celine.silent(name, [inputs, ]definition)</code></h3>
+
+<p>The <code>silent</code> constructor declares a cell that doesn't render its value above its containing <code>script</code>.</p>
+
+<script type="module" class="echo" id="silent" contenteditable="true">
+  celine.silent("silent", () => {
+    return "This string does NOT render above the script";
+  });
+</script>
+
+
+<h3><a href="#mutable" id="mutable" style="text-decoration: none;">###</a> <code>celine.mutable(name, value)</code></h3>
 
 <code>mutable</code> is a cell constructor that both declares a cell and returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
 
@@ -265,7 +276,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h2><a href="#tmg" id="tmg" style="text-decoration: none;">##</a> TeX, Markdown, Graphviz</h2>
+<h3><a href="#tmg" id="tmg" style="text-decoration: none;">###</a> TeX, Markdown, Graphviz</h3>
 
 <p>There are many useful utilities inside of the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
@@ -322,7 +333,7 @@ digraph G {
 </script>
 
 
-<h2><a href="#plot" id="plot" style="text-decoration: none;">##</a> Observable Plot</h2>
+<h3><a href="#plot" id="plot" style="text-decoration: none;">###</a> Observable Plot</h3>
 
 <script type="module" class="echo" id="numbers" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';

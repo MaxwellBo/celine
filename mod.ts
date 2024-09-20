@@ -5,7 +5,7 @@ import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
 
 export const library: any = new stdlib.Library();
 
-type CellVisibility = "hidden" | "visible";
+type ObserverVisibility = "hidden" | "visible";
 
 export class CelineModule {
   public document: any;
@@ -45,9 +45,9 @@ export class CelineModule {
     this._cell("visible", name, inputsOrDefinition, maybeDefinition);
   }
 
-  public hidden(name: string, inputs: string[], definition: Function): void;
-  public hidden(name: string, definition: Function): void;
-  public hidden(
+  public silent(name: string, inputs: string[], definition: Function): void;
+  public silent(name: string, definition: Function): void;
+  public silent(
     name: string,
     inputsOrDefinition: string[] | Function,
     maybeDefinition?: Function,
@@ -56,13 +56,13 @@ export class CelineModule {
   }
 
   private _cell(
-    visible: CellVisibility,
+    observerVisibility: ObserverVisibility,
     name: string,
     inputsOrDefinition: string[] | Function,
     maybeDefinition?: Function,
   ) {
     const variable = this.module._scope.get(name) ||
-      this.module.variable(visible === "visible" ? this.observer(name) : undefined);
+      this.module.variable(observerVisibility === "visible" ? this.observer(name) : undefined);
 
     const inputs: string[] = Array.isArray(inputsOrDefinition)
       ? inputsOrDefinition

@@ -86,6 +86,9 @@ h2 {
   font-size: 1rem;
   text-transform: uppercase;
 }
+h3 {
+  font-size: 1rem;
+}
 
 hr {
   position: relative;
