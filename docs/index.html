@@ -89,7 +89,8 @@
     <th class="width-min">Author</th>
     <td class="width-auto"><a href="https://maxbo.me">Max Bo</a></td>
     <th>Updated</th>
-    <td class="width-min"><time style="white-space: pre;" id="updated">?</time></td>
+    <!-- these should be updated to the best of your ability -->
+    <td class="width-min"><time style="white-space: pre;" id="updated">0.1.7</time></td>
   </tr>
   <tr>
     <th>GitHub</th>
@@ -101,7 +102,8 @@
     <th>JSR</th>
     <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
     <th>Version</th>
-    <td class="width-min" id="version">?</td>
+    <!-- these should be updated to the best of your ability -->
+    <td class="width-min" id="version">Tue Sep 17 2024</td>
   </tr>
   <tr>
   </tr>
@@ -322,7 +324,7 @@ digraph G {
 
 <h2><a href="#plot" id="plot" style="text-decoration: none;">##</a> Observable Plot</h2>
 
-<script type="module" class="echo" id="plot" contenteditable="true">
+<script type="module" class="echo" id="numbers" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
 const numbers = [
@@ -332,7 +334,7 @@ const numbers = [
   163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
 ]
 
-celine.cell("plot", async () => {
+celine.cell("numbers", async () => {
   return Plot.lineY(numbers).plot();
 });
 </script>

@@ -25,7 +25,7 @@ export class CelineModule {
 
   private observer(name: string) {
     const div = this.document.createElement("div");
-    const currentScript = this.document.getElementById(name);
+    const currentScript = this.document.querySelector(`script#${name}`);
 
     if (!currentScript) {
       throw new Error(`No script with id ${name} found`);
