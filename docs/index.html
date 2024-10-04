@@ -90,7 +90,7 @@
     <td class="width-auto"><a href="https://maxbo.me">Max Bo</a></td>
     <th>Updated</th>
     <!-- these should be updated to the best of your ability -->
-    <td class="width-min"><time style="white-space: pre;" id="updated">Tue Sep 17 2024</time></td>
+    <td class="width-min"><time style="white-space: pre;" id="updated">Sep 17 2024</time></td>
   </tr>
   <tr>
     <th>GitHub</th>
@@ -114,7 +114,9 @@
     .then(d => d.json())
     .then(resp => {
       document.getElementById("version").textContent = resp["dist-tags"].latest;
-      document.getElementById("updated").textContent = new Date(resp.time.modified).toDateString();
+      const date = new Date(resp.time.modified);
+      const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getFullYear()}`;
+      document.getElementById("updated").textContent = formattedDate;
     })
 </script>
 
