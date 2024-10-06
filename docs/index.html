@@ -13,7 +13,7 @@
   <meta name="keywords" content="celine, celine, reactive, html, notebook, observable, runtime, api, library, microlibrary, esm, module, script, style, element, contenteditable, reevaluate, blur, cell, viewof, mutable, counter, fizzbuzz, name, greeting, ref, increment, sword">
   <meta name="date" content="2024-09-18">
   <meta name="license" content="MIT">
-  <meta name="version" content="v0.3.0">
+  <meta name="version" content="v0.3.1">
   
   <meta property="og:title" content="@celine/celine">
   <meta property="og:description" content="A microlibrary for building reactive HTML notebooks">
@@ -103,7 +103,7 @@
     <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
     <th>Version</th>
     <!-- these should be updated to the best of your ability -->
-    <td class="width-min" id="version">0.3.0</td>
+    <td class="width-min" id="version">0.3.1</td>
   </tr>
   <tr>
   </tr>
@@ -171,12 +171,12 @@
 <br />
 
 <script type="module" class="echo">
-import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.0';
+import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.1';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
 window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-window.library = celine.library;
+window.library = celine.library; /* @observablehq/stdlib */
 window.Inputs = Inputs;
 window.htl = htl;
 

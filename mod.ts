@@ -3,6 +3,9 @@
 import { Inspector, Runtime } from "npm:@observablehq/runtime@5.9.9";
 import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
 
+/**
+ * For convenience, this module re-exports the Observable standard library.
+ */
 export const library: stdlib.Library = new stdlib.Library();
 
 type ObserverVisibility = "hidden" | "visible";
@@ -10,21 +13,31 @@ type Definition = Function;
 type Inputs = string[];
 
 /**
- * Main class for building reactive HTML notebooks using the Observable runtime.
- * Provides a minimal and opinionated API for notebook construction, wrapping a subset
- * of the Observable Notebook runtime functionality.
+ * A CelineModule is a wrapper around an Observable runtime, a derived Observable runtime module, and a document.
  * 
- * The name comes from "cell inline" -> "celine".
+ * Its various cell constructors alter both the module and the document to create reactive cells.
  */
 export class CelineModule {
+  /**
+   * The document object to create elements in.
+   */
   public document: Document;
+
+  /**
+   * The Observable runtime module to define variables in.
+   */
   public module: Runtime.Module;
+  /**
+   * @public
+   * @type {stdlib.Library}
+   * @description For convenience, this class re-exports the Observable standard library.
+   */
   public library: stdlib.Library = library;
 
   /**
    * Creates a new CelineModule instance.
    * @param document - The document object to create elements in
-   * @param module - The Observable runtime module to use
+   * @param module - The Observable runtime module to define variables in.
    */
   constructor(document: Document, module: Runtime.Module) {
     this.document = document;
