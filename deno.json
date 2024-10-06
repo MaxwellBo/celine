@@ -2,11 +2,10 @@
   "name": "@celine/celine",
   "version": "0.3.0",
   "exports": "./mod.ts",
-  "lib": [
-    "esnext",
-    "dom",
-    "dom.iterable"
-  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
+  },
   "tasks": {
     "dev": "deno run --watch mod.ts"
   }

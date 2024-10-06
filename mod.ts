@@ -1,6 +1,4 @@
 // deno-lint-ignore-file ban-types
-/// <reference lib="dom" />
-/// <reference lib="dom.iterable" />
 
 import { Inspector, Runtime } from "npm:@observablehq/runtime@5.9.9";
 import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
@@ -239,9 +237,7 @@ export class CelineModule {
    */
   public mutable<T>(name: string, value: T): typeof Mutable<T> {
     const m = Mutable(value);
-    // @ts-ignore
     this.cell(name, m);
-    // @ts-ignore
     return m;
   }
 }
@@ -252,7 +248,7 @@ export class CelineModule {
  * @param value - The initial value
  * @returns A mutable object with getter/setter for the value
  */
-function Mutable<T>(value: T): Object {
+function Mutable<T>(value: T) {
   let change: (value: T) => void;
   return Object.defineProperty(
     library.Generators.observe((_: (value: T) => void) => {
