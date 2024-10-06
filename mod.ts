@@ -237,7 +237,9 @@ export class CelineModule {
    */
   public mutable<T>(name: string, value: T): typeof Mutable<T> {
     const m = Mutable(value);
+    // @ts-ignore - some really scary stuff going on here
     this.cell(name, m);
+    // @ts-ignore - some really scary stuff going on here
     return m;
   }
 }
@@ -248,7 +250,7 @@ export class CelineModule {
  * @param value - The initial value
  * @returns A mutable object with getter/setter for the value
  */
-function Mutable<T>(value: T) {
+function Mutable<T>(value: T): { value: T } {
   let change: (value: T) => void;
   return Object.defineProperty(
     library.Generators.observe((_: (value: T) => void) => {
@@ -260,7 +262,7 @@ function Mutable<T>(value: T) {
       get: () => value,
       set: (x: T) => void change((value = x)),
     }
-  );
+  ) as { value: T };
 }
 
 /**
