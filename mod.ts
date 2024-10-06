@@ -21,7 +21,7 @@ export class CelineModule {
    * @deprecated Use `usingNewObservableRuntimeAndModule` instead.
    */
   static usingNewObservableRuntime(document: any): CelineModule {
-    throw new Error("This method is deprecated. Use `usingNewObservableRuntimeAndModule` instead.");
+    return CelineModule.usingNewObservableRuntimeAndModule(document);
   }
 
   static usingNewObservableRuntimeAndModule(document: any): CelineModule {
