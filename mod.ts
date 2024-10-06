@@ -17,9 +17,23 @@ export class CelineModule {
     this.module = module;
   }
 
+  /**
+   * @deprecated Use `usingNewObservableRuntimeAndModule` instead.
+   */
   static usingNewObservableRuntime(document: any): CelineModule {
+    throw new Error("This method is deprecated. Use `usingNewObservableRuntimeAndModule` instead.");
+  }
+
+  static usingNewObservableRuntimeAndModule(document: any): CelineModule {
     const runtime = new Runtime();
     const module = runtime.module();
+    return new CelineModule(document, module);
+  }
+
+  /**
+   * This is just an alias of the default constructor.
+   */
+  static usingExistingObservableModule(document: any, module: any): CelineModule {
     return new CelineModule(document, module);
   }
 
