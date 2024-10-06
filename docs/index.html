@@ -301,25 +301,20 @@ celine.cell("tex", async () => {
 </script>
 
 <script type="module" class="echo" id="markdown" contenteditable="true">
-celine.cell("markdown", ["elements"], async (elements) => {
+celine.cell("markdown", async () => {
+  const elements =  [
+    { "symbol": "Co", "name": "Cobalt", "number": 27 },
+    { "symbol": "Cu", "name": "Copper", "number": 29 },
+    { "symbol": "Sn", "name": "Tin", "number": 50 },
+    { "symbol": "Pb", "name": "Lead", "number": 82 }
+  ];
+
   const md = await celine.library.md();
   return md`
 | Name      | Symbol      | Atomic number |
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
 `;
-});
-</script>
-
-<br />
-<script type="module" class="echo" id="elements" contenteditable="true">
-celine.cell("elements", () => {
-  return [
-    { "symbol": "Co", "name": "Cobalt", "number": 27 },
-    { "symbol": "Cu", "name": "Copper", "number": 29 },
-    { "symbol": "Sn", "name": "Tin", "number": 50 },
-    { "symbol": "Pb", "name": "Lead", "number": 82 }
-  ];
 });
 </script>
 
