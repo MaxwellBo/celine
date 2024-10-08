@@ -4,9 +4,9 @@
   --font-family: "JetBrains Mono", monospace;
   --line-height: 1.20rem;
   --border-thickness: 2px;
-  --text-color: #000;
+  --text-color: #111;
   --text-color-alt: #666;
-  --background-color: #fff;
+  --background-color: #eee;
   --background-color-alt: #ddd;
 
   --font-weight-normal: 500;
@@ -21,7 +21,7 @@
   font-feature-settings: "ss02";
   font-size: 16px;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #eee;
@@ -29,7 +29,7 @@
     --background-color: #111;
     --background-color-alt: #333;
   }
-}
+} */
 
 * {
   box-sizing: border-box;
