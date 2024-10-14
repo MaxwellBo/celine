@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
-  <link rel="stylesheet" href="styles/libertine.css" />
+  <link rel="stylesheet" href="index.css" />
 
   <meta name="description" content="A microlibrary for building reactive HTML notebooks">
   <meta name="author" content="Max Bo">
   <meta name="keywords" content="celine, celine, reactive, html, notebook, observable, runtime, api, library, microlibrary, esm, module, script, style, element, contenteditable, reevaluate, blur, cell, viewof, mutable, counter, fizzbuzz, name, greeting, ref, increment, sword">
   <meta name="date" content="2024-09-18">
   <meta name="license" content="MIT">
-  <meta name="version" content="v0.3.1">
+  <meta name="version" content="v0.1.7">
   
   <meta property="og:title" content="@celine/celine">
   <meta property="og:description" content="A microlibrary for building reactive HTML notebooks">
@@ -73,53 +73,61 @@
 </head>
 
 <body>
-<main>
-<h1 class="title">@celine/celine</h1>
-<p class="subtitle">A microlibrary for building reactive HTML notebooks</p>
-<p class="subtitle">celine ≈ <q>cell inline</q></p>
-<br />
 <table class="header">
   <tbody>
     <tr>
-      <th class="width-min">Author</th>
-      <td class="width-auto"><a href="https://maxbo.me">Max Bo</a></td>
-      <th>Updated</th>
-      <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><time style="white-space: pre;" id="updated">Sep 17 2024</time></td>
-    </tr>
-    <tr>
-      <th>GitHub</th>
-      <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a></td>
-      <th class="width-min">License</th>
-      <td>MIT</td>
-    </tr>
-    <tr>
-      <th>JSR</th>
-      <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
-      <th>Version</th>
-      <!-- these should be updated to the best of your ability -->
-      <td class="width-min" id="version">0.3.1</td>
-    </tr>
-    <script type="module">
-      fetch("https://npm.jsr.io/@jsr/celine__celine")
-        .then(d => d.json())
-        .then(resp => {
-          document.getElementById("version").textContent = resp["dist-tags"].latest;
-          const date = new Date(resp.time.modified);
-          const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getFullYear()}`;
-          document.getElementById("updated").textContent = formattedDate;
-        })
-    </script>
-  </tbody>
-</table>
-<br />
+    <th colspan="4" rowspan="2" class="width-auto">
+      <h1 class="title">@celine/celine</h1>
+      <span class="subtitle">A microlibrary for building reactive HTML notebooks</span>
+      <br />
+      <span class="subtitle"><i>celine ~~&gt; <q>cell inline</q></i></span>
+    </th>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <th class="width-min">Author</th>
+    <td class="width-auto"><a href="https://maxbo.me">Max Bo</a></td>
+    <th>Updated</th>
+    <!-- these should be updated to the best of your ability -->
+    <td class="width-min"><time style="white-space: pre;" id="updated">Sep 17 2024</time></td>
+  </tr>
+  <tr>
+    <th>GitHub</th>
+    <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a></td>
+    <th class="width-min">License</th>
+    <td>MIT</td>
+  </tr>
+  <tr>
+    <th>JSR</th>
+    <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
+    <th>Version</th>
+    <!-- these should be updated to the best of your ability -->
+    <td class="width-min" id="version">0.2.0</td>
+  </tr>
+  <tr>
+  </tr>
+</tbody></table>
+
+<script type="module">
+  fetch("https://npm.jsr.io/@jsr/celine__celine")
+    .then(d => d.json())
+    .then(resp => {
+      document.getElementById("version").textContent = resp["dist-tags"].latest;
+      const date = new Date(resp.time.modified);
+      const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getFullYear()}`;
+      document.getElementById("updated").textContent = formattedDate;
+    })
+</script>
+
+<main>
 <p>
   <i>@celine/celine</i> is the library I promised everyone would get released in my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I pondered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
 </p> 
 
 <p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for notebook construction.</p>
 
-<h2><a href="#installation" id="installation" class="self-link"></a>Installation</h2>
+<h2><a href="#installation" id="installation" style="text-decoration: none;">##</a> Installation</h2>
 
 <p>Add the following <code>style</code> and <code>script</code> elements to your HTML file. Customize to your liking.</p>
 
@@ -128,7 +136,7 @@
 @font-face {
   font-family: 'FontWithASyntaxHighlighter';
   src:
-    url('https://maxbo.me/celine/fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+    url('https://maxbo.me/celine/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
 }
 
 .echo {
@@ -138,8 +146,7 @@
   font-feature-settings: "colr", "calt";
   white-space: pre;
   color: #eee;
-  font-size: 0.9rem;
-  background-color: #282828;
+  background-color: #222;
 }
 
 .observablehq {
@@ -164,23 +171,23 @@
 <br />
 
 <script type="module" class="echo">
-import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.1';
+import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.2.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
 window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-window.library = celine.library; /* @observablehq/stdlib */
+window.library = celine.library;
 window.Inputs = Inputs;
 window.htl = htl;
 
 reevaluateOnBlur(document, /*class=*/'echo');
 </script>
 
-<h2><a href="#api" id="api" class="self-link"></a>API</h2>
+<h2><a href="#api" id="api" style="text-decoration: none;">##</a> API</h2>
 
 <p>All of the following <code>script</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
 
-<h3><a href="#cell" id="cell" class="self-link"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
+<h3><a href="#cell" id="cell" style="text-decoration: none;">###</a> <code>celine.cell(name, [inputs, ]definition)</code></h3>
 
 <p>The <code>cell</code> constructor declares a reactive cell that can depend on other cells.</p>
 
@@ -212,7 +219,7 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
-<h3><a href="#viewof" id="viewof" class="self-link"></a><code>celine.viewof(name, [inputs, ]definition)</code></h3>
+<h3><a href="#viewof" id="viewof" style="text-decoration: none;">###</a> <code>celine.viewof(name, [inputs, ]definition)</code></h3>
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
@@ -235,7 +242,7 @@ celine.cell("greeting", ["name"], (name) => {
 </script>
 
 
-<h3><a href="#silent" id="silent" class="self-link"></a><code>celine.silent(name, [inputs, ]definition)</code></h3>
+<h3><a href="#silent" id="silent" style="text-decoration: none;">###</a> <code>celine.silent(name, [inputs, ]definition)</code></h3>
 
 <p>The <code>silent</code> constructor declares a cell that doesn't render its value above its <code>script</code> container.</p>
 
@@ -246,7 +253,7 @@ celine.cell("greeting", ["name"], (name) => {
 </script>
 
 
-<h3><a href="#mutable" id="mutable" class="self-link"></a><code>celine.mutable(name, value)</code></h3>
+<h3><a href="#mutable" id="mutable" style="text-decoration: none;">###</a> <code>celine.mutable(name, value)</code></h3>
 
 The <code>mutable</code> constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
 
@@ -271,7 +278,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#tmg" id="tmg" class="self-link"></a>TeX, Markdown, Graphviz</h3>
+<h3><a href="#tmg" id="tmg" style="text-decoration: none;">###</a> TeX, Markdown, Graphviz</h3>
 
 <p>There are many useful utilities inside of the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
@@ -294,20 +301,25 @@ celine.cell("tex", async () => {
 </script>
 
 <script type="module" class="echo" id="markdown" contenteditable="true">
-celine.cell("markdown", async () => {
-  const elements =  [
-    { "symbol": "Co", "name": "Cobalt", "number": 27 },
-    { "symbol": "Cu", "name": "Copper", "number": 29 },
-    { "symbol": "Sn", "name": "Tin", "number": 50 },
-    { "symbol": "Pb", "name": "Lead", "number": 82 }
-  ];
-
+celine.cell("markdown", ["elements"], async (elements) => {
   const md = await celine.library.md();
   return md`
 | Name      | Symbol      | Atomic number |
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
 `;
+});
+</script>
+
+<br />
+<script type="module" class="echo" id="elements" contenteditable="true">
+celine.cell("elements", () => {
+  return [
+    { "symbol": "Co", "name": "Cobalt", "number": 27 },
+    { "symbol": "Cu", "name": "Copper", "number": 29 },
+    { "symbol": "Sn", "name": "Tin", "number": 50 },
+    { "symbol": "Pb", "name": "Lead", "number": 82 }
+  ];
 });
 </script>
 
@@ -323,7 +335,7 @@ digraph G {
 </script>
 
 
-<h3><a href="#plot" id="plot" class="self-link"></a>Observable Plot</h3>
+<h3><a href="#plot" id="plot" style="text-decoration: none;">###</a> Observable Plot</h3>
 
 <script type="module" class="echo" id="numbers" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
@@ -357,6 +369,10 @@ celine.cell("numbers", async () => {
            `                              |  |   |  |                     
                                           '--'   '--'                     
 </pre>
+
+
+CSS style adapted from <a href="https://owickstrom.github.io/the-monospace-web/"><cite>The Monospace Web</cite></a> by <a href="https://wickstrom.tech/">Oskar Wickström</a>.
+
 
 </main>
 </body>
