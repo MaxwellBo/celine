@@ -16,7 +16,7 @@
   <meta name="keywords" content="celine, celine, reactive, html, notebook, observable, runtime, api, library, microlibrary, esm, module, script, style, element, contenteditable, reevaluate, blur, cell, viewof, mutable, counter, fizzbuzz, name, greeting, ref, increment, sword">
   <meta name="date" content="2024-09-18">
   <meta name="license" content="MIT">
-  <meta name="version" content="v0.3.1">
+  <meta name="version" content="v0.3.2">
   
   <meta property="og:title" content="@celine/celine">
   <meta property="og:description" content="A microlibrary for building reactive HTML notebooks">
@@ -87,7 +87,7 @@
 <script type="module" class="echo">
 import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.2';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-import * as htl from 'https://esm.run/htl@0.3.1';
+import * as htl from 'https://esm.run/htl@0.3.2';
 
 window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
 window.library = celine.library; /* @observablehq/stdlib */
@@ -104,7 +104,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.1/celine/stylesheets/echo.css?raw&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.2/celine/stylesheets/echo.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
@@ -232,7 +232,7 @@ celine.cell("sword", ["ref"], (ref) => {
 
 <h3><a href="#tmg" id="tmg" class="self-link"></a>TeX, Markdown, Graphviz</h3>
 
-<p>There are many useful utilities inside of the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
+<p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
 <script type="module" class="echo" id="lib" contenteditable="true">
 celine.cell("lib", () => {
