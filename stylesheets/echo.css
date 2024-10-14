@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
+
+.echo {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: #282828;
+}

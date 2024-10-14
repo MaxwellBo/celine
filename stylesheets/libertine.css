@@ -1,0 +1,191 @@
+/* LinBiolinum Font Family */
+@font-face {
+  font-family: 'LinBiolinum';
+  src: url('../fonts/LinLibertine/LinBiolinum_R.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinBiolinum';
+  src: url('../fonts/LinLibertine/LinBiolinum_RB.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinBiolinum';
+  src: url('../fonts/LinLibertine/LinBiolinum_RI.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* LinLibertine Font Family */
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_R.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_RB.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_RI.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_RBI.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'LinLibertine Mono';
+  src: url('../fonts/LinLibertine/LinLibertine_M.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_RZ.otf') format('opentype');
+  font-weight: 600; /* semibold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: url('../fonts/LinLibertine/LinLibertine_RZI.otf') format('opentype');
+  font-weight: 600; /* semibold */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
+
+body {
+  font-family: 'LinLibertine', sans-serif;
+  max-width: 90ch;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  margin-top: 2ch;
+}
+
+a.self-link {
+  transition: opacity 0.2s;
+  opacity: 0.5;
+  text-decoration: none;
+  margin-right: 4px;
+}
+
+a.self-link:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+a.self-link::before {
+  content: "¶";
+}
+
+h2 > a.self-link::before, h3 > a.self-link::before, h4 > a.self-link::before,
+h5 > a.self-link::before, h6 > a.self-link::before {
+  content: "§";
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+p {
+  padding-top: 0.25ch;
+  padding-bottom: 0.25ch;
+}
+
+.subtitle {
+  font-style: italic;
+}
+
+code {
+  border: 1px solid #DDDDDDDD;
+  background-color: #EEEEEEEE;
+  padding: 1px;
+}
+
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
+
+.font-with-a-syntax-highlighter {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: #282828;
+}
+
+script, pre, style {
+  margin-bottom: 1ch;
+}
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
+}
