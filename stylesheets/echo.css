@@ -16,3 +16,8 @@
   border-radius: 1ch;
   padding: 1ch;
 }
+
+.echo[contenteditable]:hover {
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
