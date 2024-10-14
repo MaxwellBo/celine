@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'FontWithASyntaxHighlighter';
   src:
-    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
 }
 
 .echo {
@@ -13,4 +13,6 @@
   color: #eee;
   font-size: 0.9rem;
   background-color: #282828;
+  border-radius: 1ch;
+  padding: 1ch;
 }
