@@ -163,6 +163,10 @@ script, pre, style {
   margin-bottom: 1ch;
 }
 
+pre {
+  overflow: auto;
+}
+
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
