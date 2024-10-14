@@ -1,0 +1,15 @@
+script::before {
+  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+}
+
+script::after {
+  content: "<\/script>";
+}
+
+style::before {
+  content: "<style class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
+}
+
+style::after {
+  content: "<\/style>";
+}

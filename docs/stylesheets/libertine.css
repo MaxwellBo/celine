@@ -88,10 +88,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2ch;
 }
 
-script, style {
-  font-family: 'FontWithASyntaxHighlighter', monospace;
-}
-
 a.self-link {
   transition: opacity 0.2s;
   opacity: 0.5;
@@ -138,4 +134,58 @@ p {
 
 .subtitle {
   font-style: italic;
+}
+
+code {
+  border: 1px solid #DDDDDDDD;
+  background-color: #EEEEEEEE;
+  padding: 1px;
+}
+
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
+
+.font-with-a-syntax-highlighter {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: #282828;
+}
+
+script, pre, style {
+  margin-bottom: 1ch;
+}
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
 }
