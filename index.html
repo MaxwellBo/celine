@@ -16,7 +16,6 @@
   <meta name="keywords" content="celine, celine, reactive, html, notebook, observable, runtime, api, library, microlibrary, esm, module, script, style, element, contenteditable, reevaluate, blur, cell, viewof, mutable, counter, fizzbuzz, name, greeting, ref, increment, sword">
   <meta name="date" content="2024-09-18">
   <meta name="license" content="MIT">
-  <meta name="version" content="v0.3.2">
   
   <meta property="og:title" content="@celine/celine">
   <meta property="og:description" content="A microlibrary for building reactive HTML notebooks">
@@ -59,7 +58,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min" id="version">0.3.2</td>
+      <td class="width-min" id="version">0.3.3</td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -85,9 +84,9 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file:</p>
 
 <script type="module" class="echo">
-import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.2';
+import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.3';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-import * as htl from 'https://esm.run/htl@0.3.2';
+import * as htl from 'https://esm.run/htl@0.3.1';
 
 window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
 window.library = celine.library; /* @observablehq/stdlib */
@@ -104,7 +103,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.2/celine/stylesheets/echo.css?raw&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.3/celine/stylesheets/echo.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
@@ -113,7 +112,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.2/celine/stylesheets/observable.css?raw&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.3/celine/stylesheets/observable.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
@@ -122,7 +121,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.2/celine/stylesheets/echo.css?raw&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.3/celine/stylesheets/echo.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
@@ -130,7 +129,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.2/celine/stylesheets/reflect.css?raw&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.3/celine/stylesheets/reflect.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
@@ -298,7 +297,6 @@ celine.cell("numbers", async () => {
   return Plot.lineY(numbers).plot();
 });
 </script>
-
 
 <pre>
 
