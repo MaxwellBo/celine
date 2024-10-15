@@ -104,6 +104,20 @@ a.self-link::before {
   content: "¶";
 }
 
+a:hover {
+  text-underline-offset: 2px;
+}
+
+a:active {
+  background-color: yellow;
+  text-underline-offset: 3px;
+}
+
+a:target {
+  background-color: yellow;
+}
+
+
 h2 > a.self-link::before, h3 > a.self-link::before, h4 > a.self-link::before,
 h5 > a.self-link::before, h6 > a.self-link::before {
   content: "§";
