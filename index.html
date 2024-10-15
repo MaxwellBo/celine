@@ -76,11 +76,11 @@
   </tbody>
 </table>
 <br />
-<p>
-  <i>@celine/celine</i> is the library I promised everyone would get released in my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I pondered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
-</p> 
+<p><i>@celine/celine</i> wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for reactive notebook construction using <code>display: block</code>, <code>contenteditable</code> <code>&lt;script&gt;</code> elements.</p>
 
-<p>It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for notebook construction.</p>
+<p>
+  It's also a followup to my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I pondered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
+</p> 
 
 <h2><a href="#installation" id="installation" class="self-link"></a>Installation</h2>
 
@@ -138,7 +138,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <h2><a href="#api" id="api" class="self-link"></a>API</h2>
 
-<p>All of the following <code>&lt;script&gt;</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
+<p>All of the following <code>&lt;script&gt;</code>s are marked <code>contenteditable</code> and reevaluate on <abbr title="loss of focus">blur</abbr>.</p>
 
 <h3><a href="#cell" id="cell" class="self-link"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
 
@@ -318,6 +318,7 @@ celine.cell("chinook", async () => {
   <li><a href="https://observablehq.com/@observablehq/module-require-debugger">Module require debugger</a></li>
 </ul>
 
+<div style="text-align: center; margin-top: 4ch;">
 <pre style="max-width: 100%; overflow-x: auto;">
 
   _..._                                                                
@@ -334,6 +335,7 @@ celine.cell("chinook", async () => {
            `                              |  |   |  |                     
                                           '--'   '--'                     
 </pre>
+</div>
 
 </main>
 </body>
