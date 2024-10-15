@@ -138,7 +138,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <h2><a href="#api" id="api" class="self-link"></a>API</h2>
 
-<p>All of the following <code>script</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
+<p>All of the following <code>&lt;script&gt;</code>s are marked <code>contenteditable</code> and reevaluate on blur.</p>
 
 <h3><a href="#cell" id="cell" class="self-link"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
 
@@ -146,7 +146,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <p>The definition can return values of type <code>T</code>, <code>Promise&lt;T&gt;</code>, <code>Iterator&lt;T&gt;</code>, or <code>AsyncIterator&lt;T&gt;</code>.</p>
 
-<p>Ensure the <code>script</code> <code>id</code> is the <code>name</code> parameterized to the <code>cell</code> constructor.</p>
+<p>Ensure the <code>&lt;script&gt;</code>'s' <code>id</code> is the <code>name</code> parameterized to the <code>cell</code> constructor.</p>
 
 <script type="module" class="echo" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
@@ -178,7 +178,7 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 
 <p><p>It declares 2 reactive cells: the <code>name</code> cell and the <code>viewof name</code> cell - one for the value, and one for the DOM element itself.</p>
 
-<p>Ensure the <code>script</code> <code>id</code> is of the form <code>viewof name</code> to display the input.</p>
+<p>Ensure the <code>&lt;script&gt;</code>'s <code>id</code> is of the form <code>viewof name</code> to display the input.</p>
 
 <p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs">Syncronized Inputs</a> guide.</p>
 
@@ -197,7 +197,7 @@ celine.cell("greeting", ["name"], (name) => {
 
 <h3><a href="#silent" id="silent" class="self-link"></a><code>celine.silent(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>silent</code> constructor declares a cell that doesn't render its value above its <code>script</code> container.</p>
+<p>The <code>silent</code> constructor declares a cell that doesn't render its value above its <code>&lt;script&gt;</code> container.</p>
 
 <script type="module" class="echo" id="silent" contenteditable="true">
   celine.silent("silent", () => {
