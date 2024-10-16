@@ -118,7 +118,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
-  <li><a href="stylesheets/libertine.css">libertine.css</a> is a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in serif-based stylesheet</a>, vaguely imitating the look of <a href="https://typst.app/">Typst</a> papers. Consider <a href="https://latex.vercel.app/">LaTeX.css</a> also. <em>Optional.</em></li>
+  <li><a href="stylesheets/libertine.css">libertine.css</a> is a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in serif-based stylesheet</a>, vaguely imitating the look of <a href="https://typst.app/">Typst</a> papers. Consider <a href="https://latex.vercel.app/">LaTeX.css</a> also. More info <a href="#libertine">further down the page</a>. <em>Optional.</em></li>
   <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
@@ -305,6 +305,100 @@ celine.cell("chinook", async () => {
   });
 });
 </script>
+
+<h2><a href="#libertine" id="libertine" class="self-link"></a>libertine.css</h2>
+
+<p>celine ships a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface, more specifically, the <a href="https://github.com/alerque/libertinus">Libertinus</a> fork.</p>
+
+<p>Because it's the default font for <a href="https://typst.app/">Typst</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, I thought it would be an appropriate choice for this project.</p>
+
+<p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opeantype-Features.pdf</a> as a demo page.</p>
+
+<p>I have enabled <code>font-feature-settings: 'liga', 'tnum', 'zero' 'calt';</code> (ligatures, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric">tabular figures</a>, slashed zero, contextual alternatives) by default.</p>
+
+<blockquote>
+fi fl ffi ffl
+<br />
+1234567890
+<br />
+Quest, (staff)
+<br />
+H<sub>2</sub>O, E = mc<sup>2</sup>
+</blockquote>
+
+
+<p>It has 2 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">small caps</a> variants:</p>
+
+<table>
+  <tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-variant: small-caps;">Small caps</span>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-variant: all-small-caps;">All small caps</span>.
+    </td>
+  </tr>
+</table>
+
+<br />
+and a number of alternative typefaces:
+
+<blockquote style="font-family: 'Libertinus Sans', sans-serif;">
+  Libertinus Sans<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+</blockquote>
+
+
+<blockquote style="font-family: 'Libertinus Display', serif;">
+  Libertinus Display<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Mono', monospace;">
+  Libertinus Mono<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Initials', serif;">
+  Libertinus Initials<br />
+  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+  <i>ABCDEFGHIJKLMNOPQRSTUVWXYZ</i><br />
+  <b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b><br />
+  <i><b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b></i><br />
+</blockquote>
+
+
+<blockquote style="font-family: 'Libertinus Math', serif;">
+  Libertinus Math<br />
+  ∑ E = mc²<br />
+  ∫ₐᵇ f(x) dx<br />
+  ∑ₙ₌₁^∞ 1/n² = π²/6<br />
+  ∇·E = ρ/ε₀<br />
+</blockquote>
+
+
 
 
 <h2><a href="#resources" id="resources" class="self-link"></a>Resources</h2>

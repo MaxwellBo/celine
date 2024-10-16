@@ -1,74 +1,4 @@
-/* LinBiolinum Font Family */
-@font-face {
-  font-family: 'LinBiolinum';
-  src: url('../fonts/LinLibertine/LinBiolinum_R.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinBiolinum';
-  src: url('../fonts/LinLibertine/LinBiolinum_RB.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinBiolinum';
-  src: url('../fonts/LinLibertine/LinBiolinum_RI.otf') format('opentype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-/* LinLibertine Font Family */
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_R.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_RB.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_RI.otf') format('opentype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_RBI.otf') format('opentype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'LinLibertine Mono';
-  src: url('../fonts/LinLibertine/LinLibertine_M.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_RZ.otf') format('opentype');
-  font-weight: 600; /* semibold */
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'LinLibertine';
-  src: url('../fonts/LinLibertine/LinLibertine_RZI.otf') format('opentype');
-  font-weight: 600; /* semibold */
-  font-style: italic;
-}
+@import url('../fonts/Libertinus/documentation/libertinus.css');
 
 @font-face {
   font-family: 'FontWithASyntaxHighlighter';
@@ -76,11 +6,47 @@
     url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
 }
 
+.font-with-a-syntax-highlighter {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: #282828;
+}
+
 body {
-  font-family: 'LinLibertine', sans-serif;
+  font-family: 'Libertinus Serif', sans-serif;
+  font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
+
   max-width: 110ch;
   margin: 0 auto;
   padding: 16px;
+}
+
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background-color: #f9f9f9;
+}
+
+kbd {
+  font-family: 'Libertinus Keyboard', monospace;
+}
+
+aside, footer {
+  font-family: 'Libertinus Sans', sans-serif;
+}
+
+pre {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  overflow: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -156,29 +122,8 @@ code {
   padding: 1px;
 }
 
-@font-face {
-  font-family: 'FontWithASyntaxHighlighter';
-  src:
-    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
-}
-
-.font-with-a-syntax-highlighter {
-  display: block;
-  overflow: auto;
-  font-family: "FontWithASyntaxHighlighter", monospace;
-  font-feature-settings: "colr", "calt";
-  white-space: pre;
-  color: #eee;
-  font-size: 0.9rem;
-  background-color: #282828;
-}
-
 script, pre, style {
   margin-bottom: 1ch;
-}
-
-pre {
-  overflow: auto;
 }
 
 /*
