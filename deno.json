@@ -1,6 +1,6 @@
 {
   "name": "@celine/celine",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "exports": "./mod.ts",
   "compilerOptions": {
     "target": "esnext",
