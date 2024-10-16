@@ -18,7 +18,7 @@
 }
 
 body {
-  font-family: 'Libertinus Serif', sans-serif;
+  font-family: 'Libertinus Serif', 'Times New Roman', sans-serif;
   font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
 
   max-width: 110ch;
