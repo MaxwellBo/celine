@@ -46,10 +46,19 @@
     </tr>
     <tr>
       <th>GitHub</th>
-      <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a> + <a href="https://github.com/MaxwellBo/celine/issues">/issues</a></td> 
+      <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a><span id="stars"></span> + <a href="https://github.com/MaxwellBo/celine/issues">/issues</a> </td> 
       <th class="width-min">License</th>
       <td><a href="https://github.com/MaxwellBo/celine/blob/master/LICENSE">MIT</a></td>
     </tr>
+    <script type="module">
+      // ping the GitHub API for the number of stars
+      fetch("https://api.github.com/repos/MaxwellBo/celine")
+        .then(d => d.json())
+        .then(resp => {
+          const stars = resp.stargazers_count;
+          document.getElementById("stars").textContent = ` (⭐ ${stars})`;
+        })
+    </script>
     <tr>
       <th>JSR</th>
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
