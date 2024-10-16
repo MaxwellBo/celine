@@ -82,28 +82,28 @@ export class CelineModule {
   /**
    * Creates an Inspector for observing cell output.
    * @private
-   * @param name - The name/id of the script element to attach the observer to
+   * @param name - The name/id of the element to attach the observer to
    * @returns A new Inspector instance
-   * @throws Error if no script with the specified id is found
+   * @throws Error if no element with the specified id is found
    */
   private observer(name: string): Inspector {
     const div = this.document.createElement("div");
-    const currentScript = this.document.getElementById(name);
+    const elementContainer = this.document.getElementById(name);
 
-    if (!currentScript) {
-      throw new Error(`No script with id ${name} found`);
+    if (!elementContainer) {
+      throw new Error(`No element with id ${name} found`);
     }
 
-    currentScript.parentNode!.insertBefore(div, currentScript);
+    elementContainer.parentNode!.insertBefore(div, elementContainer);
     return new Inspector(div);
   }
 
   /**
-   * Declares a reactive cell that renders its value above its script container.
+   * Declares a reactive cell that renders its value above its element container.
    * The cell can depend on other cells and its definition can return values of type
    * T, Promise<T>, Iterator<T>, or AsyncIterator<T>.
    * 
-   * The script element's id must match the name parameter.
+   * The element's id must match the name parameter.
    * 
    * @example
    * ```typescript
@@ -136,13 +136,13 @@ export class CelineModule {
   }
 
   /**
-   * Declares a cell that doesn't render its value above its script container.
+   * Declares a cell that doesn't render a value above an element container.
    * Otherwise behaves the same as `cell()`.
    * 
    * @example
    * ```typescript
    * celine.silent("hidden", () => {
-   *   return "This string does NOT render above the script";
+   *   return "This string does NOT render above any element";
    * });
    * ```
    */
