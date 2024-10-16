@@ -14,8 +14,12 @@ kbd {
   font-family: 'Libertinus Keyboard', monospace;
 }
 
-aside, footer {
+aside, footer, small {
   font-family: 'Libertinus Sans', sans-serif;
+}
+
+abbr {
+  font-variant: small-caps;
 }
 
 blockquote {
