@@ -243,25 +243,43 @@ celine.cell("hue", async function* () {
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
-<p><p>It declares 2 reactive cells: the <code>name</code> cell and the <code>viewof name</code> cell - one for the value, and one for the DOM element itself.</p>
+<p><p>It declares 2 reactive cells: a cell called <code>name</code>, and a cell called <code>viewof ${name}</code> - one for the value, and one for the DOM element itself.</p>
 
-<p>To display the DOM element above a <code>&lt;script&gt;</code>, set <code>id="viewof name"</code> on the <code>&lt;script&gt;</code>.</p>
+<p>To display the DOM element above another element <code>&lt;script&gt;</code>, set <code>id="viewof ${name}"</code> on the element to which the input should be prepended.</p>
 
-<p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a> guide.</p>
+<p>Here, we want to display an input above the <code>&lt;script&gt;</code> element, so we set <code>id="viewof password"</code> on the <code>&lt;script&gt;</code>:</p>
 
-<script type="module" class="echo reflect" id="viewof name" contenteditable="true">
-celine.viewof("name", () => {
-  return Inputs.text({placeholder: "What's your name?"});
+<script type="module" class="echo reflect" id="viewof password" contenteditable="true">
+celine.viewof("password", () => {
+  return Inputs.text({label: "Password", placeholder: "hunter2" });
 });
 </script>
 
 <p>You still have to depend on the cell <code>name</code> to use the input's value:</p>
 
-<script type="module" class="echo reflect" id="greeting" contenteditable="true">
-celine.cell("greeting", ["name"], (name) => {
-  return htl.html`Hello, <b>${name}</b>!`;
+<script type="module" class="echo reflect" id="strength" contenteditable="true">
+celine.cell("strength", ["password"], (password) => {
+  const strength = password.length;
+
+  // please don't use this for real password strength checking
+  if (strength >= 12) {
+    return htl.html`<b style="color: green">Strong</b>`;
+  } else if (strength >= 10) {
+    return htl.html`<b style="color: lime">Fairly Strong</b>`;
+  } else if (strength >= 8) {
+    return htl.html`<b style="color: orange">Medium</b>`;
+  } else if (strength >= 6) {
+    return htl.html`<b style="color: gold">Weak</b>`;
+  } else if (strength >= 4) {
+    return htl.html`<b style="color: red">Very Weak</b>`;
+  } else {
+    return htl.html`<b style="color: darkred">Extremely Weak</b>`;
+  }
+
 });
 </script>
+
+<p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a> guide.</p>
 
 
 <h3><a href="#silent" id="silent"></a><code>celine.silentCell(name, [inputs, ]definition)</code></h3>
