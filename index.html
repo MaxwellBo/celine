@@ -253,20 +253,20 @@ celine.cell("greeting", ["name"], (name) => {
 </script>
 
 
-<h3><a href="#silent" id="silent"></a><code>celine.silent(name, [inputs, ]definition)</code></h3>
+<h3><a href="#silent" id="silent"></a><code>celine.silentCell(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>silent</code> constructor declares a cell that doesn't display its current value.</p>
+<p>The <code>silentCell</code> constructor declares a cell that doesn't try to display its current value anywhere.</p>
 
 <script type="module" class="echo reflect" id="silent" contenteditable="true">
-  celine.silent("silent", () => {
-    return "This string does NOT render anywhere, but can be used by other cells.";
-  });
+celine.silentCell("silent", () => {
+  return "This string does NOT render anywhere, but can be used by other cells.";
+});
 </script>
 
 
-<h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name, value)</code></h3>
+<h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name, value)</code> / <code>celine.silentMutable(name, value)</code></h3>
 
-The <code>mutable</code> constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.
+The <code>mutable</code> (and <code>silentMutable</code>) constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.
 
 <script type="module" class="echo reflect" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)

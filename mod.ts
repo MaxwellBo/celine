@@ -91,7 +91,14 @@ export class CelineModule {
     const elementContainer = this.document.getElementById(name);
 
     if (!elementContainer) {
-      throw new Error(`No element with id ${name} found`);
+      throw new Error(`No element with id ${name} found.
+
+        celine tried to find a DOM element with id="${name}" to attach an observer to because some cell with name "${name}" was declared,
+        but it couldn't find one.
+
+        Either:
+        1) Annotate an element with id="${name}" in your HTML file. This is where the cell's current value will be displayed.
+        2) Use celine.silent instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
     elementContainer.parentNode!.insertBefore(div, elementContainer);
@@ -141,14 +148,14 @@ export class CelineModule {
    * 
    * @example
    * ```typescript
-   * celine.silent("hidden", () => {
+   * celine.silentCell("hidden", () => {
    *   return "This string does NOT render above any element";
    * });
    * ```
    */
-  public silent(name: string, inputs: Inputs, definition: Definition): void;
-  public silent(name: string, definition: Definition): void;
-  public silent(
+  public silentCell(name: string, inputs: Inputs, definition: Definition): void;
+  public silentCell(name: string, definition: Definition): void;
+  public silentCell(
     name: string,
     inputsOrDefinition: Inputs | Definition,
     maybeDefinition?: Definition
@@ -187,8 +194,6 @@ export class CelineModule {
    * Special constructor designed to work with Observable Inputs. It declares two reactive cells:
    * - The "name" cell for the value
    * - The "viewof name" cell for the DOM element itself
-   * 
-   * The script element's id must be of the form "viewof name" to display the input.
    * 
    * For creating custom inputs, see the Observable "Synchronized Inputs" guide.
    * 
@@ -252,6 +257,17 @@ export class CelineModule {
     const m = Mutable(value);
     // @ts-ignore - some really scary stuff going on here
     this.cell(name, m);
+    // @ts-ignore - some really scary stuff going on here
+    return m;
+  }
+
+  /**
+   * Like {@link mutable}, but doesn't render the value above the element container.
+   */
+  public silentMutable<T>(name: string, value: T): typeof Mutable<T> {
+    const m = Mutable(value);
+    // @ts-ignore - some really scary stuff going on here
+    this.silentCell(name, m);
     // @ts-ignore - some really scary stuff going on here
     return m;
   }
