@@ -1,0 +1,64 @@
+@import url('https://unpkg.com/@observablehq/inspector@5.0.1/src/style.css');
+
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+}
+
+.echo {
+  display: block;
+  overflow: auto;
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-feature-settings: "colr", "calt";
+  white-space: pre;
+  color: #eee;
+  font-size: 0.9rem;
+  background-color: #282828;
+  border-radius: 1ch;
+  padding: 1ch;
+}
+
+.echo[contenteditable]:hover {
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.echo[contenteditable] {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.echo[contenteditable]:focus {
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+script.reflect::before {
+  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+}
+
+script.reflect::after {
+  content: "<\/script>";
+}
+
+style.reflect::before {
+  content: "<style class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+}
+
+style.reflect::after {
+  content: "<\/style>";
+}
+
+.observablehq {
+  margin-top: 1rem;
+}
+
+@keyframes blink {
+  67% {
+    opacity: 0;
+  }
+}
+.observablehq--running::before {
+  content: 'LOADING';
+  animation: blink 1s step-end infinite;
+}
