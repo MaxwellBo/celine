@@ -234,7 +234,7 @@ celine.cell("details", () => {
 
 <p><p>It declares 2 reactive cells: the <code>name</code> cell and the <code>viewof name</code> cell - one for the value, and one for the DOM element itself.</p>
 
-<p>Ensure the <code>&lt;script&gt;</code>'s <code>id</code> is of the form <code>viewof name</code> to display the input.</p>
+<p>To display the DOM element above a <code>&lt;script&gt;</code>, set <code>id="viewof name"</code> on the <code>&lt;script&gt;</code>.</p>
 
 <p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a> guide.</p>
 
@@ -243,6 +243,8 @@ celine.viewof("name", () => {
   return Inputs.text({placeholder: "What's your name?"});
 });
 </script>
+
+<p>You still have to depend on the cell <code>name</code> to use the input's value:</p>
 
 <script type="module" class="echo reflect" id="greeting" contenteditable="true">
 celine.cell("greeting", ["name"], (name) => {
@@ -253,18 +255,18 @@ celine.cell("greeting", ["name"], (name) => {
 
 <h3><a href="#silent" id="silent"></a><code>celine.silent(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>silent</code> constructor declares a cell that doesn't render its value above its <code>&lt;script&gt;</code> container.</p>
+<p>The <code>silent</code> constructor declares a cell that doesn't display its current value.</p>
 
 <script type="module" class="echo reflect" id="silent" contenteditable="true">
   celine.silent("silent", () => {
-    return "This string does NOT render above the script";
+    return "This string does NOT render anywhere, but can be used by other cells.";
   });
 </script>
 
 
 <h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name, value)</code></h3>
 
-The <code>mutable</code> constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
+The <code>mutable</code> constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.
 
 <script type="module" class="echo reflect" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
