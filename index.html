@@ -251,7 +251,7 @@ celine.cell("hue", async function* () {
 
 <script type="module" class="echo reflect" id="viewof password" contenteditable="true">
 celine.viewof("password", () => {
-  return Inputs.text({label: "Password", placeholder: "hunter2" });
+  return Inputs.text({ label: "Password", placeholder: "hunter2" });
 });
 </script>
 
@@ -259,23 +259,20 @@ celine.viewof("password", () => {
 
 <script type="module" class="echo reflect" id="strength" contenteditable="true">
 celine.cell("strength", ["password"], (password) => {
-  const strength = password.length;
-
   // please don't use this for real password strength checking
-  if (strength >= 12) {
+  if (password.length >= 12) {
     return htl.html`<b style="color: green">Strong</b>`;
-  } else if (strength >= 10) {
+  } else if (password.length >= 10) {
     return htl.html`<b style="color: lime">Fairly Strong</b>`;
-  } else if (strength >= 8) {
+  } else if (password.length >= 8) {
     return htl.html`<b style="color: orange">Medium</b>`;
-  } else if (strength >= 6) {
+  } else if (password.length >= 6) {
     return htl.html`<b style="color: gold">Weak</b>`;
-  } else if (strength >= 4) {
+  } else if (password.length >= 4) {
     return htl.html`<b style="color: red">Very Weak</b>`;
   } else {
     return htl.html`<b style="color: darkred">Extremely Weak</b>`;
   }
-
 });
 </script>
 
