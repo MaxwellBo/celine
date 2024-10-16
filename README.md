@@ -1,6 +1,6 @@
 # celine
 
-A microlibrary for building reactive HTML notebooks.
+A library for building reactive HTML notebooks with `contenteditable` &lt;script&gt;s.
 
 Docs, demos, examples: https://maxbo.me/celine/
 
