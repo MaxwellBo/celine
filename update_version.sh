@@ -41,12 +41,12 @@ changes_index=$(replace_version "index.html")
 # Convert counted changes into integers and calculate total
 total_changes=$((changes_deno + changes_index))
 
-# Check if the total number of changes is exactly 7
-if [ "$total_changes" -ne 7 ]; then
+# Check if the total number of changes is exactly 5
+if [ "$total_changes" -ne 5 ]; then
     echo "#########################################"
     echo "#                                       #"
     echo "# VERY LOUD WARNING:                    #"
-    echo "# Expected 7 lines to be updated, but   #"
+    echo "# Expected 5 lines to be updated, but   #"
     echo "# found $total_changes lines changed.   #"
     echo "# Please verify your files.             #"
     echo "#                                       #"
