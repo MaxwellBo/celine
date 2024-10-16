@@ -9,9 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🦠</text></svg>" />
 
   <link rel="stylesheet" href="stylesheets/libertine.css" />
-  <link rel="stylesheet" href="stylesheets/echo.css" />
-  <link rel="stylesheet" href="stylesheets/reflect.css" />
-  <link rel="stylesheet" href="stylesheets/observable.css" />
+  <link rel="stylesheet" href="stylesheets/cell.css" />
 
   <meta name="description" content="A microlibrary for building reactive HTML notebooks">
   <meta name="author" content="Max Bo">
@@ -79,14 +77,14 @@
 <p><i>@celine/celine</i> wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for reactive notebook construction using <code>display: block</code>, <code>contenteditable</code> <code>&lt;script&gt;</code> elements.</p>
 
 <p>
-  It's also a followup to my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I pondered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
+  It's also a followup to my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I considered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
 </p> 
 
 <h2><a href="#installation" id="installation" class="self-link"></a>Installation</h2>
 
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file:</p>
 
-<script type="module" class="echo">
+<script type="module" class="echo reflect" id="installation">
 import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.8';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
@@ -99,44 +97,57 @@ window.htl = htl;
 reevaluateOnBlur(document, /*class=*/'echo');
 </script>
 
-<p>Pick and choose some or all of these versioned stylesheets to add to your <code>&lt;head&gt;</code> block:</p>
+<style>
+script#installation::before {
+  content: "<script type=\"module\">";
+  display: block;
+}
+</style>
 
-<ul>
-  <li><a href="stylesheets/echo.css">echo.css</a>'s <code>.echo</code> class can be used on <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements to display them inline, with a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/">font with built-in syntax highlighting</a>. <em>Recommended.</em></li>
-  <pre class="echo" style="margin-bottom: 1ch;">
+<p>Link <a href="stylesheets/cell.css">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
   href=&quot;https://esm.sh/jsr/@celine/celine@0.3.8/stylesheets/echo.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
 
-  <li><a href="stylesheets/observable.css">observable.css</a> adds styling to the <a href="https://github.com/observablehq/inspector">Observable standard inspector</a>. <em>Recommended.</em></li>
-  <pre class="echo" style="margin-bottom: 1ch;">
-&lt;link 
-  rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.8/stylesheets/observable.css?raw&quot; 
-  crossorigin=&quot;anonymous&quot; /&gt;
-</pre>
+<p>
+You might also want to include a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>. celine ships with <a href="stylesheets/libertine.css">libertine.css</a>, vaguely imitating the look of <a href="https://typst.app/">Typst</a> papers.  More info <a href="#libertine.css">further down the page ↓</a>.
+</p>
 
-  <li><a href="stylesheets/libertine.css">libertine.css</a> is a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in serif-based stylesheet</a>, vaguely imitating the look of <a href="https://typst.app/">Typst</a> papers. Consider <a href="https://latex.vercel.app/">LaTeX.css</a> also. More info <a href="#libertine.css">further down the page</a>. <em>Optional.</em></li>
-  <pre class="echo" style="margin-bottom: 1ch;">
+<pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
   href=&quot;https://esm.sh/jsr/@celine/celine@0.3.8/stylesheets/libertine.css?raw&quot; 
   crossorigin=&quot;anonymous&quot; /&gt;
 </pre>
-
-  <li><a href="stylesheets/reflect.css">reflect.css</a>'s forces <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> to display their opening and closing tags, <code>type</code>, <code>id</code>, and <code>contenteditable</code> attributes. <em>Optional.</em></li>
-  <pre class="echo" style="margin-bottom: 1ch;">
-&lt;link 
-  rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@0.3.8/stylesheets/reflect.css?raw&quot; 
-  crossorigin=&quot;anonymous&quot; /&gt;
-</pre>
-</ul>
+Consider <a href="https://latex.vercel.app/"><cite>LaTeX.css</cite></a> also.
 
 
 <h2><a href="#api" id="api" class="self-link"></a>API</h2>
+
+<p>The following <code>&lt;styles&gt;</code>s are marked <code>contenteditable</code> and reevaluate on edit.</p>
+
+<h3><a href="#.echo" id=".echo" class="self-link"></a><code>.echo</code></h3>
+
+<p>The <code>.echo</code> class can display <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements inline, with a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/"><cite>font with built-in syntax highlighting</cite></a>.</p>
+
+<style class="echo" id="echo-style" contenteditable="true">#echo-style {
+  border: 3px solid fuchsia;
+}
+</style>
+
+<h3><a href="#.reflect" id=".reflect" class="self-link"></a><code>.reflect</code></h3>
+
+<p>The <code>.reflect</code> class forces <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements to display their opening and closing tags, <code>type</code>, <code>class</code>, <code>id</code>, and <code>contenteditable</code> attributes, (a little trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html"><cite>This page is a truly naked, brutalist html quine</cite></a>).</p>
+
+<style class="echo reflect" id="reflect-style" contenteditable="true">
+#reflect-style {
+  border: 3px solid lime;
+}
+</style>
 
 <p>All of the following <code>&lt;script&gt;</code>s are marked <code>contenteditable</code> and reevaluate on <abbr title="loss of focus">blur</abbr>.</p>
 
@@ -148,7 +159,7 @@ reevaluateOnBlur(document, /*class=*/'echo');
 
 <p>Ensure the <code>&lt;script&gt;</code>'s' <code>id</code> is the <code>name</code> parameterized to the <code>cell</code> constructor.</p>
 
-<script type="module" class="echo" id="counter" contenteditable="true">
+<script type="module" class="echo reflect" id="counter" contenteditable="true">
 celine.cell("counter", async function* () {
   let i = 0;
   while (true) {
@@ -158,7 +169,7 @@ celine.cell("counter", async function* () {
 });
 </script>
 
-<script type="module" class="echo" id="fizzbuzz" contenteditable="true">
+<script type="module" class="echo reflect" id="fizzbuzz" contenteditable="true">
 celine.cell("fizzbuzz", ["counter"], (counter) => {
   if (counter % 3 === 0 && counter % 5 === 0) {
     return htl.html`<b style="color: purple">FizzBuzz</b>`;
@@ -174,21 +185,21 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 
 <h3><a href="#viewof" id="viewof" class="self-link"></a><code>celine.viewof(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
+<p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs"><cite>Observable Inputs</cite></a>.</p>
 
 <p><p>It declares 2 reactive cells: the <code>name</code> cell and the <code>viewof name</code> cell - one for the value, and one for the DOM element itself.</p>
 
 <p>Ensure the <code>&lt;script&gt;</code>'s <code>id</code> is of the form <code>viewof name</code> to display the input.</p>
 
-<p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs">Synchronized Inputs</a> guide.</p>
+<p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a> guide.</p>
 
-<script type="module" class="echo" id="viewof name" contenteditable="true">
+<script type="module" class="echo reflect" id="viewof name" contenteditable="true">
 celine.viewof("name", () => {
   return Inputs.text({placeholder: "What's your name?"});
 });
 </script>
 
-<script type="module" class="echo" id="greeting" contenteditable="true">
+<script type="module" class="echo reflect" id="greeting" contenteditable="true">
 celine.cell("greeting", ["name"], (name) => {
   return htl.html`Hello, <b>${name}</b>!`;
 });
@@ -199,7 +210,7 @@ celine.cell("greeting", ["name"], (name) => {
 
 <p>The <code>silent</code> constructor declares a cell that doesn't render its value above its <code>&lt;script&gt;</code> container.</p>
 
-<script type="module" class="echo" id="silent" contenteditable="true">
+<script type="module" class="echo reflect" id="silent" contenteditable="true">
   celine.silent("silent", () => {
     return "This string does NOT render above the script";
   });
@@ -210,12 +221,12 @@ celine.cell("greeting", ["name"], (name) => {
 
 The <code>mutable</code> constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propogate to cells that depend upon it.
 
-<script type="module" class="echo" id="ref" contenteditable="true">
+<script type="module" class="echo reflect" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
 </script>
 
 
-<script type="module" class="echo" id="viewof increment" contenteditable="true">
+<script type="module" class="echo reflect" id="viewof increment" contenteditable="true">
 celine.viewof("increment", () => {
   const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
@@ -224,7 +235,7 @@ celine.viewof("increment", () => {
 });
 </script>
 
-<script type="module" class="echo" id="sword" contenteditable="true">
+<script type="module" class="echo reflect" id="sword" contenteditable="true">
 celine.cell("sword", ["ref"], (ref) => {
   return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
 });
@@ -235,14 +246,14 @@ celine.cell("sword", ["ref"], (ref) => {
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
-<script type="module" class="echo" id="lib" contenteditable="true">
+<script type="module" class="echo reflect" id="lib" contenteditable="true">
 celine.cell("lib", () => {
   return celine.library;
 });
 </script>
 
 
-<script type="module" class="echo" id="tex" contenteditable="true">
+<script type="module" class="echo reflect" id="tex" contenteditable="true">
 celine.cell("tex", async () => {
   const tex = await celine.library.tex()
   return tex`
@@ -253,7 +264,7 @@ celine.cell("tex", async () => {
 });
 </script>
 
-<script type="module" class="echo" id="markdown" contenteditable="true">
+<script type="module" class="echo reflect" id="markdown" contenteditable="true">
 celine.cell("markdown", async () => {
   const elements =  [
     { "symbol": "Co", "name": "Cobalt", "number": 27 },
@@ -271,7 +282,7 @@ celine.cell("markdown", async () => {
 });
 </script>
 
-<script type="module" class="echo" id="dot" contenteditable="true">
+<script type="module" class="echo reflect" id="dot" contenteditable="true">
 celine.cell("dot", async () => {
   const dot = await celine.library.dot();
   return dot`
@@ -285,7 +296,7 @@ digraph G {
 
 <h3><a href="#plot" id="plot" class="self-link"></a>Observable Plot + SQLite</h3>
 
-<script type="module" class="echo" id="chinook" contenteditable="true">
+<script type="module" class="echo reflect" id="chinook" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
 celine.cell("chinook", async () => {
@@ -312,7 +323,7 @@ celine.cell("chinook", async () => {
 
 <p>Because it's the default font for <a href="https://typst.app/">Typst</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, I thought it would be an appropriate choice for this project.</p>
 
-<p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opeantype-Features.pdf</a> as a demo page.</p>
+<p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opentype-Features.pdf</a> as a demo page.</p>
 
 <p>I have enabled <code>font-feature-settings: 'liga', 'tnum', 'zero' 'calt';</code> (ligatures, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric">tabular figures</a>, slashed zero, contextual alternatives) by default.</p>
 
@@ -424,18 +435,14 @@ and a number of typefaces:
 </blockquote>
 
 
-
-
-
-
 <h2><a href="#resources" id="resources" class="self-link"></a>Resources</h2>
 
 <ul>
   <li><a href="https://github.com/observablehq/runtime">Observable Runtime</a></li>
   <li><a href="https://github.com/observablehq/inputs">Observable Inputs</a></li>
   <li><a href="https://github.com/observablehq/stdlib">Observable standard library</a></li>
-  <li><a href="https://observablehq.com/@observablehq/how-observable-runs">How Observable Runs</a></li>
-  <li><a href="https://observablehq.com/@observablehq/synchronized-inputs">Synchronized Inputs</a></li>
+  <li><a href="https://observablehq.com/@observablehq/how-observable-runs"><cite>How Observable Runs</cite></a></li>
+  <li><a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a></li>
   <li><a href="https://observablehq.com/@observablehq/module-require-debugger">Module require debugger</a></li>
 </ul>
 
