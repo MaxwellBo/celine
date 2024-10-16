@@ -1,22 +1,5 @@
 @import url('../fonts/Libertinus/documentation/libertinus.css');
 
-@font-face {
-  font-family: 'FontWithASyntaxHighlighter';
-  src:
-    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
-}
-
-.font-with-a-syntax-highlighter {
-  display: block;
-  overflow: auto;
-  font-family: "FontWithASyntaxHighlighter", monospace;
-  font-feature-settings: "colr", "calt";
-  white-space: pre;
-  color: #eee;
-  font-size: 0.9rem;
-  background-color: #282828;
-}
-
 body {
   font-family: 'Libertinus Serif', 'Times New Roman', sans-serif;
   font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
@@ -54,20 +37,20 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2ch;
 }
 
-a.self-link {
+h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
   transition: opacity 0.2s;
   opacity: 0.5;
   text-decoration: none;
   margin-right: 4px;
 }
 
-a.self-link:hover {
+h1 > a[href^="#"]:hover, h2 > a[href^="#"]:hover, h3 > a[href^="#"]:hover, h4 > a[href^="#"]:hover, h5 > a[href^="#"]:hover, h6 > a[href^="#"]:hover {
   opacity: 1;
   text-decoration: none;
 }
 
-a.self-link::before {
-  content: "¶";
+h1 > a[href^="#"]::before, h2 > a[href^="#"]::before, h3 > a[href^="#"]::before, h4 > a[href^="#"]::before, h5 > a[href^="#"]::before, h6 > a[href^="#"]::before {
+  content: "§";
 }
 
 a:hover {
@@ -81,12 +64,6 @@ a:active {
 
 a:target {
   background-color: yellow;
-}
-
-
-h2 > a.self-link::before, h3 > a.self-link::before, h4 > a.self-link::before,
-h5 > a.self-link::before, h6 > a.self-link::before {
-  content: "§";
 }
 
 table {
