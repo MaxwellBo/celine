@@ -8,6 +8,8 @@ JSR: https://jsr.io/@celine/celine
 
 API docs: https://jsr.io/@celine/celine/doc
 
+![Open Graph Image](https://maxbo.me/celine/og.png)
+
 
 ```
 
