@@ -2,7 +2,7 @@
 
 A microlibrary for building reactive HTML notebooks.
 
-Docs: https://maxbo.me/celine/
+Docs, demos, examples: https://maxbo.me/celine/
 
 JSR: https://jsr.io/@celine/celine
 
