@@ -204,18 +204,27 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
-<p><code>&lt;script&gt;</code>s can be hidden inside <code>&lt;details&gt;</code>s elements:</p>
+<p>A cell's <code>&lt;script&gt;</code>s can be hidden inside a <code>&lt;details&gt;</code>s element:</p>
 
 <details id="details">
   <summary>Show code</summary>
 <script type="module" class="echo reflect" contenteditable="true">
-celine.cell("details", () => {
-  return "Hello from inside the <details> element";
+celine.cell("details", async function* () {
+  let hue = 0;
+  while (true) {
+    await library.Promises.delay(100);
+    yield htl.html`<span style="color: hsl(${hue}, 100%, 40%);">
+      Hello from inside the &lt;details&gt; element
+    </span>`;
+    hue = (hue + 10) % 360;
+  }
 });
 </script>
 </details>
 
-<p>To display the cell's value above the <code>&lt;details&gt;</code> element instead of the <code>&lt;script&gt;</code>, we add <code>id="details"</code> to the <code>&lt;details&gt;</code> element instead:</p>
+<br />
+
+<p>by adding <code>id="details"</code> to the <code>&lt;details&gt;</code> element instead:</p>
 
 <pre class="echo">
 &lt;details id=&quot;details&quot;&gt;
