@@ -336,7 +336,6 @@ Quest, (staff)
 H<sub>2</sub>O, E = mc<sup>2</sup>
 </blockquote>
 
-
 <p>It has 2 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">small caps</a> variants:</p>
 
 <table>
@@ -432,6 +431,17 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   ZXCVBNM,./<br />
   </i>
 </blockquote>
+
+<p><code>&lt;script&gt;</code> can be hidden inside <code>&lt;details&gt;</code>s elements:</p>
+<details id="details">
+  <summary>Show code</summary>
+  <script type="module">
+    celine.cell("details", () => {
+      return htl.html`Hello from inside the <details> element!`;
+    });
+  </script>
+</details>
+
 
 <h2><a href="#pairings" id="pairings"></a>Pairings</h2>
 <p>Some libraries that pair well with <cite>@celine/celine</cite> are:</p>
