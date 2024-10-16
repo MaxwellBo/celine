@@ -1,5 +1,6 @@
 @import url('../fonts/Libertinus/documentation/libertinus.css');
 
+
 body {
   font-family: 'Libertinus Serif', 'Times New Roman', sans-serif;
   font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
@@ -9,19 +10,19 @@ body {
   padding: 16px;
 }
 
-blockquote {
-  border-left: 4px solid #ccc;
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  background-color: #f9f9f9;
-}
-
 kbd {
   font-family: 'Libertinus Keyboard', monospace;
 }
 
 aside, footer {
   font-family: 'Libertinus Sans', sans-serif;
+}
+
+blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background-color: #f9f9f9;
 }
 
 pre {
@@ -35,6 +36,7 @@ pre {
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin-top: 2ch;
+  margin-bottom: 1ch;
 }
 
 h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
@@ -87,6 +89,16 @@ th {
 p {
   padding-top: 0.25ch;
   padding-bottom: 0.25ch;
+}
+
+/* if p is followed by an script.echo or style.echo, add a little space above the script */
+p + script.echo, p + style.echo {
+  margin-top: 0.5ch;
+}
+
+/* if an div.observablehq is followed by an script.echo, add a little space above the script */
+div.observablehq + script.echo {
+  margin-top: 0.5ch;
 }
 
 .subtitle {
