@@ -120,6 +120,29 @@ You may want to include a <a href="https://dohliam.github.io/dropin-minimal-css/
 </pre>
 Consider <a href="https://latex.vercel.app/"><cite>LaTeX.css</cite></a> also.
 
+<h2><a href="#demo" id="demo"></a>Demo: Observable Plot + SQLite</h2>
+
+<script type="module" class="echo reflect" id="chinook" contenteditable="true">
+import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
+
+celine.cell("chinook", async () => {
+  const url = "https://maxbo.me/chinook.db";
+  const db = await library.SQLiteDatabaseClient().open(url);
+  const tracks = await db.query("SELECT * FROM tracks WHERE Milliseconds < 1000000");
+
+  return Plot.plot({
+    title: htl.html`<h3>Track length distribution</h3>`,
+    marks: [
+      Plot.rectY(
+        tracks,
+        Plot.binX({ y: "count" }, { x: "Milliseconds", tip: true })
+      ),
+      Plot.ruleY([0])
+    ]
+  });
+});
+</script>
+
 
 <h2><a href="#api" id="api"></a>API</h2>
 
@@ -291,28 +314,7 @@ digraph G {
 </script>
 
 
-<h3><a href="#plot" id="plot"></a>Observable Plot + SQLite</h3>
 
-<script type="module" class="echo reflect" id="chinook" contenteditable="true">
-import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
-
-celine.cell("chinook", async () => {
-  const url = "https://maxbo.me/chinook.db";
-  const db = await library.SQLiteDatabaseClient().open(url);
-  const tracks = await db.query("SELECT * FROM tracks WHERE Milliseconds < 1000000");
-
-  return Plot.plot({
-    title: htl.html`<h4>Track length distribution</h4>`,
-    marks: [
-      Plot.rectY(
-        tracks,
-        Plot.binX({ y: "count" }, { x: "Milliseconds", tip: true })
-      ),
-      Plot.ruleY([0])
-    ]
-  });
-});
-</script>
 
 <h2><a href="#libertine.css" id="libertine.css"></a>libertine.css</h2>
 
