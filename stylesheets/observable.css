@@ -13,7 +13,3 @@
   content: 'LOADING';
   animation: blink 1s step-end infinite;
 }
-
-.observablehq--error {
-  color: #d00;
-}
