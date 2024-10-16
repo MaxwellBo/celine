@@ -371,7 +371,7 @@ digraph G {
 
 <h2><a href="#libertine.css" id="libertine.css"></a>libertine.css</h2>
 
-<p><cite>@celine/celine</cite> ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically the <a href="https://github.com/alerque/libertinus">Libertinus</a> fork).</p>
+<p><cite>@celine/celine</cite> ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
 
 <p>Because it's the default font for <a href="https://typst.app/">Typst</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, I thought it would be an appropriate choice.</p>
 
@@ -389,34 +389,7 @@ Quest, (staff)
 H<sub>2</sub>O, E = mc<sup>2</sup>
 </blockquote>
 
-<p>It has 2 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">small caps</a> variants:</p>
-
-<table>
-  <tr>
-  <tr>
-    <td>
-      <code>
-        &lt;span style=&quot;font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
-      </code>
-    </td>
-    <td>
-      <span style="font-variant: small-caps;">Small caps</span>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        &lt;span style=&quot;font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
-      </code>
-    </td>
-    <td>
-      <span style="font-variant: all-small-caps;">All small caps</span>.
-    </td>
-  </tr>
-</table>
-
-<br />
-<p>and a number of typefaces:</p>
+<p><a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> makes a number of faces available:</p>
 
 <blockquote style="font-family: 'Libertinus Serif', serif;">
   Libertinus Serif<br />
@@ -484,6 +457,52 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   ZXCVBNM,./<br />
   </i>
 </blockquote>
+
+<p><a style="font-variant: small-caps" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">Small caps</a> are available on Libertinus Serif and <span style="font-family: 'Libertinus Sans', sans-serif;">Libertinus Sans</span>:</p>
+
+<table>
+  <tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-variant: small-caps;">Small caps</span>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-variant: all-small-caps;">All small caps</span>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-family: 'Libertinus Sans'; font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-family: 'Libertinus Sans'; font-variant: small-caps;">Small caps</span>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>
+        &lt;span style=&quot;font-family: 'Libertinus Sans'; font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
+      </code>
+    </td>
+    <td>
+      <span style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">All small caps</span>.
+    </td>
+  </tr>
+</table>
 
 <h2><a href="#pairings" id="pairings"></a>Pairings</h2>
 <p>Some libraries that pair well with <cite>@celine/celine</cite> are:</p>
