@@ -27,9 +27,6 @@
   <meta name="twitter:creator" content="@_max_bo_">
   <meta name="twitter:title" content="@celine/celine">
   <meta name="twitter:description" content="A microlibrary for building reactive HTML notebooks">
-
-  <style>
-  </style>
 </head>
 
 <body>
@@ -82,7 +79,7 @@
 
 <h2><a href="#installation" id="installation" class="self-link"></a>Installation</h2>
 
-<p>Add the following <code>&lt;script&gt;</code> element to your HTML file:</p>
+<p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code></p> block:
 
 <script type="module" class="echo reflect" id="installation">
 import { CelineModule, reevaluateOnBlur } from 'https://esm.sh/jsr/@celine/celine@0.3.9';
@@ -114,7 +111,7 @@ script#installation::before {
 </pre>
 
 <p>
-You might also want to include a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>. celine ships with <a href="stylesheets/libertine.css">libertine.css</a>, vaguely imitating the look of <a href="https://typst.app/">Typst</a> papers.  More info <a href="#libertine.css">further down the page ↓</a>.
+You may want to include a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>. celine ships with <a href="stylesheets/libertine.css">libertine.css</a>. More info is available <a href="#libertine.css">further down the page ↓</a>.
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
@@ -319,7 +316,7 @@ celine.cell("chinook", async () => {
 
 <h2><a href="#libertine.css" id="libertine.css" class="self-link"></a>libertine.css</h2>
 
-<p>celine ships a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface, more specifically, the <a href="https://github.com/alerque/libertinus">Libertinus</a> fork.</p>
+<p>celine ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface, more specifically, the <a href="https://github.com/alerque/libertinus">Libertinus</a> fork.</p>
 
 <p>Because it's the default font for <a href="https://typst.app/">Typst</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, I thought it would be an appropriate choice for this project.</p>
 
