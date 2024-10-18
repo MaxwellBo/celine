@@ -393,6 +393,20 @@ graph TD;
 });
 </script>
 
+<script type="module" class="echo reflect" id="leaflet" contenteditable="true">
+celine.cell("leaflet", async function* () {
+  const L = await celine.library.L();
+  const container = htl.html`<div id="map" style="height: 300px;"></div>`;
+  yield container;
+
+  const map = L.map(container).setView([-33.8688, 151.2093], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+});
+</script>
+
 
 <h2><a href="#libertine.css" id="libertine.css"></a>libertine.css</h2>
 
