@@ -330,7 +330,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#tmg" id="tmg"></a>TeX, Markdown, Graphviz</h3>
+<h3><a href="#tmg" id="tmg"></a>TeX, Markdown, Graphviz, Mermaid</h3>
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
 
@@ -339,7 +339,6 @@ celine.cell("lib", () => {
   return celine.library;
 });
 </script>
-
 
 <script type="module" class="echo reflect" id="tex" contenteditable="true">
 celine.cell("tex", async () => {
@@ -381,7 +380,18 @@ digraph G {
 });
 </script>
 
-
+<script type="module" class="echo reflect" id="mermaid" contenteditable="true">
+celine.cell("mermaid", async () => {
+  const mermaid = await celine.library.mermaid();
+  return mermaid`
+graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
+`;
+});
+</script>
 
 
 <h2><a href="#libertine.css" id="libertine.css"></a>libertine.css</h2>
