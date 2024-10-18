@@ -34,7 +34,7 @@
 }
 
 script.reflect::before {
-  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+  content: "<script id=\"" attr(id) "\" type=\"" attr(type) "\" class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 
 script.reflect::after {
@@ -42,7 +42,7 @@ script.reflect::after {
 }
 
 style.reflect::before {
-  content: "<style class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+  content: "<style id=\"" attr(id) "\" class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 
 style.reflect::after {
