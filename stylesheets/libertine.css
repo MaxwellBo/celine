@@ -40,7 +40,7 @@ pre {
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin-top: 2ch;
-  margin-bottom: 1ch;
+  margin-bottom: 0.5ch;
 }
 
 h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
