@@ -190,7 +190,7 @@ celine.cell("chinook", async () => {
 
 <h3><a href="#cell" id="cell"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>cell</code> constructor declares a reactive cell called <code>name</code>.
+<p>The <code>cell</code> constructor declares a reactive cell called <code>name</code>.</p>
 
 <p>The <code>definition</code> lambda can return values of type <code>T</code>, <code>Promise&lt;T&gt;</code>, <code>Iterator&lt;T&gt;</code>, or <code>AsyncIterator&lt;T&gt;</code>.</p>
 
@@ -224,8 +224,6 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 </script>
 
 <p>A <code>&lt;script&gt;</code> declaring a cell can be hidden inside a <code>&lt;details&gt;</code>s element.</p>
-
-</p>
 
 <details id="hue">
   <summary>Show code</summary>
@@ -311,7 +309,7 @@ celine.silentCell("silent", () => {
 
 <h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name, value)</code> / <code>celine.silentMutable(name, value)</code></h3>
 
-The <code>mutable</code> (and <code>silentMutable</code>) constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.
+<p>The <code>mutable</code> (and <code>silentMutable</code>) constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.</p>
 
 <script type="module" class="echo reflect" id="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
@@ -488,17 +486,13 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 
 <blockquote style="font-family: 'Libertinus Keyboard', monospace;">
   Libertinus Keyboard<br />
-  `1234567890-=<br/>
-  QWERTYUIOP[]\<br />
-  ASDFGHJKL;'<br />
-  ZXCVBNM,./<br />
-
-  <i>
-  `1234567890-=<br/>
-  QWERTYUIOP[]\<br />
-  ASDFGHJKL;'<br />
-  ZXCVBNM,./<br />
-  </i>
+  <br />
+  Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Del<br/>
+  `1234567890-= Back<br/>
+  Tab QWERTYUIOP[]\<br />
+  Capslock ASDFGHJKL;' Enter<br />
+  Shift ZXCVBNM,./ Shift<br />
+  Ctrl Windows Alt Space Alt Fn ← ↑ ↓ →<br />
 </blockquote>
 
 <p><a style="font-variant: small-caps" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">Small caps</a> are available on Libertinus Serif and <span style="font-family: 'Libertinus Sans', sans-serif;">Libertinus Sans</span>:</p>
@@ -578,6 +572,22 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 &lt;/references-list&gt;</pre>
   </li>
 </ul>
+
+
+<h2><a href="#changelog" id="changelog"></a>Changelog</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Changes</th>
+    </tr>
+    <tr>
+      <td><a href="https://jsr.io/@celine/celine@0.4.4">0.4.4</a></td>
+      <td>Stylistic tweaks to <code>libertine.css</code></td>
+    </tr>
+  </thead>
+</table>
 
 
 <h2><a href="#resources" id="resources"></a>Resources</h2>

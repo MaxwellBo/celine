@@ -43,6 +43,14 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5ch;
 }
 
+h1 {
+  border-bottom: 1px solid black;
+}
+
+h2 {
+  border-bottom: 1px dotted #ccc;
+}
+
 h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
   transition: opacity 0.2s;
   opacity: 0.5;
@@ -110,9 +118,9 @@ div.observablehq + script.echo {
 }
 
 code {
-  border: 1px solid #DDDDDDDD;
-  background-color: #EEEEEEEE;
-  padding: 1px;
+  border: 1px solid #ddd;
+  padding: 0 3px 1px;
+  border-radius: 4px;
 }
 
 script, pre, style {
