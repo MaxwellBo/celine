@@ -699,6 +699,8 @@ celine.cell("sets", async () => {
 
 <h2><a href="#changelog" id="changelog"></a>Changelog <a href="changelog.xml"><img src="static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
 
+The 10 most recent entries from the <a href="changelog.xml">changelog.xml</a>:
+
 <table>
   <thead>
     <tr>
@@ -712,7 +714,7 @@ celine.cell("sets", async () => {
           .then(data => {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, 'application/xml');
-            const entries = xmlDoc.getElementsByTagName('entry');
+            const entries = Array.from(xmlDoc.getElementsByTagName('entry')).slice(0, 10);
             let tableRows = '';
             for (let entry of entries) {
                 const version = entry.getElementsByTagName('title')[0].textContent;
