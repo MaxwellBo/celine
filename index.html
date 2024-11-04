@@ -34,6 +34,31 @@
   <meta name="twitter:description" content="A library for building reactive HTML notebooks with inline contenteditable &lt;script&gt;s">
   <meta name="twitter:image" content="https://maxbo.me/celine/static/og.png">
   <meta name="twitter:card" content="summary_large_image">
+
+    <script type="importmap" class="echo reflect">
+      {
+        "imports": {
+          "@penrose/core": "https://ga.jspm.io/npm:@penrose/core@3.2.0/dist/index.js"
+        },
+        "scopes": {
+          "https://ga.jspm.io/": {
+            "@datastructures-js/queue": "https://ga.jspm.io/npm:@datastructures-js/queue@4.2.3/index.js",
+            "@penrose/optimizer": "https://ga.jspm.io/npm:@penrose/optimizer@3.2.0/dist/index.js",
+            "consola": "https://ga.jspm.io/npm:consola@2.15.3/dist/consola.browser.js",
+            "crypto": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/crypto.js",
+            "immutable": "https://ga.jspm.io/npm:immutable@4.3.1/dist/immutable.es.js",
+            "lodash": "https://ga.jspm.io/npm:lodash@4.17.21/lodash.js",
+            "mathjax-full/js/": "https://ga.jspm.io/npm:mathjax-full@3.2.2/js/",
+            "mhchemparser/dist/mhchemParser.js": "https://ga.jspm.io/npm:mhchemparser@4.2.1/dist/mhchemParser.js",
+            "moo": "https://ga.jspm.io/npm:moo@0.5.2/moo.js",
+            "nearley": "https://ga.jspm.io/npm:nearley@2.20.1/lib/nearley.js",
+            "poly-partition": "https://ga.jspm.io/npm:poly-partition@1.0.2/lib/index.js",
+            "seedrandom": "https://ga.jspm.io/npm:seedrandom@3.0.5/index.js",
+            "true-myth": "https://ga.jspm.io/npm:true-myth@4.1.1/dist/cjs/index.js"
+          }
+        }
+      }
+    </script>
 </head>
 
 <body>
@@ -333,7 +358,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#tmg" id="tmg"></a>TeX, Markdown, Graphviz, Mermaid, Leaflet</h3>
+<h3><a href="#library" id="library"></a>Observable standard library - TeX, Markdown, Graphviz, Mermaid, Leaflet and more</h3>
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
 
@@ -571,6 +596,93 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;references-list style=&quot;font-family: 'Libertinus Sans', sans-serif;&quot;&gt;
 &lt;/references-list&gt;</pre>
+  </li>
+
+
+  <li>
+    <p><a href="https://penrose.cs.cmu.edu/">Penrose</a>, a system for creating beautiful diagrams just by typing notation in plain text.</p>
+
+    <p>Using the <a href="https://penrose.cs.cmu.edu/docs/ref/vanilla-js"><cite>Using Penrose with Vanilla JS</cite></a> instructions:</p>
+
+    <script id="penrose" type="module" class="echo reflect" contenteditable="true">
+      import { compile, optimize, showError, toSVG } from "https://ga.jspm.io/npm:@penrose/core@3.2.0/dist/bundle/index.js"
+
+      const trio = {
+        substance: `
+          Set A, B, C, D, E, F, G
+
+          Subset(B, A)
+          Subset(C, A)
+          Subset(D, B)
+          Subset(E, B)
+          Subset(F, C)
+          Subset(G, C)
+
+          Disjoint(E, D)
+          Disjoint(F, G)
+          Disjoint(B, C)
+
+          AutoLabel All
+        `,
+        style: `
+          canvas {
+            width = 800
+            height = 700
+          }
+
+          forall Set x {
+            shape x.icon = Circle { }
+            shape x.text = Equation {
+              string : x.label
+              fontSize : "32px"
+            }
+            ensure contains(x.icon, x.text)
+            encourage norm(x.text.center - x.icon.center) == 0
+            layer x.text above x.icon
+          }
+
+          forall Set x; Set y
+          where Subset(x, y) {
+            ensure disjoint(y.text, x.icon, 10)
+            ensure contains(y.icon, x.icon, 5)
+            layer x.icon above y.icon
+          }
+
+          forall Set x; Set y
+          where Disjoint(x, y) {
+            ensure disjoint(x.icon, y.icon)
+          }
+
+          forall Set x; Set y
+          where Intersecting(x, y) {
+            ensure overlapping(x.icon, y.icon)
+            ensure disjoint(y.text, x.icon)
+            ensure disjoint(x.text, y.icon)
+          }
+        `,
+        domain: `
+          type Set
+          predicate Disjoint(Set s1, Set s2)
+          predicate Intersecting(Set s1, Set s2)
+          predicate Subset(Set s1, Set s2)`,
+        variation: `test`,
+      };
+
+      celine.cell("penrose", async () => {
+        await celine.library.Promises.delay(1000); // weirdly necessary
+        const compiled = await compile(trio);
+        if (compiled.isErr()) {
+          return showError(compiled.error)
+        };
+        const optimized = optimize(compiled.value);
+
+        if (optimized.isErr()) {
+          return showError(optimized.error);
+        }
+
+        return toSVG(optimized.value);
+      });
+    </script>
   </li>
 </ul>
 
