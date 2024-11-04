@@ -580,6 +580,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   <thead>
     <tr>
       <th>Version</th>
+      <th>Date</th>
       <th>Changes</th>
 
       <script type="module">
@@ -592,8 +593,11 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
             let tableRows = '';
             for (let entry of entries) {
                 const version = entry.getElementsByTagName('title')[0].textContent;
+                const link = entry.getElementsByTagName('link')[0].getAttribute('href');
                 const changes = entry.getElementsByTagName('summary')[0].textContent;
-              tableRows += `<tr><td>${version}</td><td>${changes}</td></tr>`;
+                let date = entry.getElementsByTagName('updated')[0].textContent;
+                date = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+              tableRows += `<tr><td><a href="${link}">${version}</a></td><td>${date}</td><td>${changes}</td></tr>`;
             }
             document.querySelector('table thead').insertAdjacentHTML('afterend', tableRows);
           })
