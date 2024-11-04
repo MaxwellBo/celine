@@ -44,6 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
+  display: none;
   transition: opacity 0.2s;
   opacity: 0.5;
   text-decoration: none;
@@ -134,6 +135,61 @@ script, pre, style {
   padding: 1em;
   border: 1px solid #aaa;
   border-radius: 4px
+}
+
+
+/** counters */
+body {
+  counter-reset: h2counter;
+}
+
+h2 {
+  counter-reset: h3counter;
+  counter-increment: h2counter;
+}
+
+h3 {
+  counter-reset: h4counter;
+  counter-increment: h3counter;
+}
+
+h4 {
+  counter-reset: h5counter;
+  counter-increment: h4counter;
+}
+
+h5 {
+  counter-reset: h6counter;
+  counter-increment: h5counter;
+}
+
+h6 {
+  counter-increment: h6counter;
+}
+
+h2::before {
+  content: counter(h2counter);
+  padding-right: 1ch;
+}
+
+h3::before {
+  content: counter(h2counter) "." counter(h3counter);
+  padding-right: 1ch;
+}
+
+h4::before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter);
+  padding-right: 1ch;
+}
+
+h5::before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter);
+  padding-right: 1ch;
+}
+
+h6::before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter);
+  padding-right: 1ch;
 }
 
 /*
