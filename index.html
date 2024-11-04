@@ -655,12 +655,13 @@ const trio = {
 
 celine.cell("sets", async () => {
   await celine.library.Promises.delay(1000); // weirdly necessary
+
   const compiled = await compile(trio);
   if (compiled.isErr()) {
-    return showError(compiled.error)
-  };
-  const optimized = optimize(compiled.value);
+    return showError(compiled.error);
+  }
 
+  const optimized = optimize(compiled.value);
   if (optimized.isErr()) {
     return showError(optimized.error);
   }
