@@ -79,7 +79,7 @@
   I initially considered calling this library <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
 </p> 
 
-<p><a href="#demo"><i>Jump straight to the demo?</i></a></p>
+<p><a href="#demo"><b>Jump straight to the demo?</a></b></p>
 </section>
 <table class="header">
   <tbody>
@@ -165,7 +165,7 @@ You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.g
 
 <h2><a href="#demo" id="demo"></a>Demo: Observable Plot + SQLite</h2>
 
-<p><i>Try changing the SQL filter condition, then click away from the <code>&lt;script&gt;</code> to <abbr title="lose focus">blur</abbr> and reevaluate.</i></p>
+<p><i>Try changing removing a <code>0</code> from the SQL filter threshold, then click away from the <code>&lt;script&gt;</code> to <abbr title="lose focus">blur</abbr> and reevaluate.</i></p>
 
 <script type="module" class="echo reflect" id="chinook" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
@@ -699,7 +699,7 @@ celine.cell("sets", async () => {
 
 <h2><a href="#changelog" id="changelog"></a>Changelog <a href="changelog.xml"><img src="static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
 
-The 10 most recent entries from the <a href="changelog.xml">changelog.xml</a>:
+<p>The 10 most recent entries from the <a href="changelog.xml">changelog.xml</a>:</p>
 
 <table>
   <thead>
@@ -707,6 +707,10 @@ The 10 most recent entries from the <a href="changelog.xml">changelog.xml</a>:
       <th>Version</th>
       <th>Date</th>
       <th>Changes</th>
+  </thead>
+  <tbody id="changelog-table-body">
+
+  </tbody>
 
       <script type="module">
         fetch('changelog.xml')
@@ -724,12 +728,11 @@ The 10 most recent entries from the <a href="changelog.xml">changelog.xml</a>:
                 date = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
               tableRows += `<tr><td><a href="${link}">${version}</a></td><td>${date}</td><td>${changes}</td></tr>`;
             }
-            document.querySelector('table thead').insertAdjacentHTML('afterend', tableRows);
+            document.getElementById('changelog-table-body').innerHTML = tableRows;
           })
           .catch(error => console.error('Error loading changelog:', error));
       </script>
     </tr>
-  </thead>
 </table>
 
 <h2><a href="#resources" id="resources"></a>Resources</h2>
