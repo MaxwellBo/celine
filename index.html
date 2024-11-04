@@ -42,19 +42,19 @@
 
 <div class="authors">
   <div class="author">
-    <span class="author-name">Max Bo</span> <sup><a href="https://maxbo.me" class="out-link">↗</a></sup>
+    <span class="author-name">Max Bo</span> <sup><a href="https://maxbo.me" style="text-decoration: none;">↗</a></sup>
   </div>
 </div>
 
 <section class="abstract">
-<p><cite>@celine/celine</cite> is library for building reactive HTML notebooks with <code>display: block</code>, <code>contenteditable</code> <code>&lt;script&gt;</code> elements. 
-  It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to deliver inter-cell reactivity, just like <a href="https://quarto.org/docs/interactive/ojs/">Quarto</a>.
+<p><cite>@celine/celine</cite> is library for building reactive HTML notebooks with <code>display: block</code> <code>contenteditable</code> <code>&lt;script&gt;</code> elements. 
+  It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to deliver inter-cell reactivity, just like <a href="https://observablehq.com/framework/reactivity">Observable Framework</a> and <a href="https://quarto.org/docs/interactive/ojs/">Quarto</a>.
 
 <p>
   I initially considered calling this library <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
 </p> 
 
-<p><a href="#demo"><i>jump straight to the demo? ↓</i></a></p>
+<p><a href="#demo"><i>Jump straight to the demo?</i></a></p>
 </section>
 <table class="header">
   <tbody>
@@ -120,7 +120,7 @@ script#installation::before {
 }
 </style>
 
-<p>Link <a href="stylesheets/cell.css">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
+<p>Link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
@@ -129,7 +129,7 @@ script#installation::before {
 </pre>
 
 <p>
-You may want to include a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>. <cite>@celine/celine</cite> ships with <a href="stylesheets/libertine.css">libertine.css</a>. More info is available <a href="#libertine.css">further down the page ↓</a>.
+You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>, <a href="#libertine.css">libertine.css</a>:
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
@@ -137,7 +137,6 @@ You may want to include a <a href="https://dohliam.github.io/dropin-minimal-css/
   rel=&quot;stylesheet&quot; 
   href=&quot;https://esm.sh/jsr/@celine/celine@0.4.4/stylesheets/libertine.css?raw&quot; /&gt;
 </pre>
-Consider <a href="https://latex.vercel.app/"><cite>LaTeX.css</cite></a> also.
 
 <h2><a href="#demo" id="demo"></a>Demo: Observable Plot + SQLite</h2>
 
@@ -192,7 +191,7 @@ celine.cell("chinook", async () => {
 
 <h3><a href="#cell" id="cell"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>cell</code> constructor declares a reactive cell called <code>name</code>.</p>
+<p>The <code>cell</code> constructor declares a reactive cell called <code>"${name}"</code>.</p>
 
 <p>The <code>definition</code> lambda can return values of type <code>T</code>, <code>Promise&lt;T&gt;</code>, <code>Iterator&lt;T&gt;</code>, or <code>AsyncIterator&lt;T&gt;</code>.</p>
 
@@ -209,7 +208,7 @@ celine.cell("counter", async function* () {
 </script>
 
 <p>The <code>cell</code> constructor accepts <code>inputs</code>, a list of other cell names to depend on.</p></p>
-<p>Here we use <a href="https://observablehq.com/@observablehq/htl">Hypertext Literal</a>'s <code>html</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, to transform a the value of another cell:</p>
+<p>Here we use <a href="https://observablehq.com/@observablehq/htl">Hypertext Literal</a>'s <code>html</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, to transform the value of another cell:</p>
 
 <script type="module" class="echo reflect" id="fizzbuzz" contenteditable="true">
 celine.cell("fizzbuzz", ["counter"], (counter) => {
@@ -262,7 +261,7 @@ celine.cell("hue", async function* () {
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.</p>
 
-<p><p>It declares 2 reactive cells: a cell called <code>name</code>, and a cell called <code>viewof ${name}</code> - one for the value, and one for the DOM element itself.</p>
+<p><p>It declares 2 reactive cells: a cell called <code>"${name}"</code>, and a cell called <code>"viewof ${name}"</code> - one for the value, and one for the DOM element itself.</p>
 
 <p>To display the DOM element above another element <code>&lt;script&gt;</code>, set <code>id="viewof ${name}"</code> on the element to which the input should be prepended.</p>
 
@@ -274,7 +273,7 @@ celine.viewof("password", () => {
 });
 </script>
 
-<p>You still have to depend on the cell <code>name</code> to use the input's value:</p>
+<p>We still have to depend on the cell called <code>"password"</code> to use the input's value:</p>
 
 <script type="module" class="echo reflect" id="strength" contenteditable="true">
 celine.cell("strength", ["password"], (password) => {
@@ -416,7 +415,7 @@ celine.cell("leaflet", async function* () {
 
 <p><cite>@celine/celine</cite> ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
 
-<p>Because Linux Libertine is the default font for <a href="https://typst.app/">Typst</a> papers, an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, and the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, I thought Libertinus Serif would be an appropriate choice.</p>
+<p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
 
 <p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opentype-Features.pdf</a> as a demo page.</p>
 
