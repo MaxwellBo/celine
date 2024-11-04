@@ -8,6 +8,13 @@
   <id>https://maxbo.me/celine/changelog.xml</id>
 
   <entry>
+    <title>0.4.6</title>
+    <link href="https://jsr.io/@celine/celine@0.4.6"/>
+    <id>https://jsr.io/@celine/celine@0.4.6</id>
+    <updated>2024-11-04T00:00:00Z</updated>
+    <summary>Add header numbering</summary>
+
+  <entry>
     <title>0.4.5</title>
     <link href="https://jsr.io/@celine/celine@0.4.5"/>
     <id>https://jsr.io/@celine/celine@0.4.5</id>

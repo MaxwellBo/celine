@@ -42,22 +42,76 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2ch;
   margin-bottom: 0.5ch;
 }
-
-h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
-  display: none;
-  transition: opacity 0.2s;
-  opacity: 0.5;
-  text-decoration: none;
-  margin-right: 4px;
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    counter-reset: h2counter;
 }
 
-h1 > a[href^="#"]:hover, h2 > a[href^="#"]:hover, h3 > a[href^="#"]:hover, h4 > a[href^="#"]:hover, h5 > a[href^="#"]:hover, h6 > a[href^="#"]:hover {
-  opacity: 1;
-  text-decoration: none;
+/* Counter setup */
+h2 {
+    counter-reset: h3counter;
+    counter-increment: h2counter;
 }
 
-h1 > a[href^="#"]::before, h2 > a[href^="#"]::before, h3 > a[href^="#"]::before, h4 > a[href^="#"]::before, h5 > a[href^="#"]::before, h6 > a[href^="#"]::before {
-  content: "§";
+h3 {
+    counter-reset: h4counter;
+    counter-increment: h3counter;
+}
+
+h4 {
+    counter-reset: h5counter;
+    counter-increment: h4counter;
+}
+
+/* Counter display */
+h2::before {
+    content: counter(h2counter) ". ";
+}
+
+h3::before {
+    content: counter(h2counter) "." counter(h3counter) ". ";
+}
+
+h4::before {
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+}
+
+/* Anchor link styling */
+h1 > a[href^="#"], 
+h2 > a[href^="#"], 
+h3 > a[href^="#"], 
+h4 > a[href^="#"], 
+h5 > a[href^="#"], 
+h6 > a[href^="#"] {
+    position: relative;
+    left: -3rem;
+    transition: opacity 0.2s;
+    opacity: 0.5;
+    text-decoration: none;
+    font-size: smaller;
+    vertical-align: top;
+}
+
+h1 > a[href^="#"]:hover, 
+h2 > a[href^="#"]:hover, 
+h3 > a[href^="#"]:hover, 
+h4 > a[href^="#"]:hover, 
+h5 > a[href^="#"]:hover, 
+h6 > a[href^="#"]:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+h1 > a[href^="#"]::before, 
+h2 > a[href^="#"]::before, 
+h3 > a[href^="#"]::before, 
+h4 > a[href^="#"]::before, 
+h5 > a[href^="#"]::before, 
+h6 > a[href^="#"]::before {
+    content: "§";
 }
 
 a:hover {
