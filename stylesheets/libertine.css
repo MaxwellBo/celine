@@ -42,42 +42,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2ch;
   margin-bottom: 0.5ch;
 }
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-body {
-    counter-reset: h2counter;
-}
-
-/* Counter setup */
-h2 {
-    counter-reset: h3counter;
-    counter-increment: h2counter;
-}
-
-h3 {
-    counter-reset: h4counter;
-    counter-increment: h3counter;
-}
-
-h4 {
-    counter-reset: h5counter;
-    counter-increment: h4counter;
-}
-
-/* Counter display */
-h2::before {
-    content: counter(h2counter) ". ";
-}
-
-h3::before {
-    content: counter(h2counter) "." counter(h3counter) ". ";
-}
-
-h4::before {
-    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
-}
 
 /* Anchor link styling */
 h1 > a[href^="#"], 
