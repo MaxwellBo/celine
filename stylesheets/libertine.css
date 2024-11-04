@@ -14,7 +14,7 @@ kbd {
   font-family: 'Libertinus Keyboard', monospace;
 }
 
-aside, footer, small {
+aside, footer, small, h1, h2, h3, h4, h5, h6, figcaption {
   font-family: 'Libertinus Sans', sans-serif;
 }
 
@@ -29,6 +29,14 @@ blockquote {
   background-color: #f9f9f9;
 }
 
+figure {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+
 pre {
   background-color: #f7f7f7;
   border: 1px solid #ccc;
@@ -41,14 +49,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin-top: 2ch;
   margin-bottom: 0.5ch;
-}
-
-h1 {
-  border-bottom: 1px solid black;
-}
-
-h2 {
-  border-bottom: 1px dotted #ccc;
 }
 
 h1 > a[href^="#"], h2 > a[href^="#"], h3 > a[href^="#"], h4 > a[href^="#"], h5 > a[href^="#"], h6 > a[href^="#"] {
@@ -125,6 +125,14 @@ code {
 
 script, pre, style {
   margin-bottom: 1ch;
+}
+
+
+.abstract {
+  margin: 1em 0 2em;
+  padding: 1em;
+  border: 1px solid #aaa;
+  border-radius: 4px
 }
 
 /*
