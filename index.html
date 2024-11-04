@@ -39,19 +39,25 @@
 <body>
 <main>
 <h1 class="title">@celine/celine</h1>
-<p class="subtitle">A library for building reactive HTML notebooks with inline <code>contenteditable</code> <code>&lt;script&gt;</code>s</p>
-<p class="subtitle">celine ≈ <q>cell inline</q></p>
+
+<div class="authors">
+  <div class="author">
+    <span class="author-name">Max Bo</span> <sup><a href="https://maxbo.me" class="out-link">↗</a></sup>
+  </div>
+</div>
+
+<section class="abstract">
+<p><cite>@celine/celine</cite> is library for building reactive HTML notebooks with <code>display: block</code>, <code>contenteditable</code> <code>&lt;script&gt;</code> elements. 
+  It wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to deliver inter-cell reactivity, just like <a href="https://quarto.org/docs/interactive/ojs/">Quarto</a>.
+
+<p>
+  I initially considered calling this library <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
+</p> 
+
 <p><a href="#demo"><i>jump straight to the demo? ↓</i></a></p>
-<br />
+</section>
 <table class="header">
   <tbody>
-    <tr>
-      <th class="width-min">Author</th>
-      <td class="width-auto"><a href="https://maxbo.me">Max Bo</a></td>
-      <th>Updated</th>
-      <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><time style="white-space: pre;"><a href="https://jsr.io/@celine/celine/versions" id="updated">Oct 15 2024</a></time></td>
-    </tr>
     <tr>
       <th>GitHub</th>
       <td class="width-auto"><a href="https://github.com/MaxwellBo/celine">MaxwellBo/<wbr>celine</a><span id="stars"></span> + <a href="https://github.com/MaxwellBo/celine/issues">/issues</a> </td> 
@@ -72,7 +78,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">0.4.4</a></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">0.4.4</a>, <time  id="updated">Oct 15 2024</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -88,11 +94,7 @@
   </tbody>
 </table>
 <br />
-<p><i>@celine/celine</i> wraps a subset of the <a href="https://observablehq.com/documentation/notebooks/">Observable Notebook</a> <a href="https://github.com/observablehq/runtime">runtime</a> to provide a minimal (and opinionated) API for reactive notebook construction using <code>display: block</code>, <code>contenteditable</code> <code>&lt;script&gt;</code> elements.</p>
 
-<p>
-  It's also a followup to my article <a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML notebooks (2024)</cite></a>. I considered calling it <i>incel</i>, short for <q>inline cell</q>, but was advised against it.
-</p> 
 
 <h2><a href="#installation" id="installation"></a>Installation</h2>
 
@@ -169,7 +171,7 @@ celine.cell("chinook", async () => {
 
 <h3><a href="#.echo" id=".echo"></a><code>.echo</code></h3>
 
-<p>The <code>.echo</code> class can display <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements inline, with a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/"><cite>font with built-in syntax highlighting</cite></a>.</p>
+<p>The <code>.echo</code> class can display <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements inline, using a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/"><cite>font with built-in syntax highlighting</cite></a>.</p>
 
 <style class="echo" id="echo-style" contenteditable="true">#echo-style {
   border: 3px solid fuchsia;
@@ -243,7 +245,7 @@ celine.cell("hue", async function* () {
 
 <br />
 
-<p>But if we want the cells current value displayed above the <code>&lt;details&gt;</code> element, we need to do something slightly different. Here, the cell's <code>name</code> is <code>"hue"</code>, so we add <code>id="hue"</code> to the <code>&lt;details&gt;</code> element instead:</p>
+<p>To display the cell's current value above the <code>&lt;details&gt;</code> element, rather than above the <code>&lt;script&gt;</code>, we add <code>id="hue"</code> to the <code>&lt;details&gt;</code> element, as the cell's <code>name</code> is <code>"hue"</code>:</p>
 
 <pre class="echo">
 &lt;details id=&quot;hue&quot;&gt;
@@ -334,7 +336,7 @@ celine.cell("sword", ["ref"], (ref) => {
 
 <h3><a href="#tmg" id="tmg"></a>TeX, Markdown, Graphviz, Mermaid, Leaflet</h3>
 
-<p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>.</p>
+<p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
 
 <script type="module" class="echo reflect" id="lib" contenteditable="true">
 celine.cell("lib", () => {
@@ -414,7 +416,7 @@ celine.cell("leaflet", async function* () {
 
 <p><cite>@celine/celine</cite> ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
 
-<p>Because Linux Libertine is the default font for <a href="https://typst.app/">Typst</a> papers, an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, and the chosen font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, I thought Libertinus Serif would be an appropriate choice.</p>
+<p>Because Linux Libertine is the default font for <a href="https://typst.app/">Typst</a> papers, an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>, and the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, I thought Libertinus Serif would be an appropriate choice.</p>
 
 <p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opentype-Features.pdf</a> as a demo page.</p>
 
@@ -610,6 +612,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 <h2><a href="#resources" id="resources"></a>Resources</h2>
 
 <ul>
+  <li><a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML Notebooks</cite></a></li>
   <li><a href="https://github.com/observablehq/runtime">Observable Runtime</a></li>
   <li><a href="https://github.com/observablehq/inputs">Observable Inputs</a></li>
   <li><a href="https://github.com/observablehq/stdlib">Observable standard library</a></li>

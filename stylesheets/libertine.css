@@ -29,14 +29,6 @@ blockquote {
   background-color: #f9f9f9;
 }
 
-figure {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-
 pre {
   background-color: #f7f7f7;
   border: 1px solid #ccc;
@@ -127,6 +119,15 @@ script, pre, style {
   margin-bottom: 1ch;
 }
 
+.authors .author .author-name {
+  text-transform: uppercase;
+  font-family: 'Libertinus Sans', sans-serif;
+  font-size: larger;
+}
+
+.authors .author .author-affiliation {
+  font-size: larger
+}
 
 .abstract {
   margin: 1em 0 2em;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>celine changelog</title>
+  <title>@celine/celine changelog</title>
   <link href="https://maxbo.me/celine#changelog"/>
   <author>
     <name>Max Bo</name>

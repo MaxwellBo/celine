@@ -1,4 +1,4 @@
-# celine
+# @celine/celine
 
 A library for building reactive HTML notebooks with inline `contenteditable` `<script>`s.
 
