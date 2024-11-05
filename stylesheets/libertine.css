@@ -119,6 +119,11 @@ p + script.echo, p + style.echo {
   margin-top: 0.5ch;
 }
 
+/* if p is followed by an div.observablehq, add a little space above the inspector */
+p:has(+ div.observablehq) {
+  margin-bottom: 1ch;
+}
+
 /* if an div.observablehq is followed by an script.echo, add a little space above the script */
 div.observablehq + script.echo {
   margin-top: 0.5ch;

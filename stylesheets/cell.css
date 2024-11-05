@@ -53,10 +53,6 @@ style.reflect::after {
   display: inline;
 }
 
-.observablehq > * {
-  padding-top: 1rem;
-}
-
 @keyframes blink {
   67% {
     opacity: 0;
