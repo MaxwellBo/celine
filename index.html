@@ -102,50 +102,50 @@
 
 <script type="module">
   document.addEventListener("DOMContentLoaded", () => {
-  const toc = document.getElementById("toccontainer");
-  const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
-  
-  // Create an object to store the current ol element at each level
-  const levels = {};
-  let prevLevel = 1;  // Start with h2 (level 1)
-  
-  headers.forEach(header => {
-    const level = parseInt(header.tagName.substring(1)) - 2;  // Convert h2-h6 to 0-4
+    const toc = document.getElementById("toccontainer");
+    const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
     
-    // If going deeper, create new ol
-    if (level > prevLevel) {
-      const parentLi = levels[prevLevel].lastElementChild;
-      const newOl = document.createElement("ol");
-      parentLi.appendChild(newOl);
-      levels[level] = newOl;
-    }
+    // Create an object to store the current ol element at each level
+    const levels = {};
+    let prevLevel = 1;  // Start with h2 (level 1)
     
-    // If going back up, remove references to deeper levels
-    if (level < prevLevel) {
-      for (let i = prevLevel; i > level; i--) {
-        delete levels[i];
+    headers.forEach(header => {
+      const level = parseInt(header.tagName.substring(1)) - 2;  // Convert h2-h6 to 0-4
+      
+      // If going deeper, create new ol
+      if (level > prevLevel) {
+        const parentLi = levels[prevLevel].lastElementChild;
+        const newOl = document.createElement("ol");
+        parentLi.appendChild(newOl);
+        levels[level] = newOl;
       }
-    }
-    
-    // Create list item with link
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = `#${header.querySelector('a').id}`;
-    a.innerHTML = header.innerHTML;
-    a.querySelectorAll('a[href^="#"]').forEach(link => link.remove());
+      
+      // If going back up, remove references to deeper levels
+      if (level < prevLevel) {
+        for (let i = prevLevel; i > level; i--) {
+          delete levels[i];
+        }
+      }
+      
+      // Create list item with link
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#${header.querySelector('a').id}`;
+      a.innerHTML = header.innerHTML;
+      a.querySelectorAll('a[href^="#"]').forEach(link => link.remove());
 
-    li.appendChild(a);
-    
-    // Add to the appropriate ol
-    if (!levels[level]) {
-      const newOl = document.createElement("ol");
-      toc.appendChild(newOl);
-      levels[level] = newOl;
-    }
-    levels[level].appendChild(li);
-    
-    prevLevel = level;
-  });
+      li.appendChild(a);
+      
+      // Add to the appropriate ol
+      if (!levels[level]) {
+        const newOl = document.createElement("ol");
+        toc.appendChild(newOl);
+        levels[level] = newOl;
+      }
+      levels[level].appendChild(li);
+      
+      prevLevel = level;
+    });
   });
 </script>
 
@@ -414,7 +414,15 @@ celine.cell("eq2", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 
 <p>Because cells render their contents <code>display: inline</code> (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script <script type="module"  class="echo reflect" id="eq3" contenteditable="true">celine.cell("eq3", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> in the middle of the <code>&lt;p&gt;</code> tag.</p>
 
-<p>Of course, in non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" id="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
+<p>In non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" id="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
+
+<p>T render it centered, wrap the <code>&lt;script&gt;</code> with a <code>&lt;div style="text-align: center"&gt;</code>:</p>
+
+<div style="text-align: center; margin-top: 1ch;">
+<script type="module" id="eq5" contenteditable="true">
+celine.cell("eq5", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
+</script>
+</div>
 
 <h4><a href="#markdown" id="markdown"></a>Markdown</h4>
 
