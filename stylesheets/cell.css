@@ -50,6 +50,10 @@ style.reflect::after {
 }
 
 .observablehq {
+  display: inline;
+}
+
+.observablehq > * {
   margin-top: 1rem;
 }
 
