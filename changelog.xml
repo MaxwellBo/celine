@@ -8,9 +8,9 @@
   <id>https://maxbo.me/celine/changelog.xml</id>
 
   <entry>
-    <title>0.4.7</title>
-    <link href="https://jsr.io/@celine/celine@0.4.7"/>
-    <id>https://jsr.io/@celine/celine@0.4.7</id>
+    <title>1.0.0</title>
+    <link href="https://jsr.io/@celine/celine@1.0.0"/>
+    <id>https://jsr.io/@celine/celine@1.0.0</id>
     <updated>2024-11-05T00:00:00Z</updated>
     <summary>Start Semvar</summary>
   </entry>
