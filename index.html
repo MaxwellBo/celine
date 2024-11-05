@@ -114,10 +114,24 @@
 
 <h2 id="toc"><a href="#toc" id="toc"></a>Table of Contents</h2>
 
+<style>
+  .table-of-contents > * {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
 <div class="table-of-contents" id="toccontainer">
 </div>
 
-<script type="module">
+<script type="module" defer>
   document.addEventListener("DOMContentLoaded", () => {
     const toc = document.getElementById("toccontainer");
     const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
