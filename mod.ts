@@ -163,37 +163,6 @@ export class CelineModule {
     this._cell("hidden", name, inputsOrDefinition, maybeDefinition);
   }
 
-
-  /**
-   * Declares a cell that renders a TeX string above an element container.
-   */
-  public tex(name: string, definition: Definition): void
-  public tex(name: string, inputs: Inputs, definition: Definition): void
-  public tex(
-    name: string,
-    inputsOrDefinition: Inputs | Definition,
-    maybeDefinition?: Definition
-  ): void {
-    const inputs: Inputs = Array.isArray(inputsOrDefinition)
-      ? inputsOrDefinition
-      : [];
-    const definition: Definition = Array.isArray(inputsOrDefinition)
-      ? maybeDefinition as Definition
-      : inputsOrDefinition;
-
-    const wrappedDefinition = async (...args: string[]) => {
-      const tex = await library.tex();
-      if (definition instanceof Function) {
-        const result = definition(...args);
-        return tex`${result}`;
-      }
-
-      return tex`${definition}`;
-    }
-
-    this.cell(name, inputs, wrappedDefinition);
-  }
-
   /**
    * Internal method for creating cells with specified visibility.
    * @private

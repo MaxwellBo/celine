@@ -333,26 +333,6 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#tex" id="tex"></a><code>celine.tex(name, [inputs, ]definition)</code></h3>
-
-<p>TeX has a dedicated cell constructor.</p>
-
-<script type="module" class="echo reflect" id="eq1" contenteditable="true">
-celine.tex("eq1", "c = \pm\sqrt{a^2 + b^2}");
-</script>
-
-<p>Consider the use of multiline strings:</p>
-<script type="module" class="echo reflect" id="eq2" contenteditable="true">
-celine.tex("eq2", `
-\def\f#1#2{#1f(#2)}
-\f\relax{x} = \int_{-\infty}^\infty
-    \f\hat\xi\,e^{2 \pi i \xi x}
-    \,d\xi`
-);
-</script>
-
-<p>Because cells render their contents inline (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script (<script type="module" id="eq2">celine.tex("eq2", "c = \pm\sqrt{a^2 + b^2}")</script>) in the middle of the sentence, leaving off the <code>.echo</code> and <code>.reflect</code> classes.
-
 <h3><a href="#library" id="library"></a>Observable standard library</h3>
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
@@ -362,6 +342,28 @@ celine.cell("lib", () => {
   return celine.library;
 });
 </script>
+
+<h3><a href="#tex" id="tex"></a>TeX</h3>
+
+<script type="module" class="echo reflect" id="eq1" contenteditable="true">
+celine.cell("eq1", async () => {
+  const tex = await celine.library.tex();
+  return tex`c = \pm\sqrt{a^2 + b^2}`
+});
+</script>
+
+<script type="module" class="echo reflect" id="eq2" contenteditable="true">
+celine.cell("eq2", async () => {
+  const tex = await celine.library.tex();
+  return tex`
+  \def\f#1#2{#1f(#2)}
+  \f\relax{x} = \int_{-\infty}^\infty
+      \f\hat\xi\,e^{2 \pi i \xi x}
+      \,d\xi`;
+});
+</script>
+
+<p>Because cells render their contents inline (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script (<script type="module" id="eq3">celine.tex("eq3", tex`c = \pm\sqrt{a^2 + b^2}`)</script>) in the middle of the sentence, leaving off the <code>.echo</code> and <code>.reflect</code> classes.
 
 <h4><a href="#markdown" id="markdown"></a>Markdown</h4>
 
