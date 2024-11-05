@@ -54,7 +54,7 @@ style.reflect::after {
 }
 
 .observablehq > * {
-  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 @keyframes blink {
