@@ -143,6 +143,10 @@ script, pre, style {
   margin-bottom: 1ch;
 }
 
+.table-of-contents {
+  font-family: 'Libertinus Sans', sans-serif;
+}
+
 .authors .author .author-name {
   text-transform: uppercase;
   font-family: 'Libertinus Sans', sans-serif;
