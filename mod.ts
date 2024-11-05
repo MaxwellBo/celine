@@ -189,6 +189,22 @@ export class CelineModule {
       variable.define(name, definition);
     }
   }
+  
+  /**
+   * Renders a TeX string using the Observable stdlib.
+   */
+  public async tex(strings: TemplateStringsArray, ...values: any[]): Promise<object> {
+    const tex = await library.tex();
+    return tex(strings, ...values);
+  }
+
+  /**
+   * Renders a Markdown string using the Observable stdlib.
+   */
+  public async md(strings: TemplateStringsArray, ...values: any[]): Promise<object> {
+    const md = await library.md();
+    return md(strings, ...values);
+  }
 
   /**
    * Special constructor designed to work with Observable Inputs. It declares two reactive cells:
