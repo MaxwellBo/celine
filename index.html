@@ -434,13 +434,15 @@ celine.cell("eq2", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 
 <p>In non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" id="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
 
-<p>T render it centered, wrap the <code>&lt;script&gt;</code> with a <code>&lt;div style="text-align: center"&gt;</code>:</p>
+<p>To render TeX centered, wrap the <code>&lt;script&gt;</code> with a <code>&lt;div style="text-align: center"&gt;</code>:</p>
 
-<div style="text-align: center; margin-top: 1ch;">
+<div style="text-align: center; margin-top: 2ch; margin-bottom: 1ch;">
 <script type="module" id="eq5" contenteditable="true">
 celine.cell("eq5", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 </script>
 </div>
+
+<p>Both <code>tex</code> template literals are unconfigurable. You will need to import the <a href="https://katex.org">KaTeX</a> library proper if you'd like to modify any of its <a href="https://katex.org/docs/options">options</a>.</p>
 
 <h4><a href="#markdown" id="markdown"></a>Markdown</h4>
 
