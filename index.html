@@ -669,8 +669,67 @@ celine.cell("sets", async () => {
   return toSVG(optimized.value);
 });
 </script>
-  </li>
-</ul>
+
+
+<p>
+  <a href="https://penrose.cs.cmu.edu/docs/bloom/tutorial/getting_started">Bloom</a> lets you build optimization-driven interactive diagrams in JavaScript.
+</p>
+
+<script type="module" class="echo reflect" id="bloom" contenteditable="true">
+import * as bloom from "https://penrose.cs.cmu.edu/bloom.min.js";
+
+const db = new bloom.DiagramBuilder(bloom.canvas(400, 400), "abcd", 1);
+const { type, predicate, forall, forallWhere, ensure, circle, line } = db;
+
+const pointRad = 30;
+const pointMargin = 10;
+
+const Point = type();
+const Arrow = type();
+const Connects = predicate();
+
+const p1 = Point();
+const p2 = Point();
+const arrow = Arrow();
+Connects(arrow, p1, p2);
+
+forall({ p: Point }, ({ p }) => {
+  p.icon = circle({
+    r: pointRad,
+    drag: true,
+  });
+});
+
+forallWhere(
+  { a: Arrow, p: Point, q: Point },
+  ({ a, p, q }) => Connects.test(a, p, q),
+  ({ a, p, q }) => {
+    const pq = bloom.ops.vsub(q.icon.center, p.icon.center); // vector from p to q
+    const pqNorm = bloom.ops.vnormalize(pq); // direction from p to q
+    const pStart = bloom.ops.vmul(pointRad + pointMargin, pqNorm); // vector from p to line start
+    const start = bloom.ops.vadd(p.icon.center, pStart); // line start
+    const end = bloom.ops.vsub(q.icon.center, pStart); // line end
+
+    a.icon = line({
+      start: start,
+      end: end,
+      endArrowhead: "straight",
+    });
+
+    ensure(
+      bloom.constraints.greaterThan(
+        bloom.ops.vdist(p.icon.center, q.icon.center),
+        2 * (pointRad + pointMargin) + 20,
+      ),
+    );
+  },
+);
+
+celine.cell("bloom", async () => {
+  const diagram = await db.build();
+  return diagram.getInteractiveElement();
+});
+</script>
 
 
 <h2><a href="#changelog" id="changelog"></a>Changelog <a href="changelog.xml"><img src="static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
