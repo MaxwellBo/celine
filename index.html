@@ -345,24 +345,20 @@ celine.cell("lib", () => {
 
 <h3><a href="#tex" id="tex"></a>TeX</h3>
 
-<script type="module" class="echo reflect" id="eq2" contenteditable="true">
+<script type="module" class="echo reflect" id="eq1" contenteditable="true">
 celine.cell("eq1", async () => {
   const tex = await celine.library.tex();
-  return tex`
-  \def\f#1#2{#1f(#2)}
-  \f\relax{x} = \int_{-\infty}^\infty
-      \f\hat\xi\,e^{2 \pi i \xi x}
-      \,d\xi`;
+  return tex`c = \pm\sqrt{a^2 + b^2}`;
 });
 </script>
 
-<p>Because rendering TeX is so useful, <cite>@celine/celine</cite> has a shorthand constructor, <code>celine.tex</code>.</p>
+<p>Because rendering TeX is so useful, <cite>@celine/celine</cite> has a shorthand constructor, <code>celine.tex</code>:</p>
 
 <script type="module" class="echo reflect" id="eq2" contenteditable="true">
 celine.cell("eq2", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 </script>
 
-<p>Because cells render their contents inline (<i>celine ⇒ <q>cell inline</q></i>), we can embed can also embed the script <script type="module"  class="echo reflect" id="eq3" contenteditable="true">celine.cell("eq3", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> in the middle of the <code>&lt;p&gt;</code> tag.</p>
+<p>Because cells render their contents <code>display: inline</code> (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script <script type="module"  class="echo reflect" id="eq3" contenteditable="true">celine.cell("eq3", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> in the middle of the <code>&lt;p&gt;</code> tag.</p>
 
 <p>Of course, in non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" id="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
 
