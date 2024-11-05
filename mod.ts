@@ -311,6 +311,15 @@ function Mutable<T>(value: T): { value: T } {
 }
 
 /**
+ * 
+ * @deprecated since 1.0.0 Use registerReevaluationOnBlur instead.
+ */
+export function reevaluateOnBlur(document: Document, className: string): void {
+  console.warn("The reevaluateOnBlur function is deprecated. Use registerScriptReevaluationOnBlur instead.");
+  registerScriptReevaluationOnBlur(document, className);
+}
+
+/**
  * Sets up automatic reevaluation of editable script elements on blur.
  * When a script element marked with the specified class loses focus,
  * it will be replaced with a new script element containing the updated content.
@@ -318,7 +327,7 @@ function Mutable<T>(value: T): { value: T } {
  * @param document - The document object containing the script elements
  * @param className - The class name of script elements to watch
  */
-export function reevaluateOnBlur(document: Document, className: string): void {
+export function registerScriptReevaluationOnBlur(document: Document, className: string): void {
   function reevaluate(event: Event) {
     const old = event.target as HTMLScriptElement;
     const neww = document.createElement("script");
