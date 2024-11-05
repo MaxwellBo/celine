@@ -787,7 +787,10 @@ celine.cell("sets", async () => {
 <script type="module" class="echo reflect" contenteditable="true">
 import * as bloom from "https://penrose.cs.cmu.edu/bloom.min.js";
 
-const db = new bloom.DiagramBuilder(bloom.canvas(400, 400), "abcd", 1);
+const CANVAS_WIDTH = 400;
+const CANVAS_HEIGHT = 200;
+
+const db = new bloom.DiagramBuilder(bloom.canvas(CANVAS_WIDTH, CANVAS_HEIGHT), "abcd", 1);
 const { type, predicate, forall, forallWhere, ensure, circle, line } = db;
 
 const pointRad = 30;
@@ -836,8 +839,11 @@ forallWhere(
 
 celine.cell("bloom", async () => {
   const diagram = await db.build();
-  return diagram.getInteractiveElement();
-});
+  return htl.html`
+    <div style='height: ${CANVAS_HEIGHT};'>
+      ${diagram.getInteractiveElement()}
+    </div>`
+  });
 </script>
 </details>
 
