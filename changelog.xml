@@ -12,6 +12,14 @@
     <link href="https://jsr.io/@celine/celine@0.4.7"/>
     <id>https://jsr.io/@celine/celine@0.4.7</id>
     <updated>2024-11-05T00:00:00Z</updated>
+    <summary>Start Semvar</summary>
+  </entry>
+
+  <entry>
+    <title>0.4.7</title>
+    <link href="https://jsr.io/@celine/celine@0.4.7"/>
+    <id>https://jsr.io/@celine/celine@0.4.7</id>
+    <updated>2024-11-05T00:00:00Z</updated>
     <summary>Added <code>celine.tex</code> and <code>celine.md</code></summary>
   </entry>
 
