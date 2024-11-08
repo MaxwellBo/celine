@@ -669,6 +669,43 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 <h2><a href="#pairings" id="pairings"></a>3rd-party library pairings</h2>
 <p>Some libraries that pair well with <cite>@celine/celine</cite> are:</p>
 
+
+<h3><a id="pyodide" href="#pyodide"></a>Pyodide</h3>
+
+<p><a href="https://pyodide.org/">Pyodide</a> is a port of CPython to WebAssembly.</p>
+
+<script type="module" class="echo reflect" id="mean" contenteditable="true">
+import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.26.3/full/pyodide.mjs';
+
+celine.cell("mean", async () => {
+  const pyodide = await loadPyodide();
+  await pyodide.loadPackage(['numpy']);
+  return pyodide.runPython(`
+import numpy as np
+x = np.random.randn(1000)
+x.mean()
+  `);
+});
+</script>
+
+<h3><a id="webr" href="#webr"></a>WebR</h3>
+
+<p><a href="https://docs.r-wasm.org/webr/latest/">WebR</a> is a version of the statistical language R compiled for the browser using WebAssembly, via Emscripten.</p>
+
+<script type="module" class="echo reflect" id="summary" contenteditable="true">
+import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+celine.cell("summary", async () => {
+  const webR = new WebR();
+  await webR.init();
+  const shelter = await new webR.Shelter();
+  const capture = await shelter.captureR(`
+fit <- lm(mpg ~ am, data=mtcars)
+print(summary(fit))`);
+  return capture.output.map(d => d.data).join('\n');
+});
+</script>
+
 <h3><a id="references-web-component" href="#references-web-component"></a>References Web Component</h3>
 
     <p><a href="https://lab.avl.la/references-webcomponent/">References Web Component</a>, <q>an experimental pair of Web Components for citing and referencing sources in a wiki-like manner</q>.</p>
