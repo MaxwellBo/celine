@@ -330,15 +330,11 @@ celine.cell("hue", async function* () {
 
 <p>To display the cell's current value above the <code>&lt;details&gt;</code> element, rather than above the <code>&lt;script&gt;</code>, we add <code>id="hue"</code> to the <code>&lt;details&gt;</code> element, as the cell's <code>name</code> is <code>"hue"</code>:</p>
 
-<pre class="echo">
-&lt;details id=&quot;hue&quot;&gt;
-  &lt;summary&gt;Show code&lt;/summary&gt;
-  &lt;script type=&quot;module&quot; class=&quot;echo reflect&quot; contenteditable=&quot;true&quot;&gt;
-  celine.cell(&quot;hue&quot;, async function* () {
-    // implementation elided for brevity
-  &lt;/script&gt;
-&lt;/details&gt;
-</pre>
+<script type="module" id="innerhue">
+  celine.cell("innerhue", () => {
+    return htl.html`<span class='echo'>${document.getElementById("hue").outerHTML}</span>`;
+  });
+</script>
 
 
 <h3><a href="#viewof" id="viewof"></a><code>celine.viewof(name, [inputs, ]definition)</code></h3>
@@ -665,6 +661,35 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
     </td>
   </tr>
 </table>
+
+<h4><a href="#classes" id="classes"></a>Classes</h4>
+
+<div id="authors" class="authors">
+  <div class="author">
+    <span class="author-name">Jane Doe,</span> <span class="author-affiliation">University of Wollongong</span>
+  </div>
+  <div class="author">
+    <span class="author-name">John Smith,</span> <span class="author-affiliation">University of Townsville</span>
+  </div>
+</div>
+
+<script type="module" id="innerauthors">
+  celine.cell("innerauthors", () => {
+    return htl.html`<span class='echo'>${document.getElementById("authors").outerHTML}</span>`;
+  });
+</script>
+
+
+<div id="abstract" class="abstract">
+  This is an abstract.
+</div>
+
+<script type="module" id="innerabstract">
+  celine.cell("innerabstract", () => {
+    return htl.html`<span class='echo'>${document.getElementById("abstract").outerHTML}</span>`;
+  });
+</script>
+
 
 <h2><a href="#pairings" id="pairings"></a>3rd-party library pairings</h2>
 <p>Some libraries that pair well with <cite>@celine/celine</cite> are:</p>
