@@ -34,6 +34,55 @@
   <meta name="twitter:description" content="A library for building reactive HTML notebooks with inline contenteditable &lt;script&gt;s">
   <meta name="twitter:image" content="https://maxbo.me/celine/static/og.png">
   <meta name="twitter:card" content="summary_large_image">
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toc = document.getElementById("toccontainer");
+      const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
+      
+      // Create an object to store the current ol element at each level
+      const levels = {};
+      let prevLevel = 1;  // Start with h2 (level 1)
+      
+      headers.forEach(header => {
+        const level = parseInt(header.tagName.substring(1)) - 2;  // Convert h2-h6 to 0-4
+        
+        // If going deeper, create new ol
+        if (level > prevLevel) {
+          const parentLi = levels[prevLevel].lastElementChild;
+          const newOl = document.createElement("ol");
+          parentLi.appendChild(newOl);
+          levels[level] = newOl;
+        }
+        
+        // If going back up, remove references to deeper levels
+        if (level < prevLevel) {
+          for (let i = prevLevel; i > level; i--) {
+            delete levels[i];
+          }
+        }
+        
+        // Create list item with link
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `#${header.querySelector('a').id}`;
+        a.innerHTML = header.innerHTML;
+        // Remove the anchor links
+        a.querySelectorAll('a[href^="#"]').forEach(link => link.remove());
+
+        li.appendChild(a);
+        
+        // Add to the appropriate ol
+        if (!levels[level]) {
+          const newOl = document.createElement("ol");
+          toc.appendChild(newOl);
+          levels[level] = newOl;
+        }
+        levels[level].appendChild(li);
+        
+        prevLevel = level;
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -115,7 +164,6 @@
 <br />
 
 <h2 id="toc"><a href="#toc" id="toc"></a>Table of Contents</h2>
-
 <style>
   .table-of-contents > * {
     animation: fadeIn 0.3s ease-in;
@@ -132,56 +180,6 @@
 </style>
 <div class="table-of-contents" id="toccontainer">
 </div>
-
-<script type="module" defer>
-  document.addEventListener("load", () => {
-    const toc = document.getElementById("toccontainer");
-    const headers = document.querySelectorAll("h2, h3, h4, h5, h6");
-    
-    // Create an object to store the current ol element at each level
-    const levels = {};
-    let prevLevel = 1;  // Start with h2 (level 1)
-    
-    headers.forEach(header => {
-      const level = parseInt(header.tagName.substring(1)) - 2;  // Convert h2-h6 to 0-4
-      
-      // If going deeper, create new ol
-      if (level > prevLevel) {
-        const parentLi = levels[prevLevel].lastElementChild;
-        const newOl = document.createElement("ol");
-        parentLi.appendChild(newOl);
-        levels[level] = newOl;
-      }
-      
-      // If going back up, remove references to deeper levels
-      if (level < prevLevel) {
-        for (let i = prevLevel; i > level; i--) {
-          delete levels[i];
-        }
-      }
-      
-      // Create list item with link
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = `#${header.querySelector('a').id}`;
-      a.innerHTML = header.innerHTML;
-      // Remove the anchor links
-      a.querySelectorAll('a[href^="#"]').forEach(link => link.remove());
-
-      li.appendChild(a);
-      
-      // Add to the appropriate ol
-      if (!levels[level]) {
-        const newOl = document.createElement("ol");
-        toc.appendChild(newOl);
-        levels[level] = newOl;
-      }
-      levels[level].appendChild(li);
-      
-      prevLevel = level;
-    });
-  });
-</script>
 
 <h2><a href="#installation" id="installation"></a>Installation</h2>
 
