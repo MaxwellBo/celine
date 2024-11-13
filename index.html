@@ -641,73 +641,53 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   }
 </style>
 
-<table id="smallcaps-table">
-  <tr>
-    <td>
-<span id="ssc" style="font-variant: small-caps;">
+<div id="ssc" style="font-variant: small-caps;">
   Small caps
-</span>
-    </td>
-    <td>
-      <script type="module" id="sscdisplay" contenteditable="true">
-        celine.cell("sscdisplay", () => {
-          const elem = document.getElementById("ssc");
-          console.log()
-          elem.removeAttribute("id");
-          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
-        });
-      </script>
-    </td>
-  </tr>
-  <tr>
-    <td>
-<span id="sac" style="font-variant: all-small-caps;">
+</div>
+
+<script type="module" id="sscdisplay">
+  celine.cell("sscdisplay", () => {
+    const elem = document.getElementById("ssc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="sac" style="font-variant: all-small-caps;">
   All small caps
-</span>
-    </td>
-    <td>
-      <script type="module" id="ssacdisplay" contenteditable="true">
-        celine.cell("ssacdisplay", () => {
-          const elem = document.getElementById("sac");
-          elem.removeAttribute("id");
-          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
-        });
-      </script>
-    </td>
-  </tr>
-  <tr>
-    <td>
-<span id="sssc" style="font-family: 'Libertinus Sans'; font-variant: small-caps;">
+</div>
+
+<script type="module" id="ssacdisplay">
+  celine.cell("ssacdisplay", () => {
+    const elem = document.getElementById("sac");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="sssc" style="font-family: 'Libertinus Sans'; font-variant: small-caps;">
   Small caps
-</span>
-    </td>
-    <td>
-      <script type="module" id="ssscdisplay" contenteditable="true">
-        celine.cell("ssscdisplay", () => {
-          const elem = document.getElementById("sssc");
-          elem.removeAttribute("id");
-          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
-        });
-      </script>
-    </td>
-  </tr>
-  <tr>
-    <td>
-<span id="ssasc" style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">
+</div>
+
+<script type="module" id="ssscdisplay">
+  celine.cell("ssscdisplay", () => {
+    const elem = document.getElementById("sssc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="ssasc" style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">
   All small caps
-</span>
-    </td>
-    <td>
-      <script type="module" id="ssascdisplay" contenteditable="true">
-        const elem = document.getElementById("ssasc");
-        elem.removeAttribute("id");
-        celine.cell("ssascdisplay", () => {
-          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
-        });
-      </script>
-    </td>
-  </tr>
-</table>
+</div>
+
+<script type="module" id="ssascdisplay">
+  celine.cell("ssascdisplay", () => {
+    const elem = document.getElementById("ssasc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
 
 <h4><a href="#classes" id="classes"></a>Classes</h4>
 
