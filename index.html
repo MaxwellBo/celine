@@ -618,46 +618,93 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 
 <p><a style="font-variant: small-caps" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">Small caps</a> are available on Libertinus Serif and <span style="font-family: 'Libertinus Sans', sans-serif;">Libertinus Sans</span>:</p>
 
-<table>
-  <tr>
+<style>
+  #smallcaps-table td:nth-child(2) {
+    max-width: 600px;
+  }
+
+  @media (max-width: 600px) {
+    #smallcaps-table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    #smallcaps-table td {
+      display: block;
+      width: 100%;
+    }
+
+    #smallcaps-table td:first-child {
+      max-width: none;
+    }
+  }
+</style>
+
+<table id="smallcaps-table">
   <tr>
     <td>
-      <code>
-        &lt;span style=&quot;font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
-      </code>
+<span id="ssc" style="font-variant: small-caps;">
+  Small caps
+</span>
     </td>
     <td>
-      <span style="font-variant: small-caps;">Small caps</span>.
+      <script type="module" id="sscdisplay" contenteditable="true">
+        celine.cell("sscdisplay", () => {
+          const elem = document.getElementById("ssc");
+          console.log()
+          elem.removeAttribute("id");
+          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
+        });
+      </script>
     </td>
   </tr>
   <tr>
     <td>
-      <code>
-        &lt;span style=&quot;font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
-      </code>
+<span id="sac" style="font-variant: all-small-caps;">
+  All small caps
+</span>
     </td>
     <td>
-      <span style="font-variant: all-small-caps;">All small caps</span>.
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <code>
-        &lt;span style=&quot;font-family: 'Libertinus Sans'; font-variant: small-caps;&quot;&gt;Small caps&lt;/span&gt;.
-      </code>
-    </td>
-    <td>
-      <span style="font-family: 'Libertinus Sans'; font-variant: small-caps;">Small caps</span>.
+      <script type="module" id="ssacdisplay" contenteditable="true">
+        celine.cell("ssacdisplay", () => {
+          const elem = document.getElementById("sac");
+          elem.removeAttribute("id");
+          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
+        });
+      </script>
     </td>
   </tr>
   <tr>
     <td>
-      <code>
-        &lt;span style=&quot;font-family: 'Libertinus Sans'; font-variant: all-small-caps;&quot;&gt;All small caps&lt;/span&gt;.
-      </code>
+<span id="sssc" style="font-family: 'Libertinus Sans'; font-variant: small-caps;">
+  Small caps
+</span>
     </td>
     <td>
-      <span style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">All small caps</span>.
+      <script type="module" id="ssscdisplay" contenteditable="true">
+        celine.cell("ssscdisplay", () => {
+          const elem = document.getElementById("sssc");
+          elem.removeAttribute("id");
+          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
+        });
+      </script>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<span id="ssasc" style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">
+  All small caps
+</span>
+    </td>
+    <td>
+      <script type="module" id="ssascdisplay" contenteditable="true">
+        const elem = document.getElementById("ssasc");
+        elem.removeAttribute("id");
+        celine.cell("ssascdisplay", () => {
+          return htl.html`<span class='echo max-width-600'>${elem.outerHTML}</span>`;
+        });
+      </script>
     </td>
   </tr>
 </table>
