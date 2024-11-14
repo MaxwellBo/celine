@@ -3,7 +3,9 @@
   "packages": {
     "specifiers": {
       "npm:@observablehq/runtime": "npm:@observablehq/runtime@5.9.9",
-      "npm:@observablehq/stdlib": "npm:@observablehq/stdlib@5.8.8"
+      "npm:@observablehq/runtime@6.0.0": "npm:@observablehq/runtime@6.0.0",
+      "npm:@observablehq/stdlib": "npm:@observablehq/stdlib@5.8.8",
+      "npm:@observablehq/stdlib@5.8.8": "npm:@observablehq/stdlib@5.8.8"
     },
     "npm": {
       "@observablehq/inspector@5.0.1": {
@@ -18,6 +20,10 @@
           "@observablehq/inspector": "@observablehq/inspector@5.0.1",
           "@observablehq/stdlib": "@observablehq/stdlib@5.8.8"
         }
+      },
+      "@observablehq/runtime@6.0.0": {
+        "integrity": "sha512-t3UXP69O0JK20HY/neF4/DDDSDorwo92As806Y1pNTgTmj1NtoPyVpesYzfH31gTFOFrXC2cArV+wLpebMk9eA==",
+        "dependencies": {}
       },
       "@observablehq/stdlib@5.8.8": {
         "integrity": "sha512-XxVfXX4N+8QYqg308+KT2cpXcsiL6yFphrYNOyCNReqezeoK0Zd9xOdSvo/0NX8NJ8HypIZdTQNwPeOvQWOm2Q==",

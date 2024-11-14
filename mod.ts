@@ -1,6 +1,7 @@
 // deno-lint-ignore-file ban-types
 
-import { Inspector, Runtime } from "npm:@observablehq/runtime@5.9.9";
+import { Runtime } from "npm:@observablehq/runtime@6.0.0";
+import { Inspector } from "npm:@observablehq/inspector@5.0.1";
 import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
 
 /**
