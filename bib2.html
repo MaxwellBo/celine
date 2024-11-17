@@ -107,11 +107,7 @@
 
       render() {
         const link = document.createElement('a');
-
         const citationShorthand = String.fromCharCode(97 + this._citationIndex);
-
-        console.log("HELP", this._citationIndex)
-
         link.href = `#ref-${this.refId}`;
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
@@ -206,22 +202,33 @@
           item.innerHTML = entry.format();
           item.id = `ref-${key}`;
 
-          const citationsSet = this.store.citations.get(key);
+          const backlinks = document.createElement('sup');
 
-          if (citationsSet) {
-            const backlinks = document.createElement('div');
+          
+          let i = 0;
+          const citations = this.store.citations.get(key);
+          if (citations.size === 1) {
+            const backlink = document.createElement('a');
+            backlink.href = `#cite-${key}-a`;
+            backlink.textContent = '^';
+            backlinks.appendChild(backlink);
+          } else {
+            backlinks.textContent = '^';
+            backlinks.appendChild(document.createTextNode(' '));
 
-            citationsSet.forEach((_, i) => {
-              const suffix = citationsSet.size > 1 ? `-${String.fromCharCode(97 + i)}` : '';
+            for (const _ of citations) {
+              const citationShorthand = String.fromCharCode(97 + i);
               const backlink = document.createElement('a');
-              backlink.href = `#cite-${key}${suffix}`;
-              backlink.textContent = i === 0 ? '↑' : `↑${suffix}`;
+              backlink.href = `#cite-${key}-${citationShorthand}`;
+              backlink.textContent = citationShorthand;
+              backlinks.appendChild(document.createTextNode(' '));
               backlinks.appendChild(backlink);
-            });
-            
-            item.prepend(backlinks);
+              i++;
+            }
           }
 
+          backlinks.appendChild(document.createTextNode(' '));
+          item.prepend(backlinks);
           list.appendChild(item);
         });
 
