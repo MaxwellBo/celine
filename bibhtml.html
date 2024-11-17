@@ -7,11 +7,22 @@
   <title>bibhtml</title>
   <link 
     rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@1.0.2/stylesheets/libertine.css" />
+    href="https://esm.sh/jsr/@celine/celine@1.0.1/stylesheets/libertine.css" />
 </head>
 
 <body>
   <script type="module">
+    function 	alphabetize(n) {
+      const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+      let out = "";
+      while(n > 0) {
+        const mod = (n-1) % 26;
+        out = alphabet[mod] + out;
+        n = Math.floor((n - mod) / 26);
+      }
+      return out;
+    }
+
     import { Cite } from 'https://esm.sh/@citation-js/core'
     import 'https://esm.sh/@citation-js/plugin-bibtex'
 
@@ -109,11 +120,18 @@
       }
 
       render() {
+        const bibliography = document.querySelector("bibhtml-bibliography");
         const link = document.createElement('a');
-        const citationShorthand = String.fromCharCode(97 + this._citationIndex);
+        const citationShorthand = alphabetize(this._citationIndex);
         link.href = `#ref-${this.refId}`;
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
+        link.onclick = () => {
+          const reference = bibliography.shadowRoot.getElementById(`ref-${this.refId}`);
+          reference.scrollIntoView();
+          reference.focus();
+        };
+
         this.shadowRoot.replaceChildren(link);
       }
     }
@@ -221,7 +239,7 @@
             backlinks.appendChild(document.createTextNode(' '));
 
             for (const _ of citations) {
-              const citationShorthand = String.fromCharCode(97 + i);
+              const citationShorthand = alphabetize(i);
               const backlink = document.createElement('a');
               backlink.href = `#cite-${key}-${citationShorthand}`;
               backlink.textContent = citationShorthand;
