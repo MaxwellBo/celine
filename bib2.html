@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script type="module">
+    import { Cite } from 'https://esm.sh/@citation-js/core'
+    import 'https://esm.sh/@citation-js/plugin-bibtex'
+
+    // Central store for managing bibliography entries
+    class BibliographyStore {
+      constructor() {
+        this.entries = new Map();
+        this.citations = new Set();
+        this.bibliography = null;
+      }
+
+      static getInstance() {
+        if (!this.instance) {
+          this.instance = new BibliographyStore();
+        }
+        return this.instance;
+      }
+
+      async addEntry(key, entry) {
+        this.entries.set(key, entry);
+        this.updateCitations();
+      }
+
+      registerCitation(citation) {
+        this.citations.add(citation);
+        this.updateCitations();
+      }
+
+      setBibliography(bibliography) {
+        this.bibliography = bibliography;
+        this.updateCitations();
+      }
+
+      updateCitations() {
+        if (!this.bibliography) return;
+        
+        // Get sorted list of unique citation keys
+        const citedKeys = Array.from(new Set(
+          Array.from(this.citations)
+            .map(citation => citation.refId)
+            .filter(key => this.entries.has(key))
+        ));
+
+        // Update citation numbers
+        this.citations.forEach(citation => {
+          const index = citedKeys.indexOf(citation.refId);
+          if (index !== -1) {
+            citation.index = index + 1;
+          }
+        });
+
+        // Update bibliography list
+        this.bibliography.render(citedKeys);
+      }
+
+      getEntry(key) {
+        return this.entries.get(key);
+      }
+    }
+
+    class BibHTMLCite extends HTMLElement {
+      static get observedAttributes() {
+        return ['ref'];
+      }
+
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this._index = null;
+        this.store = BibliographyStore.getInstance();
+      }
+
+      connectedCallback() {
+        this.store.registerCitation(this);
+        this.render();
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'ref') {
+          this.render();
+        }
+      }
+
+      get refId() {
+        return this.getAttribute('ref') || this.textContent.trim();
+      }
+
+        set index(value) {
+        this._index = value;
+        this.render();
+      }
+
+      render() {
+        if (!this._index) return;
+      
+        const link = document.createElement('a');
+        link.href = `#ref-${this.refId}`;
+        link.textContent = `[${this._index}]`;
+        this.shadowRoot.replaceChildren(link);
+      }
+    }
+
+    class BibHTMLEntry extends HTMLElement {
+      constructor() {
+        super();
+        this.store = BibliographyStore.getInstance();
+        this._citation = null;
+      }
+
+      async connectedCallback() {
+        try {
+          this._citation = await new Cite(this.textContent);
+          const citationKey = this._citation.data[0]['citation-key'];
+          await this.store.addEntry(citationKey, this);
+        } catch (e) {
+          console.error('Error parsing citation entry:', e);
+        }
+      }
+
+      format(template = 'apa') {
+        if (!this._citation) return '';
+        const entry = this._citation.data[0];
+        const { author, title, journal, volume, year, number, pages, publisher, address, month, howpublished } = entry;
+
+        console.log(entry)
+        let formattedEntry = '';
+
+        if (author) {
+          const authors = author.map(a => `${a.given} ${a.family}`).join(', ');
+          formattedEntry += `${authors}. `;
+        }
+        if (title) {
+          formattedEntry += `<i>${title}</i>. `;
+        }
+        if (journal) {
+          formattedEntry += `${journal}, `;
+        }
+        if (volume) {
+          formattedEntry += `vol. ${volume}, `;
+        }
+        if (number) {
+          formattedEntry += `no. ${number}, `;
+        }
+        if (pages) {
+          formattedEntry += `pp. ${pages}, `;
+        }
+        if (year) {
+          formattedEntry += `(${year}). `;
+        }
+        if (publisher) {
+          formattedEntry += `${publisher}, `;
+        }
+        if (address) {
+          formattedEntry += `${address}, `;
+        }
+        if (month) {
+          formattedEntry += `${month}, `;
+        }
+        if (howpublished) {
+          formattedEntry += `${howpublished}. `;
+        }
+
+        return formattedEntry.trim();
+      }
+    }
+
+    class BibHTMLBibliography extends HTMLElement {
+      constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.store = BibliographyStore.getInstance();
+      }
+
+      connectedCallback() {
+        // Register as the bibliography component
+        this.store.setBibliography(this);
+      }
+
+      render(citedKeys) {
+        const list = document.createElement('ol');
+        
+        for (const key of citedKeys) {
+          const entry = this.store.getEntry(key);
+          if (!entry) continue;
+
+          const item = document.createElement('li');
+          item.id = `ref-${key}`;
+          item.innerHTML = entry.format();
+          list.appendChild(item);
+        }
+
+        this.shadowRoot.replaceChildren(list);
+      }
+    }
+
+    customElements.define('bibhtml-cite', BibHTMLCite);
+    customElements.define('bibhtml-entry', BibHTMLEntry);
+    customElements.define('bibhtml-bibliography', BibHTMLBibliography);
+  </script>
+
+  <h3><a id="citation-web-component" href="#citation-web-component"></a>Citation Web Component</h3>
+
+  <blockquote>
+    <p>
+      The accurate determination of college students' coefficients of friction is a fascinating topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
+    </p>
+    <p>
+      The Mathematical Theory of Efficient Piracy provides deep insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+    </p>
+    <p>
+      The history of the goofy layout of keyboards is quite interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
+    </p>
+    <p>
+      Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml>Freud2012</bibhtml></sup>
+    </p>
+  </blockquote>
+
+  <b style="font-size: large;">Bibliography</b>
+  <bibhtml-bibliography style="font-family: 'Libertinus Sans', sans-serif;">
+    <bibhtml-entry>
+      @article{Cummings2003,
+      author = {Arthur B Cummings and David Eftekhary and Frank G House},
+      title = {The accurate determination of college students' coefficients of friction},
+      journal = {Journal of Sketchy Physics},
+      volume = {13},
+      year = {2003},
+      number = {2},
+      pages = {46--129}
+      }
+    </bibhtml-entry>
+    <bibhtml-entry>
+      @book{Napster1998,
+      author = {L M Napster},
+      title = {Mathematical Theory of Efficient Piracy},
+      series = {Lecture Notes in Mathematics},
+      volume = {3204},
+      publisher = {Springer Verlag},
+      address = {New York NY},
+      year = {1998}
+      }
+    </bibhtml-entry>
+    <bibhtml-entry>
+      @phdthesis{Qwerty1996,
+      author = {O P Qwerty},
+      title = {History of the Goofy Layout of Keyboards},
+      publisher = {Podunk University Arcana Department},
+      address = {Podunk IN},
+      year = {1996}
+      }
+    </bibhtml-entry>
+    <bibhtml-entry>
+      @misc{Freud2012,
+      author = {Sigmund Freud},
+      month = {July},
+      year = {2012},
+      howpublished = {Personal conversation}
+      }
+    </bibhtml-entry>
+  </bibhtml-bibliography>
+</body>
+</html>
