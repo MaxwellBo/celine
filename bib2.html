@@ -131,7 +131,7 @@
       format(template = 'apa') {
         if (!this._citation) return '';
         const entry = this._citation.data[0];
-        const { author, title, journal, volume, year, number, pages, publisher, address, month, howpublished } = entry;
+        const { author, title, journal, volume, issued, number, pages, publisher, address, month, howpublished, 'citation-key': citationKey } = entry;
 
         console.log(entry)
         let formattedEntry = '';
@@ -155,8 +155,8 @@
         if (pages) {
           formattedEntry += `pp. ${pages}, `;
         }
-        if (year) {
-          formattedEntry += `(${year}). `;
+        if (issued && issued['date-parts'] && issued['date-parts'][0] && issued['date-parts'][0][0]) {
+          formattedEntry += `(${issued['date-parts'][0][0]}). `;
         }
         if (publisher) {
           formattedEntry += `${publisher}, `;
@@ -170,7 +170,6 @@
         if (howpublished) {
           formattedEntry += `${howpublished}. `;
         }
-
         return formattedEntry.trim();
       }
     }
@@ -217,17 +216,18 @@
     </p>
     <p>
       The Mathematical Theory of Efficient Piracy provides deep insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+      The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
     </p>
     <p>
       The history of the goofy layout of keyboards is quite interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
     </p>
     <p>
-      Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml>Freud2012</bibhtml></sup>
+      Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
     </p>
   </blockquote>
 
-  <b style="font-size: large;">Bibliography</b>
-  <bibhtml-bibliography style="font-family: 'Libertinus Sans', sans-serif;">
+  <b>Bibliography</b>
+  <bibhtml-bibliography>
     <bibhtml-entry>
       @article{Cummings2003,
       author = {Arthur B Cummings and David Eftekhary and Frank G House},
