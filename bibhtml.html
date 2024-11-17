@@ -9,14 +9,14 @@
 
 <body>
   <script type="module">
-        import { Cite } from 'https://esm.sh/@citation-js/core'
+    import { Cite } from 'https://esm.sh/@citation-js/core'
     import 'https://esm.sh/@citation-js/plugin-bibtex'
 
     function alphabetize(n) {
       const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
       let out = "";
-      while(n > 0) {
-        const mod = (n-1) % 26;
+      while (n > 0) {
+        const mod = (n - 1) % 26;
         out = alphabet[mod] + out;
         n = Math.floor((n - mod) / 26);
       }
@@ -148,15 +148,15 @@
       }
 
       connectedCallback() {
-        this.recalculateAndRender();
+        this.render();
       }
 
       addEntry(key, entry) {
         this.entries.set(key, entry);
-        this.recalculateAndRender();
+        this.render();
       }
 
-      recalculateAndRender() {
+      render() {
         const citedKeys = Array.from(this.entries.keys());
         const citations = document.querySelectorAll('bibhtml-cite');
 
@@ -169,10 +169,6 @@
           }
         });
 
-        this.render(citedKeys);
-      }
-
-      render(citedKeys) {
         const list = document.createElement('ol');
 
         citedKeys.forEach((key) => {
@@ -231,14 +227,18 @@
 
   <blockquote>
     <p>
-      The accurate determination of college students' coefficients of friction is a fascinating topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
+      The accurate determination of college students' coefficients of friction is a fascinating
+      topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
     </p>
     <p>
-      The Mathematical Theory of Efficient Piracy provides deep insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
-      The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+      The Mathematical Theory of Efficient Piracy provides deep
+      insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+      The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital
+      rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
     </p>
     <p>
-      The history of the goofy layout of keyboards is quite interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
+      The history of the goofy layout of keyboards is quite
+      interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
     </p>
     <p>
       Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
@@ -290,4 +290,5 @@
     </bibhtml-entry>
   </bibhtml-bibliography>
 </body>
+
 </html>
