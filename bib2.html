@@ -16,7 +16,7 @@
     class BibliographyStore {
       constructor() {
         this.entries = new Map();
-        this.citations = new Set();
+        this.citations = new Map();
         this.bibliography = null;
       }
 
@@ -33,7 +33,11 @@
       }
 
       registerCitation(citation) {
-        this.citations.add(citation);
+        const refId = citation.refId;
+        if (!this.citations.has(refId)) {
+          this.citations.set(refId, new Set());
+        }
+        this.citations.get(refId).add(citation);
         this.updateCitations();
       }
 
@@ -44,23 +48,17 @@
 
       updateCitations() {
         if (!this.bibliography) return;
-        
-        // Get sorted list of unique citation keys
-        const citedKeys = Array.from(new Set(
-          Array.from(this.citations)
-            .map(citation => citation.refId)
-            .filter(key => this.entries.has(key))
-        ));
 
-        // Update citation numbers
-        this.citations.forEach(citation => {
-          const index = citedKeys.indexOf(citation.refId);
-          if (index !== -1) {
-            citation.index = index + 1;
+        const citedKeys = Array.from(this.citations.keys()).filter(key => this.entries.has(key));
+
+        citedKeys.forEach((key, index) => {
+          let i = 0;
+          for (const citation of this.citations.get(key)) {
+            citation.referenceIndex = index;
+            citation.citationIndex = i++;
           }
         });
 
-        // Update bibliography list
         this.bibliography.render(citedKeys);
       }
 
@@ -77,7 +75,8 @@
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this._index = null;
+        this._referenceIndex = null;
+        this._citationIndex = null;
         this.store = BibliographyStore.getInstance();
       }
 
@@ -96,17 +95,26 @@
         return this.getAttribute('ref') || this.textContent.trim();
       }
 
-        set index(value) {
-        this._index = value;
+      set referenceIndex(value) {
+        this._referenceIndex = value;
+        this.render();
+      }
+
+      set citationIndex(value) {
+        this._citationIndex = value;
         this.render();
       }
 
       render() {
-        if (!this._index) return;
-      
         const link = document.createElement('a');
+
+        const citationShorthand = String.fromCharCode(97 + this._citationIndex);
+
+        console.log("HELP", this._citationIndex)
+
         link.href = `#ref-${this.refId}`;
-        link.textContent = `[${this._index}]`;
+        link.id = `cite-${this.refId}-${citationShorthand}`;
+        link.textContent = `[${this._referenceIndex + 1}]`;
         this.shadowRoot.replaceChildren(link);
       }
     }
@@ -131,9 +139,8 @@
       format(template = 'apa') {
         if (!this._citation) return '';
         const entry = this._citation.data[0];
-        const { author, title, journal, volume, year, number, pages, publisher, address, month, howpublished, 'citation-key': citationKey } = entry;
+        const { author, title, journal, volume, year, number, pages, publisher, address, month, howpublished } = entry;
 
-        console.log(entry)
         let formattedEntry = '';
 
         if (author) {
@@ -182,22 +189,41 @@
       }
 
       connectedCallback() {
-        // Register as the bibliography component
         this.store.setBibliography(this);
       }
 
       render(citedKeys) {
         const list = document.createElement('ol');
-        
-        for (const key of citedKeys) {
+
+        citedKeys.forEach((key) => {
           const entry = this.store.getEntry(key);
-          if (!entry) continue;
+          if (!entry) {
+            console.error(`Entry with key ${key} not found.`);
+            return;
+          }
 
           const item = document.createElement('li');
-          item.id = `ref-${key}`;
           item.innerHTML = entry.format();
+          item.id = `ref-${key}`;
+
+          const citationsSet = this.store.citations.get(key);
+
+          if (citationsSet) {
+            const backlinks = document.createElement('div');
+
+            citationsSet.forEach((_, i) => {
+              const suffix = citationsSet.size > 1 ? `-${String.fromCharCode(97 + i)}` : '';
+              const backlink = document.createElement('a');
+              backlink.href = `#cite-${key}${suffix}`;
+              backlink.textContent = i === 0 ? '↑' : `↑${suffix}`;
+              backlinks.appendChild(backlink);
+            });
+            
+            item.prepend(backlinks);
+          }
+
           list.appendChild(item);
-        }
+        });
 
         this.shadowRoot.replaceChildren(list);
       }
