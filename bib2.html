@@ -135,7 +135,7 @@
       format(template = 'apa') {
         if (!this._citation) return '';
         const entry = this._citation.data[0];
-        const { author, title, journal, volume, year, number, pages, publisher, address, month, howpublished } = entry;
+        const { author, title, journal, volume, number, pages, publisher, address, month, howpublished, issued } = entry;
 
         let formattedEntry = '';
 
@@ -158,7 +158,8 @@
         if (pages) {
           formattedEntry += `pp. ${pages}, `;
         }
-        if (year) {
+        if (issued && issued['date-parts'] && issued['date-parts'][0]) {
+          const year = issued['date-parts'][0][0];
           formattedEntry += `(${year}). `;
         }
         if (publisher) {
