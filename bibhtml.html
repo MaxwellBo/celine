@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>bibhtml</title>
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@1.0.1/stylesheets/libertine.css" />
 </head>
 
 <body>
   <script type="module">
-    function 	alphabetize(n) {
+        import { Cite } from 'https://esm.sh/@citation-js/core'
+    import 'https://esm.sh/@citation-js/plugin-bibtex'
+
+    function alphabetize(n) {
       const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
       let out = "";
       while(n > 0) {
@@ -23,80 +23,20 @@
       return out;
     }
 
-    import { Cite } from 'https://esm.sh/@citation-js/core'
-    import 'https://esm.sh/@citation-js/plugin-bibtex'
-
-    // Central store for managing bibliography entries
-    class BibliographyStore {
-      constructor() {
-        this.entries = new Map();
-        this.citations = new Map();
-        this.bibliography = null;
-      }
-
-      static getInstance() {
-        if (!this.instance) {
-          this.instance = new BibliographyStore();
-        }
-        return this.instance;
-      }
-
-      async addEntry(key, entry) {
-        this.entries.set(key, entry);
-        this.updateCitations();
-      }
-
-      registerCitation(citation) {
-        const refId = citation.refId;
-        if (!this.citations.has(refId)) {
-          this.citations.set(refId, new Set());
-        }
-        this.citations.get(refId).add(citation);
-        this.updateCitations();
-      }
-
-      setBibliography(bibliography) {
-        this.bibliography = bibliography;
-        this.updateCitations();
-      }
-
-      updateCitations() {
-        if (!this.bibliography) return;
-
-        const citedKeys = Array.from(this.citations.keys()).filter(key => this.entries.has(key));
-
-        citedKeys.forEach((key, index) => {
-          let i = 0;
-          for (const citation of this.citations.get(key)) {
-            citation.referenceIndex = index;
-            citation.citationIndex = i++;
-          }
-        });
-
-        this.bibliography.render(citedKeys);
-      }
-
-      getEntry(key) {
-        return this.entries.get(key);
-      }
-    }
-
     class BibHTMLCite extends HTMLElement {
-      static get observedAttributes() {
-        return ['ref'];
-      }
-
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
         this._referenceIndex = null;
         this._citationIndex = null;
-        this.store = BibliographyStore.getInstance();
       }
 
       connectedCallback() {
-        this.store.registerCitation(this);
         this.render();
+      }
+
+      static get observedAttributes() {
+        return ['ref'];
       }
 
       attributeChangedCallback(name, oldValue, newValue) {
@@ -122,14 +62,16 @@
       render() {
         const bibliography = document.querySelector("bibhtml-bibliography");
         const link = document.createElement('a');
-        const citationShorthand = alphabetize(this._citationIndex);
+        const citationShorthand = alphabetize(this._citationIndex + 1);
         link.href = `#ref-${this.refId}`;
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
         link.onclick = () => {
           const reference = bibliography.shadowRoot.getElementById(`ref-${this.refId}`);
-          reference.scrollIntoView();
-          reference.focus();
+          if (reference) {
+            reference.scrollIntoView();
+            reference.focus();
+          }
         };
 
         this.shadowRoot.replaceChildren(link);
@@ -139,15 +81,14 @@
     class BibHTMLEntry extends HTMLElement {
       constructor() {
         super();
-        this.store = BibliographyStore.getInstance();
         this._citation = null;
       }
 
       async connectedCallback() {
         try {
           this._citation = await new Cite(this.textContent);
-          const citationKey = this._citation.data[0]['citation-key'];
-          await this.store.addEntry(citationKey, this);
+          const bibliography = document.querySelector("bibhtml-bibliography");
+          bibliography.addEntry(this._citation.data[0]['citation-key'], this);
         } catch (e) {
           console.error('Error parsing citation entry:', e);
         }
@@ -203,18 +144,39 @@
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.store = BibliographyStore.getInstance();
+        this.entries = new Map();
       }
 
       connectedCallback() {
-        this.store.setBibliography(this);
+        this.recalculateAndRender();
+      }
+
+      addEntry(key, entry) {
+        this.entries.set(key, entry);
+        this.recalculateAndRender();
+      }
+
+      recalculateAndRender() {
+        const citedKeys = Array.from(this.entries.keys());
+        const citations = document.querySelectorAll('bibhtml-cite');
+
+        citations.forEach((citation, index) => {
+          const refId = citation.refId;
+          if (citedKeys.includes(refId)) {
+            const refIndex = citedKeys.indexOf(refId);
+            citation.referenceIndex = refIndex;
+            citation.citationIndex = index;
+          }
+        });
+
+        this.render(citedKeys);
       }
 
       render(citedKeys) {
         const list = document.createElement('ol');
 
         citedKeys.forEach((key) => {
-          const entry = this.store.getEntry(key);
+          const entry = this.entries.get(key);
           if (!entry) {
             console.error(`Entry with key ${key} not found.`);
             return;
@@ -226,20 +188,22 @@
 
           const backlinks = document.createElement('sup');
 
-          
-          let i = 0;
-          const citations = this.store.citations.get(key);
-          if (citations.size === 1) {
+          const citations = Array.from(document.querySelectorAll('bibhtml-cite')).filter(c => c.refId === key);
+          console.log(citations);
+
+          if (citations.length === 1) {
             const backlink = document.createElement('a');
             backlink.href = `#cite-${key}-a`;
             backlink.textContent = '^';
             backlinks.appendChild(backlink);
           } else {
+            let i = 0;
             backlinks.textContent = '^';
             backlinks.appendChild(document.createTextNode(' '));
 
             for (const _ of citations) {
-              const citationShorthand = alphabetize(i);
+              console.log(i)
+              const citationShorthand = alphabetize(i + 1);
               const backlink = document.createElement('a');
               backlink.href = `#cite-${key}-${citationShorthand}`;
               backlink.textContent = citationShorthand;
@@ -280,6 +244,8 @@
       Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
     </p>
   </blockquote>
+
+  <div style="height: 2000px; background-color: lightgray;"></div>
 
   <b>Bibliography</b>
   <bibhtml-bibliography>
