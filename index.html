@@ -43,7 +43,7 @@
       const levels = {};
       let prevLevel = 1;  // Start with h2 (level 1)
       
-      headers.forEach(header => {
+      for (const header of headers) {
         const level = parseInt(header.tagName.substring(1)) - 2;  // Convert h2-h6 to 0-4
         
         // If going deeper, create new ol
@@ -64,6 +64,12 @@
         // Create list item with link
         const li = document.createElement("li");
         const a = document.createElement("a");
+        const headerLink = header.querySelector('a');
+
+        if (!headerLink) {
+          continue;
+        }
+
         a.href = `#${header.querySelector('a').id}`;
         a.innerHTML = header.innerHTML;
         // Remove the anchor links
@@ -80,7 +86,7 @@
         levels[level].appendChild(li);
         
         prevLevel = level;
-      });
+      }
     });
   </script>
 </head>
