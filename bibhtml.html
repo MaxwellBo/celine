@@ -23,6 +23,14 @@
       return out;
     }
 
+    function anchorify(root, element, query) {
+      element.onclick = () => {
+        const target = root.querySelector(query);
+        target.scrollIntoView();
+        target.focus();
+      };
+    }
+
     class BibHTMLCite extends HTMLElement {
       constructor() {
         super();
@@ -32,6 +40,8 @@
       }
 
       connectedCallback() {
+        const bibliography = document.querySelector("bibhtml-bibliography");
+        bibliography.addCitation(this.refId, this);
         this.render();
       }
 
@@ -66,13 +76,7 @@
         link.href = `#ref-${this.refId}`;
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
-        link.onclick = () => {
-          const reference = bibliography.shadowRoot.getElementById(`ref-${this.refId}`);
-          if (reference) {
-            reference.scrollIntoView();
-            reference.focus();
-          }
-        };
+        anchorify(bibliography.shadowRoot, link, `#ref-${this.refId}`);
 
         this.shadowRoot.replaceChildren(link);
       }
@@ -81,11 +85,16 @@
     class BibHTMLEntry extends HTMLElement {
       constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this._citation = null;
       }
 
       async connectedCallback() {
         try {
+          if (this._citation) {
+            return;
+          }
+
           this._citation = await new Cite(this.textContent);
           const bibliography = document.querySelector("bibhtml-bibliography");
           bibliography.addEntry(this._citation.data[0]['citation-key'], this);
@@ -138,71 +147,81 @@
         }
         return formattedEntry.trim();
       }
+
+      render() {
+        const node = document.createElement('span');
+        node.innerHTML = this.format();
+        this.shadowRoot.replaceChildren(node);
+      }
     }
 
     class BibHTMLBibliography extends HTMLElement {
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.entries = new Map();
+        this.refToEntries = new Map();
+        this.refToCitations = new Map();
       }
 
-      connectedCallback() {
+      async connectedCallback() {
         this.render();
       }
 
       addEntry(key, entry) {
-        this.entries.set(key, entry);
+        this.refToEntries.set(key, entry);
+        this.render();
+      }
+
+      addCitation(key, citation) {
+        if (!this.refToCitations.has(key)) {
+          this.refToCitations.set(key, []);
+        }
+        this.refToCitations.get(key).push(citation);
         this.render();
       }
 
       render() {
-        const citedKeys = Array.from(this.entries.keys());
-        const citations = document.querySelectorAll('bibhtml-cite');
-
-        citations.forEach((citation, index) => {
-          const refId = citation.refId;
-          if (citedKeys.includes(refId)) {
-            const refIndex = citedKeys.indexOf(refId);
-            citation.referenceIndex = refIndex;
-            citation.citationIndex = index;
-          }
-        });
-
         const list = document.createElement('ol');
 
-        citedKeys.forEach((key) => {
-          const entry = this.entries.get(key);
+        let referenceIndex = 0;
+        for (const [ref, citations] of this.refToCitations.entries()) {
+          let citationIndex = 0;
+          for (const citation of citations) {
+            citation.referenceIndex = referenceIndex;
+            citation.citationIndex = citationIndex;
+            citation.render();
+            citationIndex++;
+          }
+
+          const entry = this.refToEntries.get(ref);
           if (!entry) {
-            console.error(`Entry with key ${key} not found.`);
-            return;
+            continue;
           }
 
           const item = document.createElement('li');
-          item.innerHTML = entry.format();
-          item.id = `ref-${key}`;
+          entry.render();
+          item.appendChild(entry);
+          item.id = `ref-${ref}`;
 
           const backlinks = document.createElement('sup');
 
-          const citations = Array.from(document.querySelectorAll('bibhtml-cite')).filter(c => c.refId === key);
-          console.log(citations);
-
           if (citations.length === 1) {
             const backlink = document.createElement('a');
-            backlink.href = `#cite-${key}-a`;
+            backlink.href = `#cite-${ref}-a`;
             backlink.textContent = '^';
             backlinks.appendChild(backlink);
+            anchorify(citations[0].shadowRoot, backlink, `#cite-${ref}-a`);
           } else {
             let i = 0;
             backlinks.textContent = '^';
             backlinks.appendChild(document.createTextNode(' '));
 
-            for (const _ of citations) {
-              console.log(i)
+            for (const citation of citations) {
               const citationShorthand = alphabetize(i + 1);
               const backlink = document.createElement('a');
-              backlink.href = `#cite-${key}-${citationShorthand}`;
+              backlink.href = `#cite-${ref}-${citationShorthand}`;
               backlink.textContent = citationShorthand;
+              anchorify(citation.shadowRoot, backlink, `#cite-${ref}-${citationShorthand}`);
               backlinks.appendChild(document.createTextNode(' '));
               backlinks.appendChild(backlink);
               i++;
@@ -212,15 +231,16 @@
           backlinks.appendChild(document.createTextNode(' '));
           item.prepend(backlinks);
           list.appendChild(item);
-        });
+          referenceIndex++;
+        };
 
         this.shadowRoot.replaceChildren(list);
       }
     }
 
-    customElements.define('bibhtml-cite', BibHTMLCite);
-    customElements.define('bibhtml-entry', BibHTMLEntry);
     customElements.define('bibhtml-bibliography', BibHTMLBibliography);
+    customElements.define('bibhtml-entry', BibHTMLEntry);
+    customElements.define('bibhtml-cite', BibHTMLCite);
   </script>
 
   <h3><a id="citation-web-component" href="#citation-web-component"></a>Citation Web Component</h3>
