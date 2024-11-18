@@ -11,6 +11,8 @@
   <script type="module">
     import { Cite } from 'https://esm.sh/@citation-js/core'
     import 'https://esm.sh/@citation-js/plugin-bibtex'
+    import 'https://esm.sh/@citation-js/plugin-doi'
+    import 'https://esm.sh/@citation-js/plugin-csl'
 
     function alphabetize(n) {
       const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -95,7 +97,7 @@
             return;
           }
 
-          this._citation = await new Cite(this.textContent);
+          this._citation = await Cite.async(this.textContent);
           const bibliography = document.querySelector("bibhtml-bibliography");
           bibliography.addEntry(this._citation.data[0]['citation-key'], this);
         } catch (e) {
@@ -239,7 +241,7 @@
     }
 
     customElements.define('bibhtml-bibliography', BibHTMLBibliography);
-    customElements.define('bibhtml-entry', BibHTMLEntry);
+    customElements.define('bibhtml-reference', BibHTMLEntry);
     customElements.define('bibhtml-cite', BibHTMLCite);
   </script>
 
@@ -257,19 +259,23 @@
       rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
     </p>
     <p>
+      Wikidata ref <sup><bibhtml-cite>10.7717/peerj-cs.214</bibhtml-cite></sup>
+    </p>
+    <p>
       The history of the goofy layout of keyboards is quite
       interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
     </p>
     <p>
       Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
     </p>
+
   </blockquote>
 
   <div style="height: 2000px; background-color: lightgray;"></div>
 
   <b>Bibliography</b>
   <bibhtml-bibliography>
-    <bibhtml-entry>
+    <bibhtml-reference>
       @article{Cummings2003,
       author = {Arthur B Cummings and David Eftekhary and Frank G House},
       title = {The accurate determination of college students' coefficients of friction},
@@ -279,8 +285,8 @@
       number = {2},
       pages = {46--129}
       }
-    </bibhtml-entry>
-    <bibhtml-entry>
+    </bibhtml-reference>
+    <bibhtml-reference>
       @book{Napster1998,
       author = {L M Napster},
       title = {Mathematical Theory of Efficient Piracy},
@@ -290,8 +296,8 @@
       address = {New York NY},
       year = {1998}
       }
-    </bibhtml-entry>
-    <bibhtml-entry>
+    </bibhtml-reference>
+    <bibhtml-reference>
       @phdthesis{Qwerty1996,
       author = {O P Qwerty},
       title = {History of the Goofy Layout of Keyboards},
@@ -299,15 +305,18 @@
       address = {Podunk IN},
       year = {1996}
       }
-    </bibhtml-entry>
-    <bibhtml-entry>
+    </bibhtml-reference>
+    <bibhtml-reference>
       @misc{Freud2012,
       author = {Sigmund Freud},
       month = {July},
       year = {2012},
       howpublished = {Personal conversation}
       }
-    </bibhtml-entry>
+    </bibhtml-reference>
+    <bibhtml-reference>
+      Q30000000
+    </bibhtml-reference>
   </bibhtml-bibliography>
 </body>
 
