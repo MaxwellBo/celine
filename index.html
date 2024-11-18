@@ -718,7 +718,9 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 
 <script type="module" id="innerauthors">
   celine.cell("innerauthors", () => {
-    return htl.html`<span class='echo'>${document.getElementById("authors").outerHTML}</span>`;
+    const elem = document.getElementById("authors");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
   });
 </script>
 
@@ -729,7 +731,19 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 
 <script type="module" id="innerabstract">
   celine.cell("innerabstract", () => {
-    return htl.html`<span class='echo'>${document.getElementById("abstract").outerHTML}</span>`;
+    const elem = document.getElementById("abstract");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<h5 id="outeranchor"><a href="#anchor" id="anchor"></a>Anchor</h5>
+
+<script type="module" id="anchor-display">
+  celine.cell("anchor-display", () => {
+    const elem = document.getElementById("outeranchor");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
   });
 </script>
 
