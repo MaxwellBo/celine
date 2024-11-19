@@ -1,30 +1,7 @@
-# @celine/celine
+# @celine monorepo
 
-A library for building reactive HTML notebooks with inline `contenteditable` `<script>`s.
+This monorepo contains the following packages:
+- [@celine/celine](https://github.com/MaxwellBo/celine/tree/master/celine), published as [@celine/celine](https://jsr.io/@celine/celine) on [JSR](https://jsr.io).
+- [@celine/libertine](https://github.com/MaxwellBo/celine/tree/master/libertine), published as [@celine/libertine](https://jsr.io/@celine/libertine) on JSR.
 
-Docs, demos, examples: https://maxbo.me/celine/
-
-JSR: https://jsr.io/@celine/celine
-
-API docs: https://jsr.io/@celine/celine/doc
-
-![Open Graph Image](https://maxbo.me/celine/og.png)
-
-
-```
-
-  _..._                                                                
-  .-'_..._''.                    .---.                                    
-.' .'      '.\     __.....__     |   |.--.   _..._         __.....__      
-/ .'            .-''         '.   |   ||__| .'     '.   .-''         '.    
-. '             /     .-''"'-.  `. |   |.--..   .-.   . /     .-''"'-.  `.  
-| |            /     /________\   \|   ||  ||  '   '  |/     /________\   \ 
-| |            |                  ||   ||  ||  |   |  ||                  | 
-. '            \    .-------------'|   ||  ||  |   |  |\    .-------------' 
-\ '.          .\    '-.____...---.|   ||  ||  |   |  | \    '-.____...---. 
-'. `._____.-'/ `.             .' |   ||__||  |   |  |  `.             .'  
-  `-.______ /    `''-...... -'   '---'    |  |   |  |    `''-...... -'    
-           `                              |  |   |  |                     
-                                          '--'   '--'                     
-```
-
+The website for the whole project is [maxbo.me/celine](https://maxbo.me/celine/) and documents the usage of both packages.
