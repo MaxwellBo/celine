@@ -9,9 +9,9 @@
 
   <entry>
     <title>2.0.0</title>
-    <link href="https://jsr.io/@celine/celine@1.0.0"/>
-    <id>https://jsr.io/@celine/celine@1.0.0</id>
-    <updated>2024-11-05T00:00:00Z</updated>
+    <link href="https://jsr.io/@celine/celine@2.0.0"/>
+    <id>https://jsr.io/@celine/celine@2.0.0</id>
+    <updated>2024-11-19T00:00:00Z</updated>
     <summary>The libertine.css stylesheet has been split off into its own package (@celine/libertine)
     so that stylistic changes aren't breaking changes to @celine/celine.
 
