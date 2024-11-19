@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'FontWithASyntaxHighlighter';
   src:
-    url('../fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
 }
 
 .echo {

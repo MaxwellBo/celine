@@ -8,6 +8,17 @@
   <id>https://maxbo.me/celine/changelog.xml</id>
 
   <entry>
+    <title>3.0.0</title>
+    <link href="https://jsr.io/@celine/celine@3.0.0"/>
+    <id>https://jsr.io/@celine/celine@3.0.0</id>
+    <updated>2024-11-19T00:00:00Z</updated>
+    <summary>cell.css has been moved to be a top level export from @celine/celine.
+
+    Check the Installation section to see how to include the stylesheet in your project.
+    </summary>
+  </entry>
+
+  </entry>
     <title>2.0.0</title>
     <link href="https://jsr.io/@celine/celine@2.0.0"/>
     <id>https://jsr.io/@celine/celine@2.0.0</id>

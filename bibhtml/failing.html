@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type="module">
+    import { Cite } from 'https://esm.sh/@citation-js/core'
+    import 'https://esm.sh/@citation-js/plugin-bibtex'
+
+    const citation = new Cite(`@article{einstein1905electrodynamics,
+      title={On the electrodynamics of moving bodies},
+      author={Einstein, Albert},
+      journal={Annalen der physik},
+      volume={17},
+      number={10},
+      pages={891--921},
+      year={1905}
+    }`)
+
+    // Output format "bibliography" unavailable
+    console.log(citation.format('bibliography', {
+      format: 'html',
+      template: 'apa',
+      lang: 'en-US'
+    }))
+  </script>
+</body>
+</html>

@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
-  <link rel="stylesheet" href="celine/stylesheets/cell.css" />
-  <link rel="stylesheet" href="libertine/stylesheets/libertine.css" />
+  <link rel="stylesheet" href="celine/cell.css" />
+  <link rel="stylesheet" href="libertine/libertine.css" />
   <meta name="theme-color" content="#ffffff">
 
   <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
@@ -162,7 +162,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">2.0.0</a>, <time  id="updated">Oct 15 2024</time></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">3.0.0</a>, <time  id="updated">Oct 15 2024</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -202,7 +202,7 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
 <script type="module" class="echo reflect" id="installation">
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@2.0.0';
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@3.0.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -226,7 +226,7 @@ script#installation::before {
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@2.0.0/stylesheets/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@3.0.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -236,7 +236,7 @@ You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.g
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@1.0.0/stylesheets/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@2.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h2><a href="#demo" id="demo"></a>Demo: Observable Plot + SQLite</h2>
@@ -547,7 +547,7 @@ celine.cell("L", async function* () {
 });
 </script>
 
-<h3><a href="#libertine.css" id="libertine.css"></a>libertine.css</h3>
+<h3><a href="#libertine.css" id="libertine.css"></a>@celine/libertine/libertine.css</h3>
 
 <p><cite>@celine/celine</cite> ships with a companion library <cite>@celine/libertine</cite> that provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
 
