@@ -1,12 +1,7 @@
 {
-  "name": "@celine/celine",
-  "version": "1.0.3",
-  "exports": "./mod.ts",
+  "workspace": ["./celine", "./libertine"],
   "compilerOptions": {
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
-  },
-  "tasks": {
-    "dev": "deno run --watch mod.ts"
   }
 }
