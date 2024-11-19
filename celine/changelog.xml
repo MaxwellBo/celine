@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>@celine/celine changelog</title>
-  <link href="https://maxbo.me/celine#changelog"/>
+  <link href="https://maxbo.me/celine/#celine-changelog"/>
   <author>
     <name>Max Bo</name>
   </author>
-  <id>https://maxbo.me/celine/changelog.xml</id>
+  <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
     <title>3.0.0</title>
