@@ -105,54 +105,18 @@
         }
       }
 
-      format(template = 'apa') {
+      format(template) {
         if (!this._citation) return '';
         const entry = this._citation.data[0];
-        const { author, title, journal, volume, number, pages, publisher, address, month, howpublished, issued } = entry;
-
-        let formattedEntry = '';
-
-        if (author) {
-          const authors = author.map(a => `${a.given} ${a.family}`).join(', ');
-          formattedEntry += `${authors}. `;
-        }
-        if (title) {
-          formattedEntry += `<i>${title}</i>. `;
-        }
-        if (journal) {
-          formattedEntry += `${journal}, `;
-        }
-        if (volume) {
-          formattedEntry += `vol. ${volume}, `;
-        }
-        if (number) {
-          formattedEntry += `no. ${number}, `;
-        }
-        if (pages) {
-          formattedEntry += `pp. ${pages}, `;
-        }
-        if (issued && issued['date-parts'] && issued['date-parts'][0]) {
-          const year = issued['date-parts'][0][0];
-          formattedEntry += `(${year}). `;
-        }
-        if (publisher) {
-          formattedEntry += `${publisher}, `;
-        }
-        if (address) {
-          formattedEntry += `${address}, `;
-        }
-        if (month) {
-          formattedEntry += `${month}, `;
-        }
-        if (howpublished) {
-          formattedEntry += `${howpublished}. `;
-        }
-        return formattedEntry.trim();
+        return this._citation.format('bibliography', {
+          format: 'html',
+          template
+        });
       }
 
-      render() {
+      render(template = 'apa') {
         const node = document.createElement('span');
-        node.innerHTML = this.format();
+        node.innerHTML = this.format(template);
         this.shadowRoot.replaceChildren(node);
       }
     }
