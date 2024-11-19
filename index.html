@@ -549,7 +549,7 @@ celine.cell("L", async function* () {
 
 <h3><a href="#libertine.css" id="libertine.css"></a>libertine.css</h3>
 
-<p><cite>@celine/celine</cite> ships with a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
+<p><cite>@celine/celine</cite> ships with a companion library <cite>@celine/libertine</cite> that provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
 
 <p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
 
@@ -984,7 +984,7 @@ celine.cell("bloom", async () => {
 <h2><a href="#changelog" id="changelog"></a>Changelog <a href="changelog.xml"><img src="static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
 
 <p>
-  <cite>@celine/celine</cite> and <cite>@celine/libertine</cite>use <a href="https://semver.org/">Semantic Versioning 2.0.0</a>.
+  <cite>@celine/celine</cite> and <cite>@celine/libertine</cite> use <a href="https://semver.org/">Semantic Versioning 2.0.0</a>.
   The following changelog is specifically that of <cite>@celine/celine</cite>'s API.
 </p>
 
@@ -1002,7 +1002,7 @@ celine.cell("bloom", async () => {
     <!-- rows get inserted here-->
   </tbody>
   <script type="module">
-    fetch('changelog.xml')
+    fetch('celine/changelog.xml')
       .then(response => response.text())
       .then(data => {
         const parser = new DOMParser();
