@@ -1,6 +1,6 @@
 # @celine project monorepo
 
-The project website [maxbo.me/celine](https://maxbo.me/celine/), rather than this README.md, has the demos, installation instructions, API docs and additional resources you might be looking for.
+The project website [maxbo.me/celine](https://maxbo.me/celine/), rather than this README.md, has the [demos](https://maxbo.me/celine/#demo), [installation instructions](https://maxbo.me/celine/#installation), [API docs](https://maxbo.me/celine/#api) and [additional resources](https://maxbo.me/celine/#resources) you might be looking for.
 
 This monorepo contains the following packages:
 - [/celine](https://github.com/MaxwellBo/celine/tree/master/celine), which is published as [@celine/celine](https://jsr.io/@celine/celine) on JSR. It exports core reactive cell functionality and styling, and a data visualization focussed standard library.
