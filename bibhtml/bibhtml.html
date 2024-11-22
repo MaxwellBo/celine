@@ -116,9 +116,12 @@
       }
 
       render(template = 'apa') {
-        const node = document.createElement('span');
-        node.innerHTML = this.format(template);
-        this.shadowRoot.replaceChildren(node);
+        const tempTemplate = document.createElement('template');
+        tempTemplate.innerHTML = this.format(template);
+
+        const cslEntry = tempTemplate.content.querySelector('.csl-entry');
+        cslEntry.style.display = 'inline-block';
+        this.shadowRoot.replaceChildren(cslEntry);
       }
     }
 
