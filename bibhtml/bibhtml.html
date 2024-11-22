@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>bibhtml</title>
+  <link rel="stylesheet" href="../libertine/libertine.css">
 </head>
 
 <body>
@@ -84,7 +85,7 @@
       }
     }
 
-    class BibHTMLEntry extends HTMLElement {
+    class BibHTMLReference extends HTMLElement {
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -101,7 +102,7 @@
           const bibliography = document.querySelector("bibhtml-bibliography");
           bibliography.addEntry(this._citation.data[0]['citation-key'], this);
         } catch (e) {
-          console.error('Error parsing citation entry:', e);
+          console.error('Error parsing Citation.js entry:', e);
         }
       }
 
@@ -205,39 +206,42 @@
     }
 
     customElements.define('bibhtml-bibliography', BibHTMLBibliography);
-    customElements.define('bibhtml-reference', BibHTMLEntry);
+    customElements.define('bibhtml-reference', BibHTMLReference);
     customElements.define('bibhtml-cite', BibHTMLCite);
   </script>
 
-  <h3><a id="citation-web-component" href="#citation-web-component"></a>Citation Web Component</h3>
+  <h1>@celine/bibhtml</h1>
+  <div class="authors">
+    <div class="author">
+      <span class="author-name">Max Bo</span> <sup><a href="https://maxbo.me" style="text-decoration: none;">↗</a></sup>
+    </div>
+  </div>
 
-  <blockquote>
-    <p>
-      The accurate determination of college students' coefficients of friction is a fascinating
-      topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
-    </p>
-    <p>
-      The Mathematical Theory of Efficient Piracy provides deep
-      insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
-      The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital
-      rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
-    </p>
-    <!-- <p> -->
-    <!--   Wikidata ref <sup><bibhtml-cite>10.7717/peerj-cs.214</bibhtml-cite></sup> -->
-    <!-- </p> -->
-    <p>
-      The history of the goofy layout of keyboards is quite
-      interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
-    </p>
-    <p>
-      Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
-    </p>
+  <p>
+    The accurate determination of college students' coefficients of friction is a fascinating
+    topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
+  </p>
+  <p>
+    The Mathematical Theory of Efficient Piracy provides deep
+    insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+    The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital
+    rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
+  </p>
+  <!-- <p> -->
+  <!--   Wikidata ref <sup><bibhtml-cite>10.7717/peerj-cs.214</bibhtml-cite></sup> -->
+  <!-- </p> -->
+  <p>
+    The history of the goofy layout of keyboards is quite
+    interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
+  </p>
+  <p>
+    Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
+  </p>
 
-  </blockquote>
 
   <div style="height: 500px; background-color: lightgray;"></div>
 
-  <b>Bibliography</b>
+  <h2>Bibliography</h2>
   <bibhtml-bibliography>
     <bibhtml-reference>
       @article{Cummings2003,
