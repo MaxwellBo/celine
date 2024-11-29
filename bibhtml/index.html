@@ -52,7 +52,6 @@
     class BibHTMLCite extends HTMLElement {
       constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
         this._referenceIndex = null;
         this._citationIndex = null;
       }
@@ -88,6 +87,14 @@
       }
 
       render() {
+        if (this._referenceIndex === null || this._citationIndex === null) {
+          return;
+        }
+
+        if (!this.shadowRoot) {
+          this.attachShadow({ mode: 'open' });
+        }
+
         const bibliography = document.querySelector("bibhtml-bibliography");
         const link = document.createElement('a');
         const citationShorthand = alphabetize(this._citationIndex + 1);
@@ -105,6 +112,7 @@
         super();
         this.attachShadow({ mode: 'open' });
         this._citation = null;
+        this._notifiedBibliography = false;
       }
 
       async connectedCallback() {
@@ -114,10 +122,13 @@
             this._citation = await Cite.async(this.textContent);
           }
         } catch (e) {
-          console.warn('Error parsing Citation.js entry:', this.textContent, e);
+          console.log('Could not parse <bibhtml-reference> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:', this.textContent, e);
         }
 
-        bibliography.addReference(this.id, this);
+        if (!this._notifiedBibliography) {
+          this._notifiedBibliography = true;
+          bibliography.addReference(this.id, this);
+        }
       }
 
       format(template) {
@@ -172,7 +183,12 @@
         const list = document.createElement('ol');
 
         let referenceIndex = 0;
-        for (const [ref, citations] of this.refIdToCitations.entries()) {
+        for (const [refId, citations] of this.refIdToCitations.entries()) {
+          const reference = this.refIdToReference.get(refId);
+          if (!reference) {
+            continue;
+          }
+
           let citationIndex = 0;
           for (const citation of citations) {
             citation.referenceIndex = referenceIndex;
@@ -181,24 +197,19 @@
             citationIndex++;
           }
 
-          const entry = this.refIdToReference.get(ref);
-          if (!entry) {
-            continue;
-          }
-
           const item = document.createElement('li');
-          entry.render();
-          item.appendChild(entry);
-          item.id = `ref-${ref}`;
+          reference.render();
+          item.appendChild(reference);
+          item.id = `ref-${refId}`;
 
           const backlinks = document.createElement('sup');
 
           if (citations.length === 1) {
             const backlink = document.createElement('a');
-            backlink.href = `#cite-${ref}-a`;
+            backlink.href = `#cite-${refId}-a`;
             backlink.textContent = '^';
             backlinks.appendChild(backlink);
-            anchorify(citations[0].shadowRoot, backlink, `#cite-${ref}-a`);
+            anchorify(citations[0].shadowRoot, backlink, `#cite-${refId}-a`);
           } else {
             let i = 0;
             backlinks.textContent = '^';
@@ -207,9 +218,9 @@
             for (const citation of citations) {
               const citationShorthand = alphabetize(i + 1);
               const backlink = document.createElement('a');
-              backlink.href = `#cite-${ref}-${citationShorthand}`;
+              backlink.href = `#cite-${refId}-${citationShorthand}`;
               backlink.textContent = citationShorthand;
-              anchorify(citation.shadowRoot, backlink, `#cite-${ref}-${citationShorthand}`);
+              anchorify(citation.shadowRoot, backlink, `#cite-${refId}-${citationShorthand}`);
               backlinks.appendChild(document.createTextNode(' '));
               backlinks.appendChild(backlink);
               i++;
@@ -298,7 +309,7 @@
   </p> -->
 
   <p>
-    When citing a <span id="missing-container">reference<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the inner text of the element with a <code>?</code> suffixed will be displayed.
+    When citing a <span id="missing-container">reference<sup><bibhtml-cite>freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the inner text of the element will be displayed as a fallback:
   </p>
 
   <script id="missing-cell" type="module">
