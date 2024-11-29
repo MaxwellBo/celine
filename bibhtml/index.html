@@ -6,6 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>bibhtml</title>
   <link rel="stylesheet" href="../libertine/libertine.css">
+  <link rel="stylesheet" href="../celine/cell.css">
+  <script type="module">
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@3.0.0';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+
+    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+    window.library = celine.library; /* @observablehq/stdlib */
+    window.Inputs = Inputs;
+    window.htl = htl;
+    console.log(window.celine)
+
+    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
 </head>
 
 <body>
@@ -14,6 +28,7 @@
     import 'https://esm.sh/@citation-js/plugin-bibtex'
     import 'https://esm.sh/@citation-js/plugin-doi'
     import 'https://esm.sh/@citation-js/plugin-csl'
+    import 'https://esm.sh/@citation-js/plugin-wikidata'
 
     function alphabetize(n) {
       const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -100,9 +115,10 @@
 
           this._citation = await Cite.async(this.textContent);
           const bibliography = document.querySelector("bibhtml-bibliography");
+          console.log(this._citation);
           bibliography.addEntry(this._citation.data[0]['citation-key'], this);
         } catch (e) {
-          console.error('Error parsing Citation.js entry:', e);
+          console.error('Error parsing Citation.js entry:', this.textContent );
         }
       }
 
@@ -221,6 +237,52 @@
   </div>
 
   <p>
+    <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to referencing in LaTeX/BibTeX. While a wrapper around <a href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>Willighagen_2019</bibhtml-cite></sup>, it gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a href="https://nota-lang.org/reference.html#def-section-2.4">Nota Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
+  </p>
+
+  <h2>API</h2>
+
+  <p>
+    <cite>bibhtml</cite> is structured around 3 custom elements:
+    <ol>
+      <li>
+      A <code>&lt;bibhtml-bibliography&gt;</code> which contains...
+      </li>
+      <li>
+      <code>&lt;bibhtml-reference&gt;</code>s which are cited by...
+      </li>
+      <li>
+      <code>&lt;bibhtml-cite&gt;</code>s inline in the text.
+      </li>
+    </ol>
+  </p>
+
+  <p>
+    So if we wanted to cite <span id="inner-text-container">Citation.js<sup><bibhtml-cite>Willighagen_2019</bibhtml-cite></sup></span>,
+    we'd use <code>&lt;bibhtml-cite&gt;</code> element:
+  </p>
+
+  <script id="inner-text-cell" type="module">
+    celine.cell("inner-text-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('inner-text-container').innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element, if JavaScript fails to load or the reference fails to parse.
+  </p>
+
+  <script id="ref-cell" type="module">
+    celine.cell("ref-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    We can site using Nota<sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup> style citations. 
+  </p>
+
+  <p>
     The accurate determination of college students' coefficients of friction is a fascinating
     topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
   </p>
@@ -244,49 +306,40 @@
 
   <div style="height: 500px; background-color: lightgray;"></div>
 
-  <h2>Bibliography</h2>
+
+  </div>
   <bibhtml-bibliography>
-    <bibhtml-reference>
-      @article{Cummings2003,
-      author = {Arthur B Cummings and David Eftekhary and Frank G House},
-      title = {The accurate determination of college students' coefficients of friction},
-      journal = {Journal of Sketchy Physics},
-      volume = {13},
-      year = {2003},
-      number = {2},
-      pages = {46--129}
+    <bibhtml-reference id="Willighagen_2019">
+      @article{Willighagen_2019,
+        title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+        author = {Willighagen, Lars G.},
+        year = 2019,
+        month = aug,
+        keywords = {Bibliography, Javascript},
+        volume = 5,
+        pages = {e214},
+        journal = {PeerJ Computer Science},
+        issn = {2376-5992},
+        url = {https://doi.org/10.7717/peerj-cs.214},
+        doi = {10.7717/peerj-cs.214}
       }
     </bibhtml-reference>
-    <bibhtml-reference>
-      @book{Napster1998,
-      author = {L M Napster},
-      title = {Mathematical Theory of Efficient Piracy},
-      series = {Lecture Notes in Mathematics},
-      volume = {3204},
-      publisher = {Springer Verlag},
-      address = {New York NY},
-      year = {1998}
+    <bibhtml-reference id="crichton2021nota">
+      @inproceedings{crichton2021nota,
+        title={A New Medium for Communicating Research on Programming Languages},
+        author={Crichton, Will},
+        booktitle={Proceedings of the 1st Workshop on Human Aspects of Types and Reasoning Assistants},
+        year={2021}
       }
     </bibhtml-reference>
-    <bibhtml-reference>
-      @phdthesis{Qwerty1996,
-      author = {O P Qwerty},
-      title = {History of the Goofy Layout of Keyboards},
-      publisher = {Podunk University Arcana Department},
-      address = {Podunk IN},
-      year = {1996}
-      }
+    <bibhtml-reference id="bo2024">
+      Free text reference
     </bibhtml-reference>
-    <bibhtml-reference>
-      @misc{Freud2012,
-      author = {Sigmund Freud},
-      month = {July},
-      year = {2012},
-      howpublished = {Personal conversation}
-      }
+    <bibhtml-reference id="10.1080/15588742.2015.1017687">
+      10.1080/15588742.2015.1017687
     </bibhtml-reference>
-    <bibhtml-reference>
-      Q30000000
+    <bibhtml-reference id="Q21972834">
+      Q21972834
     </bibhtml-reference>
   </bibhtml-bibliography>
 </body>
