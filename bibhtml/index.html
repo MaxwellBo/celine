@@ -117,7 +117,7 @@
           console.warn('Error parsing Citation.js entry:', this.textContent, e);
         }
 
-        bibliography.addEntry(this.id, this);
+        bibliography.addReference(this.id, this);
       }
 
       format(template) {
@@ -147,24 +147,24 @@
       constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.refToEntries = new Map();
-        this.refToCitations = new Map();
+        this.refIdToReference = new Map();
+        this.refIdToCitations = new Map();
       }
 
       async connectedCallback() {
         this.render();
       }
 
-      addEntry(key, entry) {
-        this.refToEntries.set(key, entry);
+      addReference(refId, reference) {
+        this.refIdToReference.set(refId, reference);
         this.render();
       }
 
-      addCitation(key, citation) {
-        if (!this.refToCitations.has(key)) {
-          this.refToCitations.set(key, []);
+      addCitation(refId, citation) {
+        if (!this.refIdToCitations.has(refId)) {
+          this.refIdToCitations.set(refId, []);
         }
-        this.refToCitations.get(key).push(citation);
+        this.refIdToCitations.get(refId).push(citation);
         this.render();
       }
 
@@ -172,7 +172,7 @@
         const list = document.createElement('ol');
 
         let referenceIndex = 0;
-        for (const [ref, citations] of this.refToCitations.entries()) {
+        for (const [ref, citations] of this.refIdToCitations.entries()) {
           let citationIndex = 0;
           for (const citation of citations) {
             citation.referenceIndex = referenceIndex;
@@ -181,7 +181,7 @@
             citationIndex++;
           }
 
-          const entry = this.refToEntries.get(ref);
+          const entry = this.refIdToReference.get(ref);
           if (!entry) {
             continue;
           }
@@ -298,7 +298,7 @@
   </p> -->
 
   <p>
-    When citing a <span id="missing-container">reference<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the reference will be citation will degrade to the inner text of the element:
+    When citing a <span id="missing-container">reference<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the inner text of the element with a <code>?</code> suffixed will be displayed.
   </p>
 
   <script id="missing-cell" type="module">
