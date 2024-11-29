@@ -150,8 +150,7 @@
         tempTemplate.innerHTML = this.format(template);
 
         const cslEntry = tempTemplate.content.querySelector('.csl-entry');
-        cslEntry.style.display = 'inline-block';
-        this.shadowRoot.replaceChildren(cslEntry);
+        this.shadowRoot.replaceChildren(...cslEntry.childNodes);
       }
     }
 
@@ -299,7 +298,7 @@
   <h2><code>&lt;bibhtml-bibliography&gt;</code></h2>
 
   <p>
-    The <code>&lt;bibhtml-bibliography&gt;</code> contains <code>&lt;bibhtml-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>).
+    The <code>&lt;bibhtml-bibliography&gt;</code> contains <code>&lt;bibhtml-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bibhtml-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bibhtml-bibliography&gt;</code>.
   </p>
 
   <p>
