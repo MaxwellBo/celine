@@ -185,7 +185,7 @@
   <h3><code>&lt;bibhtml-reference&gt;</code></h3>
 
   <p>
-    The <code>&lt;bibhtml-reference&gt;</code> is tagged with the <code>id</code> attribute and contains reference information in 4 supported formats.
+    Each <code>&lt;bibhtml-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats.
   </p>
 
   <h3>BibTeX</h3>
@@ -198,7 +198,7 @@
   </script>
 
   <p>
-    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
+    This expands to reference <bibhtml-cite ref="crichton2021nota"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
   </p>
 
   <h3>Unstructured text</h3>
@@ -233,11 +233,7 @@
   </script>
 
   <p>
-    This expands to a full reference: <bibhtml-cite ref="slivaLambert2015"></bibhtml-cite>
-  </p>
-
-  <p>
-    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+    This expands to reference <bibhtml-cite ref="slivaLambert2015"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
   </p>
 
   <h3>Wikidata</h3>
@@ -250,11 +246,7 @@
   </script>
 
   <p>
-    This expands to a full reference: <bibhtml-cite ref="raymondEtAl2013"></bibhtml-cite>
-  </p>
-
-  <p>
-    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bibhtml-cite ref="raymondEtAl2013"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
 
