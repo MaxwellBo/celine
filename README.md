@@ -5,6 +5,6 @@ The project website [maxbo.me/celine](https://maxbo.me/celine/), rather than thi
 This monorepo contains the following packages:
 - [/celine](https://github.com/MaxwellBo/celine/tree/master/celine), which is published as [@celine/celine](https://jsr.io/@celine/celine) on JSR. It exports core reactive cell functionality and styling, and a data visualization focussed standard library.
 - [/libertine](https://github.com/MaxwellBo/celine/tree/master/libertine), which is published as [@celine/libertine](https://jsr.io/@celine/libertine) on JSR. It exports `libertine.css`, a drop-in stylesheet that emulates the look of some academic typesetting.
-- [/bibhtml](https://github.com/MaxwellBo/celine/tree/master/bibhtml), is experimental and unpublished. It will export a Web Component wrapper around [Citation.js](https://citation.js.org/).
+- [/bibhtml](https://github.com/MaxwellBo/celine/tree/master/bibhtml), which is published as [@celine/bibhtml](https://jsr.io/@celine/bibhtml) on JSR. It exports 3 Web Components based custom elements that wrap [Citation.js](https://citation.js.org/).
 
 ![demo](og.png)
