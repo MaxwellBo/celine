@@ -27,7 +27,7 @@ function anchorify(root: ShadowRoot | Document, element: HTMLElement, query: str
   };
 }
 
-class BibHTMLCite extends HTMLElement {
+export class BibhtmlCite extends HTMLElement {
   _referenceIndex: number | null;
   _citationIndex: number | null;
   _notifiedBibliography: boolean;
@@ -40,7 +40,7 @@ class BibHTMLCite extends HTMLElement {
   }
 
   connectedCallback() {
-    const bibliography: BibHTMLBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
 
     if (!bibliography) {
       throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
@@ -49,7 +49,7 @@ class BibHTMLCite extends HTMLElement {
     bibliography.addCitation(this.refId, this);
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['ref'];
   }
 
@@ -59,7 +59,7 @@ class BibHTMLCite extends HTMLElement {
     }
   }
 
-  get refId() {
+  get refId(): string {
     return this.getAttribute('ref') || (this.textContent || '').trim();
   }
 
@@ -82,7 +82,7 @@ class BibHTMLCite extends HTMLElement {
       this.attachShadow({ mode: 'open' });
     }
 
-    const bibliography: BibHTMLBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
 
     if (!bibliography) {
       throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
@@ -101,7 +101,7 @@ class BibHTMLCite extends HTMLElement {
   }
 }
 
-class BibHTMLReference extends HTMLElement {
+export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
 
@@ -113,7 +113,7 @@ class BibHTMLReference extends HTMLElement {
   }
 
   async connectedCallback() {
-    const bibliography: BibHTMLBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
     if (!bibliography) {
       throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
     }
@@ -133,7 +133,7 @@ class BibHTMLReference extends HTMLElement {
     }
   }
 
-  format(template: string) {
+  format(template: string): string {
     return this._citation.format('bibliography', {
       format: 'html',
       template
@@ -160,9 +160,9 @@ class BibHTMLReference extends HTMLElement {
   }
 }
 
-class BibHTMLBibliography extends HTMLElement {
-  _refIdToReference: Map<string, BibHTMLReference>;
-  _refIdToCitations: Map<string, BibHTMLCite[]>;
+export class BibhtmlBibliography extends HTMLElement {
+  _refIdToReference: Map<string, BibhtmlReference>;
+  _refIdToCitations: Map<string, BibhtmlCite[]>;
 
   constructor() {
     super();
@@ -175,7 +175,7 @@ class BibHTMLBibliography extends HTMLElement {
     this.render();
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['format'];
   }
 
@@ -185,12 +185,12 @@ class BibHTMLBibliography extends HTMLElement {
     }
   }
 
-  addReference(refId: string, reference: BibHTMLReference) {
+  addReference(refId: string, reference: BibhtmlReference) {
     this._refIdToReference.set(refId, reference);
     this.render();
   }
 
-  addCitation(refId: string, citation: BibHTMLCite) {
+  addCitation(refId: string, citation: BibhtmlCite) {
     if (!this._refIdToCitations.has(refId)) {
       this._refIdToCitations.set(refId, []);
     }

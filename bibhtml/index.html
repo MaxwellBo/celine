@@ -23,238 +23,6 @@
 </head>
 
 <body>
-  <script type="module">
-    import { Cite } from 'https://esm.sh/@citation-js/core'
-    import 'https://esm.sh/@citation-js/plugin-bibtex'
-    import 'https://esm.sh/@citation-js/plugin-doi'
-    import 'https://esm.sh/@citation-js/plugin-csl'
-    import 'https://esm.sh/@citation-js/plugin-wikidata'
-
-    function alphabetize(n) {
-      const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-      let out = "";
-      while (n > 0) {
-        const mod = (n - 1) % 26;
-        out = alphabet[mod] + out;
-        n = Math.floor((n - mod) / 26);
-      }
-      return out;
-    }
-
-    function anchorify(root, element, query) {
-      element.onclick = () => {
-        const target = root.querySelector(query);
-        target.scrollIntoView();
-        target.focus();
-      };
-    }
-
-    class BibHTMLCite extends HTMLElement {
-      constructor() {
-        super();
-        this._referenceIndex = null;
-        this._citationIndex = null;
-      }
-
-      connectedCallback() {
-        const bibliography = document.querySelector("bibhtml-bibliography");
-        bibliography.addCitation(this.refId, this);
-      }
-
-      static get observedAttributes() {
-        return ['ref'];
-      }
-
-      attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'ref') {
-          this.render();
-        }
-      }
-
-      get refId() {
-        return this.getAttribute('ref') || this.textContent.trim();
-      }
-
-      set referenceIndex(value) {
-        this._referenceIndex = value;
-        this.render();
-      }
-
-      set citationIndex(value) {
-        this._citationIndex = value;
-        this.render();
-      }
-
-      render() {
-        if (this._referenceIndex === null || this._citationIndex === null) {
-          return;
-        }
-
-        if (!this.shadowRoot) {
-          this.attachShadow({ mode: 'open' });
-        }
-
-        const bibliography = document.querySelector("bibhtml-bibliography");
-        const link = document.createElement('a');
-        const citationShorthand = alphabetize(this._citationIndex + 1);
-
-        link.href = `#${this.refId}`;
-        anchorify(bibliography.shadowRoot, link, `#${this.refId}`);
-
-        link.id = `cite-${this.refId}-${citationShorthand}`;
-        link.textContent = `[${this._referenceIndex + 1}]`;
-
-        this.shadowRoot.replaceChildren(link);
-      }
-    }
-
-    class BibHTMLReference extends HTMLElement {
-      constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this._citation = null;
-        this._notifiedBibliography = false;
-      }
-
-      async connectedCallback() {
-        const bibliography = document.querySelector("bibhtml-bibliography");
-        try {
-          if (!this._citation) {
-            this._citation = await Cite.async(this.textContent);
-          }
-        } catch (e) {
-          console.log('Could not parse <bibhtml-reference> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:', this.textContent, e);
-        }
-
-        if (!this._notifiedBibliography) {
-          this._notifiedBibliography = true;
-          bibliography.addReference(this.id, this);
-        }
-      }
-
-      format(template) {
-        return this._citation.format('bibliography', {
-          format: 'html',
-          template
-        });
-      }
-
-      render(template = 'apa') {
-        // gracefully degrade
-        if (!this._citation) {
-          this.shadowRoot.replaceChildren(document.createTextNode(this.textContent));
-          return;
-        }
-
-        const tempTemplate = document.createElement('template');
-        tempTemplate.innerHTML = this.format(template);
-
-        const cslEntry = tempTemplate.content.querySelector('.csl-entry');
-        this.shadowRoot.replaceChildren(...cslEntry.childNodes);
-      }
-    }
-
-    class BibHTMLBibliography extends HTMLElement {
-      constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        this.refIdToReference = new Map();
-        this.refIdToCitations = new Map();
-      }
-
-      async connectedCallback() {
-        this.render();
-      }
-
-      static get observedAttributes() {
-        return ['format'];
-      }
-
-      attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'format') {
-          this.render();
-        }
-      }
-
-
-      addReference(refId, reference) {
-        this.refIdToReference.set(refId, reference);
-        this.render();
-      }
-
-      addCitation(refId, citation) {
-        if (!this.refIdToCitations.has(refId)) {
-          this.refIdToCitations.set(refId, []);
-        }
-        this.refIdToCitations.get(refId).push(citation);
-        this.render();
-      }
-
-      render() {
-        const list = document.createElement('ol');
-
-        let referenceIndex = 0;
-        for (const [refId, citations] of this.refIdToCitations.entries()) {
-          const reference = this.refIdToReference.get(refId);
-          if (!reference) {
-            continue;
-          }
-
-          let citationIndex = 0;
-          for (const citation of citations) {
-            citation.referenceIndex = referenceIndex;
-            citation.citationIndex = citationIndex;
-            citation.render();
-            citationIndex++;
-          }
-
-          const item = document.createElement('li');
-          reference.render(this.getAttribute('format'));
-          item.appendChild(reference);
-          item.id = `ref-${refId}`;
-
-          const backlinks = document.createElement('sup');
-
-          if (citations.length === 1) {
-            const backlink = document.createElement('a');
-            backlink.href = `#cite-${refId}-a`;
-            anchorify(citations[0].shadowRoot, backlink, `#cite-${refId}-a`);
-
-            backlink.textContent = '^';
-            backlinks.appendChild(backlink);
-          } else {
-            let i = 0;
-            backlinks.textContent = '^';
-            backlinks.appendChild(document.createTextNode(' '));
-
-            for (const citation of citations) {
-              const citationShorthand = alphabetize(i + 1);
-              const backlink = document.createElement('a');
-              backlink.href = `#cite-${refId}-${citationShorthand}`;
-              anchorify(citation.shadowRoot, backlink, `#cite-${refId}-${citationShorthand}`);
-
-              backlink.textContent = citationShorthand;
-              backlinks.appendChild(document.createTextNode(' '));
-              backlinks.appendChild(backlink);
-              i++;
-            }
-          }
-
-          backlinks.appendChild(document.createTextNode(' '));
-          item.prepend(backlinks);
-          list.appendChild(item);
-          referenceIndex++;
-        };
-
-        this.shadowRoot.replaceChildren(list);
-      }
-    }
-
-    customElements.define('bibhtml-bibliography', BibHTMLBibliography);
-    customElements.define('bibhtml-reference', BibHTMLReference);
-    customElements.define('bibhtml-cite', BibHTMLCite);
-  </script>
-
   <p>
     <a href="../index.html" style="text-decoration: none; font-family: 'Libertinus Sans', sans-serif">←
       @celine/celine</a>
@@ -279,6 +47,65 @@
       citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
   </p>
 
+  <table class="header">
+    <tbody>
+      <tr>
+        <th>GitHub</th>
+        <td class="width-auto"><a href="https://github.com/MaxwellBo/celine/tree/master/bibhtml">MaxwellBo/<wbr>celine/<wbr>bibhtml</a><span id="stars"></span> + <a href="https://github.com/MaxwellBo/celine/issues">/issues</a> </td> 
+        <th class="width-min">License</th>
+        <td><a href="https://github.com/MaxwellBo/celine/blob/master/LICENSE">MIT</a></td>
+      </tr>
+      <script type="module">
+        // ping the GitHub API for the number of stars
+        fetch("https://api.github.com/repos/MaxwellBo/celine")
+          .then(d => d.json())
+          .then(resp => {
+            const stars = resp.stargazers_count;
+            document.getElementById("stars").textContent = ` (⭐ ${stars})`;
+          })
+      </script>
+      <tr>
+        <th>JSR</th>
+        <td class="width-auto"><a href="https://jsr.io/@celine/bibhtml">jsr.io/<wbr>@celine/<wbr>bibhtml</a> + <a href="https://jsr.io/@celine/bibhtml/doc">/docs</a></td>
+        <th>Version</th>
+        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">0.2.0</a>, <time  id="updated">Nov 29 2024</time></td>
+      </tr>
+      <script type="module">
+        fetch("https://npm.jsr.io/@jsr/celine__bibhtml")
+          .then(d => d.json())
+          .then(resp => {
+            const latestVersion = resp["dist-tags"].latest;
+            document.getElementById("version").textContent = latestVersion;
+            const date = new Date(resp.time[latestVersion]);
+            const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getFullYear()}`;
+            document.getElementById("updated").textContent = formattedDate;
+          })
+      </script>
+    </tbody>
+  </table>
+
+  <h2>Installation</h2>
+
+  <p>
+    Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
+  </p>
+
+<div id="installation"><script type="module">
+  import * as bibhtml from 'https://esm.sh/jsr/@celine/bibhtml@0.2.0';
+  customElements.define('bibhtml-bibliography', bibhtml.BibhtmlBibliography);
+  customElements.define('bibhtml-reference', bibhtml.BibhtmlReference);
+  customElements.define('bibhtml-cite', bibhtml.BibhtmlCite);
+</script></div>
+
+  <script id="installation-cell" type="module">
+    celine.cell("installation", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('installation').innerHTML}</pre>`
+    })
+  </script>
+
+
+  <h2>API</h2>
+
   <p>
     <cite>bibhtml</cite> is structured around 3 <a
       href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">custom elements</a>:
@@ -295,7 +122,7 @@
     </ol> -->
   </p>
 
-  <h2><code>&lt;bibhtml-bibliography&gt;</code></h2>
+  <h3><code>&lt;bibhtml-bibliography&gt;</code></h3>
 
   <p>
     The <code>&lt;bibhtml-bibliography&gt;</code> contains <code>&lt;bibhtml-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bibhtml-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bibhtml-bibliography&gt;</code>.
@@ -333,7 +160,7 @@
     })
   </script> -->
 
-  <h2><code>&lt;bibhtml-reference&gt;</code></h2>
+  <h3><code>&lt;bibhtml-reference&gt;</code></h3>
 
   <p>
     The <code>&lt;bibhtml-reference&gt;</code> is tagged with the <code>id</code> attribute and contains reference information in 4 supported formats.
@@ -409,7 +236,7 @@
   </p>
 
 
-  <h2><code>&lt;bibhtml-cite&gt;</code></h2>
+  <h3><code>&lt;bibhtml-cite&gt;</code></h3>
 
   <p>
     Say we wanted to cite <span
