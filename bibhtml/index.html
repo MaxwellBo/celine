@@ -271,7 +271,7 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load.
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load:
   </p>
 
   <script id="ref-cell" type="module">
@@ -298,7 +298,7 @@
   </p> -->
 
   <p>
-    When citing a <span id="missing-container">reference <sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the reference will be citation will degrade to the inner text of the element.
+    When citing a <span id="missing-container">reference<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the reference will be citation will degrade to the inner text of the element:
   </p>
 
   <script id="missing-cell" type="module">
@@ -309,7 +309,7 @@
 
   <h2>References</h2>
 
-  <bibhtml-bibliography style="font-family: 'Libertinus Sans', sans-serif;">
+  <bibhtml-bibliography>
     <bibhtml-reference id="Willighagen_2019">
       @article{Willighagen_2019,
         title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
