@@ -59,7 +59,6 @@
       connectedCallback() {
         const bibliography = document.querySelector("bibhtml-bibliography");
         bibliography.addCitation(this.refId, this);
-        this.render();
       }
 
       static get observedAttributes() {
@@ -101,7 +100,7 @@
 
         link.href = `#${this.refId}`;
         anchorify(bibliography.shadowRoot, link, `#${this.refId}`);
-        
+
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
 
@@ -120,7 +119,7 @@
       async connectedCallback() {
         const bibliography = document.querySelector("bibhtml-bibliography");
         try {
-          if (!this._citation){
+          if (!this._citation) {
             this._citation = await Cite.async(this.textContent);
           }
         } catch (e) {
@@ -144,8 +143,8 @@
         // gracefully degrade
         if (!this._citation) {
           this.shadowRoot.replaceChildren(document.createTextNode(this.textContent));
-          return ;
-        } 
+          return;
+        }
 
         const tempTemplate = document.createElement('template');
         tempTemplate.innerHTML = this.format(template);
@@ -167,6 +166,17 @@
       async connectedCallback() {
         this.render();
       }
+
+      static get observedAttributes() {
+        return ['format'];
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'format') {
+          this.render();
+        }
+      }
+
 
       addReference(refId, reference) {
         this.refIdToReference.set(refId, reference);
@@ -200,7 +210,7 @@
           }
 
           const item = document.createElement('li');
-          reference.render();
+          reference.render(this.getAttribute('format'));
           item.appendChild(reference);
           item.id = `ref-${refId}`;
 
@@ -246,6 +256,11 @@
     customElements.define('bibhtml-cite', BibHTMLCite);
   </script>
 
+  <p>
+    <a href="../index.html" style="text-decoration: none; font-family: 'Libertinus Sans', sans-serif">←
+      @celine/celine</a>
+  </p>
+
   <h1>@celine/bibhtml</h1>
   <div class="authors">
     <div class="author">
@@ -253,13 +268,22 @@
     </div>
   </div>
 
-  <p>
-    <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to referencing in LaTeX/BibTeX. While a wrapper around <a href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup>, it gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a href="https://nota-lang.org/reference.html#def-section-2.4">Nota Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
+  <p class="abstract">
+    <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
+      Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to
+    referencing in LaTeX/BibTeX. While a wrapper around <a
+      href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup>, it
+    gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes
+    significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a
+      href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a
+      href="https://nota-lang.org/reference.html#def-section-2.4">Nota
+      Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
   </p>
 
   <p>
-    <cite>bibhtml</cite> is structured around 3 custom elements:
-    <ol>
+    <cite>bibhtml</cite> is structured around 3 <a
+      href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">custom elements</a>:
+    <!-- <ol>
       <li>
       A <code>&lt;bibhtml-bibliography&gt;</code> which contains...
       </li>
@@ -269,11 +293,129 @@
       <li>
       <code>&lt;bibhtml-cite&gt;</code>s inline in the text.
       </li>
-    </ol>
+    </ol> -->
+  </p>
+
+  <h2><code>&lt;bibhtml-bibliography&gt;</code></h2>
+
+  <p>
+    The <code>&lt;bibhtml-bibliography&gt;</code> contains <code>&lt;bibhtml-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>).
   </p>
 
   <p>
-    So if we wanted to cite <span id="inner-text-container">Citation.js<sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup></span>,
+    The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code> (default) is supported.
+  </p>
+  <!-- TODO Get <code>"vancouver"</code> or <code>"harvard1"</code> working. -->
+  <br />
+
+  <pre class="echo">
+&lt;bibhtml-bibliography format="apa"&gt;
+  &lt;bibhtml-reference id="willighagen2019"&gt;
+    @article{willighagen2019,
+    title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+    author = {Willighagen, Lars G.},
+    year = 2019,
+    month = aug,
+    keywords = {Bibliography, Javascript},
+    volume = 5,
+    pages = {e214},
+    journal = {PeerJ Computer Science},
+    issn = {2376-5992},
+    url = {https://doi.org/10.7717/peerj-cs.214},
+    doi = {10.7717/peerj-cs.214}
+    }
+  &lt;/bibhtml-reference&gt;
+  ...
+&lt;/bibhtml-bibliography&gt;</pre>
+
+  <!-- <script id="bibliography-cell" type="module">
+    celine.cell("bibliography-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('bibliography-container').innerHTML}</pre>`
+    })
+  </script> -->
+
+  <h2><code>&lt;bibhtml-reference&gt;</code></h2>
+
+  <p>
+    The <code>&lt;bibhtml-reference&gt;</code> is tagged with the <code>id</code> attribute and contains reference information in 4 supported formats.
+  </p>
+
+  <h3>BibTeX</h3>
+
+  <script id="bibtex-cell" type="module">
+    celine.cell("bibtex-cell", () => {
+      const reference = document.querySelector('bibhtml-bibliography').shadowRoot.getElementById('crichton2021nota');
+      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
+  </p>
+
+  <h3>Unstructured text</h3>
+
+  <p>
+    A <code>&lt;bibhtml-reference&gt;</code> can contain unstructured text. This format is useful when:
+    <ul>
+      <li>The reference is not in a machine readable format</li>
+      <li>The reference is malformed</li>
+      <li>The machine readable format is not supported by <cite>bibhtml</cite> or Citation.js</li>
+    </ul>
+  </p>
+
+  <script id="text-cell" type="module">
+    celine.cell("text-cell", () => {
+      const reference = document.querySelector('bibhtml-bibliography').shadowRoot.getElementById('dunbar2017');
+      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    The Sun is hot<sup><bibhtml-cite>dunbar2017</bibhtml-cite></sup>.
+  </p>
+
+  <h3>DOI</h3>
+
+  <script id="doi-cell" type="module">
+    celine.cell("doi-cell", () => {
+      const reference = document.getElementById('10.1080/15588742.2015.1017687');
+      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    This expands to a full reference: <bibhtml-cite ref="10.1080/15588742.2015.1017687"></bibhtml-cite>
+  </p>
+
+
+  <p>
+    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+  </p>
+
+  <h3>Wikidata</h3>
+
+  <script id="wikidata-cell" type="module">
+    celine.cell("wikidata-cell", () => {
+      const reference = document.getElementById('Q21972834');
+      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    This expands to a full reference: <bibhtml-cite ref="Q21972834"></bibhtml-cite>
+  </p>
+
+  <p>
+    This is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+  </p>
+
+
+  <h2><code>&lt;bibhtml-cite&gt;</code></h2>
+
+  <p>
+    Say we wanted to cite <span
+      id="inner-text-container">Citation.js<sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup></span>,
     we'd use <code>&lt;bibhtml-cite&gt;</code> element:
   </p>
 
@@ -284,7 +426,10 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="willighagen2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load:
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="willighagen2019"><a
+            href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner
+    text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element
+    if JavaScript fails to load:
   </p>
 
   <script id="ref-cell" type="module">
@@ -297,7 +442,7 @@
     We can site using Nota<sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup> style citations. 
   </p> -->
 
-  
+
 
   <!-- <script id="bib-cell" type="module">
     celine.cell("bib-cell", () => {
@@ -311,7 +456,8 @@
   </p> -->
 
   <p>
-    When citing a <span id="missing-container">reference<sup><bibhtml-cite>freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the inner text of the element will be displayed as a fallback:
+    When citing a <span id="missing-container">reference<sup><bibhtml-cite>freud2012</bibhtml-cite></sup></span> that is
+    not in the bibliography, the inner text of the element will be displayed as a fallback:
   </p>
 
   <script id="missing-cell" type="module">
@@ -325,42 +471,43 @@
     This is a really long div.
   </div>
 
-  <h2>References</h2>
+  <h2 id="references">References</h2>
 
-  <bibhtml-bibliography>
-    <bibhtml-reference id="willighagen2019">
-      @article{willighagen2019,
-        title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
-        author = {Willighagen, Lars G.},
-        year = 2019,
-        month = aug,
-        keywords = {Bibliography, Javascript},
-        volume = 5,
-        pages = {e214},
-        journal = {PeerJ Computer Science},
-        issn = {2376-5992},
-        url = {https://doi.org/10.7717/peerj-cs.214},
-        doi = {10.7717/peerj-cs.214}
-      }
-    </bibhtml-reference>
-    <bibhtml-reference id="crichton2021nota">
-      @inproceedings{crichton2021nota,
-        title={A New Medium for Communicating Research on Programming Languages},
-        author={Crichton, Will},
-        booktitle={Proceedings of the 1st Workshop on Human Aspects of Types and Reasoning Assistants},
-        year={2021}
-      }
-    </bibhtml-reference>
-    <bibhtml-reference id="bo2024">
-      Free text reference
-    </bibhtml-reference>
-    <bibhtml-reference id="10.1080/15588742.2015.1017687">
-      10.1080/15588742.2015.1017687
-    </bibhtml-reference>
-    <bibhtml-reference id="Q21972834">
-      Q21972834
-    </bibhtml-reference>
-  </bibhtml-bibliography>
+<bibhtml-bibliography format="vancouver1">
+<bibhtml-reference id="willighagen2019">
+  @article{willighagen2019,
+  title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+  author = {Willighagen, Lars G.},
+  year = 2019,
+  month = aug,
+  keywords = {Bibliography, Javascript},
+  volume = 5,
+  pages = {e214},
+  journal = {PeerJ Computer Science},
+  issn = {2376-5992},
+  url = {https://doi.org/10.7717/peerj-cs.214},
+  doi = {10.7717/peerj-cs.214}
+  }
+</bibhtml-reference>
+<bibhtml-reference id="crichton2021nota">
+  @inproceedings{crichton2021nota,
+  title={A New Medium for Communicating Research on Programming Languages},
+  author={Crichton, Will},
+  booktitle={Proceedings of the 1st Workshop on Human Aspects of Types and Reasoning Assistants},
+  year={2021}
+  }
+</bibhtml-reference>
+<bibhtml-reference id="dunbar2017">
+  Brian Dunbar (2017-08-03). The Sun | NASA. National Aeronautics and Space Administration. Accessed on
+  2021-08-30.
+</bibhtml-reference>
+<bibhtml-reference id="10.1080/15588742.2015.1017687">
+  10.1080/15588742.2015.1017687
+</bibhtml-reference>
+<bibhtml-reference id="Q21972834">
+  Q21972834
+</bibhtml-reference>
+</bibhtml-bibliography>
 </body>
 
 </html>
