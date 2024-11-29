@@ -110,6 +110,10 @@ export class BibhtmlReference extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._citation = null;
     this._notifiedBibliography = false;
+
+    if (!this.getAttribute('id')) {
+      console.error('<bibhtml-reference> must have an id attribute so that you can cite it with <bibhtml-cite>{id}</bibhtml-cite> or <bibhtml ref="${id}">...</bibhtml-cite>.');
+    }
   }
 
   async connectedCallback() {
