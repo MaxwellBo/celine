@@ -93,11 +93,10 @@
 
 <body>
 <main>
-  <p style="text-align: right;">
-    <a href="bibhtml/index.html" style="text-decoration: none; font-family: 'Libertinus Sans', sans-serif">
-      @celine/bibhtml →
-    </a>
-  </p>
+  <div style="text-align: right; text-decoration: none; font-family: 'Libertinus Sans', sans-serif;">
+    <a style="text-decoration: none;" href="libertine/index.html">/libertine</a>,
+    <a style="text-decoration: none;" href="bibhtml/index.html">/bibhtml</a>
+  </div>
 
 <h1 class="title">@celine/celine</h1>
 
@@ -236,7 +235,7 @@ script#installation::before {
 </pre>
 
 <p>
-You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>, <a href="#libertine.css">libertine.css</a>:
+You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>, <a href="libertine/index.html">libertine.css</a>:
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
@@ -563,216 +562,11 @@ celine.cell("L", async function* () {
 
 <h3><a href="#celine/libertine" id="libertine.css"></a>@celine/libertine</h3>
 
-<p><cite>@celine/celine</cite> ships with a companion library <cite>@celine/libertine</cite> that provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface (more specifically Libertinus Serif from the <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork).</p>
+<p><cite>@celine/libertine</cite> provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface, one common in academic typesetting.</p>
 
-
-<h4><a href="#fonts" id="fonts"></a>Installation</h4>
-
-<p>You can import it with:</p>
-<pre class="echo" style="margin-bottom: 1ch;">
-&lt;link 
-  rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@4.0.0/libertine.css&quot; /&gt;
-</pre>
-
-<h4><a href="#fonts" id="fonts"></a>Fonts</h4>
-
-<p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
-
-<p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opentype-Features.pdf</a> as a demo page.</p>
-
-<p><code>font-feature-settings: 'liga', 'tnum', 'zero' 'calt';</code> (ligatures, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric">tabular figures</a>, slashed zero &amp; contextual alternatives) are enabled by default.</p>
-
-<blockquote>
-fi fl ffi ffl
-<br />
-1234567890
-<br />
-Quest, (staff)
-<br />
-H<sub>2</sub>O, E = mc<sup>2</sup>
-</blockquote>
-
-<p><a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> makes a number of fonts available:</p>
-
-<blockquote style="font-family: 'Libertinus Serif', serif;">
-  Libertinus Serif<br />
-  Sphinx of black quartz, judge my vow.<br />
-  <i>Sphinx of black quartz, judge my vow.</i><br />
-  <b>Sphinx of black quartz, judge my vow.</b><br />
-  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
-  <span style="font-variant: small-caps;">Small caps.</span><br />
-  <span style="font-variant: all-small-caps;">All small caps.</span><br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Sans', sans-serif;">
-  Libertinus Sans<br />
-  Sphinx of black quartz, judge my vow.<br />
-  <i>Sphinx of black quartz, judge my vow.</i><br />
-  <b>Sphinx of black quartz, judge my vow.</b><br />
-  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
-  <span style="font-variant: small-caps;">Small caps.</span><br />
-  <span style="font-variant: all-small-caps;">All small caps.</span><br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Display', serif;">
-  Libertinus Display<br />
-  Sphinx of black quartz, judge my vow.<br />
-  <i>Sphinx of black quartz, judge my vow.</i><br />
-  <b>Sphinx of black quartz, judge my vow.</b><br />
-  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Mono', monospace;">
-  Libertinus Mono<br />
-  Sphinx of black quartz, judge my vow.<br />
-  <i>Sphinx of black quartz, judge my vow.</i><br />
-  <b>Sphinx of black quartz, judge my vow.</b><br />
-  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Initials', serif;">
-  Libertinus Initials<br />
-  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
-  <i>ABCDEFGHIJKLMNOPQRSTUVWXYZ</i><br />
-  <b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b><br />
-  <i><b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b></i><br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Math', serif;">
-  Libertinus Math<br />
-  E = mc²<br />
-  ∫ₐᵇ f(x) dx<br />
-  ∑ₙ₌₁^∞ 1/n² = π²/6<br />
-  ∇·E = ρ/ε₀<br />
-</blockquote>
-
-<blockquote style="font-family: 'Libertinus Keyboard', monospace;">
-  Libertinus Keyboard<br />
-  <br />
-  Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Del<br/>
-  `1234567890-= Back<br/>
-  Tab QWERTYUIOP[]\<br />
-  Capslock ASDFGHJKL;' Enter<br />
-  Shift ZXCVBNM,./ Shift<br />
-  Ctrl Windows Alt Space Alt Fn ← ↑ ↓ →<br />
-</blockquote>
-
-<p><a style="font-variant: small-caps" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">Small caps</a> are available on Libertinus Serif and <span style="font-family: 'Libertinus Sans', sans-serif;">Libertinus Sans</span>:</p>
-
-<style>
-  #smallcaps-table td:nth-child(2) {
-    max-width: 600px;
-  }
-
-  @media (max-width: 600px) {
-    #smallcaps-table {
-      display: block;
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    #smallcaps-table td {
-      display: block;
-      width: 100%;
-    }
-
-    #smallcaps-table td:first-child {
-      max-width: none;
-    }
-  }
-</style>
-
-<div id="ssc" style="font-variant: small-caps;">
-  Small caps
-</div>
-
-<script type="module" id="sscdisplay">
-  celine.cell("sscdisplay", () => {
-    const elem = document.getElementById("ssc");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-<div id="sac" style="font-variant: all-small-caps;">
-  All small caps
-</div>
-
-<script type="module" id="ssacdisplay">
-  celine.cell("ssacdisplay", () => {
-    const elem = document.getElementById("sac");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-<div id="sssc" style="font-family: 'Libertinus Sans'; font-variant: small-caps;">
-  Small caps
-</div>
-
-<script type="module" id="ssscdisplay">
-  celine.cell("ssscdisplay", () => {
-    const elem = document.getElementById("sssc");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-<div id="ssasc" style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">
-  All small caps
-</div>
-
-<script type="module" id="ssascdisplay">
-  celine.cell("ssascdisplay", () => {
-    const elem = document.getElementById("ssasc");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-<h4><a href="#classes" id="classes"></a>Classes</h4>
-
-<div id="authors" class="authors">
-  <div class="author">
-    <span class="author-name">Jane Doe,</span> <span class="author-affiliation">University of Wollongong</span>
-  </div>
-  <div class="author">
-    <span class="author-name">John Smith,</span> <span class="author-affiliation">University of Townsville</span>
-  </div>
-</div>
-
-<script type="module" id="innerauthors">
-  celine.cell("innerauthors", () => {
-    const elem = document.getElementById("authors");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-
-<div id="abstract" class="abstract">
-  This is an abstract.
-</div>
-
-<script type="module" id="innerabstract">
-  celine.cell("innerabstract", () => {
-    const elem = document.getElementById("abstract");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
-<h5 id="outeranchor"><a href="#anchor" id="anchor"></a>Anchor</h5>
-
-<script type="module" id="anchor-display">
-  celine.cell("anchor-display", () => {
-    const elem = document.getElementById("outeranchor");
-    elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
-  });
-</script>
-
+<p>
+  Information about it lives on a subpage, <a href="./libertine/index.html">/libertine</a>.
+</p>
 
 <h3><a href="#celine-bibhtml" id="celine-bibhtml"></a>@celine/bibhtml</h3>
 

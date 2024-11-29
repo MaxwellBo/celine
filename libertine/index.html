@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@celine/libertine</title>
+
+  <meta name="description" content="A drop-in stylesheet based around the Linux Libertine font family, one common in academic publishing.">
+  <meta name="author" content="Max Bo">
+  <meta name="keywords" content="stylesheet, font, Linux Libertine, CSS, web development">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:title" content="@celine/libertine">
+  <meta property="og:description" content="A drop-in stylesheet based around the Linux Libertine font family, one common in academic publishing.">
+  <meta property="og:url" content="https://maxbo.me/celine/libertine/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Max Bo">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@_max_bo_">
+  <meta name="twitter:title" content="@celine/libertine">
+  <meta name="twitter:description" content="A drop-in stylesheet based around the Linux Libertine font family, one common in academic publishing.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
+  <link rel="manifest" href="../static/site.webmanifest">
+
+  <link rel="stylesheet" href="../libertine/libertine.css">
+  <link rel="stylesheet" href="../celine/cell.css">
+
+  <script type="module">
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@3.0.0';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+
+    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+    window.library = celine.library; /* @observablehq/stdlib */
+    window.Inputs = Inputs;
+    window.htl = htl;
+
+    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
+</head>
+<body>
+  <div style="text-align: right; text-decoration: none; font-family: 'Libertinus Sans', sans-serif;">
+    <a style="text-decoration: none;" href="../index.html">/celine</a>,
+    <a style="text-decoration: none;" href="../bibhtml/index.html">/bibhtml</a>
+  </div>
+  <h1>@celine/libertine</h1>
+  <div class="authors">
+    <div class="author">
+      <span class="author-name">Max Bo</span> <sup><a href="https://maxbo.me" style="text-decoration: none;">↗</a></sup>
+    </div>
+  </div>
+
+  <div class="abstract">
+    <p><cite>@celine/libertine</cite> is a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a> based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> font family.</p>
+
+    <p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
+  </div>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>GitHub</th>
+        <td class="width-auto"><a href="https://github.com/MaxwellBo/celine/tree/master/libertine">MaxwellBo/<wbr>celine</a><span id="stars"></span> + <a href="https://github.com/MaxwellBo/celine/issues">/issues</a> </td> 
+        <th class="width-min">License</th>
+        <td><a href="https://github.com/MaxwellBo/celine/blob/master/LICENSE">MIT</a></td>
+      </tr>
+      <script type="module">
+        // ping the GitHub API for the number of stars
+        fetch("https://api.github.com/repos/MaxwellBo/celine")
+          .then(d => d.json())
+          .then(resp => {
+            const stars = resp.stargazers_count;
+            document.getElementById("stars").textContent = ` (⭐ ${stars})`;
+          })
+      </script>
+      <tr>
+        <th>JSR</th>
+        <td class="width-auto"><a href="https://jsr.io/@celine/libertine">jsr.io/<wbr>@celine/<wbr>libertine</a> + <a href="https://jsr.io/@celine/libertine/doc">/docs</a></td>
+        <th>Version</th>
+        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">0.2.0</a>, <time  id="updated">Nov 29 2024</time></td>
+      </tr>
+      <script type="module">
+        fetch("https://npm.jsr.io/@jsr/celine__libertine")
+          .then(d => d.json())
+          .then(resp => {
+            const latestVersion = resp["dist-tags"].latest;
+            document.getElementById("version").textContent = latestVersion;
+            const date = new Date(resp.time[latestVersion]);
+            const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getFullYear()}`;
+            document.getElementById("updated").textContent = formattedDate;
+          })
+      </script>
+    </tbody>
+  </table>
+
+<h2><a href="#installation" id="installation"></a>Installation</h2>
+
+<p>You can import <cite>@celine/libertine</cite> with:</p>
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link 
+  rel=&quot;stylesheet&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/libertine@4.0.0/libertine.css&quot; /&gt;
+</pre>
+
+<h2><a href="#fonts" id="fonts"></a>Fonts</h2>
+
+<p>I lied a little in the abstract. <cite>@celine/libertine</cite> actually uses the more maintained <a href="https://github.com/alerque/libertinus"><cite>Libertinus font family</cite></a> fork.</p>
+
+<p>The <a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> stylesheet provides authoritative documentation on the available font faces, variants, and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide">OpenType features</a>, with <a href="fonts/Libertinus/documentation/Opentype-Features.pdf">Opentype-Features.pdf</a> as a demo page.</p>
+
+<p><code>font-feature-settings: 'liga', 'tnum', 'zero' 'calt';</code> (ligatures, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric">tabular figures</a>, slashed zero &amp; contextual alternatives) are enabled by default.</p>
+
+<blockquote>
+fi fl ffi ffl
+<br />
+1234567890
+<br />
+Quest, (staff)
+<br />
+H<sub>2</sub>O, E = mc<sup>2</sup>
+</blockquote>
+
+<p><a href="fonts/Libertinus/documentation/libertinus.css">libertinus.css</a> makes a number of fonts available:</p>
+
+<blockquote style="font-family: 'Libertinus Serif', serif;">
+  Libertinus Serif<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+  <span style="font-variant: small-caps;">Small caps.</span><br />
+  <span style="font-variant: all-small-caps;">All small caps.</span><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Sans', sans-serif;">
+  Libertinus Sans<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+  <span style="font-variant: small-caps;">Small caps.</span><br />
+  <span style="font-variant: all-small-caps;">All small caps.</span><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Display', serif;">
+  Libertinus Display<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Mono', monospace;">
+  Libertinus Mono<br />
+  Sphinx of black quartz, judge my vow.<br />
+  <i>Sphinx of black quartz, judge my vow.</i><br />
+  <b>Sphinx of black quartz, judge my vow.</b><br />
+  <i><b>Sphinx of black quartz, judge my vow.</b></i><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Initials', serif;">
+  Libertinus Initials<br />
+  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+  <i>ABCDEFGHIJKLMNOPQRSTUVWXYZ</i><br />
+  <b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b><br />
+  <i><b>ABCDEFGHIJKLMNOPQRSTUVWXYZ</b></i><br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Math', serif;">
+  Libertinus Math<br />
+  E = mc²<br />
+  ∫ₐᵇ f(x) dx<br />
+  ∑ₙ₌₁^∞ 1/n² = π²/6<br />
+  ∇·E = ρ/ε₀<br />
+</blockquote>
+
+<blockquote style="font-family: 'Libertinus Keyboard', monospace;">
+  Libertinus Keyboard<br />
+  <br />
+  Esc F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Del<br/>
+  `1234567890-= Back<br/>
+  Tab QWERTYUIOP[]\<br />
+  Capslock ASDFGHJKL;' Enter<br />
+  Shift ZXCVBNM,./ Shift<br />
+  Ctrl Windows Alt Space Alt Fn ← ↑ ↓ →<br />
+</blockquote>
+
+<p><a style="font-variant: small-caps" href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps">Small caps</a> are available on Libertinus Serif and <span style="font-family: 'Libertinus Sans', sans-serif;">Libertinus Sans</span>:</p>
+
+<style>
+  #smallcaps-table td:nth-child(2) {
+    max-width: 600px;
+  }
+
+  @media (max-width: 600px) {
+    #smallcaps-table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    #smallcaps-table td {
+      display: block;
+      width: 100%;
+    }
+
+    #smallcaps-table td:first-child {
+      max-width: none;
+    }
+  }
+</style>
+
+<div id="ssc" style="font-variant: small-caps;">
+  Small caps
+</div>
+
+<script type="module" id="sscdisplay">
+  celine.cell("sscdisplay", () => {
+    const elem = document.getElementById("ssc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="sac" style="font-variant: all-small-caps;">
+  All small caps
+</div>
+
+<script type="module" id="ssacdisplay">
+  celine.cell("ssacdisplay", () => {
+    const elem = document.getElementById("sac");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="sssc" style="font-family: 'Libertinus Sans'; font-variant: small-caps;">
+  Small caps
+</div>
+
+<script type="module" id="ssscdisplay">
+  celine.cell("ssscdisplay", () => {
+    const elem = document.getElementById("sssc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<div id="ssasc" style="font-family: 'Libertinus Sans'; font-variant: all-small-caps;">
+  All small caps
+</div>
+
+<script type="module" id="ssascdisplay">
+  celine.cell("ssascdisplay", () => {
+    const elem = document.getElementById("ssasc");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<h2><a href="#classes" id="classes"></a>Classes</h2>
+
+<div id="authors" class="authors">
+  <div class="author">
+    <span class="author-name">Jane Doe,</span> <span class="author-affiliation">University of Wollongong</span>
+  </div>
+  <div class="author">
+    <span class="author-name">John Smith,</span> <span class="author-affiliation">University of Townsville</span>
+  </div>
+</div>
+
+<script type="module" id="innerauthors">
+  celine.cell("innerauthors", () => {
+    const elem = document.getElementById("authors");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+
+<div id="abstract" class="abstract">
+  This is an abstract.
+</div>
+
+<script type="module" id="innerabstract">
+  celine.cell("innerabstract", () => {
+    const elem = document.getElementById("abstract");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+<h3 id="outeranchor"><a href="#anchor" id="anchor"></a>Anchor</h3>
+
+<script type="module" id="anchor-display">
+  celine.cell("anchor-display", () => {
+    const elem = document.getElementById("outeranchor");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
+  
+</body>
+</html>

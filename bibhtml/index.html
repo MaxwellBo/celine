@@ -40,18 +40,16 @@
     window.library = celine.library; /* @observablehq/stdlib */
     window.Inputs = Inputs;
     window.htl = htl;
-    console.log(window.celine)
 
     registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
 </head>
 
 <body>
-  <p>
-    <a href="../index.html" style="text-decoration: none; font-family: 'Libertinus Sans', sans-serif">←
-      @celine/celine</a>
-  </p>
-
+  <div style="text-align: right; font-family: 'Libertinus Sans', sans-serif;">
+    <a style="text-decoration: none;" href="../index.html">/celine</a>,
+    <a style="text-decoration: none;" href="../libertine/index.html">/libertine</a>
+  </div>
   <h1>@celine/bibhtml</h1>
   <div class="authors">
     <div class="author">
@@ -71,7 +69,7 @@
       citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
   </p>
 
-  <table class="header">
+  <table>
     <tbody>
       <tr>
         <th>GitHub</th>
