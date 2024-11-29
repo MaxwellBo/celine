@@ -239,7 +239,7 @@
   </div>
 
   <p>
-    <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to referencing in LaTeX/BibTeX. While a wrapper around <a href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>Willighagen_2019</bibhtml-cite></sup>, it gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a href="https://nota-lang.org/reference.html#def-section-2.4">Nota Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
+    <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to referencing in LaTeX/BibTeX. While a wrapper around <a href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup>, it gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a href="https://nota-lang.org/reference.html#def-section-2.4">Nota Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
   </p>
 
   <h2>API</h2>
@@ -260,7 +260,7 @@
   </p>
 
   <p>
-    So if we wanted to cite <span id="inner-text-container">Citation.js<sup><bibhtml-cite>Willighagen_2019</bibhtml-cite></sup></span>,
+    So if we wanted to cite <span id="inner-text-container">Citation.js<sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup></span>,
     we'd use <code>&lt;bibhtml-cite&gt;</code> element:
   </p>
 
@@ -271,7 +271,7 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load:
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="willighagen2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load:
   </p>
 
   <script id="ref-cell" type="module">
@@ -310,8 +310,8 @@
   <h2>References</h2>
 
   <bibhtml-bibliography>
-    <bibhtml-reference id="Willighagen_2019">
-      @article{Willighagen_2019,
+    <bibhtml-reference id="willighagen2019">
+      @article{willighagen2019,
         title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
         author = {Willighagen, Lars G.},
         year = 2019,
