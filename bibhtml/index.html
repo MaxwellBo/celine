@@ -108,22 +108,19 @@
       }
 
       async connectedCallback() {
+        const bibliography = document.querySelector("bibhtml-bibliography");
         try {
-          if (this._citation) {
-            return;
+          if (!this._citation){
+            this._citation = await Cite.async(this.textContent);
           }
-
-          this._citation = await Cite.async(this.textContent);
-          const bibliography = document.querySelector("bibhtml-bibliography");
-          console.log(this._citation);
-          bibliography.addEntry(this._citation.data[0]['citation-key'], this);
         } catch (e) {
-          console.error('Error parsing Citation.js entry:', this.textContent );
+          console.warn('Error parsing Citation.js entry:', this.textContent, e);
         }
+
+        bibliography.addEntry(this.id, this);
       }
 
       format(template) {
-        if (!this._citation) return '';
         const entry = this._citation.data[0];
         return this._citation.format('bibliography', {
           format: 'html',
@@ -132,6 +129,12 @@
       }
 
       render(template = 'apa') {
+        // graceefully degrade
+        if (!this._citation) {
+          this.shadowRoot.replaceChildren(document.createTextNode(this.textContent));
+          return ;
+        } 
+
         const tempTemplate = document.createElement('template');
         tempTemplate.innerHTML = this.format(template);
 
@@ -282,6 +285,11 @@
     We can site using Nota<sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup> style citations. 
   </p>
 
+
+  <p>
+    We can do free text references<sup><bibhtml-cite>bo2024</bibhtml-cite></sup>.
+  </p>
+
   <p>
     The accurate determination of college students' coefficients of friction is a fascinating
     topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
@@ -307,7 +315,6 @@
   <div style="height: 500px; background-color: lightgray;"></div>
 
 
-  </div>
   <bibhtml-bibliography>
     <bibhtml-reference id="Willighagen_2019">
       @article{Willighagen_2019,
