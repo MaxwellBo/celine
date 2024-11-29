@@ -121,7 +121,6 @@
       }
 
       format(template) {
-        const entry = this._citation.data[0];
         return this._citation.format('bibliography', {
           format: 'html',
           template
@@ -129,7 +128,7 @@
       }
 
       render(template = 'apa') {
-        // graceefully degrade
+        // gracefully degrade
         if (!this._citation) {
           this.shadowRoot.replaceChildren(document.createTextNode(this.textContent));
           return ;
@@ -272,7 +271,7 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element, if JavaScript fails to load or the reference fails to parse.
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="Willighagen_2019"><a href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element if JavaScript fails to load.
   </p>
 
   <script id="ref-cell" type="module">
@@ -281,39 +280,32 @@
     })
   </script>
 
-  <p>
+  <!-- <p>
     We can site using Nota<sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup> style citations. 
-  </p>
+  </p> -->
 
+  
 
-  <p>
+  <!-- <script id="bib-cell" type="module">
+    celine.cell("bib-cell", () => {
+      const bib = document.getElementById('bo2024');
+      return htl.html`<pre class='echo'>${bib.outerHTML}</pre>`
+    })
+  </script> -->
+
+  <!-- <p>
     We can do free text references<sup><bibhtml-cite>bo2024</bibhtml-cite></sup>.
-  </p>
+  </p> -->
 
   <p>
-    The accurate determination of college students' coefficients of friction is a fascinating
-    topic.<sup><bibhtml-cite>Cummings2003</bibhtml-cite></sup>
-  </p>
-  <p>
-    The Mathematical Theory of Efficient Piracy provides deep
-    insights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
-    The Mathematical Theory of Efficient Piracy is often referenced in discussions about digital
-    rights.<sup><bibhtml-cite>Napster1998</bibhtml-cite></sup>
-  </p>
-  <!-- <p> -->
-  <!--   Wikidata ref <sup><bibhtml-cite>10.7717/peerj-cs.214</bibhtml-cite></sup> -->
-  <!-- </p> -->
-  <p>
-    The history of the goofy layout of keyboards is quite
-    interesting.<sup><bibhtml-cite>Qwerty1996</bibhtml-cite></sup>
-  </p>
-  <p>
-    Sigmund Freud once mentioned this in a personal conversation.<sup><bibhtml-cite>Freud2012</bibhtml-cite></sup>
+    When citing a <span id="missing-container">reference <sup><bibhtml-cite>Freud2012</bibhtml-cite></sup></span> that is not in the bibliography, the reference will be citation will degrade to the inner text of the element.
   </p>
 
-
-  <div style="height: 500px; background-color: lightgray;"></div>
-
+  <script id="missing-cell" type="module">
+    celine.cell("missing-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
+    })
+  </script>
 
   <bibhtml-bibliography>
     <bibhtml-reference id="Willighagen_2019">
