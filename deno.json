@@ -1,5 +1,5 @@
 {
-  "workspace": ["./celine", "./libertine"],
+  "workspace": ["./celine", "./libertine", "./bibhtml"],
   "compilerOptions": {
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
