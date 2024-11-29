@@ -98,10 +98,12 @@
         const bibliography = document.querySelector("bibhtml-bibliography");
         const link = document.createElement('a');
         const citationShorthand = alphabetize(this._citationIndex + 1);
-        link.href = `#ref-${this.refId}`;
+
+        link.href = `#${this.refId}`;
+        anchorify(bibliography.shadowRoot, link, `#${this.refId}`);
+        
         link.id = `cite-${this.refId}-${citationShorthand}`;
         link.textContent = `[${this._referenceIndex + 1}]`;
-        anchorify(bibliography.shadowRoot, link, `#ref-${this.refId}`);
 
         this.shadowRoot.replaceChildren(link);
       }
@@ -207,9 +209,10 @@
           if (citations.length === 1) {
             const backlink = document.createElement('a');
             backlink.href = `#cite-${refId}-a`;
+            anchorify(citations[0].shadowRoot, backlink, `#cite-${refId}-a`);
+
             backlink.textContent = '^';
             backlinks.appendChild(backlink);
-            anchorify(citations[0].shadowRoot, backlink, `#cite-${refId}-a`);
           } else {
             let i = 0;
             backlinks.textContent = '^';
@@ -219,8 +222,9 @@
               const citationShorthand = alphabetize(i + 1);
               const backlink = document.createElement('a');
               backlink.href = `#cite-${refId}-${citationShorthand}`;
-              backlink.textContent = citationShorthand;
               anchorify(citation.shadowRoot, backlink, `#cite-${refId}-${citationShorthand}`);
+
+              backlink.textContent = citationShorthand;
               backlinks.appendChild(document.createTextNode(' '));
               backlinks.appendChild(backlink);
               i++;
@@ -252,8 +256,6 @@
   <p>
     <cite>bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to referencing in LaTeX/BibTeX. While a wrapper around <a href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup>, it gracefully degrades when JavaScript is disabled, or when references are malformed. <cite>bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a href="https://lab.avl.la/references-webcomponent/">References Web Component</a> and <a href="https://nota-lang.org/reference.html#def-section-2.4">Nota Citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
   </p>
-
-  <h2>API</h2>
 
   <p>
     <cite>bibhtml</cite> is structured around 3 custom elements:
@@ -317,6 +319,11 @@
       return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
     })
   </script>
+
+
+  <div style="height: 2000px; background-color: lightgrey;">
+    This is a really long div.
+  </div>
 
   <h2>References</h2>
 
