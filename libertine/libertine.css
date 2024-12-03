@@ -87,7 +87,7 @@ a:active {
   text-underline-offset: 3px;
 }
 
-a:target {
+:target {
   background-color: yellow;
 }
 
