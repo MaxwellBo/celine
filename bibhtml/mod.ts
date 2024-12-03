@@ -30,6 +30,7 @@ function anchorify(root: ShadowRoot | Document, element: HTMLElement, query: str
 export class BibhtmlCite extends HTMLElement {
   _referenceIndex: number | null;
   _citationIndex: number | null;
+  _citation = null;
   _notifiedBibliography: boolean;
 
   static customElementName = 'bh-cite';
@@ -57,17 +58,25 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   static get observedAttributes(): string[] {
-    return ['ref'];
+    return ['ref', 'format'];
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
     if (name === 'ref') {
       this.render();
     }
+
+    if (name === 'format') {
+      this.render();
+    }
   }
 
   get refId(): string {
     return this.getAttribute('ref') || (this.textContent || '').trim();
+  }
+
+  get format(): string {
+    return this.getAttribute('format') || 'apa';
   }
 
   set referenceIndex(value: number) {
@@ -77,6 +86,11 @@ export class BibhtmlCite extends HTMLElement {
 
   set citationIndex(value: number) {
     this._citationIndex = value;
+    this.render();
+  }
+
+  set citation(value: any) {
+    this._citation = value;
     this.render();
   }
 
@@ -100,7 +114,12 @@ export class BibhtmlCite extends HTMLElement {
 
     this.id = `cite-${this.refId}-${citationShorthand}`;
     link.href = `#${this.refId}`;
-    link.textContent = `[${this._referenceIndex + 1}]`;
+
+    if (this.format === 'ieee' && this._citation && ) {
+
+    } else {
+      link.textContent = `(${this._referenceIndex + 1})`;
+    } 
 
     this.shadowRoot!.replaceChildren(link);
   }
@@ -244,6 +263,7 @@ export class BibhtmlBibliography extends HTMLElement {
       for (const citation of citations) {
         citation.referenceIndex = referenceIndex;
         citation.citationIndex = citationIndex;
+        citation.citation = reference._citation;
         citation.render();
         citationIndex++;
       }

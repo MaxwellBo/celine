@@ -147,6 +147,14 @@ script, pre, style {
   font-family: 'Libertinus Sans', sans-serif;
 }
 
+.authors .author a {
+  text-decoration: none;
+}
+
+.authors a.author {
+  text-decoration: none;
+}
+
 .authors .author .author-name {
   text-transform: uppercase;
   font-family: 'Libertinus Sans', sans-serif;
