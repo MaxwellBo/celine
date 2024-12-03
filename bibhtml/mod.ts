@@ -183,7 +183,6 @@ export class BibhtmlBibliography extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
     this._refIdToReference = new Map();
     this._refIdToCitations = new Map();
   }
@@ -274,6 +273,6 @@ export class BibhtmlBibliography extends HTMLElement {
       referenceIndex++;
     };
 
-    this.shadowRoot!.replaceChildren(list);
+    this.replaceChildren(list);
   }
 }
