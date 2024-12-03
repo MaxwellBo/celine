@@ -98,10 +98,8 @@ export class BibhtmlCite extends HTMLElement {
     const link = document.createElement('a');
     const citationShorthand = alphabetize(this._citationIndex + 1);
 
+    this.id = `cite-${this.refId}-${citationShorthand}`;
     link.href = `#${this.refId}`;
-    anchorify(bibliography.shadowRoot!, link, `#${this.refId}`);
-
-    link.id = `cite-${this.refId}-${citationShorthand}`;
     link.textContent = `[${this._referenceIndex + 1}]`;
 
     this.shadowRoot!.replaceChildren(link);
@@ -252,8 +250,6 @@ export class BibhtmlBibliography extends HTMLElement {
       if (citations.length === 1) {
         const backlink = document.createElement('a');
         backlink.href = `#cite-${refId}-a`;
-        anchorify(citations[0].shadowRoot!, backlink, `#cite-${refId}-a`);
-
         backlink.textContent = '^';
         backlinks.appendChild(backlink);
       } else {
@@ -265,8 +261,6 @@ export class BibhtmlBibliography extends HTMLElement {
           const citationShorthand = alphabetize(i + 1);
           const backlink = document.createElement('a');
           backlink.href = `#cite-${refId}-${citationShorthand}`;
-          anchorify(citation.shadowRoot!, backlink, `#cite-${refId}-${citationShorthand}`);
-
           backlink.textContent = citationShorthand;
           backlinks.appendChild(document.createTextNode(' '));
           backlinks.appendChild(backlink);
