@@ -187,11 +187,7 @@
     we use the <code>&lt;bh-cite&gt;</code> element:
   </p>
 
-  <script id="inner-text-cell" type="module">
-    celine.cell("inner-text-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('inner-text-container').innerHTML}</pre>`
-    })
-  </script>
+  <pre class="echo">cite Citation.js&lt;sup&gt;&lt;bh-cite&gt;willighagen2019&lt;/bh-cite&gt;&lt;/sup&gt;</pre>
 
   <p>
     The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed instead of its reference number when:
@@ -208,11 +204,7 @@
     not in the HTML document, the inner text of the element is displayed as a fallback:
   </p>
 
-  <script id="missing-cell" type="module">
-    celine.cell("missing-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
-    })
-  </script>
+  <pre class="echo">cite a missing reference&lt;sup&gt;&lt;bh-cite&gt;freud2012&lt;/bh-cite&gt;&lt;/sup&gt;</pre>
 
   <p>
     The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
@@ -220,12 +212,7 @@
       href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with a <code>&lt;a href="..." /&gt;</code> as the inner text fallback instead:
 </p>
 
-  <script id="ref-cell" type="module">
-    celine.cell("ref-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
-    })
-  </script>
-  </p>
+  <pre class="echo">cite Citation.js&lt;sup&gt;&lt;bh-cite ref="willighagen2019"&gt;&lt;a href="https://citation.js.org/"&gt;Link&lt;/a&gt;&lt;/bh-cite&gt;&lt;/sup&gt; again</pre>
 
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
