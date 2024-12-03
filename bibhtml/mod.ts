@@ -137,8 +137,10 @@ export class BibhtmlReference extends HTMLElement {
 
     try {
       if (!this._citation) {
-        // @ts-ignore
-        this._citation = await Cite.async(this.textContent);
+        Cite.async(this.textContent).then((citation: any) => {
+          this._citation = citation;
+          this.render();
+        });
       }
     } catch (e) {
       console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
