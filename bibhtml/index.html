@@ -221,7 +221,7 @@
   <p>
     The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
     reference ID from the <code>ref</code> attribute rather than the inner text. Here, we'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
-      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with a <code>&lt;a href="..." /&gt;</code> as the inner text fallback instead:
+      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with an <code>&lt;a href="..."&gt;</code> as the inner text fallback instead:
 </p>
 
   <script id="ref-cell" type="module">
@@ -314,7 +314,7 @@
 &lt;bh-bibliography format="apa"&gt;
 &lt;/bh-bibliography&gt;</pre>
 
-    <p>The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code>, the default, is supported.</p>
+    <p>The <code>format</code> attribute sets the citation style. Currently only 1 is supported, <code>"apa"</code>.</p>
     <p>References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in the HTML document.</p>
 
 
