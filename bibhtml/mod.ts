@@ -140,15 +140,13 @@ export class BibhtmlReference extends HTMLElement {
       throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
 
-    try {
-      if (!this._citation) {
-        Cite.async(this.textContent).then((citation: any) => {
-          this._citation = citation;
-          this.render();
-        });
-      }
-    } catch (e) {
-      console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
+    if (!this._citation) {
+      Cite.async(this.textContent).then((citation: any) => {
+        this._citation = citation;
+        this.render();
+      }).catch((e: Error) => {
+        console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
+      });
     }
 
     if (!this._notifiedBibliography) {
