@@ -32,6 +32,13 @@ export class BibhtmlCite extends HTMLElement {
   _citationIndex: number | null;
   _notifiedBibliography: boolean;
 
+  static customElementName = 'bh-cite';
+
+  static defineCustomElement(name: string) {
+    customElements.define(name, BibhtmlCite);
+    BibhtmlCite.customElementName = name;
+  }
+
   constructor() {
     super();
     this._referenceIndex = null;
@@ -40,10 +47,10 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   connectedCallback() {
-    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
-      throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
+      throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
 
     bibliography.addCitation(this.refId, this);
@@ -82,10 +89,10 @@ export class BibhtmlCite extends HTMLElement {
       this.attachShadow({ mode: 'open' });
     }
 
-    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
-      throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
+      throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
 
     const link = document.createElement('a');
@@ -105,6 +112,13 @@ export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
 
+  static customElementName = 'bh-reference';
+
+  static defineCustomElement(name: string) {
+    customElements.define(name, BibhtmlReference);
+    BibhtmlReference.customElementName = name;
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -112,14 +126,15 @@ export class BibhtmlReference extends HTMLElement {
     this._notifiedBibliography = false;
 
     if (!this.getAttribute('id')) {
-      console.error('<bibhtml-reference> must have an id attribute so that you can cite it with <bibhtml-cite>{id}</bibhtml-cite> or <bibhtml ref="${id}">...</bibhtml-cite>.');
+      console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it with <${BibhtmlCite.customElementName}>{id}</${BibhtmlCite.customElementName}> or <${BibhtmlCite.customElementName} ref="{id}">...</${BibhtmlCite.customElementName}>.`);
+
     }
   }
 
   async connectedCallback() {
-    const bibliography: BibhtmlBibliography | null = document.querySelector("bibhtml-bibliography");
+    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
     if (!bibliography) {
-      throw new Error('Could not find <bibhtml-bibliography> element in the document. Make sure you have one in your document.');
+      throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
 
     try {
@@ -128,7 +143,7 @@ export class BibhtmlReference extends HTMLElement {
         this._citation = await Cite.async(this.textContent);
       }
     } catch (e) {
-      console.log('Could not parse <bibhtml-reference> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:', this.textContent, e);
+      console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
     }
 
     if (!this._notifiedBibliography) {
@@ -173,6 +188,13 @@ export class BibhtmlBibliography extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._refIdToReference = new Map();
     this._refIdToCitations = new Map();
+  }
+
+  static customElementName = 'bh-bibliography';
+
+  static defineCustomElement(name: string) {
+    customElements.define(name, BibhtmlBibliography);
+    BibhtmlBibliography.customElementName = name;
   }
 
   async connectedCallback() {

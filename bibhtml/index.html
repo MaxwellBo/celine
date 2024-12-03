@@ -61,12 +61,12 @@
     <cite>@celine/bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
       Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to
     referencing in LaTeX/BibTeX. It's a thin wrapper around <a
-      href="https://citation.js.org/">Citation.js</a><sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup> and 
+      href="https://citation.js.org/">Citation.js</a><sup><bh-cite>willighagen2019</bh-cite></sup> and 
     gracefully degrades when citations and references are malformed or JavaScript is disabled. <cite>@celine/bibhtml</cite> takes
     significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a
-      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bibhtml-cite>avellar2021</bibhtml-cite></sup> and <a
+      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite>avellar2021</bh-cite></sup> and <a
       href="https://nota-lang.org/reference.html#def-section-2.4">Nota's
-      citations</a><sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup>.
+      citations</a><sup><bh-cite>crichton2021nota</bh-cite></sup>.
   </p>
 
   <table>
@@ -114,9 +114,10 @@
 
 <div id="installation"><script type="module">
   import * as bibhtml from 'https://esm.sh/jsr/@celine/bibhtml@0.2.0';
-  customElements.define('bibhtml-bibliography', bibhtml.BibhtmlBibliography);
-  customElements.define('bibhtml-reference', bibhtml.BibhtmlReference);
-  customElements.define('bibhtml-cite', bibhtml.BibhtmlCite);
+
+  bibhtml.BibhtmlBibliography.defineCustomElement('bh-bibliography');
+  bibhtml.BibhtmlReference.defineCustomElement('bh-reference');
+  bibhtml.BibhtmlCite.defineCustomElement('bh-cite');
 </script></div>
 
   <script id="installation-cell" type="module">
@@ -125,6 +126,9 @@
     })
   </script>
 
+  <p>
+    The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short, but you may be inclined to use a more descriptive prefix like <code>bibhtml-</code>.
+  </p>
 
   <h2>API</h2>
 
@@ -133,21 +137,21 @@
       href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">custom elements</a>:
     <!-- <ol>
       <li>
-      A <code>&lt;bibhtml-bibliography&gt;</code> which contains...
+      A <code>&lt;bh-bibliography&gt;</code> which contains...
       </li>
       <li>
-      <code>&lt;bibhtml-reference&gt;</code>s which are cited by...
+      <code>&lt;bh-reference&gt;</code>s which are cited by...
       </li>
       <li>
-      <code>&lt;bibhtml-cite&gt;</code>s inline in the text.
+      <code>&lt;bh-cite&gt;</code>s inline in the text.
       </li>
     </ol> -->
   </p>
 
-  <h3><code>&lt;bibhtml-bibliography&gt;</code></h3>
+  <h3><code>&lt;bh-bibliography&gt;</code></h3>
 
   <p>
-    The <code>&lt;bibhtml-bibliography&gt;</code> contains <code>&lt;bibhtml-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bibhtml-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bibhtml-bibliography&gt;</code>.
+    The <code>&lt;bh-bibliography&gt;</code> contains <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bh-bibliography&gt;</code>.
   </p>
 
   <p>
@@ -157,8 +161,8 @@
   <br />
 
   <pre class="echo">
-&lt;bibhtml-bibliography format="apa"&gt;
-  &lt;bibhtml-reference id="willighagen2019"&gt;
+&lt;bh-bibliography format="apa"&gt;
+  &lt;bh-reference id="willighagen2019"&gt;
     @article{willighagen2019,
     title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
     author = {Willighagen, Lars G.},
@@ -172,9 +176,9 @@
     url = {https://doi.org/10.7717/peerj-cs.214},
     doi = {10.7717/peerj-cs.214}
     }
-  &lt;/bibhtml-reference&gt;
+  &lt;/bh-reference&gt;
   ...
-&lt;/bibhtml-bibliography&gt;</pre>
+&lt;/bh-bibliography&gt;</pre>
 
   <!-- <script id="bibliography-cell" type="module">
     celine.cell("bibliography-cell", () => {
@@ -182,29 +186,29 @@
     })
   </script> -->
 
-  <h3><code>&lt;bibhtml-reference&gt;</code></h3>
+  <h3><code>&lt;bh-reference&gt;</code></h3>
 
   <p>
-    Each <code>&lt;bibhtml-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats.
+    Each <code>&lt;bh-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats.
   </p>
 
   <h3>BibTeX</h3>
 
   <script id="bibtex-cell" type="module">
     celine.cell("bibtex-cell", () => {
-      const reference = document.querySelector('bibhtml-bibliography').shadowRoot.getElementById('crichton2021nota');
+      const reference = document.querySelector('bh-bibliography').shadowRoot.getElementById('crichton2021nota');
       return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    This expands to reference <bibhtml-cite ref="crichton2021nota"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
+    This expands to reference <bh-cite ref="crichton2021nota"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
   </p>
 
   <h3>Unstructured text</h3>
 
   <p>
-    A <code>&lt;bibhtml-reference&gt;</code> can contain unstructured text. This format is useful when:
+    A <code>&lt;bh-reference&gt;</code> can contain unstructured text. This format is useful when:
     <ul>
       <li>The reference is not in a machine readable format</li>
       <li>The reference is malformed</li>
@@ -214,13 +218,13 @@
 
   <script id="text-cell" type="module">
     celine.cell("text-cell", () => {
-      const reference = document.querySelector('bibhtml-bibliography').shadowRoot.getElementById('dunbar2017');
+      const reference = document.querySelector('bh-bibliography').shadowRoot.getElementById('dunbar2017');
       return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    The Sun is hot<sup><bibhtml-cite>dunbar2017</bibhtml-cite></sup>.
+    The Sun is hot<sup><bh-cite>dunbar2017</bh-cite></sup>.
   </p>
 
   <h3>DOI</h3>
@@ -233,7 +237,7 @@
   </script>
 
   <p>
-    This expands to reference <bibhtml-cite ref="slivaLambert2015"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+    This expands to reference <bh-cite ref="slivaLambert2015"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
   </p>
 
   <h3>Wikidata</h3>
@@ -246,16 +250,16 @@
   </script>
 
   <p>
-    This expands to reference <bibhtml-cite ref="raymondEtAl2013"></bibhtml-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bh-cite ref="raymondEtAl2013"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
 
-  <h3><code>&lt;bibhtml-cite&gt;</code></h3>
+  <h3><code>&lt;bh-cite&gt;</code></h3>
 
   <p>
     Say we wanted to cite <span
-      id="inner-text-container">Citation.js<sup><bibhtml-cite>willighagen2019</bibhtml-cite></sup></span>,
-    we'd use the <code>&lt;bibhtml-cite&gt;</code> element:
+      id="inner-text-container">Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></span>,
+    we'd use the <code>&lt;bh-cite&gt;</code> element:
   </p>
 
   <script id="inner-text-cell" type="module">
@@ -265,8 +269,8 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bibhtml-cite ref="willighagen2019"><a
-            href="https://citation.js.org/">Link</a></bibhtml-cite></sup></span> with the reference ID as the inner
+    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bh-cite ref="willighagen2019"><a
+            href="https://citation.js.org/">Link</a></bh-cite></sup></span> with the reference ID as the inner
     text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element
     if JavaScript fails to load:
   </p>
@@ -278,7 +282,7 @@
   </script>
 
   <!-- <p>
-    We can site using Nota<sup><bibhtml-cite>crichton2021nota</bibhtml-cite></sup> style citations. 
+    We can site using Nota<sup><bh-cite>crichton2021nota</bh-cite></sup> style citations. 
   </p> -->
 
 
@@ -291,11 +295,11 @@
   </script> -->
 
   <!-- <p>
-    We can do free text references<sup><bibhtml-cite>bo2024</bibhtml-cite></sup>.
+    We can do free text references<sup><bh-cite>bo2024</bh-cite></sup>.
   </p> -->
 
   <p>
-    When citing a <span id="missing-container">reference<sup><bibhtml-cite>freud2012</bibhtml-cite></sup></span> that is
+    When citing a <span id="missing-container">reference<sup><bh-cite>freud2012</bh-cite></sup></span> that is
     not in the bibliography, the inner text of the element will be displayed as a fallback:
   </p>
 
@@ -307,8 +311,8 @@
 
   <h2 id="references">References</h2>
 
-<bibhtml-bibliography format="vancouver1">
-<bibhtml-reference id="willighagen2019">
+<bh-bibliography format="vancouver1">
+<bh-reference id="willighagen2019">
   @article{willighagen2019,
   title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
   author = {Willighagen, Lars G.},
@@ -322,8 +326,8 @@
   url = {https://doi.org/10.7717/peerj-cs.214},
   doi = {10.7717/peerj-cs.214}
   }
-</bibhtml-reference>
-<bibhtml-reference id="avellar2021">
+</bh-reference>
+<bh-reference id="avellar2021">
   @misc{avellar2021,
   author = {Matheus Avellar},
   title = {References Web Component},
@@ -332,26 +336,26 @@
   year = {2021},
   month = aug,
   }
-</bibhtml-reference>
-<bibhtml-reference id="crichton2021nota">
+</bh-reference>
+<bh-reference id="crichton2021nota">
   @inproceedings{crichton2021nota,
   title={A New Medium for Communicating Research on Programming Languages},
   author={Crichton, Will},
   booktitle={Proceedings of the 1st Workshop on Human Aspects of Types and Reasoning Assistants},
   year={2021}
   }
-</bibhtml-reference>
-<bibhtml-reference id="dunbar2017">
+</bh-reference>
+<bh-reference id="dunbar2017">
   Brian Dunbar (2017-08-03). The Sun | NASA. National Aeronautics and Space Administration. 
   Accessed on 2021-08-30.
-</bibhtml-reference>
-<bibhtml-reference id="slivaLambert2015">
+</bh-reference>
+<bh-reference id="slivaLambert2015">
   10.1080/15588742.2015.1017687
-</bibhtml-reference>
-<bibhtml-reference id="raymondEtAl2013">
+</bh-reference>
+<bh-reference id="raymondEtAl2013">
   Q21972834
-</bibhtml-reference>
-</bibhtml-bibliography>
+</bh-reference>
+</bh-bibliography>
 </body>
 
 </html>
