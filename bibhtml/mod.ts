@@ -109,6 +109,7 @@ export class BibhtmlCite extends HTMLElement {
 export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
+  _citationCount = 0;
 
   static customElementName = 'bh-reference';
 
@@ -127,6 +128,10 @@ export class BibhtmlReference extends HTMLElement {
       console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it with <${BibhtmlCite.customElementName}>{id}</${BibhtmlCite.customElementName}> or <${BibhtmlCite.customElementName} ref="{id}">...</${BibhtmlCite.customElementName}>.`);
 
     }
+  }
+
+  set citationCount(value: number) {
+    this._citationCount = value;
   }
 
   async connectedCallback() {
@@ -160,6 +165,10 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   render(template = 'apa') {
+    if (this._citationCount == 0) {
+      return;
+    }
+
     // gracefully degrade
     if (!this._citation) {
       this.shadowRoot!.replaceChildren(document.createTextNode(this.textContent || ''));
@@ -242,6 +251,8 @@ export class BibhtmlBibliography extends HTMLElement {
       }
 
       const item = document.createElement('li');
+
+      reference.citationCount = citations.length;
       reference.render(this.getAttribute('format') ?? undefined);
       item.appendChild(reference);
       item.id = `ref-${refId}`;
