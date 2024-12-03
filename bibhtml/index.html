@@ -127,7 +127,7 @@
   </script>
 
   <p>
-    The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short, but you may be inclined to use a more descriptive prefix like <code>bibhtml-</code>.
+    The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short, but you may define the custom elements with a more explicit prefix like <code>bibhtml-</code>.
   </p>
 
   <h2>API</h2>
@@ -151,11 +151,11 @@
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
 
   <p>
-    The <code>&lt;bh-bibliography&gt;</code> raps <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bh-bibliography&gt;</code>.
+    The <code>&lt;bh-bibliography&gt;</code> wraps <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bh-bibliography&gt;</code>.
   </p>
 
   <p>
-    The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code> (default) is supported.
+    The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code>, the default, is supported.
   </p>
   <!-- TODO Get <code>"vancouver"</code> or <code>"harvard1"</code> working. -->
   <br />
@@ -189,10 +189,10 @@
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
   <p>
-    Each <code>&lt;bh-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats.
+    Each <code>&lt;bh-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats:
   </p>
 
-  <h3>BibTeX</h3>
+  <h4>BibTeX</h4>
 
   <script id="bibtex-cell" type="module">
     celine.cell("bibtex-cell", () => {
@@ -224,10 +224,10 @@
   </script>
 
   <p>
-    The Sun is hot<sup><bh-cite>dunbar2017</bh-cite></sup>.
+    Observe that the reference <bh-cite>dunbar2017</bh-cite> is unchanged.
   </p>
 
-  <h3>DOI</h3>
+  <h4>DOI</h4>
 
   <script id="doi-cell" type="module">
     celine.cell("doi-cell", () => {
@@ -240,7 +240,7 @@
     This expands to reference <bh-cite ref="slivaLambert2015"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
   </p>
 
-  <h3>Wikidata</h3>
+  <h4>Wikidata</h4>
 
   <script id="wikidata-cell" type="module">
     celine.cell("wikidata-cell", () => {
@@ -254,12 +254,12 @@
   </p>
 
 
-  <h3><code>&lt;bh-cite&gt;</code></h3>
+  <h4><code>&lt;bh-cite&gt;</code></h4>
 
   <p>
-    Say we wanted to cite <span
-      id="inner-text-container">Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></span>,
-    we'd use the <code>&lt;bh-cite&gt;</code> element:
+    If we want to cite a reference, say <u
+    id="inner-text-container">cite Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></u>,
+    we use the <code>&lt;bh-cite&gt;</code> element:
   </p>
 
   <script id="inner-text-cell" type="module">
@@ -269,17 +269,39 @@
   </script>
 
   <p>
-    Alternatively, rather than citing <span id="ref-container">Citation.js<sup><bh-cite ref="willighagen2019"><a
-            href="https://citation.js.org/">Link</a></bh-cite></sup></span> with the reference ID as the inner
-    text, we can use the <code>ref</code> attribute to specify the ID. This allows you to put a fallback in the element
-    if JavaScript fails to load:
+    The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed instead of its reference number when:
+
+    <ul>
+      <li>The cited reference is not found in the bibliography</li>
+      <li>JavaScript is disabled</li>
+      <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
+    </ul>
   </p>
 
-  <script id="ref-cell" type="module">
-    celine.cell("ref-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
+  <p>
+    As an example, if we <u id="missing-container">cite a missing reference<sup><bh-cite>freud2012</bh-cite></sup></u> that is
+    not in the bibliography, the inner text of the element is displayed as a fallback:
+  </p>
+
+  <script id="missing-cell" type="module">
+    celine.cell("missing-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
     })
   </script>
+
+  <p>
+    The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
+    reference ID from the <code>ref</code> attribute rather than the inner text. Here, we'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
+      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with a <code>&lt;a href="..." /&gt;</code> as the inner text fallback instead:
+</p>
+
+<script id="ref-cell" type="module">
+celine.cell("ref-cell", () => {
+return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
+})
+</script>
+  </p>
+
 
   <!-- <p>
     We can site using Nota<sup><bh-cite>crichton2021nota</bh-cite></sup> style citations. 
@@ -298,16 +320,6 @@
     We can do free text references<sup><bh-cite>bo2024</bh-cite></sup>.
   </p> -->
 
-  <p>
-    When citing a <span id="missing-container">reference<sup><bh-cite>freud2012</bh-cite></sup></span> that is
-    not in the bibliography, the inner text of the element will be displayed as a fallback:
-  </p>
-
-  <script id="missing-cell" type="module">
-    celine.cell("missing-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
-    })
-  </script>
 
   <h2 id="references">References</h2>
 
