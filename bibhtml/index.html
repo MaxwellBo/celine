@@ -135,56 +135,90 @@
   <p>
     <cite>@celine/bibhtml</cite> is structured around 3 <a
       href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">custom elements</a>:
-    <!-- <ol>
+    <ol>
       <li>
-      A <code>&lt;bh-bibliography&gt;</code> which contains...
+      <code>&lt;bh-cite&gt;</code>
       </li>
       <li>
-      <code>&lt;bh-reference&gt;</code>s which are cited by...
+      <code>&lt;bh-reference&gt;</code>
       </li>
       <li>
-      <code>&lt;bh-cite&gt;</code>s inline in the text.
+      <code>&lt;bh-bibliography&gt;</code>
       </li>
-    </ol> -->
+    </ol>
   </p>
-
-  <h3><code>&lt;bh-bibliography&gt;</code></h3>
-
-  <p>
-    The <code>&lt;bh-bibliography&gt;</code> wraps <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in <code>&lt;bh-bibliography&gt;</code>.
-  </p>
-
-  <p>
-    The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code>, the default, is supported.
-  </p>
-  <!-- TODO Get <code>"vancouver"</code> or <code>"harvard1"</code> working. -->
   <br />
 
   <pre class="echo">
+&lt;bh-cite&gt;willighagen2019&lt;/bh-cite&gt;
+...
+&lt;bh-reference id="willighagen2019"&gt;
+  @article{willighagen2019,
+  title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
+  author = {Willighagen, Lars G.},
+  year = 2019,
+  month = aug,
+  keywords = {Bibliography, Javascript},
+  volume = 5,
+  pages = {e214},
+  journal = {PeerJ Computer Science},
+  issn = {2376-5992},
+  url = {https://doi.org/10.7717/peerj-cs.214},
+  doi = {10.7717/peerj-cs.214}
+  }
+&lt;/bh-reference&gt;
+...
 &lt;bh-bibliography format="apa"&gt;
-  &lt;bh-reference id="willighagen2019"&gt;
-    @article{willighagen2019,
-    title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
-    author = {Willighagen, Lars G.},
-    year = 2019,
-    month = aug,
-    keywords = {Bibliography, Javascript},
-    volume = 5,
-    pages = {e214},
-    journal = {PeerJ Computer Science},
-    issn = {2376-5992},
-    url = {https://doi.org/10.7717/peerj-cs.214},
-    doi = {10.7717/peerj-cs.214}
-    }
-  &lt;/bh-reference&gt;
-  ...
 &lt;/bh-bibliography&gt;</pre>
 
-  <!-- <script id="bibliography-cell" type="module">
-    celine.cell("bibliography-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('bibliography-container').innerHTML}</pre>`
+
+  <h3><code>&lt;bh-cite&gt;</code></h3>
+
+  <p>
+    If we want to cite a reference, say <u
+    id="inner-text-container">cite Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></u>,
+    we use the <code>&lt;bh-cite&gt;</code> element:
+  </p>
+
+  <script id="inner-text-cell" type="module">
+    celine.cell("inner-text-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('inner-text-container').innerHTML}</pre>`
     })
-  </script> -->
+  </script>
+
+  <p>
+    The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed instead of its reference number when:
+
+    <ul>
+      <li>The cited reference ID does not correspond to a <code>&lt;bh-reference&gt;</code> element with a matching <code>id</code> attribute</li>
+      <li>JavaScript is disabled</li>
+      <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
+    </ul>
+  </p>
+
+  <p>
+    As an example, if we <u id="missing-container">cite a missing reference<sup><bh-cite>freud2012</bh-cite></sup></u> that is
+    not in the HTML document, the inner text of the element is displayed as a fallback:
+  </p>
+
+  <script id="missing-cell" type="module">
+    celine.cell("missing-cell", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
+    reference ID from the <code>ref</code> attribute rather than the inner text. Here, we'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
+      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with a <code>&lt;a href="..." /&gt;</code> as the inner text fallback instead:
+</p>
+
+<script id="ref-cell" type="module">
+celine.cell("ref-cell", () => {
+return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
+})
+</script>
+  </p>
 
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
@@ -254,76 +288,36 @@
   </p>
 
 
-  <h4><code>&lt;bh-cite&gt;</code></h4>
+
+  <h3><code>&lt;bh-bibliography&gt;</code></h3>
 
   <p>
-    If we want to cite a reference, say <u
-    id="inner-text-container">cite Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></u>,
-    we use the <code>&lt;bh-cite&gt;</code> element:
+    The <code>&lt;bh-bibliography&gt;</code> finds <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). 
   </p>
-
-  <script id="inner-text-cell" type="module">
-    celine.cell("inner-text-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('inner-text-container').innerHTML}</pre>`
-    })
-  </script>
-
   <p>
-    The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed instead of its reference number when:
+    <code>&lt;/bh-bibliography&gt;</code> has very simple calling semantics. Just:
+  </p>
+  <br />
 
-    <ul>
-      <li>The cited reference is not found in the bibliography</li>
-      <li>JavaScript is disabled</li>
-      <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
-    </ul>
+  <pre class="echo">
+&lt;bh-bibliography format="apa"&gt;
+&lt;/bh-bibliography&gt;</pre>
+
+    <p>The <code>format</code> attribute sets the citation style. Currently only <code>"apa"</code>, the default, is supported.</p>
+    <p>References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in the HTML document.</p>
+
+
+  <p style="border: 1px solid orange; background-color: #fff8e1; border-radius: 8px; padding: 10px; margin: 10px;">
+    Do not put <code>&lt;bh-reference&gt;</code> elements inside the <code>&lt;bh-bibliography&gt;</code> element. Everything will break.
   </p>
 
   <p>
-    As an example, if we <u id="missing-container">cite a missing reference<sup><bh-cite>freud2012</bh-cite></sup></u> that is
-    not in the bibliography, the inner text of the element is displayed as a fallback:
   </p>
 
-  <script id="missing-cell" type="module">
-    celine.cell("missing-cell", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('missing-container').innerHTML}</pre>`
-    })
-  </script>
-
-  <p>
-    The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
-    reference ID from the <code>ref</code> attribute rather than the inner text. Here, we'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
-      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with a <code>&lt;a href="..." /&gt;</code> as the inner text fallback instead:
-</p>
-
-<script id="ref-cell" type="module">
-celine.cell("ref-cell", () => {
-return htl.html`<pre class='echo'>${document.getElementById('ref-container').innerHTML}</pre>`
-})
-</script>
-  </p>
-
-
-  <!-- <p>
-    We can site using Nota<sup><bh-cite>crichton2021nota</bh-cite></sup> style citations. 
-  </p> -->
-
-
-
-  <!-- <script id="bib-cell" type="module">
-    celine.cell("bib-cell", () => {
-      const bib = document.getElementById('bo2024');
-      return htl.html`<pre class='echo'>${bib.outerHTML}</pre>`
-    })
-  </script> -->
-
-  <!-- <p>
-    We can do free text references<sup><bh-cite>bo2024</bh-cite></sup>.
-  </p> -->
-
+  <p>And our finished product:</p>
 
   <h2 id="references">References</h2>
 
-<bh-bibliography format="vancouver1">
 <bh-reference id="willighagen2019">
   @article{willighagen2019,
   title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
@@ -367,6 +361,8 @@ return htl.html`<pre class='echo'>${document.getElementById('ref-container').inn
 <bh-reference id="raymondEtAl2013">
   Q21972834
 </bh-reference>
+
+<bh-bibliography format="apa">
 </bh-bibliography>
 </body>
 
