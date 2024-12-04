@@ -57,17 +57,25 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   static get observedAttributes(): string[] {
-    return ['ref'];
+    return ['ref', 'href'];
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
     if (name === 'ref') {
       this.render();
     }
+
+    if (name === 'href') {
+      this.render();
+    }
   }
 
   get refId(): string {
-    return this.getAttribute('ref') || (this.textContent || '').trim();
+    if (this.getAttribute('href') && this.getAttribute('ref')) {
+      console.warn(`<${BibhtmlCite.customElementName}> has both a href and ref attribute. Using href: ${this.getAttribute('href')}.`);
+    }
+
+    return this.getAttribute('href') || this.getAttribute('ref') || (this.textContent || '').trim();
   }
 
   set referenceIndex(value: number) {
@@ -100,7 +108,12 @@ export class BibhtmlCite extends HTMLElement {
 
     this.id = `cite-${this.refId}-${citationShorthand}`;
     link.href = `#${this.refId}`;
-    link.textContent = `[${this._referenceIndex + 1}]`;
+
+    if (this.getAttribute('href')) {
+      link.textContent = this.textContent;
+    } else {
+      link.textContent = `[${this._referenceIndex + 1}]`;
+    }
 
     this.shadowRoot!.replaceChildren(link);
   }
