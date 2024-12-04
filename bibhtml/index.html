@@ -96,7 +96,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/bibhtml">jsr.io/<wbr>@celine/<wbr>bibhtml</a> + <a href="https://jsr.io/@celine/bibhtml/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">0.8.0</a><sup>β</sup>, <time  id="updated">Nov 29 2024</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">0.9.0</a><sup>β</sup>, <time  id="updated">Nov 29 2024</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__bibhtml")
@@ -119,7 +119,7 @@
   </p>
 
 <div id="installation"><script type="module">
-  import * as bibhtml from 'https://esm.sh/jsr/@celine/bibhtml@0.8.0';
+  import * as bibhtml from 'https://esm.sh/jsr/@celine/bibhtml@0.9.0';
 
   // DO NOT CHANGE THIS DEFINITION ORDER
   bibhtml.BibhtmlBibliography.defineCustomElement('bh-bibliography');
@@ -182,9 +182,9 @@
   <h3><code>&lt;bh-cite&gt;</code></h3>
 
   <p>
-    If we want to cite a reference, say <u
-    id="inner-text-container">cite Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></u>,
-    we use the <code>&lt;bh-cite&gt;</code> element:
+    To cite
+    <u id="inner-text-container">Citation.js<sup><bh-cite>willighagen2019</bh-cite></sup></u> as a reference,
+    we can use the <code>&lt;bh-cite&gt;</code> element:
   </p>
 
   <script id="inner-text-cell" type="module">
@@ -206,7 +206,7 @@
   </p>
 
   <p>
-    As an example, if we <u id="missing-container">cite a missing reference<sup><bh-cite>freud2012</bh-cite></sup></u> that is
+    If we <u id="missing-container">cite a missing reference<sup><bh-cite>freud2012</bh-cite></sup></u> that is
     not in the HTML document, the inner text of the element is displayed as a fallback:
   </p>
 
@@ -219,9 +219,9 @@
   </script>
 
   <p>
-    The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more convenient fallback, by parsing the
-    reference ID from the <code>ref</code> attribute rather than the inner text. Here, we'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
-      href="https://citation.js.org/">Link</a></bh-cite></sup> again</u>, but with an <code>&lt;a href="..."&gt;</code> as the inner text fallback instead:
+    The <code>&lt;bh-cite&gt;</code>'s <code>ref</code> attribute allows us to provide a more graceful fallback, by parsing the
+    reference ID from the <code>ref</code> attribute rather than the inner text. We'll <u id="ref-container">cite Citation.js<sup><bh-cite ref="willighagen2019"><a
+      href="#willighagen2019">willighagen2019</a></bh-cite></sup> again</u>, but with an inner <code>&lt;a href="#willighagen2019"&gt;</code> to the <code>&lt;bh-reference&gt;</code> element.
 </p>
 
   <script id="ref-cell" type="module">
@@ -232,6 +232,34 @@
     })
   </script>
   </p>
+
+  <p>
+    We can use <code>&lt;bh-cite&gt;</code>'s <code>href</code> attribute with a reference ID to force the inner text to always be displayed.
+  </p>
+
+  <p>
+    This permits us to cite references with flexible inline citation formatting, <u id="href-container">like [<bh-cite href="birolEtAl2013">Birol et al. 2013</bh-cite>] or <bh-cite href="birolEtAl2013">Birol et al. [2013]</bh-cite></u>.
+  </p>
+
+  <script id="href-cell" type="module">
+    celine.cell("href-cell", () => {
+      const cloned = document.getElementById('href-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    We can still use an inner fallback link with the <code>href</code> attribute: <u id="href-inner-container">[<bh-cite href="birolEtAl2013"><a href="#birolEtAl2013">Birol et al. 2013</a></bh-cite>]</u>.
+  </p>
+
+  <script id="href-inner-cell" type="module">
+    celine.cell("href-inner-cell", () => {
+      const cloned = document.getElementById('href-inner-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+    })
+  </script>
 
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
@@ -291,13 +319,13 @@
 
   <script id="wikidata-cell" type="module">
     celine.cell("wikidata-cell", () => {
-      const reference = document.getElementById('raymondEtAl2013');
+      const reference = document.getElementById('birolEtAl2013');
       return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    This expands to reference <bh-cite ref="raymondEtAl2013"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bh-cite ref="birolEtAl2013"></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
@@ -363,7 +391,7 @@
 <bh-reference id="slivaLambert2015">
   10.1080/15588742.2015.1017687
 </bh-reference>
-<bh-reference id="raymondEtAl2013">
+<bh-reference id="birolEtAl2013">
   Q21972834
 </bh-reference>
 
