@@ -34,6 +34,7 @@ export class BibhtmlCite extends HTMLElement {
 
   static customElementName = 'bh-cite';
 
+  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
   static defineCustomElement(name: string) {
     customElements.define(name, BibhtmlCite);
     BibhtmlCite.customElementName = name;
@@ -126,6 +127,7 @@ export class BibhtmlReference extends HTMLElement {
 
   static customElementName = 'bh-reference';
 
+  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
   static defineCustomElement(name: string) {
     customElements.define(name, BibhtmlReference);
     BibhtmlReference.customElementName = name;
@@ -211,6 +213,7 @@ export class BibhtmlBibliography extends HTMLElement {
 
   static customElementName = 'bh-bibliography';
 
+  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
   static defineCustomElement(name: string) {
     customElements.define(name, BibhtmlBibliography);
     BibhtmlBibliography.customElementName = name;
@@ -300,3 +303,7 @@ export class BibhtmlBibliography extends HTMLElement {
     this.replaceChildren(list);
   }
 }
+
+BibhtmlBibliography.defineCustomElement('bh-bibliography');
+BibhtmlReference.defineCustomElement('bh-reference');
+BibhtmlCite.defineCustomElement('bh-cite');
