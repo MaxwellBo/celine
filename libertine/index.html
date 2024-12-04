@@ -296,13 +296,21 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   });
 </script>
 
-<h3 id="outeranchor"><a href="#anchor" id="anchor"></a>Anchor</h3>
+<h3><a id="anchors" href="#anchors"></a>Anchors</h3>
+
+<div id="anchor-container"><h1><a id="h1" href="#h1"></a>h1</h1>
+<h2><a id="h2" href="#h2"></a>h2</h2>
+<h3><a id="h3" href="#h3"></a>h3</h3>
+<h4><a id="h4" href="#h4"></a>h3</h4>
+<h5><a id="h5" href="#h5"></a>h5</h5>
+<h6><a id="h6" href="#h6"></a>h6</h6>
+</div>
 
 <script type="module" id="anchor-display">
   celine.cell("anchor-display", () => {
-    const elem = document.getElementById("outeranchor");
+    const elem = document.getElementById("anchor-container");
     elem.removeAttribute("id");
-    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+    return htl.html`<span class='echo'>${elem.innerHTML}</span>`;
   });
 </script>
 

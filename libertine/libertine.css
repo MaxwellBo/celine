@@ -55,12 +55,30 @@ h4 > a[href^="#"],
 h5 > a[href^="#"], 
 h6 > a[href^="#"] {
     position: relative;
-    left: -3rem;
     transition: opacity 0.2s;
     opacity: 0.5;
     text-decoration: none;
     font-size: smaller;
     vertical-align: top;
+}
+
+h1 > a[href^="#"] {
+  left: -1.2rem;
+}
+h2 > a[href^="#"] {
+  left: -2.6rem;
+}
+h3 > a[href^="#"] {
+  left: -3.1rem;
+}
+h4 > a[href^="#"] {
+  left: -3.5rem;
+}
+h5 > a[href^="#"] {
+  left: -3.65rem;
+}
+h6 > a[href^="#"] {
+  left: -3.60rem;
 }
 
 h1 > a[href^="#"]:hover, 
