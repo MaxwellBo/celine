@@ -45,6 +45,7 @@
   </script>
 </head>
 <body>
+  <main>
   <div style="text-align: right; text-decoration: none; font-family: 'Libertinus Sans', sans-serif;">
     <a style="text-decoration: none;" href="../index.html">/celine</a>,
     <a style="text-decoration: none;" href="../bibhtml/index.html">/bibhtml</a>
@@ -296,9 +297,44 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   });
 </script>
 
-<h3><a id="anchors" href="#anchors"></a>Anchors</h3>
+<h2><a href="#elements" id="elements"></a>Elements</h2>
 
-<div id="anchor-container"><h1><a id="h1" href="#h1"></a>h1</h1>
+<p>
+  <code>&lt;main&gt;</code> applies a <code>max-width</code> and <code>margin: 0 auto</code> to center content.
+</p>
+
+<p>
+  <abbr>&lt;abbr&gt;</abbr> is used to display an abbreviation.
+</p>
+
+<p>
+  <code>&lt;code&gt;</code> is used to display inline code.
+</p>
+
+<p>
+  <kbd>&lt;kbd&gt;</kbd> is used to display keyboard buttons.
+</p>
+
+<blockquote>
+  &lt;blockquote&gt; is used to display a blockquote.
+</blockquote>
+
+<aside>
+  &lt;aside&gt; is used to display content related to the main content.
+</aside>
+
+<figure>
+  <img src="https://via.placeholder.com/150" alt="Placeholder image">
+  <figcaption>This is &lt;figcaption&gt; in a &lt;figure&gt;.</figcaption>
+</figure>
+
+<pre>
+  &lt;pre&gt; is used to display preformatted text.
+</pre>
+
+<h3><a id="silcrow" href="#silcrow"></a>Headers / silcrow</h3>
+
+<div id="silcrow-container"><h1><a id="h1" href="#h1"></a>h1</h1>
 <h2><a id="h2" href="#h2"></a>h2</h2>
 <h3><a id="h3" href="#h3"></a>h3</h3>
 <h4><a id="h4" href="#h4"></a>h3</h4>
@@ -306,14 +342,15 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 <h6><a id="h6" href="#h6"></a>h6</h6>
 </div>
 
-<script type="module" id="anchor-display">
-  celine.cell("anchor-display", () => {
-    const elem = document.getElementById("anchor-container");
+<script type="module" id="silcrow-display">
+  celine.cell("silcrow-display", () => {
+    const elem = document.getElementById("silcrow-container");
     elem.removeAttribute("id");
     return htl.html`<span class='echo'>${elem.innerHTML}</span>`;
   });
 </script>
 
   
+</main>
 </body>
 </html>

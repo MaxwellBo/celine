@@ -4,7 +4,9 @@
 body {
   font-family: 'Libertinus Serif', 'Times New Roman', sans-serif;
   font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
+}
 
+main {
   max-width: 110ch;
   margin: 0 auto;
   padding: 16px;
@@ -33,6 +35,14 @@ blockquote {
   background-color: #f9f9f9;
 }
 
+aside {
+  background-color: #f0f0f0;
+  border-left: 4px solid #ccc;
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 4px;
+}
+
 pre {
   background-color: #f7f7f7;
   border: 1px solid #ccc;
@@ -47,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5ch;
 }
 
-/* Anchor link styling */
+/* Silcrow styling */
 h1 > a[href^="#"], 
 h2 > a[href^="#"], 
 h3 > a[href^="#"], 
