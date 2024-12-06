@@ -175,7 +175,8 @@ export class BibhtmlReference extends HTMLElement {
 
   render(template = 'apa') {
     if (this._citationCount == 0) {
-      return;
+      // clear the shadow root
+      this.shadowRoot!.replaceChildren();
     }
 
     // gracefully degrade
@@ -254,7 +255,7 @@ export class BibhtmlBibliography extends HTMLElement {
   }
 
   render() {
-    const list = document.createElement('ol');
+    const ol = document.createElement('ol');
 
     let referenceIndex = 0;
     for (const [refId, citations] of this._refIdToCitations.entries()) {
@@ -262,6 +263,9 @@ export class BibhtmlBibliography extends HTMLElement {
       if (!reference) {
         continue;
       }
+
+      reference.citationCount = citations.length;
+      reference.render(this.getAttribute('format') ?? undefined);
 
       let citationIndex = 0;
       for (const citation of citations) {
@@ -271,15 +275,13 @@ export class BibhtmlBibliography extends HTMLElement {
         citationIndex++;
       }
 
-      const item = document.createElement('li');
+      if (citations.length === 0) {
+        continue
+      }
 
-      reference.citationCount = citations.length;
-      reference.render(this.getAttribute('format') ?? undefined);
-      item.appendChild(reference);
-      item.id = `ref-${refId}`;
+      const li = document.createElement('li');
 
       const backlinks = document.createElement('sup');
-
       if (citations.length === 1) {
         const backlink = document.createElement('a');
         backlink.href = `#cite-${refId}-a`;
@@ -300,14 +302,16 @@ export class BibhtmlBibliography extends HTMLElement {
           i++;
         }
       }
-
       backlinks.appendChild(document.createTextNode(' '));
-      item.prepend(backlinks);
-      list.appendChild(item);
+
+      li.appendChild(backlinks);
+      li.appendChild(reference);
+
+      ol.appendChild(li);
       referenceIndex++;
     };
 
-    this.replaceChildren(list);
+    this.replaceChildren(ol);
   }
 }
 
