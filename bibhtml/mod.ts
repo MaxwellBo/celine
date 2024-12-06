@@ -167,19 +167,9 @@ export class BibhtmlReference extends HTMLElement {
     }
   }
 
-  disconnectedCallback() {
-    getBibliography().removeReference(this.id, this);
-  }
-
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (name === 'id') {
-      if (oldValue) {
-        getBibliography().removeReference(oldValue, this);
-      }
-
-      if (newValue) {
-        getBibliography().addReference(newValue, this);
-      }
+    if (name === 'id' && newValue) {
+      getBibliography().addReference(newValue, this);
     }
   }
 
@@ -244,11 +234,6 @@ export class BibhtmlBibliography extends HTMLElement {
 
   addReference(refId: string, reference: BibhtmlReference) {
     this._refIdToReference.set(refId, reference);
-    this.render();
-  }
-
-  removeReference(refId: string, reference: BibhtmlReference) {
-    this._refIdToReference.delete(refId);
     this.render();
   }
 
