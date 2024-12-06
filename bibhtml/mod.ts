@@ -50,11 +50,11 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   connectedCallback() {
-    getBibliography().render();
+    getBibliography().addCitation(this.refId, this);
   }
 
   disconnectedCallback() {
-    getBibliography().render();
+    getBibliography().removeCitation(this.refId, this);
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
@@ -163,13 +163,13 @@ export class BibhtmlReference extends HTMLElement {
 
     if (!this._notifiedBibliography) {
       this._notifiedBibliography = true;
-      bibliography.render();
+      bibliography.addReference(this.id, this);
     }
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
     if (name === 'id' && newValue) {
-      getBibliography().render();
+      getBibliography().addReference(newValue, this);
     }
   }
 
@@ -202,6 +202,15 @@ export class BibhtmlReference extends HTMLElement {
 }
 
 export class BibhtmlBibliography extends HTMLElement {
+  _refIdToReference: Map<string, BibhtmlReference>;
+  _refIdToCitations: Map<string, BibhtmlCite[]>;
+
+  constructor() {
+    super();
+    this._refIdToReference = new Map();
+    this._refIdToCitations = new Map();
+  }
+
   static customElementName = 'bh-bibliography';
 
   /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
@@ -224,28 +233,33 @@ export class BibhtmlBibliography extends HTMLElement {
     }
   }
 
+  addReference(refId: string, reference: BibhtmlReference) {
+    this._refIdToReference.set(refId, reference);
+    this.render();
+  }
+
+  addCitation(refId: string, citation: BibhtmlCite) {
+    if (!this._refIdToCitations.has(refId)) {
+      this._refIdToCitations.set(refId, []);
+    }
+    this._refIdToCitations.get(refId)!.push(citation);
+    this.render();
+  }
+
+  removeCitation(refId: string, citation: BibhtmlCite) {
+    if (!this._refIdToCitations.has(refId)) {
+      return;
+    }
+    this._refIdToCitations.set(refId, this._refIdToCitations.get(refId)!.filter(c => c !== citation));
+    this.render();
+  }
+
   render() {
-    const refIdToReference: Map<string, BibhtmlReference> = new Map();
-    const refIdToCitations: Map<string, BibhtmlCite[]> = new Map();
-
-    for (const reference of document.querySelectorAll(BibhtmlReference.customElementName)) {
-      refIdToReference.set(reference.getAttribute('id')!, reference as BibhtmlReference);
-    }
-
-    for (const citation of document.querySelectorAll(BibhtmlCite.customElementName)) {
-      const refId = (citation as BibhtmlCite).refId;
-      if (!refIdToCitations.has(refId)) {
-        refIdToCitations.set(refId, []);
-      }
-
-      refIdToCitations.get(refId)!.push(citation as BibhtmlCite);
-    }
-
     const ol = document.createElement('ol');
 
     let referenceIndex = 0;
-    for (const [refId, citations] of refIdToCitations.entries()) {
-      const reference = refIdToReference.get(refId);
+    for (const [refId, citations] of this._refIdToCitations.entries()) {
+      const reference = this._refIdToReference.get(refId);
       if (!reference) {
         continue;
       }
