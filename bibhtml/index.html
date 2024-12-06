@@ -38,10 +38,12 @@
 
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@3.0.0';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
     import * as htl from 'https://esm.run/htl@0.3.1';
 
     window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
     window.library = celine.library; /* @observablehq/stdlib */
+    window.Inputs = Inputs;
     window.htl = htl;
 
     registerScriptReevaluationOnBlur(document, /*class=*/'echo');
@@ -119,7 +121,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@0.12.0"></script></div>
+  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@0.13.0"></script></div>
 
   <script id="installation-cell" type="module">
     celine.cell("installation", () => {
@@ -342,7 +344,31 @@
     <p>The <code>format</code> attribute sets the citation style. Currently only 1 is supported, <code>"apa"</code>.</p>
     <p>References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in the HTML document.</p>
 
+  <h2>Extras</h2>
+
+  <p>
+    <cite>&lt;bh-cite&gt;</cite> has an appropriate implementation of <code>disconnectedCallback</code> to remove the citation from the bibliography when the <code>&lt;bh-cite&gt;</code> element is removed from the DOM.
+  </p>
+
+<script id="viewof toggle-citation" type="module">
+  celine.viewof('toggle-citation', () => {
+    return Inputs.toggle({
+      label: 'Toggle citation',
+      value: true
+    });
+  });
+</script>
+
+<script id="dynamic-citation" type="module" contenteditable="true">
+  celine.cell('dynamic-citation', ['toggle-citation'], (toggleCitation) => {
+  return toggleCitation 
+      ? htl.html`<bh-cite>griesemer2020featherweight</bh-cite>` 
+      : htl.html`<i>CITATION GONE</i>`;
+  });
+</script>
+
   <h2 id="references">References</h2>
+
 
 <bh-reference id="willighagen2019">
   @article{willighagen2019,
@@ -387,9 +413,22 @@
 <bh-reference id="birolEtAl2013">
   Q21972834
 </bh-reference>
+<bh-reference id="griesemer2020featherweight">
+  @misc{griesemer2020featherweight,
+    title={Featherweight Go}, 
+    author={Robert Griesemer and Raymond Hu and Wen Kokke and Julien Lange and Ian Lance Taylor and Bernardo Toninho and Philip Wadler and Nobuko Yoshida},
+    year={2020},
+    eprint={2005.11710},
+    archivePrefix={arXiv},
+    primaryClass={cs.PL},
+    url={https://arxiv.org/abs/2005.11710}, 
+}
+</bh-reference>
 
 <bh-bibliography format="apa">
 </bh-bibliography>
+
+
 
 </main>
 </body>
