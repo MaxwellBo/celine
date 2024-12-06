@@ -15,16 +15,14 @@ function alphabetize(n: number): string {
   return out;
 }
 
-function anchorify(root: ShadowRoot | Document, element: HTMLElement, query: string): void {
-  element.onclick = () => {
-    const target = root.querySelector(query);
-    if (!target) {
-      throw new Error(`Could not find element to scroll to and focus. Query was ${query}`);
-    }
+function getBibliography(): BibhtmlBibliography {
+  const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
-    target.scrollIntoView();
-    (target as HTMLElement).focus();
-  };
+  if (!bibliography) {
+    throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
+  }
+
+  return bibliography;
 }
 
 export class BibhtmlCite extends HTMLElement {
@@ -40,6 +38,10 @@ export class BibhtmlCite extends HTMLElement {
     BibhtmlCite.customElementName = name;
   }
 
+  static get observedAttributes(): string[] {
+    return ['ref', 'href'];
+  }
+
   constructor() {
     super();
     this._referenceIndex = null;
@@ -48,17 +50,11 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   connectedCallback() {
-    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
-
-    if (!bibliography) {
-      throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
-    }
-
-    bibliography.addCitation(this.refId, this);
+    getBibliography().addCitation(this.refId, this);
   }
 
-  static get observedAttributes(): string[] {
-    return ['ref', 'href'];
+  disconnectedCallback() {
+    getBibliography().removeCitation(this.refId, this);
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
@@ -133,6 +129,10 @@ export class BibhtmlReference extends HTMLElement {
     BibhtmlReference.customElementName = name;
   }
 
+  static get observedAttributes(): string[] {
+    return ['id'];
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -149,11 +149,8 @@ export class BibhtmlReference extends HTMLElement {
     this._citationCount = value;
   }
 
-  async connectedCallback() {
-    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
-    if (!bibliography) {
-      throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
-    }
+  connectedCallback() {
+    const bibliography: BibhtmlBibliography = getBibliography();
 
     if (!this._citation) {
       Cite.async(this.textContent).then((citation: any) => {
@@ -170,11 +167,20 @@ export class BibhtmlReference extends HTMLElement {
     }
   }
 
-  format(template: string): string {
-    return this._citation.format('bibliography', {
-      format: 'html',
-      template
-    });
+  disconnectedCallback() {
+    getBibliography().removeReference(this.id, this);
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    if (name === 'id') {
+      if (oldValue) {
+        getBibliography().removeReference(oldValue, this);
+      }
+
+      if (newValue) {
+        getBibliography().addReference(newValue, this);
+      }
+    }
   }
 
   render(template = 'apa') {
@@ -189,7 +195,10 @@ export class BibhtmlReference extends HTMLElement {
     }
 
     const tempTemplate = document.createElement('template');
-    tempTemplate.innerHTML = this.format(template);
+    tempTemplate.innerHTML = this._citation.format('bibliography', {
+      format: 'html',
+      template
+    });
 
     const cslEntry = tempTemplate.content.querySelector('.csl-entry');
 
@@ -238,11 +247,24 @@ export class BibhtmlBibliography extends HTMLElement {
     this.render();
   }
 
+  removeReference(refId: string, reference: BibhtmlReference) {
+    this._refIdToReference.delete(refId);
+    this.render();
+  }
+
   addCitation(refId: string, citation: BibhtmlCite) {
     if (!this._refIdToCitations.has(refId)) {
       this._refIdToCitations.set(refId, []);
     }
     this._refIdToCitations.get(refId)!.push(citation);
+    this.render();
+  }
+
+  removeCitation(refId: string, citation: BibhtmlCite) {
+    if (!this._refIdToCitations.has(refId)) {
+      return;
+    }
+    this._refIdToCitations.set(refId, this._refIdToCitations.get(refId)!.filter(c => c !== citation));
     this.render();
   }
 
