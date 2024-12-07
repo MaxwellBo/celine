@@ -38,10 +38,6 @@ export class BibhtmlCite extends HTMLElement {
     BibhtmlCite.customElementName = name;
   }
 
-  static get observedAttributes(): string[] {
-    return ['ref', 'href'];
-  }
-
   constructor() {
     super();
     this._referenceIndex = null;
@@ -57,22 +53,14 @@ export class BibhtmlCite extends HTMLElement {
     getBibliography().removeCitation(this.refId, this);
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
-    if (name === 'ref') {
-      this.render();
-    }
-
-    if (name === 'href') {
-      this.render();
-    }
-  }
-
   get refId(): string {
-    if (this.getAttribute('href') && this.getAttribute('ref')) {
-      console.warn(`<${BibhtmlCite.customElementName}> has both a href and ref attribute. Using href: ${this.getAttribute('href')}.`);
+    const a = this.querySelector('a');
+
+    if (a == null) {
+      throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    return this.getAttribute('href') || this.getAttribute('ref') || (this.textContent || '').trim();
+    return (a.getAttribute('href') || '').replace(/^#/, '');
   }
 
   set referenceIndex(value: number) {
@@ -90,29 +78,37 @@ export class BibhtmlCite extends HTMLElement {
       return;
     }
 
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: 'open' });
-    }
 
     const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
       throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
-
-    const link = document.createElement('a');
     const citationShorthand = alphabetize(this._citationIndex + 1);
 
     this.id = `cite-${this.refId}-${citationShorthand}`;
-    link.href = `#${this.refId}`;
 
-    if (this.getAttribute('href')) {
-      link.textContent = this.textContent;
-    } else {
-      link.textContent = `[${this._referenceIndex + 1}]`;
+
+    // get the first link
+    const a = this.querySelector('a');
+
+    // fail if no first link
+    if (!a) {
+      throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    this.shadowRoot!.replaceChildren(link);
+    // build a shadow root if it doesn't exist
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+    }
+
+    // clone light DOM into shadow DOM
+    this.shadowRoot!.replaceChildren(...Array.from(this.children).map(child => child.cloneNode(true)));
+
+    // get the cloned first link
+    const clonedA = this.shadowRoot!.querySelector('a');
+    // swap ? for the reference index
+    clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
   }
 }
 
