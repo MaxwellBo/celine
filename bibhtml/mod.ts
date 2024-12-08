@@ -51,13 +51,6 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   get refId(): string {
-    // try and treat the inner text as a refId
-    const maybeRef = this.querySelector(this.innerText);
-
-    if (maybeRef) {
-      return this.innerText;
-    }
-
     const a = this.querySelector('a');
 
     if (a == null) {

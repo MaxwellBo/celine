@@ -100,7 +100,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/bibhtml">jsr.io/<wbr>@celine/<wbr>bibhtml</a> + <a href="https://jsr.io/@celine/bibhtml/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">1.5.0</a>, <time  id="updated">Nov 29 2024</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">1.7.0</a>, <time  id="updated">Nov 29 2024</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__bibhtml")
@@ -122,7 +122,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.5.0"></script></div>
+  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.7.0"></script></div>
 
   <script id="installation-cell" type="module">
     celine.cell("installation", () => {
@@ -222,6 +222,24 @@
       return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
     })
   </script>
+
+  <!-- <p>
+    <code>&lt;bh-cite&gt;</code> has <q>shorthand</q> syntax, where the inner text is the ID of the reference to cite: 
+    
+    <span id="shorthand-container"><bh-cite>willighagen2019</bh-cite></span>
+  </p>
+
+  <script id="shorthand-cell" type="module">
+    celine.cell("shorthand-cell", () => {
+      const cloned = document.getElementById('shorthand-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    Shorthand syntax is discouraged: it does not gracefully degrade to a link.
+  </p> -->
 
   <p>
     If we cite a missing reference<span id="missing-container"><sup><bh-cite><a href="#freud2012">[#?]</a></bh-cite></sup></span> that is
