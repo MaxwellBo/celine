@@ -137,7 +137,7 @@
       href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements">custom elements</a>:
     <ol>
       <li>
-      <code>&lt;bh-cite&gt;</code>
+      <code>&lt;bh-cite&gt;</code><sup><a id="backlink-a" href="#footnote-a">(a)</a></sup>
       </li>
       <li>
       <code>&lt;bh-reference&gt;</code>
@@ -172,7 +172,7 @@
 &lt;/bh-bibliography&gt;</pre>
 
   <p>
-    The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short.
+    
   </p>
 
   <h3><code>&lt;bh-cite&gt;</code></h3>
@@ -195,7 +195,7 @@
     The <code>&lt;bh-cite&gt;</code> element:
     <ol>
       <li>Unhides the <code>&lt;bh-reference&gt;</code> targeted by the first inner <code>&lt;a&gt;</code> element, and adds a <a href="https://en.wikipedia.org/wiki/Backlink">backlink</a> to itself</li>
-      <li>Replaces the first <code>#?</code><sup><a href="#footnote-a">(a)</a></sup> contained within the first inner <code>&lt;a&gt;</code> element with the reference number</li>
+      <li>Replaces the first <code>#?</code><sup><a id="backlink-b" href="#footnote-b">(b)</a></sup> contained within the first inner <code>&lt;a&gt;</code> element with the reference number</li>
     </ol>
   </p>
 
@@ -212,7 +212,7 @@
   </script>
 
   <p>
-    We may choose to forgo numbered referencing entirely: <span id="flex-2-container"><bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite> [<a href="#birolEtAl2013">2013</a>]</span>
+    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite> [<a href="#birolEtAl2013">2013</a>]</span>
   </p>
 
   <script id="flex-2-cell" type="module">
@@ -443,7 +443,10 @@
 
 <ol type="a">
   <li id="footnote-a">
-    I considered replacing just <code>?</code>, rather than the somewhat uglier <code>#?</code>, but I worried that this would cause replacement of <code>?</code>s appended to the end of uncertain dates, like <code>2017?</code>.
+    <a href="#backlink-a">^</a> The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short.</code>.
+  </li>
+  <li id="footnote-b">
+    <a href="#backlink-b">^</a> I considered replacing just <code>?</code>, rather than the somewhat uglier <code>#?</code>, but I worried that this would cause replacement of <code>?</code>s appended to the end of uncertain dates, like <code>2017?</code>.
   </li>
 </ol>
 
