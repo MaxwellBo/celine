@@ -78,7 +78,6 @@ export class BibhtmlCite extends HTMLElement {
       return;
     }
 
-
     const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
@@ -100,6 +99,8 @@ export class BibhtmlCite extends HTMLElement {
     // build a shadow root if it doesn't exist
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
+      const documentSheets = [...document.styleSheets];
+      this.shadowRoot!.adoptedStyleSheets = documentSheets;
     }
 
     // clone light DOM into shadow DOM
@@ -132,6 +133,8 @@ export class BibhtmlReference extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    const documentSheets = [...document.styleSheets];
+    this.shadowRoot!.adoptedStyleSheets = documentSheets;
     this._citation = null;
     this._notifiedBibliography = false;
 
