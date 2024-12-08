@@ -200,7 +200,7 @@
   </p>
 
   <p>
-    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container">like <sup><bh-cite><a href="#birolEtAl2013">(#?)</a></bh-cite></sup></span>.
+    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#birolEtAl2013">(#?)</a></bh-cite></sup></span>
   </p>
 
   <script id="flex-1-cell" type="module">
@@ -212,7 +212,7 @@
   </script>
 
   <p>
-    We may choose to forgo number referencing entirely: <span id="flex-2-container">with (<bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite>, <a href="#birolEtAl2013">2013</a>)</span>
+    We may choose to forgo numbered referencing entirely: <span id="flex-2-container"><bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite> [<a href="#birolEtAl2013">2013</a>]</span>
   </p>
 
   <script id="flex-2-cell" type="module">
@@ -223,18 +223,8 @@
     })
   </script>
 
-  <span id="flex-3-container">or <bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite> [<a href="#birolEtAl2013">2013</a>]</span>.
-
-  <script id="flex-3-cell" type="module">
-    celine.cell("flex-3-cell", () => {
-      const cloned = document.getElementById('flex-3-container').cloneNode(true);
-      cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
-    })
-  </script>
-
   <p>
-    If we cite a <span id="missing-container">missing reference<sup><bh-cite><a href="#freud2012">[#?]</a></bh-cite></sup></span> that is
+    If we cite a missing reference<span id="missing-container"><sup><bh-cite><a href="#freud2012">[#?]</a></bh-cite></sup></span> that is
     not in the HTML document, the inner text of the element is displayed unchanged.
   </p>
 
