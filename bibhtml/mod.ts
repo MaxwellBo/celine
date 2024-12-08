@@ -263,16 +263,16 @@ export class BibhtmlBibliography extends HTMLElement {
       reference.citationCount = citations.length;
       reference.render(this.getAttribute('format') ?? undefined);
 
+      if (citations.length === 0) {
+        continue
+      }
+
       let citationIndex = 0;
       for (const citation of citations) {
         citation.referenceIndex = referenceIndex;
         citation.citationIndex = citationIndex;
         citation.render();
         citationIndex++;
-      }
-
-      if (citations.length === 0) {
-        continue
       }
 
       const li = document.createElement('li');
