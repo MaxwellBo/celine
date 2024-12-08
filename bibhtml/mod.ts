@@ -108,7 +108,7 @@ export class BibhtmlCite extends HTMLElement {
     // get the cloned first link
     const clonedA = this.shadowRoot!.querySelector('a');
     // swap ? for the reference index
-    clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
+    clonedA!.innerText = clonedA!.innerText.replace('#?', (this._referenceIndex + 1).toString());
   }
 }
 
@@ -173,6 +173,7 @@ export class BibhtmlReference extends HTMLElement {
     if (this._citationCount == 0) {
       // clear the shadow root
       this.shadowRoot!.replaceChildren();
+      return;
     }
 
     // gracefully degrade
