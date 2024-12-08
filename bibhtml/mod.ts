@@ -78,7 +78,7 @@ export class BibhtmlCite extends HTMLElement {
       return;
     }
 
-    const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
+    const bibliography: BibhtmlBibliography | null = (this.getRootNode() as Document | ShadowRoot).querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
       throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
