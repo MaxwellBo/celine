@@ -15,12 +15,15 @@ function alphabetize(n: number): string {
   return out;
 }
 
-function getBibliography(): BibhtmlBibliography {
+async function getBibliography(): Promise<BibhtmlBibliography> {
   const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
 
   if (!bibliography) {
     throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
   }
+
+  // Edge case where the custom element is defined but not yet upgraded
+  await customElements.whenDefined(BibhtmlBibliography.customElementName);
 
   return bibliography;
 }
@@ -32,12 +35,6 @@ export class BibhtmlCite extends HTMLElement {
 
   static customElementName = 'bh-cite';
 
-  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
-  static defineCustomElement(name: string) {
-    customElements.define(name, BibhtmlCite);
-    BibhtmlCite.customElementName = name;
-  }
-
   constructor() {
     super();
     this._referenceIndex = null;
@@ -46,11 +43,11 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   connectedCallback() {
-    getBibliography().addCitation(this.refId, this);
+    getBibliography().then(bib => bib.addCitation(this.refId, this));
   }
 
   disconnectedCallback() {
-    getBibliography().removeCitation(this.refId, this);
+    getBibliography().then(bib => bib.removeCitation(this.refId, this));
   }
 
   get refId(): string {
@@ -145,8 +142,6 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   connectedCallback() {
-    const bibliography: BibhtmlBibliography = getBibliography();
-
     if (!this._citation) {
       Cite.async(this.textContent).then((citation: any) => {
         this._citation = citation;
@@ -158,13 +153,13 @@ export class BibhtmlReference extends HTMLElement {
 
     if (!this._notifiedBibliography) {
       this._notifiedBibliography = true;
-      bibliography.addReference(this.id, this);
+      getBibliography().then(bib => bib.addReference(this.id, this));
     }
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
     if (name === 'id' && newValue) {
-      getBibliography().addReference(newValue, this);
+      getBibliography().then(bib => bib.addReference(newValue, this));
     }
   }
 
@@ -208,12 +203,6 @@ export class BibhtmlBibliography extends HTMLElement {
   }
 
   static customElementName = 'bh-bibliography';
-
-  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
-  static defineCustomElement(name: string) {
-    customElements.define(name, BibhtmlBibliography);
-    BibhtmlBibliography.customElementName = name;
-  }
 
   async connectedCallback() {
     this.render();
@@ -311,6 +300,6 @@ export class BibhtmlBibliography extends HTMLElement {
   }
 }
 
-BibhtmlBibliography.defineCustomElement('bh-bibliography');
-BibhtmlReference.defineCustomElement('bh-reference');
-BibhtmlCite.defineCustomElement('bh-cite');
+customElements.define(BibhtmlBibliography.customElementName, BibhtmlBibliography);
+customElements.define(BibhtmlReference.customElementName, BibhtmlReference);
+customElements.define(BibhtmlCite.customElementName, BibhtmlCite);
