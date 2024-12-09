@@ -123,15 +123,18 @@ export class BibhtmlCite extends HTMLElement {
     if (this.hasAttribute('deref')) {
       const ref = bibliography._refIdToReference.get(this.refId);
       if (!ref) {
-        throw new Error(`Could not find a reference with id ${this.refId} in the bibliography.`);
+        console.warn(`Could not find a reference with id ${this.refId} in the bibliography.`);
+        return;
       }
       const citation = ref._citation;
       if (!citation) {
-        throw new Error(`Could not find a citation for reference with id ${this.refId}.`);
+        console.log(`Could not find a citation for reference with id ${this.refId}.`);
+        return;
       }
       const url = citation.data[0].URL;
       if (!url) {
-        throw new Error(`Could not find a URL for reference with id ${this.refId}.`);
+        console.log(`Could not find a citation for reference with id ${this.refId}.`);
+        return;
       }
       clonedA!.href = url;
     }
@@ -147,6 +150,9 @@ export class BibhtmlCite extends HTMLElement {
       tooltip.style.padding = '5px';
       tooltip.style.display = 'none';
       tooltip.style.zIndex = '1000';
+      tooltip.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+      tooltip.style.borderRadius = '4px';
+      tooltip.style.maxWidth = '300px';
 
       this.shadowRoot!.appendChild(tooltip);
 
@@ -165,6 +171,7 @@ export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
   _citationCount = 0;
+  _citationPromise: Promise<any> | null;
 
   static customElementName = 'bh-reference';
 
@@ -182,6 +189,7 @@ export class BibhtmlReference extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this._citation = null;
+    this._citationPromise = null;
     this._notifiedBibliography = false;
 
     if (!this.getAttribute('id')) {
@@ -195,8 +203,8 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   connectedCallback() {
-    if (!this._citation) {
-      Cite.async(this.textContent).then((citation: any) => {
+    if (!this._citation && this._citationPromise == null) {
+      this._citationPromise = Cite.async(this.textContent).then((citation: any) => {
         this._citation = citation;
         this.render();
         return getBibliography().then(bib => bib.render())
