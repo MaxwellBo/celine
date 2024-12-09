@@ -122,7 +122,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.13.0"></script></div>
+  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.14.0"></script></div>
 
   <script id="installation-cell" type="module">
     celine.cell("installation", () => {
@@ -238,9 +238,9 @@
   </script>
 
   <p>
-    The <code>deref</code> attribute, achieves a similar goal by <a href="https://en.wikipedia.org/wiki/Indirection"><i>dereferencing</i></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element by extracting it from the referenced <code>&lt;bh-reference&gt;</code> element.
+    The <code>deref</code> attribute, achieves a similar goal by <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferencing</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by Citation.js.
 
-    Thus, <span id="deref-container"><bh-cite><cite><a href="#mokhov2018" deref>Build Systems à la Carte</a></cite></bh-cite></span> links to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
+    Thus, <span id="deref-container"><bh-cite><cite><a href="#mokhov2018" deref>Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
 
   <script id="deref-cell" type="module">

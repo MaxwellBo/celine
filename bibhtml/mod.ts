@@ -153,11 +153,11 @@ export class BibhtmlCite extends HTMLElement {
       tooltip.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
       tooltip.style.borderRadius = '4px';
       tooltip.style.maxWidth = '300px';
+      tooltip.style.fontSize = '14px';
 
       // Position the tooltip underneath the citation link
       const rect = clonedA!.getBoundingClientRect();
-      tooltip.style.top = `${rect.bottom + globalThis.scrollY}px`;
-      tooltip.style.left = `${rect.left + globalThis.scrollX}px`;
+      tooltip.style.left = `${rect.left + globalThis.scrollX + 100}px`;
 
       this.shadowRoot!.appendChild(tooltip);
 
