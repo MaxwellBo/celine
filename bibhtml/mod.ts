@@ -131,6 +131,30 @@ export class BibhtmlCite extends HTMLElement {
       }
       clonedA!.href = url;
     }
+
+    // Show the entire reference on hover
+    const ref = bibliography._refIdToReference.get(this.refId);
+    if (ref) {
+      const tooltip = document.createElement('span');
+      tooltip.textContent = ref.shadowRoot?.textContent || ref.textContent || '';
+      tooltip.style.position = 'absolute';
+      tooltip.style.backgroundColor = 'white';
+      tooltip.style.border = '1px solid black';
+      tooltip.style.padding = '5px';
+      tooltip.style.display = 'none';
+      tooltip.style.zIndex = '1000';
+
+      this.shadowRoot!.appendChild(tooltip);
+
+      this.addEventListener('mouseenter', () => {
+        tooltip.style.display = 'block';
+      });
+
+      this.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+    }
+  }
   }
 }
 
