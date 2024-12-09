@@ -55,19 +55,23 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (name === 'deref') {
+    if (name === 'deref' || name === 'ref') {
       this.render();
     }
   }
 
   get refId(): string {
+    if (this.hasAttribute('ref') && this.hasAttribute('deref')) {
+      throw new Error(`You have both ref and deref attributes in <${BibhtmlCite.customElementName}>. You should only have one.`);
+    }
+
     const a = this.querySelector('a');
 
     if (a == null) {
       throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    return (a.getAttribute('href') || '').replace(/^#/, '');
+    return this.getAttribute('ref') || (a.getAttribute('href') || '').replace(/^#/, '');
   }
 
   set referenceIndex(value: number) {
@@ -154,7 +158,6 @@ export class BibhtmlCite extends HTMLElement {
         tooltip.style.display = 'none';
       });
     }
-  }
   }
 }
 
