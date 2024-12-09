@@ -50,6 +50,16 @@ export class BibhtmlCite extends HTMLElement {
     getBibliography().then(bib => bib.removeCitation(this.refId, this));
   }
 
+  static get observedAttributes(): string[] {
+    return ['deref'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    if (name === 'deref') {
+      this.render();
+    }
+  }
+
   get refId(): string {
     const a = this.querySelector('a');
 
@@ -84,7 +94,6 @@ export class BibhtmlCite extends HTMLElement {
 
     this.id = `cite-${this.refId}-${citationShorthand}`;
 
-
     // get the first link
     const a = this.querySelector('a');
 
@@ -105,6 +114,23 @@ export class BibhtmlCite extends HTMLElement {
     const clonedA = this.shadowRoot!.querySelector('a');
     // swap ? for the reference index
     clonedA!.innerText = clonedA!.innerText.replace('#?', (this._referenceIndex + 1).toString());
+
+    // if deref, we need to get the URL from the citation of the reference
+    if (this.hasAttribute('deref')) {
+      const ref = bibliography._refIdToReference.get(this.refId);
+      if (!ref) {
+        throw new Error(`Could not find a reference with id ${this.refId} in the bibliography.`);
+      }
+      const citation = ref._citation;
+      if (!citation) {
+        throw new Error(`Could not find a citation for reference with id ${this.refId}.`);
+      }
+      const url = citation.data[0].URL;
+      if (!url) {
+        throw new Error(`Could not find a URL for reference with id ${this.refId}.`);
+      }
+      clonedA!.href = url;
+    }
   }
 }
 
@@ -146,6 +172,7 @@ export class BibhtmlReference extends HTMLElement {
       Cite.async(this.textContent).then((citation: any) => {
         this._citation = citation;
         this.render();
+        return getBibliography().then(bib => bib.render())
       }).catch((e: Error) => {
         console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
       });
