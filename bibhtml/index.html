@@ -67,15 +67,15 @@
     <p>
       <cite>@celine/bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
         Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to
-      referencing in LaTeX/BibTeX. It's a thin wrapper around <a
+      referencing in LaTeX/BibTeX<sup><bh-cite><a href="#patashnik2007">[#?]</a></bh-cite></sup>. It's a thin wrapper around <a
         href="https://citation.js.org/">Citation.js</a><sup><bh-cite><a href="#willighagen2019">[#?]</a></bh-cite></sup> and 
       gracefully degrades when citations and references are malformed or JavaScript is disabled. 
     </p>
     <p>
       <cite>@celine/bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a
-      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite><a href="#avellar2021">[#?]</a></bh-cite></sup> and <a
+      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite><a href="#avellar2021">[#?]</a></bh-cite></sup>, <a
       href="https://nota-lang.org/reference.html#def-section-2.4">Nota's
-      citations</a><sup><bh-cite><a href="#crichton2021nota">[#?]</a></bh-cite></sup>.
+      citations</a><sup><bh-cite><a href="#crichton2021nota">[#?]</a></bh-cite></sup>, and Meyer's <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/"><cite>Blinded By the Light DOM</cite></a><sup><bh-cite><a href="#meyer2023lightdom">[#?]</a></bh-cite></sup>.
     </p>
   </section>
 
@@ -200,7 +200,7 @@
   </p>
 
   <p>
-    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#birolEtAl2013">(#?)</a></bh-cite></sup></span>
+    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#mokhov2018">(#?)</a></bh-cite></sup></span>
   </p>
 
   <script id="flex-1-cell" type="module">
@@ -212,7 +212,7 @@
   </script>
 
   <p>
-    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#birolEtAl2013">Birol et al.</a></bh-cite> [<a href="#birolEtAl2013">2013</a>]</span>
+    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al.</a></bh-cite> [<a href="#mokhov2018">2018</a>]</span>
   </p>
 
   <script id="flex-2-cell" type="module">
@@ -310,26 +310,26 @@
 
   <script id="doi-cell" type="module">
     celine.cell("doi-cell", () => {
-      const reference = document.getElementById('slivaLambert2015');
+      const reference = document.getElementById('mokhov2018');
       return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#slivaLambert2015">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+    This expands to reference <bh-cite><a href="#mokhov2018">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
   </p>
 
   <h4>Wikidata</h4>
 
   <script id="wikidata-cell" type="module">
     celine.cell("wikidata-cell", () => {
-      const reference = document.getElementById('birolEtAl2013');
+      const reference = document.getElementById('patashnik2007');
       return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#birolEtAl2013">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bh-cite><a href="#patashnik2007">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
@@ -416,11 +416,11 @@
   Brian Dunbar (2017-08-03). The Sun | NASA. National Aeronautics and Space Administration. 
   Accessed on 2021-08-30.
 </bh-reference>
-<bh-reference id="slivaLambert2015">
-  10.1080/15588742.2015.1017687
+<bh-reference id="mokhov2018">
+  10.1145/3236774
 </bh-reference>
-<bh-reference id="birolEtAl2013">
-  Q21972834
+<bh-reference id="patashnik2007">
+  Q8029
 </bh-reference>
 <bh-reference id="griesemer2020featherweight">
   @misc{griesemer2020featherweight,
@@ -432,6 +432,19 @@
     primaryClass={cs.PL},
     url={https://arxiv.org/abs/2005.11710}, 
 }
+<bh-reference id="meyer2023lightdom">
+  @article{meyer2023lightdom,
+    author       = {Meyer, Eric A.},
+    title        = {Blinded By the Light {DOM}},
+    year         = {2023},
+    month        = nov,
+    day          = {1},
+    url          = {https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/},
+    journal      = {Eric's Archived Thoughts},
+    keywords     = {web components, Light DOM, JavaScript, DOM},
+    note         = {Blog post discussing the advantages of using Light DOM over Shadow DOM in web components}
+  }
+</bh-reference>
 </bh-reference>
 
 <bh-bibliography format="apa">
@@ -459,7 +472,7 @@
   author = {Bo, Maxwell},
   license = {MIT},
   title = {{@celine/bibhtml}},
-  url = {https://maxbo.me/celine/bibhtml/},
+  url = {https://maxbo.me/celine/bibhtml},
   year = {2024}
 }
 </pre>
