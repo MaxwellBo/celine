@@ -157,7 +157,7 @@ export class BibhtmlCite extends HTMLElement {
 
       // Position the tooltip underneath the citation link
       const rect = clonedA!.getBoundingClientRect();
-      tooltip.style.left = `${rect.left + globalThis.scrollX + 100}px`;
+      tooltip.style.left = `${rect.left}px`;
 
       this.shadowRoot!.appendChild(tooltip);
 
