@@ -122,7 +122,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.8.0"></script></div>
+  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.13.0"></script></div>
 
   <script id="installation-cell" type="module">
     celine.cell("installation", () => {
@@ -212,7 +212,7 @@
   </script>
 
   <p>
-    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al.</a></bh-cite> [<a href="#mokhov2018">2018</a>]</span>
+    We may choose to forgo numbered citations entirely: <span id="flex-2-container">[<bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite>]</span>
   </p>
 
   <script id="flex-2-cell" type="module">
@@ -223,11 +223,24 @@
     })
   </script>
 
+  <p>
+    The <code>ref</code> attribute assigns an explicit reference ID, and prevents the <code>&lt;bh-cite&gt;</code> element from performing <q>reference ID inference</q>.
+    This allows the inner <code>&lt;a&gt;</code> element to be a direct link to the referenced material:
+    <span id="ref-container"><bh-cite ref="mokhov2018"><cite><a href="https://doi.org/10.1145/3236774">Build Systems à la Carte</a></cite></bh-cite></span>
+  </p>
+
+  <script id="ref-cell" type="module">
+    celine.cell("ref-cell", () => {
+      const cloned = document.getElementById('ref-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+    })
+  </script>
 
   <p>
-    The <code>deref</code> attribute <a href="https://en.wikipedia.org/wiki/Indirection"><i>dereferences</i></a> a citation, bypassing linking to the <code>&lt;bh-reference&gt;</code> and linking directly to the URL of the reference itself.
+    The <code>deref</code> attribute, achieves a similar goal by <a href="https://en.wikipedia.org/wiki/Indirection"><i>dereferencing</i></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element by extracting it from the referenced <code>&lt;bh-reference&gt;</code> element.
 
-    As an example, <span id="deref-container"><bh-cite deref><a href="#meyer2023lightdom">Blinded By the Light DOM</a></bh-cite></span> links directly to <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/">meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom</a>. This preserves traditional reference hyperlinking whilst generating a bibliography.
+    Thus, <span id="deref-container"><bh-cite><cite><a href="#mokhov2018" deref>Build Systems à la Carte</a></cite></bh-cite></span> links to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
 
   <script id="deref-cell" type="module">
