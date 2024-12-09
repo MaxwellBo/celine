@@ -122,7 +122,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.14.0"></script></div>
+  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.16.0"></script></div>
 
   <script id="installation-cell" type="module">
     celine.cell("installation", () => {
@@ -224,8 +224,8 @@
   </script>
 
   <p>
-    The <code>ref</code> attribute assigns an explicit reference ID, and prevents the <code>&lt;bh-cite&gt;</code> element from performing <q>reference ID inference</q>.
-    This allows the inner <code>&lt;a&gt;</code> element to be a direct link to the referenced material:
+    The <code>ref</code> attribute assigns an explicit reference ID, and prevents the <code>&lt;bh-cite&gt;</code> element from performing <q>reference ID inference</q> (extracting the reference ID from <code>href</code> attribute of the first inner <code>&lt;a&gt;</code> element).
+    This allows the inner <code>&lt;a&gt;</code> element to <code>href</code> directly to the the referenced material:
     <span id="ref-container"><bh-cite ref="mokhov2018"><cite><a href="https://doi.org/10.1145/3236774">Build Systems à la Carte</a></cite></bh-cite></span>
   </p>
 
@@ -240,7 +240,7 @@
   <p>
     The <code>deref</code> attribute, achieves a similar goal by <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferencing</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by Citation.js.
 
-    Thus, <span id="deref-container"><bh-cite><cite><a href="#mokhov2018" deref>Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
+    Thus, <span id="deref-container"><bh-cite deref><cite><a href="#mokhov2018">Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
 
   <script id="deref-cell" type="module">
@@ -250,6 +250,7 @@
       return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
     })
   </script>
+
 
   <!-- <p>
     <code>&lt;bh-cite&gt;</code> has <q>shorthand</q> syntax, where the inner text is the ID of the reference to cite: 
@@ -291,6 +292,40 @@
       <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
     </ul>
   </p>
+
+  <p>
+    In summary:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>Computed reference ID</th>
+        <th>Shadow DOM <code>href</code></th>
+        <th>Light DOM (fallback) <code>href</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td class="echo">&lt;bh-cite&gt;&lt;a href=&quot;#refId&quot;&gt;...</td>
+      <td><code>"refId"</code></td>
+      <td><code>"#refId"</code></td>
+      <td><code>"#refId"</code></td>
+      </tr>
+      <tr>
+      <td class="echo">&lt;bh-cite ref=&quot;refId&quot;&gt;&lt;a href=&quot;example.com&quot;&gt;...</td>
+      <td><code>"refId"</code></td>
+      <td><code>"example.com"</code></td>
+      <td><code>"example.com"</code></td>
+      </tr>
+      <tr>
+      <td class="echo">&lt;bh-cite deref&gt;&lt;a href=&quot;#refId&quot;&gt;...</td>
+      <td><code>"refId"</code></td>
+      <td>URL yielded by Citation.js</td>
+      <td><code>"#refId"</code></td>
+      </tr>
+    </tbody>
+  </table>
 
 
   <h3><code>&lt;bh-reference&gt;</code></h3>

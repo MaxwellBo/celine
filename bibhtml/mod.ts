@@ -308,6 +308,7 @@ export class BibhtmlBibliography extends HTMLElement {
 
   render() {
     const ol = document.createElement('ol');
+    ol.style.wordWrap = 'break-word';
 
     let referenceIndex = 0;
     for (const [refId, citations] of this._refIdToCitations.entries()) {
