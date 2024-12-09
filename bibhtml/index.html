@@ -296,37 +296,65 @@
   <p>
     In summary:
   </p>
-  <table>
+
+  <style>
+    /* Default table styles */
+    .responsive-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    /* Mobile breakpoint transformation */
+    @media screen and (max-width: 768px) {
+      .responsive-table tr {
+          display: block;
+      }
+      
+      .responsive-table td, .responsive-table th {
+          display: block;
+          text-align: left;
+          border: none;
+          border-bottom: 1px solid #eee;
+      }
+    }
+  </style>
+
+  <table class="responsive-table">
     <thead>
       <tr>
         <th>Pattern</th>
-        <th>Computed reference ID</th>
-        <th>Shadow DOM <code>href</code></th>
-        <th>Light DOM (fallback) <code>href</code></th>
+        <!-- <th>Computed reference ID</th> -->
+        <th>Citation navigates to:</th>
+        <!-- <th>Light DOM (fallback) <code>href</code></th> -->
       </tr>
     </thead>
     <tbody>
       <tr>
       <td class="echo">&lt;bh-cite&gt;&lt;a href=&quot;#refId&quot;&gt;...</td>
-      <td><code>"refId"</code></td>
+      <!-- <td><code>"refId"</code></td> -->
       <td><code>"#refId"</code></td>
-      <td><code>"#refId"</code></td>
+      <!-- <td><code>"#refId"</code></td> -->
       </tr>
       <tr>
       <td class="echo">&lt;bh-cite ref=&quot;refId&quot;&gt;&lt;a href=&quot;example.com&quot;&gt;...</td>
-      <td><code>"refId"</code></td>
+      <!-- <td><code>"refId"</code></td> -->
       <td><code>"example.com"</code></td>
-      <td><code>"example.com"</code></td>
+      <!-- <td><code>"example.com"</code></td> -->
       </tr>
       <tr>
       <td class="echo">&lt;bh-cite deref&gt;&lt;a href=&quot;#refId&quot;&gt;...</td>
-      <td><code>"refId"</code></td>
+      <!-- <td><code>"refId"</code></td> -->
       <td>URL yielded by Citation.js</td>
-      <td><code>"#refId"</code></td>
+      <!-- <td><code>"#refId"</code></td> -->
       </tr>
     </tbody>
   </table>
-
 
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
