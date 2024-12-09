@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "@celine"
+authors:
+  - family-names: "Bo"
+    given-names: "Maxwell"
+    orcid: https://orcid.org/0009-0009-3275-5233
+date-released: "2024-01-01"
+# version: "1.0.0"
+# doi: "10.1234/example-doi"
+url: "https://maxbo.me/celine/"
+repository-code: "https://github.com/MaxwellBo/celine"
+license: "MIT"
+keywords:
+  - "reactive cells"
+  - "data visualization"
+  - "web components"
+  - "bibliography"
+  - "academic typesetting"
