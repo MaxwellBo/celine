@@ -312,6 +312,14 @@
 
     /* Mobile breakpoint transformation */
     @media screen and (max-width: 768px) {
+
+      .responsive-table {
+        /* Enable wrapping at any character */
+        word-break: break-all;
+        /* Enable wrapping within words */
+        overflow-wrap: break-word;
+      }
+
       .responsive-table tr {
           display: block;
       }
