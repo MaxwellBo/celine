@@ -126,7 +126,7 @@
 
   <script id="import-cell" type="module">
     celine.cell("import", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('import').innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${document.getElementById('import').innerHTML}</pre>`
     })
   </script>
 
@@ -149,7 +149,7 @@
   </p>
   <br />
 
-  <pre class="echo">
+  <pre class="echo dark">
 &lt;bh-cite&gt;&lt;a href=&quot;#willighagen2019&quot;&gt;[#?]&lt;/a&gt;&lt;/bh-cite&gt;
 ...
 &lt;bh-reference id="willighagen2019"&gt;
@@ -187,7 +187,7 @@
     celine.cell("inner-text-cell", () => {
       const cloned = document.getElementById('inner-text-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -207,19 +207,19 @@
     celine.cell("flex-1-cell", () => {
       const cloned = document.getElementById('flex-1-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
   <p>
-    We may choose to forgo numbered citations entirely: <span id="flex-2-container">[<bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite>]</span>
+    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite></span>
   </p>
 
   <script id="flex-2-cell" type="module">
     celine.cell("flex-2-cell", () => {
       const cloned = document.getElementById('flex-2-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -233,7 +233,7 @@
     celine.cell("ref-cell", () => {
       const cloned = document.getElementById('ref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -247,7 +247,7 @@
     celine.cell("deref-cell", () => {
       const cloned = document.getElementById('deref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -262,7 +262,7 @@
     celine.cell("shorthand-cell", () => {
       const cloned = document.getElementById('shorthand-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -279,7 +279,7 @@
     celine.cell("missing-cell", () => {
       const cloned = document.getElementById('missing-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo'>${cloned.innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
 
@@ -341,7 +341,7 @@
   <script id="bibtex-cell" type="module">
     celine.cell("bibtex-cell", () => {
       const reference = document.getElementById('crichton2021nota');
-      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
     })
   </script>
 
@@ -363,7 +363,7 @@
   <script id="text-cell" type="module">
     celine.cell("text-cell", () => {
       const reference = document.getElementById('dunbar2017');
-      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
     })
   </script>
 
@@ -376,7 +376,7 @@
   <script id="doi-cell" type="module">
     celine.cell("doi-cell", () => {
       const reference = document.getElementById('mokhov2018');
-      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
     })
   </script>
 
@@ -389,7 +389,7 @@
   <script id="wikidata-cell" type="module">
     celine.cell("wikidata-cell", () => {
       const reference = document.getElementById('patashnik2007');
-      return htl.html`<pre class='echo'>${reference.outerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
     })
   </script>
 
@@ -407,7 +407,7 @@
   </p>
   <br />
 
-  <pre class="echo">
+  <pre class="echo dark">
 &lt;bh-bibliography format="apa"&gt;
 &lt;/bh-bibliography&gt;</pre>
 

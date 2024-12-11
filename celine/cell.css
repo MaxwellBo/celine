@@ -1,14 +1,21 @@
 @import url('https://unpkg.com/@observablehq/inspector@5.0.1/src/style.css');
 
 @font-face {
-  font-family: 'FontWithASyntaxHighlighter';
+  font-family: 'FontWithASyntaxHighlighterLightOwl';
   src:
     url('./fonts/FontWithASyntaxHighlighterLightOwl-Regular.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'FontWithASyntaxHighlighter';
+  src:
+    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
 .echo {
   display: block;
-  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-family: "FontWithASyntaxHighlighterLightOwl", monospace;
   font-feature-settings: "colr", "calt";
   white-space: pre;
   font-size: 0.87rem;
@@ -19,6 +26,14 @@
   background-color: #f3f3f3;
   border-radius: 4px;
 }
+
+
+.echo.dark {
+  font-family: "FontWithASyntaxHighlighter", monospace;
+  background-color: #282828;
+  color: #eee;
+}
+
 
 .echo[contenteditable]:hover {
   /* background-color: #f1f6f9; */
