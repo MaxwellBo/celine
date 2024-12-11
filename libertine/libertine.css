@@ -110,11 +110,11 @@ h6 > a[href^="#"]::before {
     content: "§";
 }
 
-a:hover {
+a:hover, *::part(bh-a):hover  {
   text-underline-offset: 2px;
 }
 
-a:active {
+a:active, *::part(bh-a):active  {
   background-color: yellow;
   text-underline-offset: 3px;
 }

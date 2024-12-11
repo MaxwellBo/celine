@@ -116,6 +116,7 @@ export class BibhtmlCite extends HTMLElement {
 
     // get the cloned first link
     const clonedA = this.shadowRoot!.querySelector('a');
+    clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
     // swap ? for the reference index
     clonedA!.innerText = clonedA!.innerText.replace('#?', (this._referenceIndex + 1).toString());
 
