@@ -235,7 +235,7 @@ script#installation::before {
 </pre>
 
 <p>
-You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a>, <a href="libertine/index.html">libertine.css</a>:
+You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a href="libertine/index.html">libertine.css</a>:
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
@@ -263,7 +263,7 @@ You may want to include <cite>@celine/celine</cite>'s <a href="https://dohliam.g
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
 celine.cell("chinook", async () => {
-  const url = "https://maxbo.me/chinook.db";
+  const url = "https://maxbo.me/celine/static/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
   const tracks = await db.sql`SELECT * FROM tracks WHERE Milliseconds < 1000000`;
 
@@ -633,7 +633,7 @@ celine.cell("duck", async () => {
   HTML has a little known element, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn">&lt;dfn&gt;</a>, that can be used to define terms.
 </p> -->
 
-<h3><a href="#celine/libertine" id="libertine.css"></a>@celine/libertine</h3>
+<h3><a href="#celine-libertine" id="celine-libertine"></a>@celine/libertine</h3>
 
 <p><cite>@celine/libertine</cite> provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> typeface, one common in academic typesetting.</p>
 
