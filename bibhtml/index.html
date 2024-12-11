@@ -297,42 +297,6 @@
     In summary:
   </p>
 
-  <style>
-    /* Default table styles */
-    .responsive-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .responsive-table th,
-    .responsive-table td {
-        padding: 12px;
-        border: 1px solid #ddd;
-    }
-
-    /* Mobile breakpoint transformation */
-    @media screen and (max-width: 768px) {
-
-      .responsive-table {
-        /* Enable wrapping at any character */
-        word-break: break-all;
-        /* Enable wrapping within words */
-        overflow-wrap: break-word;
-      }
-
-      .responsive-table tr {
-          display: block;
-      }
-      
-      .responsive-table td, .responsive-table th {
-          display: block;
-          text-align: left;
-          border: none;
-          border-bottom: 1px solid #eee;
-      }
-    }
-  </style>
-
   <table class="responsive-table">
     <thead>
       <tr>
@@ -344,22 +308,22 @@
     </thead>
     <tbody>
       <tr>
-      <td class="echo">&lt;bh-cite&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
+        <td class="echo">&lt;bh-cite&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
       <!-- <td><code>"refId"</code></td> -->
-      <td><code>"#refId"</code></td>
+        <td><code>"#refId"</code></td>
       <!-- <td><code>"#refId"</code></td> -->
-      </tr>
+        </tr>
       <tr>
-      <td class="echo">&lt;bh-cite ref=&quot;refId&quot;&gt;<wbr>&lt;a href=&quot;example.com&quot;&gt;<wbr>...</td>
-      <!-- <td><code>"refId"</code></td> -->
-      <td><code>"example.com"</code></td>
-      <!-- <td><code>"example.com"</code></td> -->
-      </tr>
+      <td class="echo">&lt;bh-cite ref=&quot;refId&quot;&gt;<wbr>&lt;a <wbr>href=&quot;example.com&quot;&gt;<wbr>...</td>
+        <!-- <td><code>"refId"</code></td> -->
+        <td><code>"example.com"</code></td>
+        <!-- <td><code>"example.com"</code></td> -->
+        </tr>
       <tr>
-      <td class="echo">&lt;bh-cite deref&gt<wbr>;&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
-      <!-- <td><code>"refId"</code></td> -->
-      <td>URL yielded by Citation.js</td>
-      <!-- <td><code>"#refId"</code></td> -->
+        <td class="echo">&lt;bh-cite deref&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
+        <!-- <td><code>"refId"</code></td> -->
+        <td>URL yielded by Citation.js</td>
+        <!-- <td><code>"#refId"</code></td> -->
       </tr>
     </tbody>
   </table>
