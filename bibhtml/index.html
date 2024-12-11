@@ -37,7 +37,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="module">
-    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@3.0.0';
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.0.0';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
     import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -122,11 +122,11 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="installation"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.17.0"></script></div>
+  <div id="import"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.17.0"></script></div>
 
-  <script id="installation-cell" type="module">
-    celine.cell("installation", () => {
-      return htl.html`<pre class='echo'>${document.getElementById('installation').innerHTML}</pre>`
+  <script id="import-cell" type="module">
+    celine.cell("import", () => {
+      return htl.html`<pre class='echo'>${document.getElementById('import').innerHTML}</pre>`
     })
   </script>
 

@@ -8,6 +8,14 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>4.0.0</title>
+    <link href="https://jsr.io/@celine/celine@4.0.0"/>
+    <id>https://jsr.io/@celine/celine@4.0.0</id>
+    <updated>2024-12-11T00:00:00Z</updated>
+    <summary>cell.css now uses a light theme</summary>
+  </entry>
+
+  <entry>
     <title>3.0.0</title>
     <link href="https://jsr.io/@celine/celine@3.0.0"/>
     <id>https://jsr.io/@celine/celine@3.0.0</id>

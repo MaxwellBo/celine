@@ -44,11 +44,11 @@ aside {
 }
 
 pre {
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 16px;
+  /* cloned by cell.css */
+  padding: 1ch;
   overflow: auto;
+  background-color: #f3f3f3;
+  border-radius: 4px;
 }
 
 h1, h2, h3, h4, h5, h6 {
