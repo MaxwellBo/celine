@@ -265,7 +265,7 @@ import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 celine.cell("chinook", async () => {
   const url = "https://maxbo.me/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
-  const tracks = await db.query("SELECT * FROM tracks WHERE Milliseconds < 1000000");
+  const tracks = await db.sql`SELECT * FROM tracks WHERE Milliseconds < 1000000`;
 
   return Plot.plot({
     title: htl.html`<h3>Track length distribution</h3>`,
@@ -279,6 +279,10 @@ celine.cell("chinook", async () => {
   });
 });
 </script>
+
+<small>
+  <a href="https://observablehq.com/framework/lib/sqlite"><code>SQLiteDatabaseClient</code> docs</a> 
+</small>
 
 
 <h2><a href="#api" id="api"></a>API</h2>
@@ -521,6 +525,10 @@ celine.cell("md2", celine.md`
 
 <h4><a href="#graphviz" id="graphviz"></a>Graphviz</h4>
 
+<p>
+  <a href="https://observablehq.com/framework/lib/dot">Docs</a>
+</p>
+
 <script type="module" class="echo reflect" id="dot" contenteditable="true">
 celine.cell("dot", async () => {
   const dot = await celine.library.dot();
@@ -533,6 +541,11 @@ digraph G {
 </script>
 
 <h4><a href="#mermaid" id="mermaid"></a>Mermaid</h4>
+
+<p>
+  <a href="https://observablehq.com/framework/lib/mermaid">Docs</a>
+</p>
+
 
 <script type="module" class="echo reflect" id="cmermaid" contenteditable="true">
 celine.cell("cmermaid", async () => {
@@ -549,6 +562,10 @@ graph TD;
 
 <h4><a href="#leaflet" id="leaflet"></a>Leaflet</h4>
 
+<p>
+  <a href="https://observablehq.com/framework/lib/leaflet">Docs</a>
+</p>
+
 <script type="module" class="echo reflect" id="L" contenteditable="true">
 celine.cell("L", async function* () {
   const L = await celine.library.L();
@@ -560,6 +577,50 @@ celine.cell("L", async function* () {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+});
+</script>
+
+<h4><a href="#duckdb" id="duckdb"></a>DuckDB</h4>
+
+<p>
+  <a href="https://observablehq.com/framework/lib/duckdb">Docs</a>
+</p>
+
+<script type="module" class="echo reflect" id="duck" contenteditable="true">
+import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
+
+celine.cell("duck", async () => {
+  const db = await celine.library.DuckDBClient().of();
+
+  await db.sql`
+  CREATE TABLE gaia
+  AS SELECT *
+  FROM read_parquet('https://maxbo.me/celine/static/gaia-sample.parquet')`;
+
+  const bins = await db.sql`
+  SELECT
+  floor(ra / 2) * 2 + 1 AS ra,
+  floor(dec / 2) * 2 + 1 AS dec,
+  count() AS count
+  FROM gaia
+  GROUP BY 1, 2`
+
+  return Plot.plot({
+    aspectRatio: 1,
+    x: {domain: [0, 360]},
+    y: {domain: [-90, 90]},
+    marks: [
+      Plot.frame({fill: 0}),
+      Plot.raster(bins, {
+        x: "ra",
+        y: "dec",
+        fill: "count",
+        width: 360 / 2,
+        height: 180 / 2,
+        imageRendering: "pixelated"
+      })
+    ]
+  })
 });
 </script>
 
