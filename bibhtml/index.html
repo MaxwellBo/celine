@@ -297,33 +297,35 @@
     In summary:
   </p>
 
-  <table class="responsive-table">
+  <style>
+    .fwbish {
+      font-family: "FontWithASyntaxHighlighter", monospace;
+      font-feature-settings: "colr", "calt";
+      color: #eee;
+      font-size: 0.87rem;
+      background-color: #282828;
+    }
+  </style>
+
+  <table>
     <thead>
       <tr>
         <th>Pattern</th>
-        <!-- <th>Computed reference ID</th> -->
         <th>Citation navigates to:</th>
-        <!-- <th>Light DOM (fallback) <code>href</code></th> -->
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="echo">&lt;bh-cite&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
-      <!-- <td><code>"refId"</code></td> -->
+        <td class="fwbish">&lt;bh-cite&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
         <td><code>"#refId"</code></td>
-      <!-- <td><code>"#refId"</code></td> -->
         </tr>
       <tr>
-      <td class="echo">&lt;bh-cite ref=&quot;refId&quot;&gt;<wbr>&lt;a <wbr>href=&quot;example.com&quot;&gt;<wbr>...</td>
-        <!-- <td><code>"refId"</code></td> -->
+        <td class="fwbish">&lt;bh-cite ref=&quot;refId&quot;&gt;<wbr>&lt;a href=&quot;example.com&quot;&gt;<wbr>...</td>
         <td><code>"example.com"</code></td>
-        <!-- <td><code>"example.com"</code></td> -->
         </tr>
       <tr>
-        <td class="echo">&lt;bh-cite deref&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
-        <!-- <td><code>"refId"</code></td> -->
+        <td class="fwbish">&lt;bh-cite deref&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
         <td>URL yielded by Citation.js</td>
-        <!-- <td><code>"#refId"</code></td> -->
       </tr>
     </tbody>
   </table>
