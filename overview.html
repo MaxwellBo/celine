@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,6 @@
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />
 
-  <!-- Import required libraries -->
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.1.0';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
@@ -22,22 +22,29 @@
     registerScriptReevaluationOnBlur(document, 'echo');
   </script>
 </head>
+
 <body>
   <main>
-    <h1>@celine libraries</h1>
+    <h1>@celine</h1>
+    <div class="authors">
+      <div class="author">
+        <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span>
+      </div>
+    </div>
+
+    <section class="abstract">
+      <p>
+        <cite>@celine</cite> is suite of libraries.
+      </p>
+    </section>
+
     <script type="module" id="landing">
-
-
-
-
-
       const extractAbstract = (html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const abstract = doc.querySelector('.abstract');
         if (!abstract) return '';
-        const firstP = abstract.querySelector('p');
-        return firstP ? firstP.textContent.trim() : '';
+        return abstract.querySelector('p');
       };
 
       const extractInstallation = (html) => {
@@ -45,7 +52,7 @@
         const doc = parser.parseFromString(html, 'text/html');
         const importElement = doc.getElementById('import');
         if (!importElement) return '';
-        return importElement.innerHTML.trim();
+        return importElement;
       };
 
       celine.cell("landing", async () => {
@@ -92,8 +99,9 @@
             `)}
           </div>
         `;
-            });
-          </script>
+      });
+    </script>
   </main>
 </body>
+
 </html>

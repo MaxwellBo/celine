@@ -122,11 +122,11 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="import"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.17.0"></script></div>
+  <div id="import-container"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@1.17.0"></script></div>
 
-  <script id="import-cell" type="module">
+  <script id="import" type="module">
     celine.cell("import", () => {
-      return htl.html`<pre class='echo dark'>${document.getElementById('import').innerHTML}</pre>`
+      return htl.html`<pre class='echo dark'>${document.getElementById('import-container').innerHTML}</pre>`
     })
   </script>
 
