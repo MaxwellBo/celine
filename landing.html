@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@celine</title>
+
+  <link rel="stylesheet" href="celine/cell.css" />
+  <link rel="stylesheet" href="libertine/libertine.css" />
+
+  <!-- Import required libraries -->
+  <script type="module">
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.1.0';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+
+    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+    window.library = celine.library;
+    window.Inputs = Inputs;
+    window.htl = htl;
+
+    registerScriptReevaluationOnBlur(document, 'echo');
+  </script>
+</head>
+<body>
+  <main>
+    <h1>@celine libraries</h1>
+    <script type="module" id="landing">
+
+
+
+
+
+      const extractAbstract = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const abstract = doc.querySelector('.abstract');
+        if (!abstract) return '';
+        const firstP = abstract.querySelector('p');
+        return firstP ? firstP.textContent.trim() : '';
+      };
+
+      const extractInstallation = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const importElement = doc.getElementById('import');
+        if (!importElement) return '';
+        return importElement.innerHTML.trim();
+      };
+
+      celine.cell("landing", async () => {
+        const fetchText = async (url) => {
+          const response = await fetch(url);
+          return response.text();
+        };
+
+        const libraries = [
+          {
+            name: '@celine/celine',
+            content: await fetchText('index.html'),
+            imagePath: 'static/og.png'
+          },
+          {
+            name: '@celine/libertine',
+            content: await fetchText('libertine/index.html'),
+            imagePath: 'libertine/static/og.png'
+          },
+          {
+            name: '@celine/bibhtml',
+            content: await fetchText('bibhtml/index.html'),
+            imagePath: 'bibhtml/static/og.png'
+          }
+        ].map(lib => ({
+          ...lib,
+          description: extractAbstract(lib.content),
+          installation: extractInstallation(lib.content)
+        }));
+
+        return htl.html`
+          <div>
+            ${libraries.map(lib => htl.html`
+              <div class="card">
+          <div>
+            <img src=${lib.imagePath} alt="${lib.name} preview" class="card-image">
+          </div>
+          <div>
+            <h2>${lib.name}</h2>
+            <p>${lib.description}</p>
+            <pre>${lib.installation}</pre>
+          </div>
+              </div>
+            `)}
+          </div>
+        `;
+            });
+          </script>
+  </main>
+</body>
+</html>
