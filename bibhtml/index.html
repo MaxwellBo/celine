@@ -338,7 +338,7 @@
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
   <p>
-    Each <code>&lt;bh-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in 4 supported formats:
+    Each <code>&lt;bh-reference&gt;</code> must be tagged with an <code>id</code> attribute, and contain reference information in one of 4 supported formats:
   </p>
 
   <h4>BibTeX</h4>
@@ -367,13 +367,13 @@
 
   <script id="text-cell" type="module">
     celine.cell("text-cell", () => {
-      const reference = document.getElementById('dunbar2017');
+      const reference = document.getElementById('jacobs2018house');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
     })
   </script>
 
   <p>
-    Observe that the reference <bh-cite><a href="#dunbar2017">[?]</a></bh-cite> is unchanged.
+    Observe that the reference <bh-cite><a href="#jacobs2018house">[?]</a></bh-cite> is unchanged.
   </p>
 
   <h4>DOI</h4>
@@ -516,16 +516,7 @@
   }
 </bh-reference>
 <bh-reference id="jacobs2018house">
-  @article{jacobs2018house,
-    author = {Jacobs, Julia and Mervosh, Sarah and Stevens, Matt},
-    title = {When the {House} and the {Senate} are controlled by different parties, who wins?},
-    journal = {The New York Times},
-    year = {2018},
-    month = {November},
-    day = {7},
-    url = {https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html},
-    urldate = {2024-12-16}
- }
+  Jacobs, J., Mervosh, S., & Stevens, M. (2018, November 7). When the House and the Senate are controlled by different parties, who wins? The New York Times. Retrieved from https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html
 </bh-reference>
 
 <bh-bibliography format="apa">
