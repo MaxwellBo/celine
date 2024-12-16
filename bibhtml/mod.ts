@@ -61,7 +61,14 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   get replace(): string {
-    return this.getAttribute('replace') || '?';
+    const REPLACEMENTS = ['number', 'none'];
+
+    if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
+      console.warn(`Invalid value for the replace attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. Defaulting to "number".`);
+      return "number";
+    }
+
+    return this.getAttribute('replace') || "number";
   }
 
   get refId(): string {
@@ -75,7 +82,7 @@ export class BibhtmlCite extends HTMLElement {
       throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    return this.getAttribute('ref') || (a.getAttribute('href') || '').replace(/^#/, '');
+    return (this.getAttribute('ref') || a.getAttribute('href') || '').replace(/^#/, '');
   }
 
   set referenceIndex(value: number) {
@@ -122,7 +129,10 @@ export class BibhtmlCite extends HTMLElement {
     const clonedA = this.shadowRoot!.querySelector('a');
     clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
     // swap ? for the reference index
-    clonedA!.innerText = clonedA!.innerText.replace(this.replace, (this._referenceIndex + 1).toString());
+    
+    if (this.replace === "number") {
+      clonedA!.innerText = clonedA!.innerText.replace(this.replace, (this._referenceIndex + 1).toString());
+    }
 
     // if deref, we need to get the URL from the citation of the reference
     if (this.hasAttribute('deref')) {
@@ -203,7 +213,7 @@ export class BibhtmlReference extends HTMLElement {
     this._notifiedBibliography = false;
 
     if (!this.getAttribute('id')) {
-      console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it with <${BibhtmlCite.customElementName}>{id}</${BibhtmlCite.customElementName}> or <${BibhtmlCite.customElementName} ref="{id}">...</${BibhtmlCite.customElementName}>.`);
+      console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it`);
 
     }
   }
