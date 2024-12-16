@@ -143,12 +143,12 @@ export class BibhtmlCite extends HTMLElement {
       }
       const citation = ref._citation;
       if (!citation) {
-        console.log(`Could not find a citation for reference with id ${this.refId}.`);
+        console.log(`Could not find a citation for reference with id ${this.refId}. It may not have loaded yet.`);
         return;
       }
       const url = citation.data[0].URL;
       if (!url) {
-        console.log(`Could not find a citation for reference with id ${this.refId}.`);
+        console.log(`Could not find a citation URL for reference with id ${this.refId}.`);
         return;
       }
       clonedA!.href = url;
