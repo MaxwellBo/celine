@@ -61,7 +61,7 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   get replace(): string {
-    const REPLACEMENTS = ['number', 'none'];
+    const REPLACEMENTS = ['number', 'none', ''];
 
     if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
       console.warn(`Invalid value for the replace attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. Defaulting to "number".`);
