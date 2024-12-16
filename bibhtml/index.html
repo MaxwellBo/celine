@@ -67,15 +67,15 @@
     <p>
       <cite>@celine/bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
         Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to
-      referencing in LaTeX/BibTeX<sup><bh-cite><a href="#patashnik2007">[#?]</a></bh-cite></sup>. It's a thin wrapper around <a
-        href="https://citation.js.org/">Citation.js</a><sup><bh-cite><a href="#willighagen2019">[#?]</a></bh-cite></sup> and 
+      referencing in LaTeX/BibTeX<sup><bh-cite><a href="#patashnik2007">[?]</a></bh-cite></sup>. It's a thin wrapper around <a
+        href="https://citation.js.org/">Citation.js</a><sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup> and 
       gracefully degrades when citations and references are malformed or JavaScript is disabled. 
     </p>
     <p>
       <cite>@celine/bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a
-      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite><a href="#avellar2021">[#?]</a></bh-cite></sup>, <a
+      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite><a href="#avellar2021">[?]</a></bh-cite></sup>, <a
       href="https://nota-lang.org/reference.html#def-section-2.4">Nota's
-      citations</a><sup><bh-cite><a href="#crichton2021nota">[#?]</a></bh-cite></sup>, and Meyer's <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/"><cite>Blinded By the Light DOM</cite></a><sup><bh-cite><a href="#meyer2023lightdom">[#?]</a></bh-cite></sup>.
+      citations</a><sup><bh-cite><a href="#crichton2021nota">[?]</a></bh-cite></sup>, and Meyer's <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/"><cite>Blinded By the Light DOM</cite></a><sup><bh-cite><a href="#meyer2023lightdom">[?]</a></bh-cite></sup>.
     </p>
   </section>
 
@@ -150,7 +150,7 @@
   <br />
 
   <pre class="echo dark">
-&lt;bh-cite&gt;&lt;a href=&quot;#willighagen2019&quot;&gt;[#?]&lt;/a&gt;&lt;/bh-cite&gt;
+&lt;bh-cite&gt;&lt;a href=&quot;#willighagen2019&quot;&gt;[?]&lt;/a&gt;&lt;/bh-cite&gt;
 ...
 &lt;bh-reference id="willighagen2019"&gt;
   @article{willighagen2019,
@@ -179,7 +179,7 @@
 
   <p>
     To cite
-    <span id="inner-text-container">Citation.js<sup><bh-cite><a href="#willighagen2019">[#?]</a></bh-cite></sup></span> as a reference,
+    <span id="inner-text-container">Citation.js<sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup></span> as a reference,
     we can use the <code>&lt;bh-cite&gt;</code> element:
   </p>
 
@@ -195,12 +195,12 @@
     The <code>&lt;bh-cite&gt;</code> element:
     <ol>
       <li>Unhides the <code>&lt;bh-reference&gt;</code> targeted by the first inner <code>&lt;a&gt;</code> element, and adds a <a href="https://en.wikipedia.org/wiki/Backlink">backlink</a> to itself</li>
-      <li>Replaces the first <code>#?</code><sup><a id="backlink-b" href="#footnote-b">(b)</a></sup> contained within the first inner <code>&lt;a&gt;</code> element with the reference number</li>
+      <li>Replaces the first <code>?</code><sup><a id="backlink-a" href="#footnote-a">(b)</a></sup> contained within the first inner <code>&lt;a&gt;</code> element with the reference number</li>
     </ol>
   </p>
 
   <p>
-    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#mokhov2018">(#?)</a></bh-cite></sup></span>
+    This permits us to change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#mokhov2018">(?)</a></bh-cite></sup></span>
   </p>
 
   <script id="flex-1-cell" type="module">
@@ -212,7 +212,34 @@
   </script>
 
   <p>
-    We may choose to forgo numbered citations entirely: <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite></span>
+    The <code>replace</code> attribute (which defaults to <code>?</code>) overrides the string that is replaced by the reference number.
+  </p>
+
+  <p>
+    If we cite a missing reference<span id="missing-container"><sup><bh-cite><a href="#freud2012">[?]</a></bh-cite></sup></span> that is
+    not in the HTML document, the inner text of the element is displayed unchanged.
+  </p>
+
+  <script id="missing-cell" type="module">
+    celine.cell("missing-cell", () => {
+      const cloned = document.getElementById('missing-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed unchanged when:
+
+    <ul>
+      <li>The cited reference ID does not correspond to a <code>&lt;bh-reference&gt;</code> element with a matching <code>id</code> attribute</li>
+      <li>JavaScript is disabled</li>
+      <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
+    </ul>
+  </p>
+
+  <p>
+    We can forgo numbered citations entirely by omitting <code>?</code> <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite></span>
   </p>
 
   <script id="flex-2-cell" type="module">
@@ -224,9 +251,9 @@
   </script>
 
   <p>
-    The <code>ref</code> attribute assigns an explicit reference ID, and prevents the <code>&lt;bh-cite&gt;</code> element from performing <q>reference ID inference</q> (extracting the reference ID from <code>href</code> attribute of the first inner <code>&lt;a&gt;</code> element).
-    This allows the inner <code>&lt;a&gt;</code> element to <code>href</code> directly to the the referenced material:
-    <span id="ref-container"><bh-cite ref="mokhov2018"><cite><a href="https://doi.org/10.1145/3236774">Build Systems à la Carte</a></cite></bh-cite></span>
+    The <code>ref</code> attribute accepts an explicit reference ID, permitting the inner <code>&lt;a&gt;</code> element to <code>href</code> directly to the the referenced material.
+    Thus, <span id="ref-container"><bh-cite ref="mokhov2018"><cite><a href="https://doi.org/10.1145/3236774">Build Systems à la Carte</a></cite></bh-cite></span> is explicitly linked to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
+    The <code>ref</code> attribute facilitates adding a bibliography to a HTML document full of existing hyperlinks that should remain unchanged.
   </p>
 
   <script id="ref-cell" type="module">
@@ -238,7 +265,7 @@
   </script>
 
   <p>
-    The <code>deref</code> attribute, achieves a similar goal by <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferencing</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by Citation.js.
+    The <code>deref</code> flag <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferences</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by Citation.js.
 
     Thus, <span id="deref-container"><bh-cite deref><cite><a href="#mokhov2018">Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
@@ -269,29 +296,6 @@
   <p>
     Shorthand syntax is discouraged: it does not gracefully degrade to a link.
   </p> -->
-
-  <p>
-    If we cite a missing reference<span id="missing-container"><sup><bh-cite><a href="#freud2012">[#?]</a></bh-cite></sup></span> that is
-    not in the HTML document, the inner text of the element is displayed unchanged.
-  </p>
-
-  <script id="missing-cell" type="module">
-    celine.cell("missing-cell", () => {
-      const cloned = document.getElementById('missing-container').cloneNode(true);
-      cloned.querySelector('bh-cite').removeAttribute('id');
-      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
-    })
-  </script>
-
-  <p>
-    The inner text of a <code>&lt;bh-cite&gt;</code> element is displayed unchanged when:
-
-    <ul>
-      <li>The cited reference ID does not correspond to a <code>&lt;bh-reference&gt;</code> element with a matching <code>id</code> attribute</li>
-      <li>JavaScript is disabled</li>
-      <li><cite>@celine/bibhtml</cite> fails to load or execute properly</li>
-    </ul>
-  </p>
 
   <p>
     In summary:
@@ -346,7 +350,7 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#crichton2021nota">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
+    This expands to reference <bh-cite><a href="#crichton2021nota">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
   </p>
 
   <h3>Unstructured text</h3>
@@ -368,7 +372,7 @@
   </script>
 
   <p>
-    Observe that the reference <bh-cite><a href="#dunbar2017">[#?]</a></bh-cite> is unchanged.
+    Observe that the reference <bh-cite><a href="#dunbar2017">[?]</a></bh-cite> is unchanged.
   </p>
 
   <h4>DOI</h4>
@@ -381,7 +385,7 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#mokhov2018">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+    This expands to reference <bh-cite><a href="#mokhov2018">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
   </p>
 
   <h4>Wikidata</h4>
@@ -394,7 +398,7 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#patashnik2007">[#?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bh-cite><a href="#patashnik2007">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
@@ -436,7 +440,7 @@
 <script id="dynamic-citation" type="module" contenteditable="true">
   celine.cell('dynamic-citation', ['toggle-citation'], (toggleCitation) => {
   return toggleCitation 
-      ? htl.html`<bh-cite><a href="#griesemer2020featherweight">[#?]</bh-cite>` 
+      ? htl.html`<bh-cite><a href="#griesemer2020featherweight">[?]</bh-cite>` 
       : htl.html`<i>CITATION GONE</i>`;
   });
 </script>
@@ -513,19 +517,6 @@
 
 <bh-bibliography format="apa">
 </bh-bibliography>
-
-
-<h2>Footnotes</h2>
-
-
-<ol type="a">
-  <li id="footnote-a">
-    <a href="#backlink-a">^</a> The <code>bh-</code> prefix was chosen to make the use of <code>&lt;bh-cite&gt;</code> relatively short.</code>.
-  </li>
-  <li id="footnote-b">
-    <a href="#backlink-b">^</a> I considered replacing just <code>?</code>, rather than the somewhat uglier <code>#?</code>, but I worried that this would cause replacement of <code>?</code>s appended to the end of uncertain dates, like <code>2017?</code>.
-  </li>
-</ol>
 
 <h2>How to cite</h2>
 

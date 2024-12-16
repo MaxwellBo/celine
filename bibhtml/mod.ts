@@ -51,13 +51,17 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   static get observedAttributes(): string[] {
-    return ['deref'];
+    return ['replace', 'ref', 'deref'];
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
-    if (name === 'deref' || name === 'ref') {
+    if (name === 'deref' || name === 'ref' || name === 'replace') {
       this.render();
     }
+  }
+
+  get replace(): string {
+    return this.getAttribute('replace') || '?';
   }
 
   get refId(): string {
@@ -118,7 +122,7 @@ export class BibhtmlCite extends HTMLElement {
     const clonedA = this.shadowRoot!.querySelector('a');
     clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
     // swap ? for the reference index
-    clonedA!.innerText = clonedA!.innerText.replace('#?', (this._referenceIndex + 1).toString());
+    clonedA!.innerText = clonedA!.innerText.replace(this.replace, (this._referenceIndex + 1).toString());
 
     // if deref, we need to get the URL from the citation of the reference
     if (this.hasAttribute('deref')) {
