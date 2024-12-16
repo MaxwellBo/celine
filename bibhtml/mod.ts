@@ -131,7 +131,7 @@ export class BibhtmlCite extends HTMLElement {
     // swap ? for the reference index
     
     if (this.replace === "number") {
-      clonedA!.innerText = clonedA!.innerText.replace(this.replace, (this._referenceIndex + 1).toString());
+      clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
 
     // if deref, we need to get the URL from the citation of the reference
