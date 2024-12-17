@@ -200,7 +200,7 @@
 
 
   <p>
-    We can change the formatting of the inline citation, perhaps to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#willighagen2019">(?)</a></bh-cite></sup></span>
+    We can change the formatting of the inline citation, say, to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#willighagen2019">(?)</a></bh-cite></sup></span>
   </p>
 
   <script id="flex-1-cell" type="module">
@@ -358,12 +358,7 @@
   <h3>Unstructured text</h3>
 
   <p>
-    A <code>&lt;bh-reference&gt;</code> can contain unstructured text. This format is useful when:
-    <ul>
-      <li>The reference is not in a machine readable format</li>
-      <li>The reference is malformed</li>
-      <li>The machine readable format is not supported by <cite>@celine/bibhtml</cite> or Citation.js</li>
-    </ul>
+    A <code>&lt;bh-reference&gt;</code> can contain unstructured text, and will display it unchanged. This format is useful when the reference is not in a machine readable format supported by <cite>@celine/bibhtml</cite> or Citation.js</li>. When a reference in a structured format is malformed, <cite>@celine/bibhtml</cite> will treat it as unstructured text and display it unchanged.
   </p>
 
   <script id="text-cell" type="module">
@@ -409,7 +404,7 @@
     The <code>&lt;bh-bibliography&gt;</code> finds <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). 
   </p>
   <p>
-    <code>&lt;/bh-bibliography&gt;</code> has very simple calling semantics. Just:
+    <code>&lt;/bh-bibliography&gt;</code> has simple calling semantics:
   </p>
   <br />
 
