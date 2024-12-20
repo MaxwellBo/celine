@@ -877,6 +877,35 @@ celine.viewof("save", () => {
 });
 </script>
 
+<h2><a href="#new-cell" id="new-script"></a>Creating new cells</h2>
+
+<p>
+  You can allow the user to create new cells:
+</p>
+
+<script type="module" class="echo reflect" id="viewof new-cell" contenteditable="true">
+celine.viewof("new-cell", () => {
+  return Inputs.button("New cell", {
+    value: 0,
+    reduce: (value) => {
+      const script = document.createElement('script');
+      script.id = `new-cell-${value}`;
+      script.type = 'module';
+      script.className = 'echo reflect';
+      script.contentEditable = 'true';
+      script.textContent = `
+celine.cell("new-cell-${value}", () => {
+  return "Hello from new script!";
+});
+`;
+      (document.getElementById(`new-cell-${value - 1}`) || document.getElementById('viewof new-cell'))
+        .insertAdjacentElement('afterend', script);
+      return value + 1;
+    }
+  });
+});
+</script>
+
 
 <!-- <h2><a href="#introspection" id="introspection"></a>Introspection</h2>
 
