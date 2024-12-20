@@ -854,6 +854,29 @@ celine.cell("bloom", async () => {
 </script>
 </details>
 
+<h2><a href="#saving" id="saving"></a>Saving modified notebooks</h2>
+
+<p>
+  If you make changes to <code>contenteditable</code> elements, you are able to save the notebook, with changes, as a new file.
+</p>
+
+<script id="viewof save" type="module" class="echo reflect" contenteditable="true">
+celine.viewof("save", () => {
+  return Inputs.button("Save", {
+    reduce: async () => {
+      const filename = prompt("Enter a filename", "index.html");
+      const content = document.documentElement.outerHTML;
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+    }
+  });
+});
+</script>
+
 
 <!-- <h2><a href="#introspection" id="introspection"></a>Introspection</h2>
 
