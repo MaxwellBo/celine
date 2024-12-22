@@ -3,7 +3,7 @@ import 'npm:@citation-js/plugin-bibtex@0.7.16'
 import 'npm:@citation-js/plugin-doi@0.7.16'
 import 'npm:@citation-js/plugin-csl@0.7.14'
 import 'npm:@citation-js/plugin-wikidata@0.7.15'
-import 'npm:@citation-js/plugin-hayagriva@0.1.1'
+// import 'npm:@citation-js/plugin-hayagriva@0.1.1'
 
 function alphabetize(n: number): string {
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
