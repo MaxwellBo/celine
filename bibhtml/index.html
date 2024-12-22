@@ -398,6 +398,23 @@
     This expands to reference <bh-cite><a href="#patashnik2007">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
   </p>
 
+
+  <h4>Hayagriva (Typst)</h4>
+
+  <p>
+    <a href="https://typst.app/docs/reference/model/bibliography/">https://github.com/typst/hayagriva/blob/main/docs/file-format.md</a> is a new bibliography file format designed for use with <a href="https://typst.app/">Typst</a>.
+  </p>
+
+
+  <script id="hayagriva-cell" type="module">
+    celine.cell("hayagriva-cell", () => {
+      const reference = document.getElementById('dependence');
+      return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
+    })
+  </script>
+
+  This expands to reference <bh-cite><a href="#dependence">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-hayagriva">@citation-js/plugin-hayagriva</a>.
+
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
 
   <p>
@@ -506,6 +523,21 @@
     keywords     = {web components, Light DOM, JavaScript, DOM},
     note         = {Blog post discussing the advantages of using Light DOM over Shadow DOM in web components}
   }
+</bh-reference>
+
+<bh-reference id="dependence">
+dependence:
+  type: Article
+  title: The program dependence graph and its use in optimization
+  author: ["Ferrante, Jeanne", "Ottenstein, Karl J.", "Warren, Joe D."]
+  date: 1987-07
+  serial-number:
+      doi: "10.1145/24039.24041"
+  parent:
+      type: Periodical
+      title: ACM Transactions on Programming Languages and Systems
+      volume: 9
+      issue: 3
 </bh-reference>
 <bh-reference id="jacobs2018house">
   Jacobs, J., Mervosh, S., & Stevens, M. (2018, November 7). When the House and the Senate are controlled by different parties, who wins? The New York Times. Retrieved from https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html

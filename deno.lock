@@ -3,13 +3,28 @@
   "packages": {
     "specifiers": {
       "npm:@citation-js/core": "npm:@citation-js/core@0.7.14",
+      "npm:@citation-js/core@0.7.14": "npm:@citation-js/core@0.7.14",
       "npm:@citation-js/plugin-bibtex": "npm:@citation-js/plugin-bibtex@0.7.16_@citation-js+core@0.7.14",
+      "npm:@citation-js/plugin-bibtex@0.7.16": "npm:@citation-js/plugin-bibtex@0.7.16_@citation-js+core@0.7.14",
       "npm:@citation-js/plugin-csl": "npm:@citation-js/plugin-csl@0.7.14_@citation-js+core@0.7.14",
+      "npm:@citation-js/plugin-csl@0.7.14": "npm:@citation-js/plugin-csl@0.7.14_@citation-js+core@0.7.14",
       "npm:@citation-js/plugin-doi": "npm:@citation-js/plugin-doi@0.7.16_@citation-js+core@0.7.14",
+      "npm:@citation-js/plugin-doi@0.7.16": "npm:@citation-js/plugin-doi@0.7.16_@citation-js+core@0.7.14",
+      "npm:@citation-js/plugin-hayagriva@0.1": "npm:@citation-js/plugin-hayagriva@0.1.1_@citation-js+core@0.6.9",
       "npm:@citation-js/plugin-wikidata": "npm:@citation-js/plugin-wikidata@0.7.15_@citation-js+core@0.7.14",
+      "npm:@citation-js/plugin-wikidata@0.7.15": "npm:@citation-js/plugin-wikidata@0.7.15_@citation-js+core@0.7.14",
       "npm:@types/node": "npm:@types/node@18.16.19"
     },
     "npm": {
+      "@citation-js/core@0.6.9": {
+        "integrity": "sha512-ElG4cvedkaRm/a40yhWXOUPUzAImwqI7ZmIyL55GIR4EmfQ5PkaSEcFhA3dekMa66l52ddn4lQaNVO+/yECq9A==",
+        "dependencies": {
+          "@citation-js/date": "@citation-js/date@0.5.1",
+          "@citation-js/name": "@citation-js/name@0.4.2",
+          "fetch-ponyfill": "fetch-ponyfill@7.1.0",
+          "sync-fetch": "sync-fetch@0.4.5"
+        }
+      },
       "@citation-js/core@0.7.14": {
         "integrity": "sha512-dgeGqYDSQmn2MtnWZkwPGpJQPh43yr1lAAr9jl1NJ9pIY1RXUQxtlAUZVur0V9PHdbfQC+kkvB1KC3VpgVV3MA==",
         "dependencies": {
@@ -26,6 +41,15 @@
       "@citation-js/name@0.4.2": {
         "integrity": "sha512-brSPsjs2fOVzSnARLKu0qncn6suWjHVQtrqSUrnqyaRH95r/Ad4wPF5EsoWr+Dx8HzkCGb/ogmoAzfCsqlTwTQ==",
         "dependencies": {}
+      },
+      "@citation-js/plugin-bibtex@0.6.9_@citation-js+core@0.6.9": {
+        "integrity": "sha512-35xHut8rbDAN2ffYt+BPn+DChxXhbVnN86fu2DHDQNWlCqCrUJhQTMRMlD0L1uuyHTDrkTvgLPtcs14WC+xKzA==",
+        "dependencies": {
+          "@citation-js/core": "@citation-js/core@0.6.9",
+          "@citation-js/date": "@citation-js/date@0.5.1",
+          "@citation-js/name": "@citation-js/name@0.4.2",
+          "moo": "moo@0.5.2"
+        }
       },
       "@citation-js/plugin-bibtex@0.7.16_@citation-js+core@0.7.14": {
         "integrity": "sha512-Udeli19VAoFjOw0H1bB1KgmekRoW6XP5cdR3OQF5c2Mt1tZatXWcSQVdq+FeLKzodRocZXG5NFRvjyUZjVbV6A==",
@@ -51,6 +75,15 @@
           "@citation-js/date": "@citation-js/date@0.5.1"
         }
       },
+      "@citation-js/plugin-hayagriva@0.1.1_@citation-js+core@0.6.9": {
+        "integrity": "sha512-yIVxrkZXw7CQ7GH7YaxtPGV06FiAmMBfr98BIFoTQ/RMFcWEBoylm/EouQm9k/7JTp5sNCW3u403NmAiAn9SpA==",
+        "dependencies": {
+          "@citation-js/core": "@citation-js/core@0.6.9",
+          "@citation-js/date": "@citation-js/date@0.5.1",
+          "@citation-js/plugin-bibtex": "@citation-js/plugin-bibtex@0.6.9_@citation-js+core@0.6.9",
+          "@citation-js/plugin-yaml": "@citation-js/plugin-yaml@0.6.1"
+        }
+      },
       "@citation-js/plugin-wikidata@0.7.15_@citation-js+core@0.7.14": {
         "integrity": "sha512-QGYA9Mu/28B0LcQEpeAqtILE8+JmiVQux4lzysu/TWMl45b4AVW2ajfQIAwMNf455GERwUwD+P6oafDrqpLQFA==",
         "dependencies": {
@@ -60,8 +93,18 @@
           "wikibase-sdk": "wikibase-sdk@8.1.1"
         }
       },
+      "@citation-js/plugin-yaml@0.6.1": {
+        "integrity": "sha512-XEVVks1cJTqRbjy+nmthfw/puR6NwRB3fyJWi1tX13UYXlkhP/h45nsv4zjgLLGekdcMHQvhad9MAYunOftGKA==",
+        "dependencies": {
+          "js-yaml": "js-yaml@4.1.0"
+        }
+      },
       "@types/node@18.16.19": {
         "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
+        "dependencies": {}
+      },
+      "argparse@2.0.1": {
+        "integrity": "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==",
         "dependencies": {}
       },
       "base64-js@1.5.1": {
@@ -88,6 +131,12 @@
       "ieee754@1.2.1": {
         "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==",
         "dependencies": {}
+      },
+      "js-yaml@4.1.0": {
+        "integrity": "sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==",
+        "dependencies": {
+          "argparse": "argparse@2.0.1"
+        }
       },
       "moo@0.5.2": {
         "integrity": "sha512-iSAJLHYKnX41mKcJKjqvnAN9sf0LMDTXDEvFv+ffuRR9a1MIuXLjMNL6EsnDHSkKLTWNqQQ5uo61P4EbU4NU+Q==",
