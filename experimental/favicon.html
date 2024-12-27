@@ -5,73 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Favicon Link Component Demo</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.6;
-    }
-
-    prepend-favicon {
-      display: block;
-      margin: 12px 0;
-    }
-
-    .favicon-img {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    a {
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
-  <script type="module">
-    class PrependFavicon extends HTMLElement {
-      async connectedCallback() {
-        const link = this.querySelector('a');
-        if (!link) return;
-
-        // Check if we've already processed this link
-        if (link.querySelector('.favicon-img')) return;
-
-        const url = link.href;
-
-        try {
-          const response = await fetch(`https://api.microlink.io?url=${url}&filter=logo.url`);
-          const { data } = await response.json();
-          const logoUrl = data.logo?.url;
-
-          if (logoUrl) {
-            const img = document.createElement('img');
-            img.className = 'favicon-img';
-            img.src = logoUrl;
-            img.alt = '';
-            img.style.width = '16px';
-            img.style.height = '16px';
-            img.style.marginRight = '8px';
-            img.style.verticalAlign = 'middle';
-            img.onerror = () => img.remove();
-
-            link.insertBefore(img, link.firstChild);
-          }
-        } catch (error) {
-          console.error('Error fetching favicon:', error);
-        }
-      }
-    }
-
-    customElements.define('prepend-favicon', PrependFavicon);
-  </script>
+  <script type="module" src="prepend-favicon.js"></script>
 </head>
 
 <body>
