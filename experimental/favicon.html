@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Link Component Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        prepend-favicon {
+            display: block;
+            margin: 12px 0;
+        }
+        .favicon-img {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script type="module">
+         class PrependFavicon extends HTMLElement {
+        async connectedCallback() {
+            const link = this.querySelector('a');
+            if (!link) return;
+            
+            // Check if we've already processed this link
+            if (link.querySelector('.favicon-img')) return;
+
+            const url = link.href;
+            
+            try {
+                const response = await fetch(`https://api.microlink.io?url=${url}&filter=logo.url`);
+                const { data } = await response.json();
+                const logoUrl = data.logo?.url;
+                
+                if (logoUrl) {
+                    const img = document.createElement('img');
+                    img.className = 'favicon-img';
+                    img.src = logoUrl;
+                    img.alt = '';
+                    img.onerror = () => img.remove();
+                    
+                    link.insertBefore(img, link.firstChild);
+                }
+            } catch (error) {
+                console.error('Error fetching favicon:', error);
+            }
+        }
+    }
+
+    customElements.define('prepend-favicon', PrependFavicon);
+    </script>
+</head>
+<body>
+    <h1>Links with Auto-Prepended Favicons</h1>
+    <p>Here are some example links enhanced with favicons:</p>
+
+    <prepend-favicon>
+        <a href="https://github.com">GitHub - Where the world builds software</a>
+    </prepend-favicon>
+
+    <prepend-favicon>
+        <a href="https://news.ycombinator.com">Hacker News - Tech News and Discussion</a>
+    </prepend-favicon>
+
+    <prepend-favicon>
+        <a href="https://anthropic.com">Anthropic - AI Research Company</a>
+    </prepend-favicon>
+
+    <prepend-favicon>
+        <a href="https://vercel.com">Vercel - Develop. Preview. Ship.</a>
+    </prepend-favicon>
+
+    <p>The component will automatically fetch and display favicons for each link using the Microlink API. If the favicon can't be loaded, it will gracefully fall back to just showing the link text.</p>
+</body>
+</html>
