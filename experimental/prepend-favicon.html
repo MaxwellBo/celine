@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Favicon Link Component Demo</title>
+  <title>&lt;prepend-favicon&gt;</title>
   <script type="module" src="prepend-favicon.js"></script>
 </head>
 
 <body>
-  <h1>Links with Auto-Prepended Favicons</h1>
+  <h1>&lt;prepend-favicon&gt;</h1>
   <p>Here are some example links enhanced with favicons:</p>
 
   <prepend-favicon>
@@ -30,6 +30,19 @@
 
   <p>The component will automatically fetch and display favicons for each link using the Microlink API. If the favicon
     can't be loaded, it will gracefully fall back to just showing the link text.</p>
+
+
+  <h2>How to use</h2>
+
+  <p>Just wrap your links in a <code>&lt;prepend-favicon&gt;</code> element. The component will take care of the rest.</p>
+
+  <pre>
+    <code>
+      &lt;prepend-favicon&gt;
+        &lt;a href="https://example.com"&gt;Example&lt;/a&gt;
+      &lt;/prepend-favicon&gt;
+    </code>
+  </pre>
 </body>
 
 </html>
