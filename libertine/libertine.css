@@ -216,6 +216,12 @@ script, pre, style {
   border-radius: 4px
 }
 
+.favicon {
+  display: inline;
+  width: 1.6ch;
+  height: 1.6ch;
+}
+
 pre code {
   font-family: "FontWithASyntaxHighlighterLightOwl", monospace !important;
   font-feature-settings: "colr", "calt";

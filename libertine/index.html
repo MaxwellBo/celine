@@ -297,6 +297,22 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   });
 </script>
 
+<br />
+<br />
+
+<div id="favicon-group">
+  <a href="https://google.com"><img class="favicon" src="https://google.com/favicon.ico" /> Google</a>,
+  <a href="https://github.com"><img class="favicon" src="https://github.com/favicon.ico" /> GitHub</a>
+</div>
+
+<script type="module" id="favicon">
+  celine.cell("favicon", () => {
+    const elem = document.getElementById("favicon-group");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
 <h2><a href="#elements" id="elements"></a>Elements</h2>
 
 <p>
