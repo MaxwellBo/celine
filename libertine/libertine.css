@@ -48,12 +48,34 @@ blockquote {
 }
 
 aside {
-  background-color: #f3f3f3;
-  border-left: 4px solid #ccc;
-  margin: 1em 0;
-  padding: 1em;
-  border-radius: 4px;
+  float: right;
+  clear: right;
+  margin-right: calc(-50vw + 26rem);
+  width: calc(50vw - 28rem);
 }
+
+aside p {
+  border-radius: 4px;
+  border: rgb(228, 232, 236) solid 1px;
+  padding-left: 1em;
+}
+
+sup aside {
+  /* should have standard global font size */
+  font-size: medium;
+}
+
+/* below a standard width, the aside collapses to be inline */
+@media (max-width: 80rem) {
+  aside {
+    display: inline-block;
+    float: none;
+    clear: none;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
 
 pre {
   /* cloned by cell.css */
