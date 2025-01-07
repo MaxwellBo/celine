@@ -262,6 +262,7 @@ export class BibhtmlReference extends HTMLElement {
     const tempTemplate = document.createElement('template');
     tempTemplate.innerHTML = this._citation.format('bibliography', {
       format: 'html',
+      hyperlinks: true,
       template
     });
 
