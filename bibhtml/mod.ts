@@ -159,7 +159,7 @@ export class BibhtmlCite extends HTMLElement {
     const ref = bibliography._refIdToReference.get(this.refId);
     if (ref) {
       const tooltip = document.createElement('span');
-      tooltip.textContent = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
+      tooltip.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
       tooltip.style.position = 'absolute';
       tooltip.style.backgroundColor = 'white';
       tooltip.style.border = '1px solid black';
