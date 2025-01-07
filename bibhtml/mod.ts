@@ -129,8 +129,9 @@ export class BibhtmlCite extends HTMLElement {
     // get the cloned first link
     const clonedA = this.shadowRoot!.querySelector('a');
     clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
+    clonedA?.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
+
     // swap ? for the reference index
-    
     if (this.replace === "number") {
       clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
