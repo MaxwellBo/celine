@@ -358,11 +358,11 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 celine.cell("hue", async function* () {
   let hue = 0;
   while (true) {
-    await library.Promises.delay(100);
+    await library.Promises.delay(1000);
     yield htl.html`<span style="color: hsl(${hue}, 100%, 40%);">
       Hello from inside the &lt;details&gt; element
     </span>`;
-    hue = (hue + 10) % 360;
+    hue = (hue + 55) % 360;
   }
 });
 </script>
