@@ -6,6 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
+  <script type="module">
+  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.1.0';
+  import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+  import * as htl from 'https://esm.run/htl@0.3.1';
+
+  window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+  window.library = celine.library; /* @observablehq/stdlib */
+  window.Inputs = Inputs;
+  window.htl = htl;
+
+  registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />
   <!-- UNCOMMENT ME WHEN COPY PASTING -->
@@ -214,7 +226,7 @@
 
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
-<script type="module" class="echo reflect" id="import">
+<pre class="echo" style="margin-bottom: 1ch;">&lt;script type=&quot;module&quot;&gt;
 import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.1.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
@@ -225,14 +237,8 @@ window.Inputs = Inputs;
 window.htl = htl;
 
 registerScriptReevaluationOnBlur(document, /*class=*/'echo');
-</script>
-
-<style>
-script#installation::before {
-  content: "<script type=\"module\">";
-  display: block;
-}
-</style>
+&lt;/script&gt;
+</pre>
 
 <p>Link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
 
