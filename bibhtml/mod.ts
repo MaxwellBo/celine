@@ -256,7 +256,7 @@ export class BibhtmlReference extends HTMLElement {
 
     // gracefully degrade
     if (!this._citation) {
-      this.shadowRoot!.replaceChildren(document.createTextNode(this.textContent || ''));
+      this.shadowRoot!.innerHTML = this.innerHTML;
       return;
     }
 
