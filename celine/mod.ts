@@ -175,13 +175,11 @@ export class CelineModule {
     maybeDefinition?: Definition
   ): void {
     const observer = observerVisibility === "visible" ? this.observer(name) : undefined
-    const variable = this.module._scope.get(name) ||
-      this.module.variable(observer);
-    // if you declare B before A such that B depends on A
-    // I _think_ the Observable runtime declares a sort of "pseudeo-variable" for A
-    // which does not have an Observer attached to it
-    // Thus, we need to force the Observer to be attached to the variable
-    variable._observer = observer;
+    const variable = this.module._scope.get(name) || this.module.variable(observer);
+
+    if (Symbol.keyFor(variable._observer) == 'no-observer' && observerVisibility) {
+      variable.delete();
+    }
 
     const inputs: Inputs = Array.isArray(inputsOrDefinition)
       ? inputsOrDefinition
