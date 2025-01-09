@@ -177,9 +177,7 @@ export class CelineModule {
     const observer = observerVisibility === "visible" ? this.observer(name) : undefined
     const variable = this.module._scope.get(name) || this.module.variable(observer);
 
-    if (typeof variable._observer === 'symbol' 
-      && Symbol.keyFor(variable._observer) == 'no-observer' 
-      && observerVisibility) {
+    if (typeof variable._observer === 'symbol' && observerVisibility === 'visible') {
       variable.delete();
     }
 
