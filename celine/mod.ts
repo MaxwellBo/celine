@@ -178,7 +178,9 @@ export class CelineModule {
     let variable = this.module._scope.get(name) || this.module.variable(observer);
 
     // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
-    if (typeof variable._observer === 'symbol' && observerVisibility === 'visible') {
+    // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
+    // that means we need to delete it and recreate it with a new observer
+    if (typeof variable._observer === 'symbol' && observer) {
       variable.delete();
       variable = this.module.variable(observer)
     }

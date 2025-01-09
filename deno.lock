@@ -96,7 +96,7 @@
       "@citation-js/plugin-yaml@0.6.1": {
         "integrity": "sha512-XEVVks1cJTqRbjy+nmthfw/puR6NwRB3fyJWi1tX13UYXlkhP/h45nsv4zjgLLGekdcMHQvhad9MAYunOftGKA==",
         "dependencies": {
-          "js-yaml": "js-yaml@4.1.0"
+          "js-yaml": "js-yaml@4.6.0"
         }
       },
       "@types/node@18.16.19": {
@@ -132,7 +132,7 @@
         "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==",
         "dependencies": {}
       },
-      "js-yaml@4.1.0": {
+      "js-yaml@4.6.0": {
         "integrity": "sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==",
         "dependencies": {
           "argparse": "argparse@2.0.1"
