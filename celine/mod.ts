@@ -174,8 +174,10 @@ export class CelineModule {
     inputsOrDefinition: Inputs | Definition,
     maybeDefinition?: Definition
   ): void {
+    const observer = observerVisibility === "visible" ? this.observer(name) : undefined
     const variable = this.module._scope.get(name) ||
-      this.module.variable(observerVisibility === "visible" ? this.observer(name) : undefined);
+      this.module.variable(observer);
+    variable._observer = observer;
 
     const inputs: Inputs = Array.isArray(inputsOrDefinition)
       ? inputsOrDefinition
