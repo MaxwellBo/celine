@@ -62,37 +62,14 @@ aside p {
   padding: 0.5ch;
 }
 
-sup aside {
-  /* should have standard global font size */
-  font-size: medium;
-}
-
 /* below a standard width, the aside collapses to be inline */
 @media (max-width: 80rem) {
   aside {
-    display: inline;
-    float: none;
-    clear: none;
-    margin-right: 0;
-    width: 100%;
+    float: right;
+    clear: right;
+    margin: 1em;
+    width: 30%;
   }
-
-  aside p {
-    padding: inherit;
-    /* border: none; */
-    max-width: inherit;
-    /* eliminate the sup shift up */
-    vertical-align: baseline;
-  }
-
-  aside p a:first-of-type {
-    display: none;
-  }
-
-  /* a link BEFORE an aside is hidden */
-  /* a + aside {
-    display: none;
-  } */
 }
 
 pre {
