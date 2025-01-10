@@ -69,6 +69,29 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5ch;
 }
 
+figure.card,
+figure.card-figure {
+  display: inline-block;
+  margin: 1em;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3f3;
+}
+
+figure.card figcaption,
+figure.card-figure figcaption {
+  padding-top: 0.5em;
+}
+
+output {
+  font-family: monospace;
+}
+
+time {
+  font-variant: small-caps;
+  font-family: 'Libertinus Sans'
+}
+
 /* Silcrow styling */
 h1 > a[href^="#"], 
 h2 > a[href^="#"], 

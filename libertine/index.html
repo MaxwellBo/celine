@@ -36,7 +36,7 @@
     href="https://esm.sh/jsr/@celine/celine@4.6.0/cell.css" />
   <link 
     rel="stylesheet"  -->
-    <!-- href="https://esm.sh/jsr/@celine/libertine@10.1.0/libertine.css" /> -->
+    <!-- href="https://esm.sh/jsr/@celine/libertine@11.0.0/libertine.css" /> -->
 
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.6.0';
@@ -91,7 +91,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/libertine">jsr.io/<wbr>@celine/<wbr>libertine</a> + <a href="https://jsr.io/@celine/libertine/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">10.1.0</a>, <time  id="updated">Nov 29 2024</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">11.0.0</a>, <time  id="updated">Nov 29 2024</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__libertine")
@@ -113,7 +113,7 @@
 <pre class="echo" style="margin-bottom: 1ch;" id="import">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@10.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@11.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h2><a href="#fonts" id="fonts"></a>Fonts</h2>
@@ -322,20 +322,29 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 
 <h2><a href="#elements" id="elements"></a>Elements</h2>
 
-<p>
-  <code>&lt;main&gt;</code> applies a <code>max-width</code> and <code>margin: 0 auto</code> to center content.
-</p>
-
-<p>
-  <abbr>&lt;abbr&gt;</abbr> is used to display an abbreviation.
-</p>
 
 <p>
   <code>&lt;code&gt;</code> is used to display inline code.
 </p>
 
 <p>
-  <kbd>&lt;kbd&gt;</kbd> is used to display keyboard buttons.
+  <code>&lt;main&gt;</code> applies a <code>max-width</code> and <code>margin: 0 auto</code> to center content.
+</p>
+
+<p>
+  <abbr>HTML</abbr> <code>&lt;abbr&gt;</code> is used to display an abbreviation.
+</p>
+
+<p>
+  <kbd>Esc</kbd> <code>&lt;kbd&gt;</code> is used to display keyboard buttons.
+</p>
+
+<p>
+  <time datetime="2018-07-07">July 7</time>. The <code>&lt;time&gt;</code> element is used to display a date or time.
+</p>
+
+<p>
+  <output>&lt;output&gt;</output> is used to display the result of a calculation.
 </p>
 
 <blockquote>
@@ -346,19 +355,45 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   &lt;aside&gt; is used to display content related to the main content.
 </aside>
 
-<figure>
-  <img src="https://via.placeholder.com/150" alt="Placeholder image">
-  <figcaption>This is &lt;figcaption&gt; in a &lt;figure&gt;.</figcaption>
-</figure>
-
 <pre>
   &lt;pre&gt; is used to display preformatted text.
 </pre>
 
 <pre>
-<code>&lt;code&gt; inside of a &lt;pre&gt; has syntax highlighting
+<code>&lt;code&gt; inside of a &lt;pre&gt; is used to apply syntax highlighting.
 console.log("Hello, world!");</code>
 </pre>
+
+<figure>
+  <img src="https://picsum.photos/300/200" alt="Placeholder image">
+  <figcaption>&lt;figcaption&gt; is used to annotate a &lt;figure&gt;.</figcaption>
+</figure>
+
+<figure class="card">
+  <img src="https://picsum.photos/300/200" alt="Placeholder image">
+  <figcaption>Add the <code>.card</code> class to <code>&lt;figure&gt;</code> for an alternate styling.</figcaption>
+</figure>
+
+<p>
+  Parameterizing Observable Plot's <a href="https://observablehq.com/plot/features/plots"><code>className</code> option</a> with <code>"card"</code>
+  will set <code>class="card-figure"</code> on the <code>&lt;figure&gt;</code> element. Thus, the <code>.card</code> class is also aliased to <code>.card-figure</code></a>
+</p>
+
+<script id="plot-example" class="echo reflect" type="module" contenteditable="true">
+  import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
+
+  celine.cell("plot-example", () => {
+    return Plot.plot({
+      className: 'card',
+      title: htl.html`<h3>Card plot demo</h3>`,
+      caption: "Squiggly line go up",
+      marks: [
+        Plot.lineY([1, 4, 3, 2, 5])
+      ]
+    });
+  });
+</script>
+
 
 <h3><a id="silcrow" href="#silcrow"></a>Headers / silcrow</h3>
 
