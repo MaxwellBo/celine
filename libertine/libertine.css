@@ -54,10 +54,6 @@ aside {
   border-left: #ccc 1px solid;
 }
 
-aside p {
-  display: inline-block;
-}
-
 /* above a standard width, the aside jumps out to be a sidenote */
 @media (min-width: 80rem) {
   aside {
@@ -69,12 +65,10 @@ aside p {
     width: calc(50vw - 28rem);
   }
 
-  aside p {
+  aside * {
     max-width: 60ch;
-    padding: 0.5ch;
   }
 }
-
 
 pre {
   /* cloned by cell.css */
