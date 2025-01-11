@@ -36,7 +36,7 @@
     href="https://esm.sh/jsr/@celine/celine@4.6.0/cell.css" />
   <link 
     rel="stylesheet"  -->
-    <!-- href="https://esm.sh/jsr/@celine/libertine@12.0.0/libertine.css" /> -->
+    <!-- href="https://esm.sh/jsr/@celine/libertine@13.0.0/libertine.css" /> -->
 
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.6.0';
@@ -91,7 +91,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/libertine">jsr.io/<wbr>@celine/<wbr>libertine</a> + <a href="https://jsr.io/@celine/libertine/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">12.0.0</a>, <time  id="updated">Nov 29 2024</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">13.0.0</a>, <time  id="updated">Nov 29 2024</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__libertine")
@@ -113,7 +113,7 @@
 <pre class="echo" style="margin-bottom: 1ch;" id="import">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@12.0.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@13.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h2><a href="#fonts" id="fonts"></a>Fonts</h2>
@@ -397,18 +397,15 @@ console.log("Hello, world!");</code>
 </script>
 
 <aside>
-  &lt;aside&gt; is used to display content related to the main content.
+  <code>&lt;aside&gt;</code> is used to display content related to the main content.
 </aside>
 
 <div id="aside-container">
   <p>
-    An <code>&lt;aside&gt;</code> tag pulls content out of the <code>&lt;main&gt;</code>.
-    <sup id="fnref:2">
-      <a href="#fn:2" class="footnote-ref" role="doc-noteref">(2)</a>
-    </sup>
+    An <code>&lt;aside&gt;</code> tag jumps out of the <code>&lt;main&gt;</code> when given enough space.<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">†</a></sup>
   </p>
   <aside>
-    <p id="fn:2"> <a href="#fnref:2">2</a> This is a &lt;p&gt; inside of the <code>&lt;aside&gt;</code>. It gets additional styling.
+    <p id="fn:2"> <a href="#fnref:2">†</a> This is a <code>&lt;p&gt;</code> inside of the <code>&lt;aside&gt;</code>. It has its width constrained and its content padded.
   </aside>
   <p>
     When the width of the window is constrained, the <code>&lt;aside&gt;</code> will pull back into the main flow.
