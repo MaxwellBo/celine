@@ -63,6 +63,8 @@ aside p {
   aside {
     float: right;
     clear: right;
+    margin-top: 0.25ch;
+    margin-bottom: 0.25ch;
     margin-right: calc(-50vw + 26rem);
     width: calc(50vw - 28rem);
   }
