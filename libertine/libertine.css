@@ -65,7 +65,7 @@ aside {
     width: calc(50vw - 28rem);
   }
 
-  aside * {
+  aside > * {
     max-width: 60ch;
   }
 }
