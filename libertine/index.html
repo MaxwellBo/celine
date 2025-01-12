@@ -33,13 +33,13 @@
   <!-- UNCOMMENT ME WHEN COPY PASTING -->
   <!-- <link 
     rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@4.6.0/cell.css" />
+    href="https://esm.sh/jsr/@celine/celine@4.7.0/cell.css" />
   <link 
     rel="stylesheet"  -->
-    <!-- href="https://esm.sh/jsr/@celine/libertine@13.4.0/libertine.css" /> -->
+    <!-- href="https://esm.sh/jsr/@celine/libertine@13.5.0/libertine.css" /> -->
 
   <script type="module">
-    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.6.0';
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.7.0';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
     import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -91,7 +91,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/libertine">jsr.io/<wbr>@celine/<wbr>libertine</a> + <a href="https://jsr.io/@celine/libertine/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">13.4.0</a>, <time  id="updated">Nov 29 2024</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">13.5.0</a>, <time  id="updated">Nov 29 2024</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__libertine")
@@ -113,7 +113,7 @@
 <pre class="echo" style="margin-bottom: 1ch;" id="import">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@13.4.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@13.5.0/libertine.css&quot; /&gt;
 </pre>
 
 <h2><a href="#fonts" id="fonts"></a>Fonts</h2>
@@ -437,6 +437,40 @@ console.log("Hello, world!");</code>
     return htl.html`<span class='echo'>${elem.innerHTML}</span>`;
   });
 </script>
+
+<h2><a href="#line-height" id="line-height"></a>Line height</h2>
+
+
+<style>
+  .container {
+      display: flex;
+  }
+  .text-box {
+      flex: 1;
+      background-color: #f3f4f6;
+  }
+  pre {
+      margin: 0;
+  }
+</style>
+</head>
+<div class="container">
+  <div class="text-box" style="padding: 6px">
+      <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+      </p>
+  </div>
+  <div class="text-box">
+      <pre><code>print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")
+print("Hello, world!")</code></pre>
+  </div>
+</div>
 
   
 </main>

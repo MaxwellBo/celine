@@ -13,12 +13,14 @@
   font-weight: 400;
 }
 
+/** keep in sync with libertine.css */
 .echo {
   display: block;
   font-family: "FontWithASyntaxHighlighterLightOwl", monospace;
   font-feature-settings: "colr", "calt";
   white-space: pre;
-  font-size: 0.87rem;
+  font-size: 0.85rem;
+  line-height: 1.39;
 
   padding: 1ch;
   /* cloned by libertine.css */
