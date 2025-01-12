@@ -191,18 +191,21 @@ th {
   background-color: #f3f3f3;
 }
 
-p {
+p,
+.p {
   padding-top: 0.25ch;
   padding-bottom: 0.25ch;
 }
 
 /* if p is followed by an script.echo or style.echo, add a little space above the script */
-p + script.echo, p + style.echo {
+p + script.echo, p + style.echo,
+.p + script.echo, .p + style.echo {
   margin-top: 0.5ch;
 }
 
 /* if p is followed by an div.observablehq, add a little space above the inspector */
-p:has(+ div.observablehq) {
+p:has(+ div.observablehq),
+.p:has(+ div.observablehq) {
   margin-bottom: 1ch;
 }
 
