@@ -266,8 +266,8 @@ script, pre, style {
 pre code {
   font-family: "FontWithASyntaxHighlighterLightOwl", monospace !important;
   font-feature-settings: "colr", "calt";
-  font-size: 0.85rem;
-  line-height: 1.39;
+  font-size: 0.83rem;
+  line-height: 1.42;
   border: initial;
   padding: initial;
   border-radius: initial;
