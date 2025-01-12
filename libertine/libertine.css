@@ -48,7 +48,6 @@ blockquote {
 }
 
 aside {
-  display: inline-block;
   font-size: smaller;
   padding-left: 1ch;
   border-left: #ccc 1px solid;
