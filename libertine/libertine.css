@@ -1,21 +1,36 @@
 @import url('./fonts/Libertinus/documentation/libertinus.css');
 
+/* Color variables for light/dark mode */
+:root {
+  color-scheme: light dark;
+  --background-color: light-dark(#ffffff, #1a1a1a);
+  --text-color: light-dark(#000000, #ffffff);
+  --border-color: light-dark(#cccccc, #404040);
+  --blockquote-bg: light-dark(#f3f3f3, #2a2a2a);
+  --code-bg: light-dark(#f3f3f3, #2a2a2a);
+  --table-header-bg: light-dark(#f3f3f3, #2a2a2a);
+  --card-bg: light-dark(#f3f3f3f3, #2a2a2a);
+  --highlight-color: light-dark(yellow, #665800);
+  --syntax-font: light-dark('FontWithASyntaxHighlighterLightOwl', 'FontWithASyntaxHighlighter');
+}
+
+/* Syntax highlighting fonts for light/dark modes */
 @font-face {
   font-family: 'FontWithASyntaxHighlighterLightOwl';
-  src:
-    url('./fonts/FontWithASyntaxHighlighterLightOwl-Regular.woff2') format('woff2');
+  src: url('./fonts/FontWithASyntaxHighlighterLightOwl-Regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'FontWithASyntaxHighlighter';
-  src:
-    url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
+  src: url('./fonts/FontWithASyntaxHighlighter-Regular.woff2') format('woff2');
   font-weight: 400;
 }
 
 body {
   font-family: 'Libertinus Serif', 'Times New Roman', sans-serif;
   font-feature-settings: 'liga', 'tnum', 'calt', 'zero';
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 main {
@@ -41,19 +56,18 @@ abbr {
 }
 
 blockquote {
-  border-left: 4px solid #ccc;
+  border-left: 4px solid var(--border-color);
   margin: 1em 0;
   padding: 0.5em 1em;
-  background-color: #f3f3f3;
+  background-color: var(--blockquote-bg);
 }
 
 aside {
   font-size: smaller;
   padding-left: 1ch;
-  border-left: #ccc 1px solid;
+  border-left: var(--border-color) 1px solid;
 }
 
-/* above a standard width, the aside jumps out to be a sidenote */
 @media (min-width: 80rem) {
   aside {
     float: right;
@@ -70,10 +84,9 @@ aside {
 }
 
 pre {
-  /* cloned by cell.css */
   padding: 1ch;
   overflow: auto;
-  background-color: #f3f3f3;
+  background-color: var(--code-bg);
   border-radius: 4px;
 }
 
@@ -88,8 +101,8 @@ figure.card-figure {
   display: inline-block;
   margin: 1em;
   padding: 0.5em;
-  border: 1px solid #ccc;
-  background-color: #f3f3f3f3;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
 }
 
 figure.card figcaption,
@@ -147,6 +160,7 @@ h4 > a[href^="#"]:hover,
 h5 > a[href^="#"]:hover, 
 h6 > a[href^="#"]:hover {
     opacity: 1;
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -164,12 +178,12 @@ a:hover, *::part(bh-a):hover  {
 }
 
 a:active, *::part(bh-a):active  {
-  background-color: yellow;
+  background-color: var(--highlight-color);
   text-underline-offset: 3px;
 }
 
 :target {
-  background-color: yellow;
+  background-color: var(--highlight-color);
 }
 
 table {
@@ -178,7 +192,7 @@ table {
 }
 
 table, th, td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 th, td {
@@ -187,7 +201,7 @@ th, td {
 }
 
 th {
-  background-color: #f3f3f3;
+  background-color: var(--table-header-bg);
 }
 
 p,
@@ -196,19 +210,16 @@ p,
   padding-bottom: 0.25ch;
 }
 
-/* if p is followed by an script.echo or style.echo, add a little space above the script */
 p + script.echo, p + style.echo,
 .p + script.echo, .p + style.echo {
   margin-top: 0.5ch;
 }
 
-/* if p is followed by an div.observablehq, add a little space above the inspector */
 p:has(+ div.observablehq),
 .p:has(+ div.observablehq) {
   margin-bottom: 1ch;
 }
 
-/* if an div.observablehq is followed by an script.echo, add a little space above the script */
 div.observablehq + script.echo {
   margin-top: 0.5ch;
 }
@@ -218,7 +229,8 @@ div.observablehq + script.echo {
 }
 
 code {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
+  background-color: var(--code-bg);
   padding: 0 3px 1px;
   border-radius: 4px;
 }
@@ -252,7 +264,7 @@ script, pre, style {
 .abstract {
   margin: 1em 0 2em;
   padding: 1em;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 4px
 }
 
@@ -262,9 +274,8 @@ script, pre, style {
   height: 1.6ch;
 }
 
-/* keep in sync with cell.css */
 pre code {
-  font-family: "FontWithASyntaxHighlighterLightOwl", monospace !important;
+  font-family: var(--syntax-font), monospace !important;
   font-feature-settings: "colr", "calt";
   font-size: 0.83rem;
   line-height: 1.42;
