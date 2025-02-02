@@ -1,8 +1,8 @@
-import { Cite } from 'npm:@citation-js/core@0.7.14'
-import 'npm:@citation-js/plugin-bibtex@0.7.16'
-import 'npm:@citation-js/plugin-doi@0.7.16'
-import 'npm:@citation-js/plugin-csl@0.7.14'
-import 'npm:@citation-js/plugin-wikidata@0.7.15'
+import { Cite } from 'npm:@citation-js/core@0.7.18'
+import 'npm:@citation-js/plugin-bibtex@0.7.18'
+import 'npm:@citation-js/plugin-doi@0.7.18'
+import 'npm:@citation-js/plugin-csl@0.7.18'
+import 'npm:@citation-js/plugin-wikidata@0.7.18'
 // import 'npm:@citation-js/plugin-hayagriva@0.1.1'
 
 function alphabetize(n: number): string {
