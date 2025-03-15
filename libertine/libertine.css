@@ -12,6 +12,10 @@
   --card-bg: light-dark(#f3f3f3f3, #2a2a2a);
   --highlight-color: light-dark(yellow, #665800);
   --syntax-font: light-dark('FontWithASyntaxHighlighterLightOwl', 'FontWithASyntaxHighlighter');
+  --link-color: light-dark(#4444FF, #6EA8FE);
+  --link-visited-color: light-dark(#7733CC, #B69EFF); 
+  --link-hover-color: light-dark(#4444FF, #8AB4FE);
+  --link-active-color: light-dark(#FF4444, #FF6B6B);
 }
 
 /* Syntax highlighting fonts for light/dark modes */
@@ -38,6 +42,23 @@ main {
   margin: 0 auto;
   padding: 16px;
 }
+
+a {
+  color: var(--link-color);
+}
+
+a:visited {
+  color: var(--link-visited-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+a:active {
+  color: var(--link-active-color);
+}
+
 
 kbd {
   font-family: 'Libertinus Keyboard', monospace;
