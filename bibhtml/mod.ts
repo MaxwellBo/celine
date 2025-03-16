@@ -142,15 +142,6 @@ export class BibhtmlCite extends HTMLElement {
       return;
     }
 
-    if (this.replace === "reference") {
-      if (!ref.shadowRoot) {
-        console.warn(`Could not find a shadowRoot for reference with id ${this.refId}. It may not have loaded yet.`);
-        return;
-      }
-
-      this.shadowRoot!.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
-    }
-
     // if deref, we need to get the URL from the citation of the reference
     if (this.hasAttribute('deref')) {
       const citation = ref._citation;
@@ -270,15 +261,9 @@ export class BibhtmlReference extends HTMLElement {
       return;
     }
 
-    const backlinks: HTMLElement | undefined = this.renderBacklinks();
-    const backlinkNodes: Node[] = backlinks ? [backlinks] : [];
-
     // gracefully degrade
     if (!this._citation) {
-      this.shadowRoot!.replaceChildren(
-        ...backlinkNodes,
-        document.createTextNode(this.textContent || ''),
-      );
+      this.shadowRoot!.innerHTML = this.textContent || '';
       return;
     }
 
@@ -295,16 +280,10 @@ export class BibhtmlReference extends HTMLElement {
       throw new Error('Could not find .csl-entry element in Citation.js rendered HTML. This is very odd. Please report this on the @celine/bibhtml GitHub repository.');
     }
 
-    this.shadowRoot!.replaceChildren(
-      ...backlinkNodes,
-      ...cslEntry.childNodes);
+    this.shadowRoot!.replaceChildren(...cslEntry.childNodes);
   }
 
-  renderBacklinks(): HTMLElement | undefined {
-    if (this._citations.length === 0) {
-      return undefined;
-    }
-
+  renderBacklinks(): HTMLElement {
     const backlinks = document.createElement('sup');
 
     if (this._citations.length === 1) {
@@ -407,6 +386,7 @@ export class BibhtmlBibliography extends HTMLElement {
       }
 
       const li = document.createElement('li');
+      li.appendChild(reference.renderBacklinks());
       li.appendChild(reference);
       ol.appendChild(li);
 

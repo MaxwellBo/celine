@@ -129,7 +129,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="import-container"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@3.12.0"></script></div>
+  <div id="import-container"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@3.13.0"></script></div>
 
   <script id="import" type="module">
     celine.cell("import", () => {
@@ -274,16 +274,13 @@
 
   <p>
     The <code>replace</code> attribute (which defaults to <code>"number"</code>) determines
-    what happens to the inner text of a <code>&lt;bh-cite&gt;</code> element when the reference is found.
+    what happens to the inner text of a <code>&lt;bh-cite&gt;</code> element.
   </p>
   <p>
-    When <code>replace="number"</code>, the first <code>?</code> in the inner text of the first inner <code>&lt;a&gt;</code> element is replaced with the reference number:
+    When <code>replace="number"</code>, the first <code>?</code> in the inner text of the first inner <code>&lt;a&gt;</code> element is replaced with the reference number.
   </p>
   <p>
-    When <code>replace="none"</code>, no replacement is made.
-  </p>
-  <p>
-    You will need to set <code>replace="none"</code> if the title of a work contains a <code>?</code> in it: 
+    When <code>replace="none"</code>, no replacement is made. You will need to set <code>replace="none"</code> if the title of a work contains a <code>?</code> in it: 
     <span id="jacobs2018house-container"><bh-cite replace="none" ref="#jacobs2018house"><cite><a href="https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html">Who wins when the House and the Senate are controlled by different parties?</a></cite></bh-cite></span>
   </p>
 
@@ -295,11 +292,9 @@
     })
   </script>
 
-  <p>
-    When <code>replace="reference"</code>, the inner text is replaced with the reference text itself, such as 
-    <span id="replace-reference-container">
-      <bh-cite ref="mokhov2018"></bh-cite>
-    </span>
+  <!-- <p>
+    When <code>replace="reference"</code>, the inner text is replaced with the reference text itself: 
+    <span id="replace-reference-container"><bh-cite ref="mokhov2018" replace="reference"></bh-cite></span>
   </p>
 
   <script id="replace-reference-cell" type="module">
@@ -308,7 +303,7 @@
       cloned.querySelector('bh-cite').removeAttribute('id');
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
-  </script>
+  </script> -->
 
   <!-- <p>
     <code>&lt;bh-cite&gt;</code> has <q>shorthand</q> syntax, where the inner text is the ID of the reference to cite: 
