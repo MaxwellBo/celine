@@ -62,7 +62,7 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   get replace(): string {
-    const REPLACEMENTS = ['number', 'none', ''];
+    const REPLACEMENTS = ['number', 'reference', 'none', ''];
 
     if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
       console.warn(`Invalid value for the replace attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. Defaulting to "number".`);
@@ -136,13 +136,23 @@ export class BibhtmlCite extends HTMLElement {
       clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
 
-    // if deref, we need to get the URL from the citation of the reference
-    if (this.hasAttribute('deref')) {
-      const ref = bibliography._refIdToReference.get(this.refId);
-      if (!ref) {
-        console.warn(`Could not find a reference with id ${this.refId} in the bibliography.`);
+    const ref = bibliography._refIdToReference.get(this.refId);
+    if (!ref) {
+      console.warn(`Could not find a reference with id ${this.refId} in the bibliography.`);
+      return;
+    }
+
+    if (this.replace === "reference") {
+      if (!ref.shadowRoot) {
+        console.warn(`Could not find a shadowRoot for reference with id ${this.refId}. It may not have loaded yet.`);
         return;
       }
+
+      this.shadowRoot!.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
+    }
+
+    // if deref, we need to get the URL from the citation of the reference
+    if (this.hasAttribute('deref')) {
       const citation = ref._citation;
       if (!citation) {
         console.log(`Could not find a citation for reference with id ${this.refId}. It may not have loaded yet.`);
@@ -157,8 +167,7 @@ export class BibhtmlCite extends HTMLElement {
     }
 
     // Show the entire reference on hover
-    const ref = bibliography._refIdToReference.get(this.refId);
-    if (ref) {
+    if (this.replace !== "reference") {
       const tooltip = document.createElement('span');
       tooltip.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
       tooltip.style.position = 'absolute';
