@@ -261,9 +261,15 @@ export class BibhtmlReference extends HTMLElement {
       return;
     }
 
+    const backlinks: HTMLElement | undefined = this.renderBacklinks();
+    const backlinkNodes: Node[] = backlinks ? [backlinks] : [];
+
     // gracefully degrade
     if (!this._citation) {
-      this.shadowRoot!.innerHTML = this.innerHTML;
+      this.shadowRoot!.replaceChildren(
+        ...backlinkNodes,
+        document.createTextNode(this.textContent || ''),
+      );
       return;
     }
 
@@ -280,13 +286,10 @@ export class BibhtmlReference extends HTMLElement {
       throw new Error('Could not find .csl-entry element in Citation.js rendered HTML. This is very odd. Please report this on the @celine/bibhtml GitHub repository.');
     }
 
-    const backlinks: HTMLElement | undefined = this.renderBacklinks();
-
     this.shadowRoot!.replaceChildren(
-      ...(backlinks ? [backlinks] : []),
+      ...backlinkNodes,
       ...cslEntry.childNodes);
   }
-
 
   renderBacklinks(): HTMLElement | undefined {
     if (this._citations.length === 0) {
