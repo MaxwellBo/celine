@@ -288,7 +288,7 @@ export class BibhtmlReference extends HTMLElement {
   }
 
 
-  renderBacklinks() {
+  renderBacklinks(): HTMLElement | undefined {
     if (this.citations.length === 0) {
       return undefined;
     }
