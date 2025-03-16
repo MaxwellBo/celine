@@ -289,25 +289,25 @@ export class BibhtmlReference extends HTMLElement {
 
 
   renderBacklinks(): HTMLElement | undefined {
-    if (this.citations.length === 0) {
+    if (this._citations.length === 0) {
       return undefined;
     }
 
     const backlinks = document.createElement('sup');
 
-    if (this.citations.length === 1) {
+    if (this._citations.length === 1) {
       const backlink = document.createElement('a');
-      backlink.href = `#cite-${this.refId}-a`;
+      backlink.href = `#cite-${this._refId}-a`;
       backlink.textContent = '^';
       backlinks.appendChild(backlink);
     } else {
       backlinks.textContent = '^';
       backlinks.appendChild(document.createTextNode(' '));
 
-      for (let i = 0; i < this.citations.length; i++) {
+      for (let i = 0; i < this._citations.length; i++) {
         const citationShorthand = alphabetize(i + 1);
         const backlink = document.createElement('a');
-        backlink.href = `#cite-${this.refId}-${citationShorthand}`;
+        backlink.href = `#cite-${this._refId}-${citationShorthand}`;
         backlink.textContent = citationShorthand;
         backlinks.appendChild(document.createTextNode(' '));
         backlinks.appendChild(backlink);
