@@ -62,7 +62,7 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   get replace(): string {
-    const REPLACEMENTS = ['number', 'reference', 'none', ''];
+    const REPLACEMENTS = ['number', 'none', ''];
 
     if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
       console.warn(`Invalid value for the replace attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. Defaulting to "number".`);
@@ -136,14 +136,13 @@ export class BibhtmlCite extends HTMLElement {
       clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
 
-    const ref = bibliography._refIdToReference.get(this.refId);
-    if (!ref) {
-      console.warn(`Could not find a reference with id ${this.refId} in the bibliography.`);
-      return;
-    }
-
     // if deref, we need to get the URL from the citation of the reference
     if (this.hasAttribute('deref')) {
+      const ref = bibliography._refIdToReference.get(this.refId);
+      if (!ref) {
+        console.warn(`Could not find a reference with id ${this.refId} in the bibliography.`);
+        return;
+      }
       const citation = ref._citation;
       if (!citation) {
         console.log(`Could not find a citation for reference with id ${this.refId}. It may not have loaded yet.`);
@@ -158,7 +157,8 @@ export class BibhtmlCite extends HTMLElement {
     }
 
     // Show the entire reference on hover
-    if (this.replace !== "reference") {
+    const ref = bibliography._refIdToReference.get(this.refId);
+    if (ref) {
       const tooltip = document.createElement('span');
       tooltip.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
       tooltip.style.position = 'absolute';
@@ -192,8 +192,7 @@ export class BibhtmlCite extends HTMLElement {
 export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
-  _citations: BibhtmlCite[];
-  _refId: string;
+  _citationCount = 0;
   _citationPromise: Promise<any> | null;
 
   static customElementName = 'bh-reference';
@@ -213,8 +212,6 @@ export class BibhtmlReference extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._citation = null;
     this._citationPromise = null;
-    this._citations = [];
-    this._refId = '';
     this._notifiedBibliography = false;
 
     if (!this.getAttribute('id')) {
@@ -223,12 +220,8 @@ export class BibhtmlReference extends HTMLElement {
     }
   }
 
-  set citations(citations: BibhtmlCite[]) {
-    this._citations = citations;
-  }
-
-  set refId(refId: string) {
-    this._refId = refId;
+  set citationCount(value: number) {
+    this._citationCount = value;
   }
 
   connectedCallback() {
@@ -255,7 +248,7 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   render(template = 'apa') {
-    if (this._citations.length == 0) {
+    if (this._citationCount == 0) {
       // clear the shadow root
       this.shadowRoot!.replaceChildren();
       return;
@@ -263,7 +256,7 @@ export class BibhtmlReference extends HTMLElement {
 
     // gracefully degrade
     if (!this._citation) {
-      this.shadowRoot!.innerHTML = this.textContent || '';
+      this.shadowRoot!.innerHTML = this.innerHTML;
       return;
     }
 
@@ -281,32 +274,6 @@ export class BibhtmlReference extends HTMLElement {
     }
 
     this.shadowRoot!.replaceChildren(...cslEntry.childNodes);
-  }
-
-  renderBacklinks(): HTMLElement {
-    const backlinks = document.createElement('sup');
-
-    if (this._citations.length === 1) {
-      const backlink = document.createElement('a');
-      backlink.href = `#cite-${this._refId}-a`;
-      backlink.textContent = '^';
-      backlinks.appendChild(backlink);
-    } else {
-      backlinks.textContent = '^';
-      backlinks.appendChild(document.createTextNode(' '));
-
-      for (let i = 0; i < this._citations.length; i++) {
-        const citationShorthand = alphabetize(i + 1);
-        const backlink = document.createElement('a');
-        backlink.href = `#cite-${this._refId}-${citationShorthand}`;
-        backlink.textContent = citationShorthand;
-        backlinks.appendChild(document.createTextNode(' '));
-        backlinks.appendChild(backlink);
-      }
-    }
-
-    backlinks.appendChild(document.createTextNode(' '));
-    return backlinks;
   }
 }
 
@@ -364,13 +331,11 @@ export class BibhtmlBibliography extends HTMLElement {
     let referenceIndex = 0;
     for (const [refId, citations] of this._refIdToCitations.entries()) {
       const reference = this._refIdToReference.get(refId);
-
       if (!reference) {
         continue;
       }
 
-      reference.citations = citations;
-      reference.refId = refId;
+      reference.citationCount = citations.length;
       reference.render(this.getAttribute('format') ?? undefined);
 
       if (citations.length === 0) {
@@ -386,10 +351,34 @@ export class BibhtmlBibliography extends HTMLElement {
       }
 
       const li = document.createElement('li');
-      li.appendChild(reference.renderBacklinks());
-      li.appendChild(reference);
-      ol.appendChild(li);
 
+      const backlinks = document.createElement('sup');
+      if (citations.length === 1) {
+        const backlink = document.createElement('a');
+        backlink.href = `#cite-${refId}-a`;
+        backlink.textContent = '^';
+        backlinks.appendChild(backlink);
+      } else {
+        let i = 0;
+        backlinks.textContent = '^';
+        backlinks.appendChild(document.createTextNode(' '));
+
+        for (const citation of citations) {
+          const citationShorthand = alphabetize(i + 1);
+          const backlink = document.createElement('a');
+          backlink.href = `#cite-${refId}-${citationShorthand}`;
+          backlink.textContent = citationShorthand;
+          backlinks.appendChild(document.createTextNode(' '));
+          backlinks.appendChild(backlink);
+          i++;
+        }
+      }
+      backlinks.appendChild(document.createTextNode(' '));
+
+      li.appendChild(backlinks);
+      li.appendChild(reference);
+
+      ol.appendChild(li);
       referenceIndex++;
     };
 
