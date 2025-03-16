@@ -192,7 +192,8 @@ export class BibhtmlCite extends HTMLElement {
 export class BibhtmlReference extends HTMLElement {
   _citation: any;
   _notifiedBibliography: boolean;
-  _citationCount = 0;
+  _citations: BibhtmlCite[];
+  _refId: string;
   _citationPromise: Promise<any> | null;
 
   static customElementName = 'bh-reference';
@@ -212,6 +213,8 @@ export class BibhtmlReference extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this._citation = null;
     this._citationPromise = null;
+    this._citations = [];
+    this._refId = '';
     this._notifiedBibliography = false;
 
     if (!this.getAttribute('id')) {
@@ -220,8 +223,12 @@ export class BibhtmlReference extends HTMLElement {
     }
   }
 
-  set citationCount(value: number) {
-    this._citationCount = value;
+  set citations(citations: BibhtmlCite[]) {
+    this._citations = citations;
+  }
+
+  set refId(refId: string) {
+    this._refId = refId;
   }
 
   connectedCallback() {
@@ -248,7 +255,7 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   render(template = 'apa') {
-    if (this._citationCount == 0) {
+    if (this._citations.length == 0) {
       // clear the shadow root
       this.shadowRoot!.replaceChildren();
       return;
@@ -273,7 +280,42 @@ export class BibhtmlReference extends HTMLElement {
       throw new Error('Could not find .csl-entry element in Citation.js rendered HTML. This is very odd. Please report this on the @celine/bibhtml GitHub repository.');
     }
 
-    this.shadowRoot!.replaceChildren(...cslEntry.childNodes);
+    const backlinks: HTMLElement | undefined = this.renderBacklinks();
+
+    this.shadowRoot!.replaceChildren(
+      ...(backlinks ? [backlinks] : []),
+      ...cslEntry.childNodes);
+  }
+
+
+  renderBacklinks() {
+    if (this.citations.length === 0) {
+      return undefined;
+    }
+
+    const backlinks = document.createElement('sup');
+
+    if (this.citations.length === 1) {
+      const backlink = document.createElement('a');
+      backlink.href = `#cite-${this.refId}-a`;
+      backlink.textContent = '^';
+      backlinks.appendChild(backlink);
+    } else {
+      backlinks.textContent = '^';
+      backlinks.appendChild(document.createTextNode(' '));
+
+      for (let i = 0; i < this.citations.length; i++) {
+        const citationShorthand = alphabetize(i + 1);
+        const backlink = document.createElement('a');
+        backlink.href = `#cite-${this.refId}-${citationShorthand}`;
+        backlink.textContent = citationShorthand;
+        backlinks.appendChild(document.createTextNode(' '));
+        backlinks.appendChild(backlink);
+      }
+    }
+
+    backlinks.appendChild(document.createTextNode(' '));
+    return backlinks;
   }
 }
 
@@ -331,11 +373,13 @@ export class BibhtmlBibliography extends HTMLElement {
     let referenceIndex = 0;
     for (const [refId, citations] of this._refIdToCitations.entries()) {
       const reference = this._refIdToReference.get(refId);
+
       if (!reference) {
         continue;
       }
 
-      reference.citationCount = citations.length;
+      reference.citations = citations;
+      reference.refId = refId;
       reference.render(this.getAttribute('format') ?? undefined);
 
       if (citations.length === 0) {
@@ -351,34 +395,9 @@ export class BibhtmlBibliography extends HTMLElement {
       }
 
       const li = document.createElement('li');
-
-      const backlinks = document.createElement('sup');
-      if (citations.length === 1) {
-        const backlink = document.createElement('a');
-        backlink.href = `#cite-${refId}-a`;
-        backlink.textContent = '^';
-        backlinks.appendChild(backlink);
-      } else {
-        let i = 0;
-        backlinks.textContent = '^';
-        backlinks.appendChild(document.createTextNode(' '));
-
-        for (const citation of citations) {
-          const citationShorthand = alphabetize(i + 1);
-          const backlink = document.createElement('a');
-          backlink.href = `#cite-${refId}-${citationShorthand}`;
-          backlink.textContent = citationShorthand;
-          backlinks.appendChild(document.createTextNode(' '));
-          backlinks.appendChild(backlink);
-          i++;
-        }
-      }
-      backlinks.appendChild(document.createTextNode(' '));
-
-      li.appendChild(backlinks);
       li.appendChild(reference);
-
       ol.appendChild(li);
+
       referenceIndex++;
     };
 
