@@ -1,0 +1,32 @@
+{
+  "name": "@celine/bibhtml",
+  "version": "3.8.0",
+  "type": "module",
+  "main": "./dist/mod.js",
+  "module": "./dist/mod.js",
+  "types": "./dist/mod.d.ts",
+  "exports": {
+    "import": "./dist/mod.js",
+    "types": "./dist/mod.d.ts"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun build ./mod.ts --outdir ./dist --target browser",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist",
+    "build:all": "bun run build && bun run build:types",
+    "prepublishOnly": "bun run build:all"
+  },
+  "dependencies": {
+    "@citation-js/core": "0.7.18",
+    "@citation-js/plugin-bibtex": "0.7.18",
+    "@citation-js/plugin-doi": "0.7.18",
+    "@citation-js/plugin-csl": "0.7.18",
+    "@citation-js/plugin-wikidata": "0.7.18"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

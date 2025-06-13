@@ -1,2 +1,7 @@
 .DS_Store
 *.bak
+node_modules/
+.env
+/bibhtml/dist/
+.bun
+bun.lockb
