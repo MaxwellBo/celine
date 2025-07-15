@@ -270,7 +270,8 @@ export class BibhtmlReference extends HTMLElement {
     // Find all anchor elements and add the required classes
     const anchors = tempTemplate.content.querySelectorAll('a');
     anchors.forEach(anchor => {
-      anchor.classList.add('doc-noteref', 'bh-a');
+      anchor.setAttribute('part', 'bh-a');
+      anchor.setAttribute('role', 'doc-noteref');
     });
 
     const cslEntry = tempTemplate.content.querySelector('.csl-entry');
