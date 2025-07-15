@@ -2,5 +2,24 @@
   "name": "@celine/bibhtml",
   "version": "3.16.0",
   "license": "MIT",
-  "exports": "./mod.ts"
+  "exports": "./mod.ts",
+  "imports": {
+    "@citation-js/core": "npm:@citation-js/core@0.7.18",
+    "@citation-js/plugin-bibtex": "npm:@citation-js/plugin-bibtex@0.7.18",
+    "@citation-js/plugin-doi": "npm:@citation-js/plugin-doi@0.7.18",
+    "@citation-js/plugin-csl": "npm:@citation-js/plugin-csl@0.7.18",
+    "@citation-js/plugin-wikidata": "npm:@citation-js/plugin-wikidata@0.7.18",
+    "#json/*": "./json/*"
+  },
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"],
+    "jsx": "react"
+  },
+  "tasks": {
+    "build": "deno bundle bundle.ts > dist/bibhtml.js",
+    "build:mod": "deno bundle mod.ts dist/mod.js",
+    "clean": "rm -f dist/*.js",
+    "prebuild": "mkdir -p dist"
+  }
 }
