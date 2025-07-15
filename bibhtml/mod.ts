@@ -267,6 +267,12 @@ export class BibhtmlReference extends HTMLElement {
       template
     });
 
+    // Find all anchor elements and add the required classes
+    const anchors = tempTemplate.content.querySelectorAll('a');
+    anchors.forEach(anchor => {
+      anchor.classList.add('doc-noteref', 'bh-a');
+    });
+
     const cslEntry = tempTemplate.content.querySelector('.csl-entry');
 
     if (!cslEntry) {
