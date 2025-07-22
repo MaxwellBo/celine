@@ -5,7 +5,12 @@ import 'npm:@citation-js/plugin-csl@0.7.18'
 import 'npm:@citation-js/plugin-wikidata@0.7.18'
 // import 'npm:@citation-js/plugin-hayagriva@0.1.1'
 
-function alphabetize(n: number): string {
+/**
+ * Converts a number to alphabetical representation (1=a, 2=b, 26=z, 27=aa, etc.)
+ * @param {number} n - The number to convert
+ * @returns {string} The alphabetical representation
+ */
+function alphabetize(n) {
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   let out = "";
   while (n > 0) {
@@ -16,8 +21,14 @@ function alphabetize(n: number): string {
   return out;
 }
 
-async function getBibliography(): Promise<BibhtmlBibliography> {
-  const bibliography: BibhtmlBibliography | null = document.querySelector(BibhtmlBibliography.customElementName);
+/**
+ * Gets the bibliography element from the document
+ * @returns {Promise<BibhtmlBibliography>} The bibliography element
+ * @throws {Error} If bibliography element is not found
+ */
+async function getBibliography() {
+  /** @type {BibhtmlBibliography | null} */
+  const bibliography = document.querySelector(BibhtmlBibliography.customElementName);
 
   if (!bibliography) {
     throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
@@ -30,16 +41,15 @@ async function getBibliography(): Promise<BibhtmlBibliography> {
 }
 
 export class BibhtmlCite extends HTMLElement {
-  _referenceIndex: number | null;
-  _citationIndex: number | null;
-  _notifiedBibliography: boolean;
-
   static customElementName = 'bh-cite';
 
   constructor() {
     super();
+    /** @type {number | null} */
     this._referenceIndex = null;
+    /** @type {number | null} */
     this._citationIndex = null;
+    /** @type {boolean} */
     this._notifiedBibliography = false;
   }
 
@@ -51,17 +61,28 @@ export class BibhtmlCite extends HTMLElement {
     getBibliography().then(bib => bib.removeCitation(this.refId, this));
   }
 
-  static get observedAttributes(): string[] {
+  /**
+   * @returns {string[]} Array of observed attributes
+   */
+  static get observedAttributes() {
     return ['replace', 'ref', 'deref'];
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+  /**
+   * @param {string} name - Attribute name
+   * @param {string | null} oldValue - Old attribute value
+   * @param {string | null} newValue - New attribute value
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'deref' || name === 'ref' || name === 'replace') {
       this.render();
     }
   }
 
-  get replace(): string {
+  /**
+   * @returns {string} The replace attribute value
+   */
+  get replace() {
     const REPLACEMENTS = ['number', 'none', ''];
 
     if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
@@ -72,11 +93,16 @@ export class BibhtmlCite extends HTMLElement {
     return this.getAttribute('replace') || "number";
   }
 
-  get refId(): string {
+  /**
+   * @returns {string} The reference ID
+   * @throws {Error} If both ref and deref attributes are present or if no anchor element is found
+   */
+  get refId() {
     if (this.hasAttribute('ref') && this.hasAttribute('deref')) {
       throw new Error(`You have both ref and deref attributes in <${BibhtmlCite.customElementName}>. You should only have one.`);
     }
 
+    /** @type {HTMLAnchorElement | null} */
     const a = this.querySelector('a');
 
     if (a == null) {
@@ -86,12 +112,18 @@ export class BibhtmlCite extends HTMLElement {
     return (this.getAttribute('ref') || a.getAttribute('href') || '').replace(/^#/, '');
   }
 
-  set referenceIndex(value: number) {
+  /**
+   * @param {number} value - The reference index
+   */
+  set referenceIndex(value) {
     this._referenceIndex = value;
     this.render();
   }
 
-  set citationIndex(value: number) {
+  /**
+   * @param {number} value - The citation index
+   */
+  set citationIndex(value) {
     this._citationIndex = value;
     this.render();
   }
@@ -101,7 +133,8 @@ export class BibhtmlCite extends HTMLElement {
       return;
     }
 
-    const bibliography: BibhtmlBibliography | null = (this.getRootNode() as Document | ShadowRoot).querySelector(BibhtmlBibliography.customElementName);
+    /** @type {BibhtmlBibliography | null} */
+    const bibliography = (/** @type {Document | ShadowRoot} */ (this.getRootNode())).querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
       throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
@@ -111,6 +144,7 @@ export class BibhtmlCite extends HTMLElement {
     this.id = `cite-${this.refId}-${citationShorthand}`;
 
     // get the first link
+    /** @type {HTMLAnchorElement | null} */
     const a = this.querySelector('a');
 
     // fail if no first link
@@ -124,16 +158,17 @@ export class BibhtmlCite extends HTMLElement {
     }
 
     // clone light DOM into shadow DOM
-    this.shadowRoot!.replaceChildren(...Array.from(this.children).map(child => child.cloneNode(true)));
+    this.shadowRoot.replaceChildren(...Array.from(this.children).map(child => child.cloneNode(true)));
 
     // get the cloned first link
-    const clonedA = this.shadowRoot!.querySelector('a');
+    /** @type {HTMLAnchorElement | null} */
+    const clonedA = this.shadowRoot.querySelector('a');
     clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
     clonedA?.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
 
     // swap ? for the reference index
     if (this.replace === "number") {
-      clonedA!.innerText = clonedA!.innerText.replace('?', (this._referenceIndex + 1).toString());
+      clonedA.innerText = clonedA.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
 
     // if deref, we need to get the URL from the citation of the reference
@@ -153,7 +188,7 @@ export class BibhtmlCite extends HTMLElement {
         console.log(`Could not find a citation URL for reference with id ${this.refId}.`);
         return;
       }
-      clonedA!.href = url;
+      clonedA.href = url;
     }
 
     // Show the entire reference on hover
@@ -173,10 +208,10 @@ export class BibhtmlCite extends HTMLElement {
       tooltip.style.fontSize = '14px';
 
       // Position the tooltip underneath the citation link
-      const rect = clonedA!.getBoundingClientRect();
+      const rect = clonedA.getBoundingClientRect();
       tooltip.style.left = `${rect.left}px`;
 
-      this.shadowRoot!.appendChild(tooltip);
+      this.shadowRoot.appendChild(tooltip);
 
       this.addEventListener('mouseenter', () => {
         tooltip.style.display = 'block';
@@ -190,47 +225,55 @@ export class BibhtmlCite extends HTMLElement {
 }
 
 export class BibhtmlReference extends HTMLElement {
-  _citation: any;
-  _notifiedBibliography: boolean;
-  _citationCount = 0;
-  _citationPromise: Promise<any> | null;
-
   static customElementName = 'bh-reference';
 
-  /** @deprecated you don't need to explicitly define the custom element now, it's done at import time.  */
-  static defineCustomElement(name: string) {
+  /** 
+   * @deprecated you don't need to explicitly define the custom element now, it's done at import time.
+   * @param {string} name - The custom element name
+   */
+  static defineCustomElement(name) {
     customElements.define(name, BibhtmlReference);
     BibhtmlReference.customElementName = name;
   }
 
-  static get observedAttributes(): string[] {
+  /**
+   * @returns {string[]} Array of observed attributes
+   */
+  static get observedAttributes() {
     return ['id'];
   }
 
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    /** @type {any} */
     this._citation = null;
+    /** @type {Promise<any> | null} */
     this._citationPromise = null;
+    /** @type {boolean} */
     this._notifiedBibliography = false;
+    /** @type {number} */
+    this._citationCount = 0;
 
     if (!this.getAttribute('id')) {
       console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it`);
-
     }
   }
 
-  set citationCount(value: number) {
+  /**
+   * @param {number} value - The citation count
+   */
+  set citationCount(value) {
     this._citationCount = value;
   }
 
   connectedCallback() {
     if (!this._citation && this._citationPromise == null) {
-      this._citationPromise = Cite.async(this.textContent).then((citation: any) => {
+      this._citationPromise = Cite.async(this.textContent).then((citation) => {
         this._citation = citation;
         this.render();
         return getBibliography().then(bib => bib.render())
-      }).catch((e: Error) => {
+      }).catch((e) => {
         console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
       });
     }
@@ -241,22 +284,30 @@ export class BibhtmlReference extends HTMLElement {
     }
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+  /**
+   * @param {string} name - Attribute name
+   * @param {string | null} oldValue - Old attribute value
+   * @param {string | null} newValue - New attribute value
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'id' && newValue) {
       getBibliography().then(bib => bib.addReference(newValue, this));
     }
   }
 
+  /**
+   * @param {string} template - The citation template (default: 'apa')
+   */
   render(template = 'apa') {
     if (this._citationCount == 0) {
       // clear the shadow root
-      this.shadowRoot!.replaceChildren();
+      this.shadowRoot.replaceChildren();
       return;
     }
 
     // gracefully degrade
     if (!this._citation) {
-      this.shadowRoot!.innerHTML = this.innerHTML;
+      this.shadowRoot.innerHTML = this.innerHTML;
       return;
     }
 
@@ -268,66 +319,87 @@ export class BibhtmlReference extends HTMLElement {
     });
 
     // Find all anchor elements and add the required classes
+    /** @type {NodeListOf<HTMLAnchorElement>} */
     const anchors = tempTemplate.content.querySelectorAll('a');
     anchors.forEach(anchor => {
       anchor.setAttribute('part', 'bh-a');
       anchor.setAttribute('role', 'doc-noteref');
     });
 
+    /** @type {Element | null} */
     const cslEntry = tempTemplate.content.querySelector('.csl-entry');
 
     if (!cslEntry) {
       throw new Error('Could not find .csl-entry element in Citation.js rendered HTML. This is very odd. Please report this on the @celine/bibhtml GitHub repository.');
     }
 
-    this.shadowRoot!.replaceChildren(...cslEntry.childNodes);
+    this.shadowRoot.replaceChildren(...cslEntry.childNodes);
   }
 }
 
 export class BibhtmlBibliography extends HTMLElement {
-  _refIdToReference: Map<string, BibhtmlReference>;
-  _refIdToCitations: Map<string, BibhtmlCite[]>;
+  static customElementName = 'bh-bibliography';
 
   constructor() {
     super();
+    /** @type {Map<string, BibhtmlReference>} */
     this._refIdToReference = new Map();
+    /** @type {Map<string, BibhtmlCite[]>} */
     this._refIdToCitations = new Map();
   }
-
-  static customElementName = 'bh-bibliography';
 
   async connectedCallback() {
     this.render();
   }
 
-  static get observedAttributes(): string[] {
+  /**
+   * @returns {string[]} Array of observed attributes
+   */
+  static get observedAttributes() {
     return ['format'];
   }
 
-  attributeChangedCallback(name: string, oldValue: string | null, _newValue: string | null) {
+  /**
+   * @param {string} name - Attribute name
+   * @param {string | null} oldValue - Old attribute value
+   * @param {string | null} _newValue - New attribute value
+   */
+  attributeChangedCallback(name, oldValue, _newValue) {
     if (name === 'format') {
       this.render();
     }
   }
 
-  addReference(refId: string, reference: BibhtmlReference) {
+  /**
+   * @param {string} refId - Reference ID
+   * @param {BibhtmlReference} reference - Reference element
+   */
+  addReference(refId, reference) {
     this._refIdToReference.set(refId, reference);
     this.render();
   }
 
-  addCitation(refId: string, citation: BibhtmlCite) {
+  /**
+   * @param {string} refId - Reference ID
+   * @param {BibhtmlCite} citation - Citation element
+   */
+  addCitation(refId, citation) {
     if (!this._refIdToCitations.has(refId)) {
       this._refIdToCitations.set(refId, []);
     }
-    this._refIdToCitations.get(refId)!.push(citation);
+    this._refIdToCitations.get(refId).push(citation);
     this.render();
   }
 
-  removeCitation(refId: string, citation: BibhtmlCite) {
+  /**
+   * @param {string} refId - Reference ID
+   * @param {BibhtmlCite} citation - Citation element to remove
+   */
+  removeCitation(refId, citation) {
     if (!this._refIdToCitations.has(refId)) {
       return;
     }
-    this._refIdToCitations.set(refId, this._refIdToCitations.get(refId)!.filter(c => c !== citation));
+    this._refIdToCitations.set(refId, this._refIdToCitations.get(refId).filter(c => c !== citation));
     this.render();
   }
 
@@ -346,7 +418,7 @@ export class BibhtmlBibliography extends HTMLElement {
       reference.render(this.getAttribute('format') ?? undefined);
 
       if (citations.length === 0) {
-        continue
+        continue;
       }
 
       let citationIndex = 0;
@@ -370,7 +442,7 @@ export class BibhtmlBibliography extends HTMLElement {
         backlinks.textContent = '^';
         backlinks.appendChild(document.createTextNode(' '));
 
-        for (const citation of citations) {
+        for (const _citation of citations) {
           const citationShorthand = alphabetize(i + 1);
           const backlink = document.createElement('a');
           backlink.href = `#cite-${refId}-${citationShorthand}`;
@@ -387,7 +459,7 @@ export class BibhtmlBibliography extends HTMLElement {
 
       ol.appendChild(li);
       referenceIndex++;
-    };
+    }
 
     this.replaceChildren(ol);
   }
