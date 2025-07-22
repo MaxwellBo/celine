@@ -51,14 +51,30 @@ export class BibhtmlCite extends HTMLElement {
     this._citationIndex = null;
     /** @type {boolean} */
     this._notifiedBibliography = false;
+    /** @type {string | null} */
+    this._originalContent = null;
+    /** @type {HTMLElement | null} */
+    this._tooltip = null;
   }
 
   connectedCallback() {
+    // Cache the original content before any modifications
+    if (this._originalContent === null) {
+      this._originalContent = this.innerHTML;
+    }
     getBibliography().then(bib => bib.addCitation(this.refId, this));
   }
 
   disconnectedCallback() {
     getBibliography().then(bib => bib.removeCitation(this.refId, this));
+    // Remove tooltip if it exists
+    if (this._tooltip && this._tooltip.parentNode) {
+      document.body.removeChild(this._tooltip);
+      this._tooltip = null;
+    }
+    // Clean up event listeners
+    this.removeEventListener('mouseenter', this._handleMouseEnter);
+    this.removeEventListener('mouseleave', this._handleMouseLeave);
   }
 
   /**
@@ -70,10 +86,10 @@ export class BibhtmlCite extends HTMLElement {
 
   /**
    * @param {string} name - Attribute name
-   * @param {string | null} oldValue - Old attribute value
-   * @param {string | null} newValue - New attribute value
+   * @param {string | null} _oldValue - Old attribute value
+   * @param {string | null} _newValue - New attribute value
    */
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name, _oldValue, _newValue) {
     if (name === 'deref' || name === 'ref' || name === 'replace') {
       this.render();
     }
@@ -128,50 +144,63 @@ export class BibhtmlCite extends HTMLElement {
     this.render();
   }
 
+  /**
+   * Handle mouse enter event for tooltip
+   */
+  _handleMouseEnter = () => {
+    if (this._tooltip) {
+      this._tooltip.style.display = 'block';
+      
+      // Position the tooltip underneath the citation link
+      const rect = this.getBoundingClientRect();
+      this._tooltip.style.left = `${rect.left}px`;
+      this._tooltip.style.top = `${rect.bottom}px`;
+    }
+  }
+
+  /**
+   * Handle mouse leave event for tooltip
+   */
+  _handleMouseLeave = () => {
+    if (this._tooltip) {
+      this._tooltip.style.display = 'none';
+    }
+  }
+
   render() {
     if (this._referenceIndex === null || this._citationIndex === null) {
       return;
     }
 
     /** @type {BibhtmlBibliography | null} */
-    const bibliography = (/** @type {Document | ShadowRoot} */ (this.getRootNode())).querySelector(BibhtmlBibliography.customElementName);
+    const bibliography = (/** @type {Document} */ (this.getRootNode())).querySelector(BibhtmlBibliography.customElementName);
 
     if (!bibliography) {
       throw new Error(`Could not find <${BibhtmlBibliography.customElementName}> element in the document. Make sure you have one in your document.`);
     }
+    
     const citationShorthand = alphabetize(this._citationIndex + 1);
-
     this.id = `cite-${this.refId}-${citationShorthand}`;
 
-    // get the first link
+    // Get the first link
     /** @type {HTMLAnchorElement | null} */
     const a = this.querySelector('a');
 
-    // fail if no first link
+    // Fail if no first link
     if (!a) {
       throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    // build a shadow root if it doesn't exist
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: 'open' });
-    }
+    // Apply attributes directly to the anchor
+    a.setAttribute('part', 'bh-a'); // used to style links in libertine.css
+    a.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
 
-    // clone light DOM into shadow DOM
-    this.shadowRoot.replaceChildren(...Array.from(this.children).map(child => child.cloneNode(true)));
-
-    // get the cloned first link
-    /** @type {HTMLAnchorElement | null} */
-    const clonedA = this.shadowRoot.querySelector('a');
-    clonedA?.setAttribute('part', 'bh-a'); // used to style links in libertine.css
-    clonedA?.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
-
-    // swap ? for the reference index
+    // Swap ? for the reference index
     if (this.replace === "number") {
-      clonedA.innerText = clonedA.innerText.replace('?', (this._referenceIndex + 1).toString());
+      a.innerText = a.innerText.replace('?', (this._referenceIndex + 1).toString());
     }
 
-    // if deref, we need to get the URL from the citation of the reference
+    // If deref, we need to get the URL from the citation of the reference
     if (this.hasAttribute('deref')) {
       const ref = bibliography._refIdToReference.get(this.refId);
       if (!ref) {
@@ -188,38 +217,39 @@ export class BibhtmlCite extends HTMLElement {
         console.log(`Could not find a citation URL for reference with id ${this.refId}.`);
         return;
       }
-      clonedA.href = url;
+      a.href = url;
     }
 
-    // Show the entire reference on hover
+    // Create or update tooltip
     const ref = bibliography._refIdToReference.get(this.refId);
     if (ref) {
-      const tooltip = document.createElement('span');
-      tooltip.innerHTML = ref.shadowRoot?.innerHTML || ref.innerHTML || '';
-      tooltip.style.position = 'absolute';
-      tooltip.style.backgroundColor = 'white';
-      tooltip.style.border = '1px solid black';
-      tooltip.style.padding = '5px';
-      tooltip.style.display = 'none';
-      tooltip.style.zIndex = '1000';
-      tooltip.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-      tooltip.style.borderRadius = '4px';
-      tooltip.style.maxWidth = '300px';
-      tooltip.style.fontSize = '14px';
-
-      // Position the tooltip underneath the citation link
-      const rect = clonedA.getBoundingClientRect();
-      tooltip.style.left = `${rect.left}px`;
-
-      this.shadowRoot.appendChild(tooltip);
-
-      this.addEventListener('mouseenter', () => {
-        tooltip.style.display = 'block';
-      });
-
-      this.addEventListener('mouseleave', () => {
-        tooltip.style.display = 'none';
-      });
+      // Remove old tooltip if it exists
+      if (this._tooltip && this._tooltip.parentNode) {
+        document.body.removeChild(this._tooltip);
+      }
+      
+      // Create new tooltip
+      this._tooltip = document.createElement('span');
+      this._tooltip.innerHTML = ref.innerHTML || '';
+      this._tooltip.style.position = 'absolute';
+      this._tooltip.style.backgroundColor = 'white';
+      this._tooltip.style.border = '1px solid black';
+      this._tooltip.style.padding = '5px';
+      this._tooltip.style.display = 'none';
+      this._tooltip.style.zIndex = '1000';
+      this._tooltip.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+      this._tooltip.style.borderRadius = '4px';
+      this._tooltip.style.maxWidth = '300px';
+      this._tooltip.style.fontSize = '14px';
+      
+      // Add tooltip to document body instead of as child of this element
+      document.body.appendChild(this._tooltip);
+      
+      // Set up event listeners
+      this.removeEventListener('mouseenter', this._handleMouseEnter);
+      this.removeEventListener('mouseleave', this._handleMouseLeave);
+      this.addEventListener('mouseenter', this._handleMouseEnter);
+      this.addEventListener('mouseleave', this._handleMouseLeave);
     }
   }
 }
@@ -245,7 +275,6 @@ export class BibhtmlReference extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
     /** @type {any} */
     this._citation = null;
     /** @type {Promise<any> | null} */
@@ -254,7 +283,9 @@ export class BibhtmlReference extends HTMLElement {
     this._notifiedBibliography = false;
     /** @type {number} */
     this._citationCount = 0;
-
+    /** @type {string | null} */
+    this._originalContent = null;
+    
     if (!this.getAttribute('id')) {
       console.error(`<${BibhtmlReference.customElementName}> must have an id attribute so that you can cite it`);
     }
@@ -265,9 +296,15 @@ export class BibhtmlReference extends HTMLElement {
    */
   set citationCount(value) {
     this._citationCount = value;
+    this.render();
   }
 
   connectedCallback() {
+    // Store the original content for reference
+    if (this._originalContent === null) {
+      this._originalContent = this.innerHTML;
+    }
+    
     if (!this._citation && this._citationPromise == null) {
       this._citationPromise = Cite.async(this.textContent).then((citation) => {
         this._citation = citation;
@@ -286,10 +323,10 @@ export class BibhtmlReference extends HTMLElement {
 
   /**
    * @param {string} name - Attribute name
-   * @param {string | null} oldValue - Old attribute value
+   * @param {string | null} _oldValue - Old attribute value
    * @param {string | null} newValue - New attribute value
    */
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name, _oldValue, newValue) {
     if (name === 'id' && newValue) {
       getBibliography().then(bib => bib.addReference(newValue, this));
     }
@@ -300,14 +337,14 @@ export class BibhtmlReference extends HTMLElement {
    */
   render(template = 'apa') {
     if (this._citationCount == 0) {
-      // clear the shadow root
-      this.shadowRoot.replaceChildren();
+      // Clear the element's content
+      this.innerHTML = '';
       return;
     }
 
-    // gracefully degrade
+    // Gracefully degrade
     if (!this._citation) {
-      this.shadowRoot.innerHTML = this.innerHTML;
+      // Keep existing content
       return;
     }
 
@@ -333,7 +370,11 @@ export class BibhtmlReference extends HTMLElement {
       throw new Error('Could not find .csl-entry element in Citation.js rendered HTML. This is very odd. Please report this on the @celine/bibhtml GitHub repository.');
     }
 
-    this.shadowRoot.replaceChildren(...cslEntry.childNodes);
+    // Clear the element and add the new content
+    this.innerHTML = '';
+    while (cslEntry.firstChild) {
+      this.appendChild(cslEntry.firstChild);
+    }
   }
 }
 
@@ -348,7 +389,7 @@ export class BibhtmlBibliography extends HTMLElement {
     this._refIdToCitations = new Map();
   }
 
-  async connectedCallback() {
+  connectedCallback() {
     this.render();
   }
 
@@ -361,10 +402,10 @@ export class BibhtmlBibliography extends HTMLElement {
 
   /**
    * @param {string} name - Attribute name
-   * @param {string | null} oldValue - Old attribute value
+   * @param {string | null} _oldValue - Old attribute value
    * @param {string | null} _newValue - New attribute value
    */
-  attributeChangedCallback(name, oldValue, _newValue) {
+  attributeChangedCallback(name, _oldValue, _newValue) {
     if (name === 'format') {
       this.render();
     }
@@ -405,7 +446,7 @@ export class BibhtmlBibliography extends HTMLElement {
 
   render() {
     const ol = document.createElement('ol');
-    ol.style.wordWrap = 'break-word';
+    ol.style.overflowWrap = 'break-word'; // Updated from wordWrap which is deprecated
 
     let referenceIndex = 0;
     for (const [refId, citations] of this._refIdToCitations.entries()) {
@@ -415,7 +456,6 @@ export class BibhtmlBibliography extends HTMLElement {
       }
 
       reference.citationCount = citations.length;
-      reference.render(this.getAttribute('format') ?? undefined);
 
       if (citations.length === 0) {
         continue;
@@ -461,7 +501,9 @@ export class BibhtmlBibliography extends HTMLElement {
       referenceIndex++;
     }
 
-    this.replaceChildren(ol);
+    // Clear and replace content
+    this.innerHTML = '';
+    this.appendChild(ol);
   }
 }
 
