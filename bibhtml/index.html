@@ -55,6 +55,17 @@
 
     registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
+  <script type="importmap">
+  {
+    "imports": {
+      "npm:@citation-js/core@0.7.18": "https://esm.sh/@citation-js/core@0.7.18",
+      "npm:@citation-js/plugin-bibtex@0.7.18": "https://esm.sh/@citation-js/plugin-bibtex@0.7.18",
+      "npm:@citation-js/plugin-doi@0.7.18": "https://esm.sh/@citation-js/plugin-doi@0.7.18",
+      "npm:@citation-js/plugin-csl@0.7.18": "https://esm.sh/@citation-js/plugin-csl@0.7.18",
+      "npm:@citation-js/plugin-wikidata@0.7.18": "https://esm.sh/@citation-js/plugin-wikidata@0.7.18"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -130,6 +141,7 @@
   </p>
 
   <div id="import-container"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@3.17.0"></script></div>
+  <!-- <div id="import-container"><script type="module" src="/bibhtml/mod.mjs"></script></div> -->
 
   <script id="import" type="module">
     celine.cell("import", () => {
