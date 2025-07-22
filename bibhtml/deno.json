@@ -2,5 +2,5 @@
   "name": "@celine/bibhtml",
   "version": "3.17.0",
   "license": "MIT",
-  "exports": "./mod.ts"
+  "exports": "./mod.mjs"
 }
