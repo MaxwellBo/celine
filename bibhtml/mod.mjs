@@ -58,10 +58,6 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   connectedCallback() {
-    // Cache the original content before any modifications
-    if (this._originalContent === null) {
-      this._originalContent = this.innerHTML;
-    }
     getBibliography().then(bib => bib.addCitation(this.refId, this));
   }
 
@@ -191,8 +187,6 @@ export class BibhtmlCite extends HTMLElement {
       throw new Error(`Could not find an <a> element in <${BibhtmlCite.customElementName}>. Make sure you have one inside your <${BibhtmlCite.customElementName}>...</${BibhtmlCite.customElementName}>.`);
     }
 
-    // Apply attributes directly to the anchor
-    a.setAttribute('part', 'bh-a'); // used to style links in libertine.css
     a.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
 
     // Swap ? for the reference index
@@ -300,11 +294,6 @@ export class BibhtmlReference extends HTMLElement {
   }
 
   connectedCallback() {
-    // Store the original content for reference
-    if (this._originalContent === null) {
-      this._originalContent = this.innerHTML;
-    }
-    
     if (!this._citation && this._citationPromise == null) {
       this._citationPromise = Cite.async(this.textContent).then((citation) => {
         this._citation = citation;
@@ -344,7 +333,6 @@ export class BibhtmlReference extends HTMLElement {
 
     // Gracefully degrade
     if (!this._citation) {
-      // Keep existing content
       return;
     }
 
@@ -353,14 +341,6 @@ export class BibhtmlReference extends HTMLElement {
       format: 'html',
       hyperlinks: true,
       template
-    });
-
-    // Find all anchor elements and add the required classes
-    /** @type {NodeListOf<HTMLAnchorElement>} */
-    const anchors = tempTemplate.content.querySelectorAll('a');
-    anchors.forEach(anchor => {
-      anchor.setAttribute('part', 'bh-a');
-      anchor.setAttribute('role', 'doc-noteref');
     });
 
     /** @type {Element | null} */
