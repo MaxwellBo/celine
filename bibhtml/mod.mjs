@@ -51,8 +51,6 @@ export class BibhtmlCite extends HTMLElement {
     this._citationIndex = null;
     /** @type {boolean} */
     this._notifiedBibliography = false;
-    /** @type {string | null} */
-    this._originalContent = null;
     /** @type {HTMLElement | null} */
     this._tooltip = null;
   }
