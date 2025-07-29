@@ -1,8 +1,8 @@
 {
   "name": "@celine/celine",
-  "version": "4.8.0",
-  "exports": "./mod.ts",
+  "version": "4.9.0",
+  "exports": "./mod.mjs",
   "tasks": {
-    "dev": "deno run --watch mod.ts"
+    "dev": "deno run --watch mod.mjs"
   }
 }
