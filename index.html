@@ -262,7 +262,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 
 <p><i>Try removing a <code>0</code> from the <code>WHERE</code> condition, then click away from the <code>&lt;script&gt;</code> to <abbr title="lose focus">blur</abbr> and reevaluate.</i></p>
 
-<script type="module" class="echo reflect" id="chinook" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="chinook" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
 celine.cell("chinook", async () => {
@@ -327,9 +327,9 @@ celine.cell("chinook", async () => {
 
 <p>The <code>definition</code> can be <code>T</code> or <code>(...inputs) => T</code>, where <code>T</code> can be <code>object</code>, <code>Promise&lt;?&gt;</code>, <code>Iterator&lt;?&gt;</code>, or <code>AsyncIterator&lt;?&gt;</code>.</p>
 
-<p>Cells render their current value above an element that has an <code>id</code> the same as the cell's <code>name</code>. Thus, to render the counter value above the <code>&lt;script&gt;</code>, we set <code>id="counter"</code> on the <code>&lt;script&gt;</code>:</p>
+<p>Cells render their current value above an element that has an <code>data-observe</code> attribute the same as the cell's <code>name</code>. Thus, to render the counter value above the <code>&lt;script&gt;</code>, we set <code>data-observe="counter"</code> on the <code>&lt;script&gt;</code>:</p>
 
-<script type="module" class="echo reflect" id="counter" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="counter" contenteditable="true">
 celine.cell("counter", async function* () {
   let i = 0;
   while (true) {
@@ -342,7 +342,7 @@ celine.cell("counter", async function* () {
 <p>The <code>cell</code> constructor accepts <code>inputs</code>, a list of other cell names to depend on.</p></p>
 <p>Here we use <a href="https://observablehq.com/@observablehq/htl">Hypertext Literal</a>'s <code>html</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, to transform the value of another cell:</p>
 
-<script type="module" class="echo reflect" id="fizzbuzz" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="fizzbuzz" contenteditable="true">
 celine.cell("fizzbuzz", ["counter"], (counter) => {
   if (counter % 3 === 0 && counter % 5 === 0) {
     return htl.html`<b style="color: purple">FizzBuzz</b>`;
@@ -358,7 +358,7 @@ celine.cell("fizzbuzz", ["counter"], (counter) => {
 
 <p>A <code>&lt;script&gt;</code> declaring a cell can be hidden inside a <code>&lt;details&gt;</code>s element.</p>
 
-<details id="hue">
+<details data-observe="hue">
   <summary>Show code</summary>
 <script type="module" class="echo reflect" contenteditable="true">
 celine.cell("hue", async function* () {
@@ -376,7 +376,7 @@ celine.cell("hue", async function* () {
 
 <br />
 
-<p>To display the cell's current value above the <code>&lt;details&gt;</code> element, rather than above the <code>&lt;script&gt;</code>, we add <code>id="hue"</code> to the <code>&lt;details&gt;</code> element, as the cell's <code>name</code> is <code>"hue"</code>:</p>
+<p>To display the cell's current value above the <code>&lt;details&gt;</code> element, rather than above the <code>&lt;script&gt;</code>, we add <code>data-observe="hue"</code> to the <code>&lt;details&gt;</code> element, as the cell's <code>name</code> is <code>"hue"</code>:</p>
 
 <script type="module" id="innerhue">
   celine.cell("innerhue", () => {
@@ -391,11 +391,11 @@ celine.cell("hue", async function* () {
 
 <p><p>It declares 2 reactive cells: a cell called <code>"${name}"</code>, and a cell called <code>"viewof ${name}"</code> - one for the value, and one for the DOM element itself.</p>
 
-<p>To display the DOM element above another element <code>&lt;script&gt;</code>, set <code>id="viewof ${name}"</code> on the element to which the input should be prepended.</p>
+<p>To display the DOM element above another element <code>&lt;script&gt;</code>, set <code>data-observe="viewof ${name}"</code> on the element to which the input should be prepended.</p>
 
-<p>Here, we want to display an input above the <code>&lt;script&gt;</code> element, so we set <code>id="viewof password"</code> on the <code>&lt;script&gt;</code>:</p>
+<p>Here, we want to display an input above the <code>&lt;script&gt;</code> element, so we set <code>data-observe="viewof password"</code> on the <code>&lt;script&gt;</code>:</p>
 
-<script type="module" class="echo reflect" id="viewof password" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="viewof password" contenteditable="true">
 celine.viewof("password", () => {
   return Inputs.text({ label: "Password", placeholder: "hunter2" });
 });
@@ -403,7 +403,7 @@ celine.viewof("password", () => {
 
 <p>We still have to depend on the cell called <code>"password"</code> to use the input's value:</p>
 
-<script type="module" class="echo reflect" id="strength" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="strength" contenteditable="true">
 celine.cell("strength", ["password"], (password) => {
   // please don't use this for real password strength checking
   if (password.length >= 12) {
@@ -429,7 +429,7 @@ celine.cell("strength", ["password"], (password) => {
 
 <p>The <code>silentCell</code> constructor declares a cell that doesn't try to display its current value anywhere.</p>
 
-<script type="module" class="echo reflect" id="silent" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="silent" contenteditable="true">
 celine.silentCell("silent", () => {
   return "This string does NOT render anywhere, but can be used by other cells.";
 });
@@ -440,12 +440,12 @@ celine.silentCell("silent", () => {
 
 <p>The <code>mutable</code> (and <code>silentMutable</code>) constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.</p>
 
-<script type="module" class="echo reflect" id="ref" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="ref" contenteditable="true">
 window.ref = celine.mutable("ref", 3)
 </script>
 
 
-<script type="module" class="echo reflect" id="viewof increment" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="viewof increment" contenteditable="true">
 celine.viewof("increment", () => {
   const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
@@ -454,7 +454,7 @@ celine.viewof("increment", () => {
 });
 </script>
 
-<script type="module" class="echo reflect" id="sword" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="sword" contenteditable="true">
 celine.cell("sword", ["ref"], (ref) => {
   return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
 });
@@ -465,7 +465,7 @@ celine.cell("sword", ["ref"], (ref) => {
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
 
-<script type="module" class="echo reflect" id="lib" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="lib" contenteditable="true">
 celine.cell("lib", () => {
   return celine.library;
 });
@@ -473,7 +473,7 @@ celine.cell("lib", () => {
 
 <h4><a href="#tex" id="tex"></a>TeX</h4>
 
-<script type="module" class="echo reflect" id="eq1" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="eq1" contenteditable="true">
 celine.cell("eq1", async () => {
   const tex = await celine.library.tex();
   return tex`c = \pm\sqrt{a^2 + b^2}`;
@@ -484,18 +484,18 @@ celine.cell("eq1", async () => {
 
 <p>Because rendering TeX is so useful, <cite>@celine/celine</cite> provides a shorthand <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, <code>celine.tex</code>:</p>
 
-<script type="module" class="echo reflect" id="eq2" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="eq2" contenteditable="true">
 celine.cell("eq2", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 </script>
 
-<p>Because cells render their contents <code>display: inline</code> (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script <script type="module"  class="echo reflect" id="eq3" contenteditable="true">celine.cell("eq3", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> in the middle of the <code>&lt;p&gt;</code> element.</p>
+<p>Because cells render their contents <code>display: inline</code> (<i>celine ⇒ <q>cell inline</q></i>), we can embed the script <script type="module"  class="echo reflect" data-observe="eq3" contenteditable="true">celine.cell("eq3", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> in the middle of the <code>&lt;p&gt;</code> element.</p>
 
-<p>In non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" id="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
+<p>In non-demonstration use, we'd also leave off the <code>.echo</code> and <code>.reflect</code> classes, to render <script type="module" data-observe="eq4">celine.cell("eq4", celine.tex`c = \pm\sqrt{a^2 + b^2}`)</script> inline.</p>
 
 <p>To render TeX centered, wrap the <code>&lt;script&gt;</code> with a <code>&lt;div style="text-align: center"&gt;</code>:</p>
 
 <div style="text-align: center; margin-top: 2ch; margin-bottom: 1ch;">
-<script type="module" id="eq5" contenteditable="true">
+<script type="module" data-observe="eq5" contenteditable="true">
 celine.cell("eq5", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 </script>
 </div>
@@ -504,7 +504,7 @@ celine.cell("eq5", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 
 <h4><a href="#markdown" id="markdown"></a>Markdown</h4>
 
-<script type="module" class="echo reflect" id="md" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="md" contenteditable="true">
 celine.cell("md", async () => {
   const elements =  [
     { "symbol": "Co", "name": "Cobalt", "number": 27 },
@@ -526,7 +526,7 @@ celine.cell("md", async () => {
 
 <p>Markdown also has a shorthand <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, <code>celine.md</code>:</p>
 
-<script type="module" class="echo reflect" id="md2" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="md2" contenteditable="true">
 celine.cell("md2", celine.md`
   1. I
   2. love
@@ -541,7 +541,7 @@ celine.cell("md2", celine.md`
   <a href="https://observablehq.com/framework/lib/dot">Docs</a>
 </p>
 
-<script type="module" class="echo reflect" id="dot" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="dot" contenteditable="true">
 celine.cell("dot", async () => {
   const dot = await celine.library.dot();
   return dot`
@@ -559,7 +559,7 @@ digraph G {
 </p>
 
 
-<script type="module" class="echo reflect" id="cmermaid" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="cmermaid" contenteditable="true">
 celine.cell("cmermaid", async () => {
   const mermaid = await celine.library.mermaid();
   return mermaid`
@@ -578,7 +578,7 @@ graph TD;
   <a href="https://observablehq.com/framework/lib/leaflet">Docs</a>
 </p>
 
-<script type="module" class="echo reflect" id="L" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="L" contenteditable="true">
 celine.cell("L", async function* () {
   const L = await celine.library.L();
   const container = htl.html`<div id="map" style="height: 300px;"></div>`;
@@ -598,7 +598,7 @@ celine.cell("L", async function* () {
   <a href="https://observablehq.com/framework/lib/duckdb">Docs</a>
 </p>
 
-<script type="module" class="echo reflect" id="duck" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="duck" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
 celine.cell("duck", async () => {
@@ -672,7 +672,7 @@ celine.cell("duck", async () => {
 
 <p><a href="https://pyodide.org/">Pyodide</a> is a port of CPython to WebAssembly.</p>
 
-<script type="module" class="echo reflect" id="mean" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="mean" contenteditable="true">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.26.3/full/pyodide.mjs';
 
 celine.cell("mean", async () => {
@@ -690,7 +690,7 @@ x.mean()
 
 <p><a href="https://docs.r-wasm.org/webr/latest/">WebR</a> is a version of the statistical language R compiled for the browser using WebAssembly, via Emscripten.</p>
 
-<script type="module" class="echo reflect" id="summary" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="summary" contenteditable="true">
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
 celine.cell("summary", async () => {
@@ -803,7 +803,7 @@ celine.cell("sets", async () => {
   <i>Try dragging the circles around!</i>
 </p>
 
-<details id="bloom">
+<details data-observe="bloom">
   <summary>Show code</summary>
 <script type="module" class="echo reflect" contenteditable="true">
 import * as bloom from "https://penrose.cs.cmu.edu/bloom.min.js";
@@ -874,7 +874,7 @@ celine.cell("bloom", async () => {
   If you make changes to <code>contenteditable</code> elements, you are able to save the notebook, with changes, as a new file.
 </p>
 
-<script id="viewof save" type="module" class="echo reflect" contenteditable="true">
+<script data-observe="viewof save" type="module" class="echo reflect" contenteditable="true">
 celine.viewof("save", () => {
   return Inputs.button("Save", {
     reduce: async () => {
@@ -897,7 +897,7 @@ celine.viewof("save", () => {
   You can allow the user to create new cells:
 </p>
 
-<script type="module" class="echo reflect" id="viewof new-cell" contenteditable="true">
+<script type="module" class="echo reflect" data-observe="viewof new-cell" contenteditable="true">
 celine.viewof("new-cell", () => {
   return Inputs.button("New cell", {
     value: 0,

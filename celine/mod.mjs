@@ -95,16 +95,16 @@ export class CelineModule {
    */
   observer(name) {
     const div = this.document.createElement("div");
-    const elementContainer = this.document.getElementById(name);
+    const elementContainer = this.document.querySelector(`[data-observe="${name}"]`);
 
     if (!elementContainer) {
-      throw new Error(`No element with id ${name} found.
+      throw new Error(`No element with data-observe ${name} found.
 
-        celine tried to find a DOM element with id="${name}" to attach an observer to because some cell with name "${name}" was declared,
+        celine tried to find a DOM element with data-observe="${name}" to attach an observer to because some cell with name "${name}" was declared,
         but it couldn't find one.
 
         Either:
-        1) Annotate an element with id="${name}" in your HTML file. This is where the cell's current value will be displayed.
+        1) Annotate an element with data-observe="${name}" in your HTML file. This is where the cell's current value will be displayed.
         2) Use celine.silent instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
@@ -113,12 +113,10 @@ export class CelineModule {
   }
 
   /**
-   * Declares a reactive cell that renders its value above its element container.
+   * Declares a reactive cell that renders its value above its data-observe element.
    * The cell can depend on other cells and its definition can return values of type
    * T, Promise<T>, Iterator<T>, or AsyncIterator<T>.
-   * 
-   * The element's id must match the name parameter.
-   * 
+   *
    * @example
    * ```javascript
    * // Counter that increments every second

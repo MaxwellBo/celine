@@ -1,6 +1,6 @@
 {
   "name": "@celine/celine",
-  "version": "4.9.0",
+  "version": "5.0.0",
   "exports": "./mod.mjs",
   "tasks": {
     "dev": "deno run --watch mod.mjs"
