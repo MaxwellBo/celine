@@ -89,9 +89,9 @@ export class CelineModule {
   /**
    * Creates an Inspector for observing cell output.
    * @private
-   * @param {string} name - The name/id of the element to attach the observer to
+   * @param {string} name - The data-observe attribute of the element to attach an observer to
    * @returns {Inspector} A new Inspector instance
-   * @throws {Error} Error if no element with the specified id is found
+   * @throws {Error} Error if no element with a data-observe attribute is found
    */
   observer(name) {
     const div = this.document.createElement("div");

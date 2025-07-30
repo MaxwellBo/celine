@@ -427,7 +427,9 @@ celine.cell("strength", ["password"], (password) => {
 
 <h3><a href="#silent" id="silent"></a><code>celine.silentCell(name, [inputs, ]definition)</code></h3>
 
-<p>The <code>silentCell</code> constructor declares a cell that doesn't try to display its current value anywhere.</p>
+<p>The <code>silentCell</code> constructor declares a cell that doesn't need an element annotated with <code>
+data-observe="${name}"</code> declared in the HTML. It is useful for cells that are used as inputs to other cells, but whose values do not need to be displayed.</p>
+</code>
 
 <script type="module" class="echo reflect" contenteditable="true">
 celine.silentCell("silent", () => {
