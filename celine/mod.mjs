@@ -89,22 +89,22 @@ export class CelineModule {
   /**
    * Creates an Inspector for observing cell output.
    * @private
-   * @param {string} name - The data-observe attribute of the element to attach an observer to
+   * @param {string} name - The data-display attribute of the element to attach an observer to
    * @returns {Inspector} A new Inspector instance
-   * @throws {Error} Error if no element with a data-observe attribute is found
+   * @throws {Error} Error if no element with a data-display attribute is found
    */
   observer(name) {
     const div = this.document.createElement("div");
-    const elementContainer = this.document.querySelector(`[data-observe="${name}"]`);
+    const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
 
     if (!elementContainer) {
-      throw new Error(`No element with data-observe ${name} found.
+      throw new Error(`No element with data-display ${name} found.
 
-        celine tried to find a DOM element with data-observe="${name}" to attach an observer to because some cell with name "${name}" was declared,
+        celine tried to find a DOM element with data-display="${name}" to attach an observer to because some cell with name "${name}" was declared,
         but it couldn't find one.
 
         Either:
-        1) Annotate an element with data-observe="${name}" in your HTML file. This is where the cell's current value will be displayed.
+        1) Annotate an element with data-display="${name}" in your HTML file. This is where the cell's current value will be displayed.
         2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
@@ -113,7 +113,7 @@ export class CelineModule {
   }
 
   /**
-   * Declares a reactive cell that renders its value above its data-observe element.
+   * Declares a reactive cell that renders its value above its data-display element.
    * The cell can depend on other cells and its definition can return values of type
    * T, Promise<T>, Iterator<T>, or AsyncIterator<T>.
    *

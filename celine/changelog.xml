@@ -12,6 +12,14 @@
     <link href="https://jsr.io/@celine/celine@5.0.0"/>
     <id>https://jsr.io/@celine/celine@5.0.0</id>
     <updated>2025-07-29T00:00:00Z</updated>
+    <summary>`data-observe` is now `data-display`</summary>
+  </entry>
+
+  <entry>
+    <title>5.0.0</title>
+    <link href="https://jsr.io/@celine/celine@5.0.0"/>
+    <id>https://jsr.io/@celine/celine@5.0.0</id>
+    <updated>2025-07-29T00:00:00Z</updated>
     <summary>`celine.cell(name, ...)` now renders above `data-observe=name`, not `id=name`</summary>
   </entry>
 
