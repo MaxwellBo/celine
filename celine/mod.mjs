@@ -105,7 +105,7 @@ export class CelineModule {
 
         Either:
         1) Annotate an element with data-observe="${name}" in your HTML file. This is where the cell's current value will be displayed.
-        2) Use celine.silent instead of celine.cell if you don't want to display the cell's current value anywhere.`);
+        2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
     elementContainer.parentNode.insertBefore(div, elementContainer);
