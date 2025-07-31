@@ -1,6 +1,8 @@
 import { Runtime } from "npm:@observablehq/runtime@6.0.0";
 import { Inspector } from "npm:@observablehq/inspector@5.0.1";
 import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
+import * as kit from "npm:@observablehq/notebook-kit@1.0.1"
+
 
 /**
  * For convenience, this module re-exports the Observable standard library.
@@ -107,6 +109,7 @@ export class CelineModule {
         1) Annotate an element with data-display="${name}" in your HTML file. This is where the cell's current value will be displayed.
         2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
+
 
     elementContainer.parentNode.insertBefore(div, elementContainer);
     return new Inspector(div);
