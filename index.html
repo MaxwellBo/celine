@@ -22,7 +22,8 @@
   import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
   import * as htl from 'https://esm.run/htl@0.3.1';
 
-  window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+  window.celine = await CelineModule.usingNewObservableRuntimeAndModule(document);
+  await celine.registerN2Handlers(document);
   window.library = celine.library; /* @observablehq/stdlib */
   window.Inputs = Inputs;
   window.htl = htl;
@@ -130,6 +131,153 @@
   </div>
 
 <h1 class="title">@celine/celine</h1>
+
+
+
+  <script id="17" type="text/markdown" class="echo reflect">
+    # Urn question
+  </script>
+  <script id="26" type="text/markdown">
+    > You are given an urn containing 100 balls; ${tex`n`} of them are red, and ${tex`100-n`} are green, where n is chosen uniformly at random in ${tex`[0, 100]`}. You take a random ball out of the urn — it’s red — and discard it. The next ball you pick (out of the 99 remaining) is:
+
+    > a) More likely to be red
+
+    > b) More likely to be green
+
+    > c) Equally likely
+  </script>
+  <script id="288" type="text/markdown">
+    ## Working it out by hand
+  </script>
+  <script id="90" type="text/markdown">
+    I have no formal statistical training. Forgive me if I do anything weird.
+
+    If I yank a red out of the urn, I'd like to figure out the probability of having a certain ${tex`n`}-urn. It's impossible to get a red ball from ${tex`n = 0`} urn, but the most likely from ${tex`n = 100`} urn.
+  </script>
+  <script id="116" type="application/vnd.observable.javascript" class="echo reflect">
+    Plot.plot({
+      color: { legend: true },
+      x: {
+        label: "n"
+      },
+      y: {
+        label: "P(red)"
+      },
+      marks: [
+        Plot.raster({
+          x1: 0,
+          y1: 0,
+          x2: 100,
+          y2: 1,
+          imageRendering: "pixelated",
+          fill: (x, y) => {
+            return x / 100 >= y ? "#AA0000" : "#00AA00";
+          }
+        })
+      ]
+    })
+  </script>
+  <script id="96" type="application/vnd.observable.javascript" pinned="">
+    pfn = un.map((_, n) => n / 101 / 50)
+  </script>
+  <script id="312" type="application/vnd.observable.javascript" pinned="">
+    pfn[49]
+  </script>
+  <script id="107" type="application/vnd.observable.javascript" pinned="">
+    _.sum(pfn)
+  </script>
+  <script id="132" type="text/markdown">
+    Now that we've guessed the likelihood having a certain ${tex`n`}-urn, now we need to see what the likelihood of a second red from each of those ${tex`n`}-urns. 
+  </script>
+  <script id="144" type="application/vnd.observable.javascript" pinned="">
+    p2r = pfn.map((pn, n) => pn * (Math.floor(n - 1) / 99))
+  </script>
+  <script id="315" type="application/vnd.observable.javascript" pinned="">
+    Plot.lineY(p2r).plot({
+      x: {
+        label: "n"
+      },
+      y: {
+        label: "P(red|red)"
+      }
+    })
+  </script>
+  <script id="162" type="text/markdown">
+    Given we still have no idea what our ${tex`n`}-urn, we'll sum up all the probabilities of the second red:
+  </script>
+  <script id="160" type="application/vnd.observable.javascript" pinned="">
+    _.sum(p2r)
+  </script>
+  <script id="290" type="text/markdown">
+    ---
+
+    ## Validation
+  </script>
+  <script id="3" type="application/vnd.observable.javascript" pinned="">
+    un = d3.range(0, 101)
+  </script>
+  <script id="9" type="application/vnd.observable.javascript" pinned="">
+    function fillUrn(n) {
+      const acc = Array(100).fill("green");
+
+      for (let i = 0; i < n; i++) {
+        acc[i] = "red";
+      }
+
+      return _.shuffle(acc);
+    }
+  </script>
+  <script id="20" type="text/markdown">
+    Check our sanity
+  </script>
+  <script id="54" type="application/vnd.observable.javascript" pinned="">
+    urn = fillUrn(37)
+  </script>
+  <script id="12" type="application/vnd.observable.javascript" pinned="">
+    _.countBy(urn, (d) => d)
+  </script>
+  <script id="78" type="application/vnd.observable.javascript" pinned="">
+    urn2 = [...urn]
+  </script>
+  <script id="59" type="application/vnd.observable.javascript" pinned="">
+    ball = urn2.pop()
+  </script>
+  <script id="63" type="application/vnd.observable.javascript" pinned="">
+    _.countBy(urn2, (d) => d)
+  </script>
+  <script id="30" type="text/markdown">
+
+    ### Simulation
+  </script>
+  <script id="36" type="application/vnd.observable.javascript" pinned="">
+    mutable secondRedsGivenFirstRed = 0
+  </script>
+  <script id="38" type="application/vnd.observable.javascript" pinned="">
+    mutable firstReds = 0
+  </script>
+  <script id="40" type="application/vnd.observable.javascript" pinned="">
+    {
+      for (let i = 0; i < 10000; ++i) {
+        const n = _.sample(un);
+        const urn = fillUrn(n);
+
+        const firstBall = urn.pop(); // pull a ball out of the urn
+
+        if (firstBall === "red") {
+          mutable firstReds += 1;
+
+          const secondBall = urn.pop(); // pull another ball out of the urn
+
+          if (secondBall === "red") {
+            mutable secondRedsGivenFirstRed += 1;
+          }
+        }
+      }
+    }
+  </script>
+  <script id="69" type="application/x-tex" pinned="">
+    P(\text{second red} | \text{first red}) = ${(secondRedsGivenFirstRed / firstReds).toFixed(2)}
+  </script>
 
 <style>
 .postit {
@@ -517,8 +665,8 @@ celine.cell("eq5", celine.tex`c = \pm\sqrt{a^2 + b^2}`);
 
 <h4><a href="#markdown" id="markdown"></a>Markdown</h4>
 
-<script type="module" class="echo reflect" data-display="md" contenteditable="true">
-celine.cell("md", async () => {
+<script type="module" class="echo reflect" data-display="markdown" contenteditable="true">
+celine.cell("markdown", async () => {
   const elements =  [
     { "symbol": "Co", "name": "Cobalt", "number": 27 },
     { "symbol": "Cu", "name": "Copper", "number": 29 },
@@ -539,8 +687,8 @@ celine.cell("md", async () => {
 
 <p>Markdown also has a shorthand <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literal</a>, <code>celine.md</code>:</p>
 
-<script type="module" class="echo reflect" data-display="md2" contenteditable="true">
-celine.cell("md2", celine.md`
+<script type="module" class="echo reflect" data-display="markdown2" contenteditable="true">
+celine.cell("markdown2", celine.md`
   1. I
   2. love
   3. simple
@@ -999,6 +1147,8 @@ celine.cell("module", () => {
   <li><a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a></li>
   <li><a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML Notebooks</cite></a></li>
 </ul>
+
+
 
 <!-- <div style="text-align: center; margin-top: 4ch;">
 <pre style="max-width: 100%; overflow-x: auto;">

@@ -95,6 +95,33 @@ export class CelineModule {
    * @returns {Inspector} A new Inspector instance
    * @throws {Error} Error if no element with a data-display attribute is found
    */
+  observeId(name) {
+    const div = this.document.createElement("div");
+    const elementContainer = this.document.getElementById(name);
+
+    if (!elementContainer) {
+      throw new Error(`No element with id ${name} found.
+
+        celine tried to find a DOM element with id="${name}" to attach an observer to because some cell with name "${name}" was declared,
+        but it couldn't find one.
+
+        Either:
+        1) Annotate an element with id="${name}" in your HTML file. This is where the cell's current value will be displayed.
+        2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
+    }
+
+
+    elementContainer.parentNode.insertBefore(div, elementContainer);
+    return new Inspector(div);
+  }
+
+  /**
+   * Creates an Inspector for observing cell output.
+   * @private
+   * @param {string} name - The data-display attribute of the element to attach an observer to
+   * @returns {Inspector} A new Inspector instance
+   * @throws {Error} Error if no element with a data-display attribute is found
+   */
   observer(name) {
     const div = this.document.createElement("div");
     const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
@@ -114,6 +141,54 @@ export class CelineModule {
     elementContainer.parentNode.insertBefore(div, elementContainer);
     return new Inspector(div);
   }
+
+    async registerN2Handlers(document) {
+      const md = await library.md();
+      const tex = await library.tex();
+      const Plot = await library.Plot();
+      this.module.builtin("md", md);
+      this.module.builtin("tex", tex);
+      this.module.builtin("Plot", Plot);
+
+      const scriptTypes = [
+        'text/markdown',
+        'text/html', 
+        'application/sql',
+        'application/x-tex',
+        'text/vnd.graphviz',
+        'application/vnd.observable.javascript'
+      ];
+
+      const typeMapping = {
+        "module": "js",
+        'text/markdown': 'md',
+        'text/html': 'html',
+        'application/sql': 'sql',
+        'application/x-tex': 'tex',
+        'text/vnd.graphviz': 'dot',
+        'application/vnd.observable.javascript': 'ojs'
+      };
+
+      for (const type of scriptTypes) {
+        const scripts = document.querySelectorAll(`script[type="${type}"]`);
+        for (const script of scripts) {
+          const tjs = kit.transpile(script.textContent, typeMapping[type]);
+
+          console.log(tjs)
+
+          const name = (tjs.outputs && tjs.outputs[0]) || script.id;
+
+          const observer = this.observeId(script.id);
+
+          const iife = `((${tjs.body}))`;
+
+          this.module.variable(observer).define(
+            name,
+            tjs.inputs,
+            eval(iife));
+        }
+      }
+    }
 
   /**
    * Declares a reactive cell that renders its value above its data-display element.
