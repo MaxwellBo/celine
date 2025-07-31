@@ -146,9 +146,18 @@ export class CelineModule {
       const md = await library.md();
       const tex = await library.tex();
       const Plot = await library.Plot();
+      const lodash = await library._();
+      const d3 = await library.d3();
+      const html = await library.html();
+      const dot = await library.dot();
+      console.log(dot)
       this.module.builtin("md", md);
       this.module.builtin("tex", tex);
       this.module.builtin("Plot", Plot);
+      this.module.builtin("_", lodash);
+      this.module.builtin("d3", d3);
+      this.module.builtin("html", html);
+      this.module.builtin("dot", dot);
 
       const scriptTypes = [
         'text/markdown',
@@ -172,20 +181,24 @@ export class CelineModule {
       for (const type of scriptTypes) {
         const scripts = document.querySelectorAll(`script[type="${type}"]`);
         for (const script of scripts) {
-          const tjs = kit.transpile(script.textContent, typeMapping[type]);
+          const tjs = kit.transpile(script.textContent.trim(), typeMapping[type]);
 
           console.log(tjs)
 
-          const name = (tjs.outputs && tjs.outputs[0]) || script.id;
+          if (tjs.automutable) {
+            console.error("NOT SUPPORTED")
+            continue
+          }
+
 
           const observer = this.observeId(script.id);
-
-          const iife = `((${tjs.body}))`;
+          const name = tjs.output?.replace(" ", "$") ?? script.id;
+          const expression = `((${tjs.body}))`;
 
           this.module.variable(observer).define(
             name,
             tjs.inputs,
-            eval(iife));
+            eval(expression));
         }
       }
     }

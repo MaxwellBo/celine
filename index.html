@@ -132,6 +132,21 @@
 
 <h1 class="title">@celine/celine</h1>
 
+  <script id="aaaaa" type="application/x-tex">
+    \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+  </script>
+
+  <script id="bbbbbbb" type="text/html">
+    <h1>Hello, <i>world</i>!</h1>
+  </script>
+
+  <script id="cccccc" type="text/vnd.graphviz">
+    digraph G {
+      A -> B -> C;
+      A -> C;
+    }
+  </script>
+
 
 
   <script id="17" type="text/markdown" class="echo reflect">
@@ -702,8 +717,8 @@ celine.cell("markdown2", celine.md`
   <a href="https://observablehq.com/framework/lib/dot">Docs</a>
 </p>
 
-<script type="module" class="echo reflect" data-display="dot" contenteditable="true">
-celine.cell("dot", async () => {
+<script type="module" class="echo reflect" data-display="graphviz" contenteditable="true">
+celine.cell("graphviz", async () => {
   const dot = await celine.library.dot();
   return dot`
 digraph G {
