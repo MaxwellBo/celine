@@ -192,6 +192,20 @@ export class CelineModule {
 
 
           const observer = this.observeId(script.id);
+
+            // Register a blur handler that retranspiles and uses redefine
+          script.addEventListener("blur", () => {
+            console.log("Reevaluating script", script.id, type);
+            const tjsNew = kit.transpile(script.textContent.trim(), typeMapping[type]);
+            const name = tjsNew.output?.replace(" ", "$") ?? script.id;
+            const expression = `((${tjsNew.body}))`;
+            this.module.redefine(
+              name,
+              tjsNew.inputs,
+              eval(expression)
+            );
+            });
+
           const name = tjs.output?.replace(" ", "$") ?? script.id;
           const expression = `((${tjs.body}))`;
 
