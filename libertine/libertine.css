@@ -47,12 +47,22 @@ blockquote {
   background-color: #f3f3f3;
 }
 
+figure:has(blockquote) {
+  border-left: 4px solid #ccc !important;
+  border-top: unset !important;
+  border-right: unset !important;
+  border-bottom: unset !important;
+
+}
+
 figure > blockquote {
   margin: unset;
+  border: unset !important;
 }
 
 blockquote + figcaption {
   text-align: right;
+  padding-top: unset !important;
 }
 
 aside {
