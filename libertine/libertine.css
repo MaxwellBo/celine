@@ -47,20 +47,20 @@ blockquote {
   background-color: #f3f3f3;
 }
 
-figure:has(blockquote) {
+figure.blockquote {
   border-left: 4px solid #ccc !important;
-  border-top: unset !important;
-  border-right: unset !important;
-  border-bottom: unset !important;
-
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  background-color: #f3f3f3f3;
 }
 
-figure > blockquote {
+figure.blockquote > blockquote {
   margin: unset;
   border: unset !important;
 }
 
-blockquote + figcaption {
+figure.blockquote > blockquote + figcaption {
   text-align: right;
   padding-top: unset !important;
 }
