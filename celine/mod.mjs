@@ -172,20 +172,24 @@ export class CelineModule {
    */
   _cell(observerVisibility, name, inputsOrDefinition, maybeDefinition) {
     const observer = observerVisibility === "visible" ? this.observer(name) : undefined;
-    let variable = this.module._scope.get(name) || this.module.variable(observer);
-
-    // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
-    // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
-    // that means we need to delete it and recreate it with a new observer
-    if (typeof variable._observer === 'symbol' && observer) {
-      variable.delete();
-      variable = this.module.variable(observer);
-    }
-
+    const variable = this.module._scope.get(name) || this.module.variable(observer);
     /** @type {Inputs} */
     const inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
     /** @type {Definition} */
     const definition = Array.isArray(inputsOrDefinition) ? maybeDefinition : inputsOrDefinition;
+
+    // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
+    // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
+    // that means we need to redefine it
+    if (typeof variable._observer === 'symbol' && observer) {
+      if (inputs && definition) {
+        variable.redefine(name, inputs, definition);
+      } else {
+        variable.redefine(name, definition);
+      }
+
+      return;
+    }
 
     if (inputs && definition) {
       variable.define(name, inputs, definition);
