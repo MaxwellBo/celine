@@ -97,7 +97,7 @@ export class CelineModule {
    */
   observeId(name) {
     const div = this.document.createElement("div");
-    const elementContainer = this.document.getElementById(name);
+    let elementContainer = this.document.querySelector(`[data-display="${name}"]`);
 
     if (!elementContainer) {
       throw new Error(`No element with id ${name} found.
@@ -122,7 +122,7 @@ export class CelineModule {
    * @returns {Inspector} A new Inspector instance
    * @throws {Error} Error if no element with a data-display attribute is found
    */
-  observer(name) {
+  observerForDataDisplay(name) {
     const div = this.document.createElement("div");
     const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
 
@@ -137,89 +137,91 @@ export class CelineModule {
         2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
+    elementContainer.parentNode.insertBefore(div, elementContainer);
+    return new Inspector(div);
+  }
+
+  /**
+   * Creates an Inspector for observing cell output by id.
+   * @private
+   * @param {string} id - The id of the element to attach an observer to
+   * @returns {Inspector} A new Inspector instance
+   * @throws {Error} Error if no element with the specified id is found
+   */
+  observerForId(id) {
+    const div = this.document.createElement("div");
+    const elementContainer = this.document.getElementById(id);
+
+    if (!elementContainer) {
+      throw new Error(`No element with id ${id} found.
+
+        celine tried to find a DOM element with id="${id}" to attach an observer to because some cell with name "${id}" was declared,
+        but it couldn't find one.
+
+        Annotate an element with id="${id}" in your HTML file. This is where the cell's current value will be displayed.
+        `);
+    }
 
     elementContainer.parentNode.insertBefore(div, elementContainer);
     return new Inspector(div);
   }
 
-    async registerN2Handlers(document) {
-      const md = await library.md();
-      const tex = await library.tex();
-      const Plot = await library.Plot();
-      const lodash = await library._();
-      const d3 = await library.d3();
-      const html = await library.html();
-      const dot = await library.dot();
-      console.log(dot)
-      this.module.builtin("md", md);
-      this.module.builtin("tex", tex);
-      this.module.builtin("Plot", Plot);
-      this.module.builtin("_", lodash);
-      this.module.builtin("d3", d3);
-      this.module.builtin("html", html);
-      this.module.builtin("dot", dot);
+  async registerN2Handlers(document) {
+    const md = await library.md();
+    const tex = await library.tex();
+    const Plot = await library.Plot();
+    const lodash = await library._();
+    const d3 = await library.d3();
+    const html = await library.html();
+    const dot = await library.dot();
+    console.log(dot)
+    this.module.builtin("md", md);
+    this.module.builtin("tex", tex);
+    this.module.builtin("Plot", Plot);
+    this.module.builtin("_", lodash);
+    this.module.builtin("d3", d3);
+    this.module.builtin("html", html);
+    this.module.builtin("dot", dot);
 
-      const scriptTypes = [
-        'text/markdown',
-        'text/html', 
-        'application/sql',
-        'application/x-tex',
-        'text/vnd.graphviz',
-        'application/vnd.observable.javascript'
-      ];
+    const scriptTypes = [
+      'text/markdown',
+      'text/html', 
+      'application/sql',
+      'application/x-tex',
+      'text/vnd.graphviz',
+      'application/vnd.observable.javascript'
+    ];
 
-      const typeMapping = {
-        "module": "js",
-        'text/markdown': 'md',
-        'text/html': 'html',
-        'application/sql': 'sql',
-        'application/x-tex': 'tex',
-        'text/vnd.graphviz': 'dot',
-        'application/vnd.observable.javascript': 'ojs'
-      };
+    const typeMapping = {
+      "module": "js",
+      'text/markdown': 'md',
+      'text/html': 'html',
+      'application/sql': 'sql',
+      'application/x-tex': 'tex',
+      'text/vnd.graphviz': 'dot',
+      'application/vnd.observable.javascript': 'ojs'
+    };
 
-      for (const type of scriptTypes) {
-        const scripts = document.querySelectorAll(`script[type="${type}"]`);
-        for (const script of scripts) {
-          const tjs = kit.transpile(script.textContent.trim(), typeMapping[type]);
+    for (const type of scriptTypes) {
+      const scripts = document.querySelectorAll(`script[type="${type}"]`);
+      for (const script of scripts) {
+        const tjs = kit.transpile(script.textContent.trim(), typeMapping[type]);
 
-          console.log(tjs)
+        console.log(tjs)
 
-          if (tjs.automutable) {
-            console.error("NOT SUPPORTED")
-            continue
-          }
+        const observer = this.observerForId(script.id);
 
-
-          const observer = this.observeId(script.id);
-
-            // Register a blur handler that retranspiles and uses redefine
-          script.addEventListener("blur", () => {
-            console.log("Reevaluating script", script.id, type);
-            const tjsNew = kit.transpile(script.textContent.trim(), typeMapping[type]);
-            const name = tjsNew.output?.replace(" ", "$") ?? script.id;
-            const expression = `((${tjsNew.body}))`;
-
-            const old = this.module._scope.get(name);
-
-            console.log(old)
-            old.redefine(
-              name,
-              tjsNew.inputs,
-              eval(expression)
-            );
-            });
-
-          const name = tjs.output?.replace(" ", "$") ?? script.id;
-          const expression = `((${tjs.body}))`;
-
-          this.module.variable(observer).define(
-            name,
-            tjs.inputs,
-            eval(expression));
+        if (tjs.automutable) {
+          console.error("NOT SUPPORTED")
+          continue
         }
+
+        const name = tjs.output?.replace(" ", "$") ?? script.id;
+        const expression = `((${tjs.body}))`;
+        this._cell(observer, name, tjs.inputs, eval(expression));
       }
     }
+  }
 
   /**
    * Declares a reactive cell that renders its value above its data-display element.
@@ -250,7 +252,8 @@ export class CelineModule {
    * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
   cell(name, inputsOrDefinition, maybeDefinition) {
-    this._cell("visible", name, inputsOrDefinition, maybeDefinition);
+    const observer = this.observerForDataDisplay(name);
+    this._cell(observer, name, inputsOrDefinition, maybeDefinition);
   }
 
   /**
@@ -268,19 +271,19 @@ export class CelineModule {
    * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
   silentCell(name, inputsOrDefinition, maybeDefinition) {
-    this._cell("hidden", name, inputsOrDefinition, maybeDefinition);
+    const observer = undefined;
+    this._cell(observer, name, inputsOrDefinition, maybeDefinition);
   }
 
   /**
    * Internal method for creating cells with specified visibility.
    * @private
-   * @param {ObserverVisibility} observerVisibility - Whether the cell should be visible or hidden
+   * @param {Observer | undefined} observer - The observer instance or undefined
    * @param {string} name - The name of the cell
    * @param {Inputs | Definition} inputsOrDefinition - Either array of input dependencies or the definition function
    * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
-  _cell(observerVisibility, name, inputsOrDefinition, maybeDefinition) {
-    const observer = observerVisibility === "visible" ? this.observer(name) : undefined;
+  _cell(observer, name, inputsOrDefinition, maybeDefinition) {
     const variable = this.module._scope.get(name) || this.module.variable(observer);
     /** @type {Inputs} */
     const inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
@@ -290,7 +293,7 @@ export class CelineModule {
     // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
     // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
     // that means we need to redefine it
-    if (typeof variable._observer === 'symbol' && observer) {
+    if (variable.redefine) {
       if (inputs && definition) {
         variable.redefine(name, inputs, definition);
       } else {
