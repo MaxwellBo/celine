@@ -282,7 +282,6 @@ export class CelineModule {
   _cell(observerVisibility, name, inputsOrDefinition, maybeDefinition) {
     const observer = observerVisibility === "visible" ? this.observer(name) : undefined;
     const variable = this.module._scope.get(name) || this.module.variable(observer);
-
     /** @type {Inputs} */
     const inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
     /** @type {Definition} */

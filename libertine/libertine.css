@@ -42,9 +42,27 @@ abbr {
 
 blockquote {
   border-left: 4px solid #ccc;
-  margin: 1em 0;
+  margin: 1rem 0;
   padding: 0.5em 1em;
   background-color: #f3f3f3;
+}
+
+figure.blockquote {
+  border-left: 4px solid #ccc !important;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  background-color: #f3f3f3f3;
+}
+
+figure.blockquote > blockquote {
+  margin: unset;
+  border: unset !important;
+}
+
+figure.blockquote > blockquote + figcaption {
+  text-align: right;
+  padding-top: unset !important;
 }
 
 aside {
@@ -86,7 +104,8 @@ h1, h2, h3, h4, h5, h6 {
 figure.card,
 figure.card-figure {
   display: inline-block;
-  margin: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
   padding: 0.5em;
   border: 1px solid #ccc;
   background-color: #f3f3f3f3;
