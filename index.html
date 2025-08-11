@@ -23,12 +23,12 @@
   import * as htl from 'https://esm.run/htl@0.3.1';
 
   window.celine = await CelineModule.usingNewObservableRuntimeAndModule(document);
-  await celine.registerN2Handlers(document);
   window.library = celine.library; /* @observablehq/stdlib */
   window.Inputs = Inputs;
   window.htl = htl;
 
   registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  await celine.registerNotebookKitScriptEvaluationAndRevaluation(document);
   </script>
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />

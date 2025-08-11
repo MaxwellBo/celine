@@ -3,6 +3,25 @@ import { Inspector } from "npm:@observablehq/inspector@5.0.1";
 import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
 import * as kit from "npm:@observablehq/notebook-kit@1.0.1"
 
+const NOTEBOOK_KIT_SCRIPT_TYPES = [
+  'text/markdown',
+  'text/html', 
+  'application/sql',
+  'application/x-tex',
+  'text/vnd.graphviz',
+  'application/vnd.observable.javascript'
+];
+
+const NOTEBOOK_KIT_SCRIT_TYPES_TO_CELL_TYPES = {
+  "module": "js",
+  'text/markdown': 'md',
+  'text/html': 'html',
+  'application/sql': 'sql',
+  'application/x-tex': 'tex',
+  'text/vnd.graphviz': 'dot',
+  'application/vnd.observable.javascript': 'ojs'
+};
+
 
 /**
  * For convenience, this module re-exports the Observable standard library.
@@ -95,33 +114,6 @@ export class CelineModule {
    * @returns {Inspector} A new Inspector instance
    * @throws {Error} Error if no element with a data-display attribute is found
    */
-  observeId(name) {
-    const div = this.document.createElement("div");
-    let elementContainer = this.document.querySelector(`[data-display="${name}"]`);
-
-    if (!elementContainer) {
-      throw new Error(`No element with id ${name} found.
-
-        celine tried to find a DOM element with id="${name}" to attach an observer to because some cell with name "${name}" was declared,
-        but it couldn't find one.
-
-        Either:
-        1) Annotate an element with id="${name}" in your HTML file. This is where the cell's current value will be displayed.
-        2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
-    }
-
-
-    elementContainer.parentNode.insertBefore(div, elementContainer);
-    return new Inspector(div);
-  }
-
-  /**
-   * Creates an Inspector for observing cell output.
-   * @private
-   * @param {string} name - The data-display attribute of the element to attach an observer to
-   * @returns {Inspector} A new Inspector instance
-   * @throws {Error} Error if no element with a data-display attribute is found
-   */
   observerForDataDisplay(name) {
     const div = this.document.createElement("div");
     const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
@@ -166,7 +158,7 @@ export class CelineModule {
     return new Inspector(div);
   }
 
-  async registerN2Handlers(document) {
+  async registerNotebookKitScriptEvaluationAndRevaluation(document) {
     const md = await library.md();
     const tex = await library.tex();
     const Plot = await library.Plot();
@@ -183,42 +175,29 @@ export class CelineModule {
     this.module.builtin("html", html);
     this.module.builtin("dot", dot);
 
-    const scriptTypes = [
-      'text/markdown',
-      'text/html', 
-      'application/sql',
-      'application/x-tex',
-      'text/vnd.graphviz',
-      'application/vnd.observable.javascript'
-    ];
-
-    const typeMapping = {
-      "module": "js",
-      'text/markdown': 'md',
-      'text/html': 'html',
-      'application/sql': 'sql',
-      'application/x-tex': 'tex',
-      'text/vnd.graphviz': 'dot',
-      'application/vnd.observable.javascript': 'ojs'
-    };
-
-    for (const type of scriptTypes) {
+    for (const type of NOTEBOOK_KIT_SCRIPT_TYPES) {
       const scripts = document.querySelectorAll(`script[type="${type}"]`);
       for (const script of scripts) {
-        const tjs = kit.transpile(script.textContent.trim(), typeMapping[type]);
-
-        console.log(tjs)
-
         const observer = this.observerForId(script.id);
 
-        if (tjs.automutable) {
-          console.error("NOT SUPPORTED")
-          continue
+        const registerCell = () => {
+          const tjs = kit.transpile(script.textContent.trim(), NOTEBOOK_KIT_SCRIT_TYPES_TO_CELL_TYPES[type]);
+
+          let name = tjs.output?.replace(" ", "$") ?? script.id;
+          // if (name.startsWith("mutable$")) {
+          //   name = name.slice("mutable$".length);
+          // }
+          const expression = `((${tjs.body}))`;
+          if (tjs.automutable) {
+            const m = Mutable(eval(expression));
+            this._cell(observer, name, tjs.inputs, m);
+          } else {
+            this._cell(observer, name, tjs.inputs, eval(expression));
+          }
         }
 
-        const name = tjs.output?.replace(" ", "$") ?? script.id;
-        const expression = `((${tjs.body}))`;
-        this._cell(observer, name, tjs.inputs, eval(expression));
+        registerCell();
+        script.addEventListener("blur", registerCell);
       }
     }
   }
@@ -442,16 +421,6 @@ function Mutable(value) {
 }
 
 /**
- * @deprecated since 1.0.0 Use registerReevaluationOnBlur instead.
- * @param {Document} document - The document object
- * @param {string} className - The class name of script elements to watch
- */
-export function reevaluateOnBlur(document, className) {
-  console.warn("The reevaluateOnBlur function is deprecated. Use registerScriptReevaluationOnBlur instead.");
-  registerScriptReevaluationOnBlur(document, className);
-}
-
-/**
  * Sets up automatic reevaluation of editable script elements on blur.
  * When a script element marked with the specified class loses focus,
  * it will be replaced with a new script element containing the updated content.
@@ -481,6 +450,9 @@ export function registerScriptReevaluationOnBlur(document, className) {
   document
     .querySelectorAll(`script.${className}[contenteditable='true']`)
     .forEach((script) => {
-      script.addEventListener("blur", /** @type {EventListener} */ (reevaluate));
+      // Only register if script type is NOT a notebook kit script type
+      if (!NOTEBOOK_KIT_SCRIPT_TYPES.includes(script.type)) {
+        script.addEventListener("blur", /** @type {EventListener} */ (reevaluate));
+      }
     });
 }
