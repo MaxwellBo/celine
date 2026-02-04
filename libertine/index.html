@@ -338,6 +338,20 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   });
 </script>
 
+<br />
+  
+<div id="fullwidth-example" class="fullwidth" style="border: 1px solid #ccc; padding: 1ch;"> 
+  <p>Add <code>.fullwidth</code> to any direct child of <code>&lt;main&gt;</code> to make it break out and span the full viewport width, while other content remains constrained to the default <code>max-width</code>.</p>
+</div>
+
+<script type="module" id="fullwidth-display">
+  celine.cell("fullwidth-display", () => {
+    const elem = document.getElementById("fullwidth-example");
+    elem.removeAttribute("id");
+    return htl.html`<span class='echo'>${elem.outerHTML}</span>`;
+  });
+</script>
+
 <h2><a href="#elements" id="elements"></a>Elements</h2>
 
 
@@ -375,6 +389,8 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
 <code>&lt;code&gt; inside of a &lt;pre&gt; is used to apply syntax highlighting.
 console.log("Hello, world!");</code>
 </pre>
+
+<hr />
 
 <figure>
   <img src="https://placehold.co/300x200" alt="Placeholder image">

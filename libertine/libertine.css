@@ -24,6 +24,13 @@ main {
   padding: 16px;
 }
 
+main > .fullwidth {
+  width: 95vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 kbd {
   font-family: 'Libertinus Keyboard', monospace;
 }
@@ -211,25 +218,30 @@ th {
 
 p,
 .p {
-  padding-top: 0.25ch;
-  padding-bottom: 0.25ch;
+  margin-block-start: 1.5ch;
+  margin-block-end: 1.5ch;
+}
+
+hr {
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
 }
 
 /* if p is followed by an script.echo or style.echo, add a little space above the script */
 p + script.echo, p + style.echo,
 .p + script.echo, .p + style.echo {
-  margin-top: 0.5ch;
+  margin-block-start: 0.5ch;
 }
 
 /* if p is followed by an div.observablehq, add a little space above the inspector */
 p:has(+ div.observablehq),
 .p:has(+ div.observablehq) {
-  margin-bottom: 1ch;
+  margin-block-end: 1ch;
 }
 
 /* if an div.observablehq is followed by an script.echo, add a little space above the script */
 div.observablehq + script.echo {
-  margin-top: 0.5ch;
+  margin-block-start: 0.5ch;
 }
 
 .subtitle {
@@ -243,7 +255,7 @@ code {
 }
 
 script, pre, style {
-  margin-bottom: 1ch;
+  margin-block-end: 1ch;
 }
 
 .table-of-contents {
