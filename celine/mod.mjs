@@ -1,6 +1,6 @@
-import { Runtime } from "npm:@observablehq/runtime@6.0.0";
-import { Inspector } from "npm:@observablehq/inspector@5.0.1";
-import * as stdlib from "npm:@observablehq/stdlib@5.8.8";
+import { Runtime } from "@observablehq/runtime";
+import { Inspector } from "@observablehq/inspector";
+import * as stdlib from "@observablehq/stdlib";
 
 /**
  * For convenience, this module re-exports the Observable standard library.

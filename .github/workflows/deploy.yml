@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+
+      - name: Bundle entry scripts for browser
+        run: |
+          cp -r index.html overview.html bun-starter.html cdn-starter.html celine/ libertine/ bibhtml/ static/ og.png dist/
+          bun build entry.mjs --outfile dist/entry.mjs --target browser
+          bun build libertine/entry.mjs --outfile dist/libertine/entry.mjs --target browser
+          bun build bibhtml/entry.mjs --outfile dist/bibhtml/entry.mjs --target browser
+          bun build bibhtml/mod.mjs --outfile dist/bibhtml/mod.mjs --target browser
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

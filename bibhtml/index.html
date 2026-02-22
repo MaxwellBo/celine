@@ -31,41 +31,11 @@
 
   <link rel="stylesheet" href="../libertine/libertine.css">
   <link rel="stylesheet" href="../celine/cell.css">
-  <!-- UNCOMMENT ME WHEN COPY PASTING -->
-  <!-- <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@4.9.0/cell.css" />
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" /> -->
-
   <meta property="og:image" content="https://maxbo.me/celine/bibhtml/static/og.png">
   <meta name="twitter:image" content="https://maxbo.me/celine/bibhtml/static/og.png">
   <meta name="twitter:card" content="summary_large_image">
 
-  <script type="module">
-    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.9.0';
-    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-    import * as htl from 'https://esm.run/htl@0.3.1';
-
-    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-    window.library = celine.library; /* @observablehq/stdlib */
-    window.Inputs = Inputs;
-    window.htl = htl;
-
-    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
-  </script>
-  <script type="importmap">
-  {
-    "imports": {
-      "npm:@citation-js/core@0.7.18": "https://esm.sh/@citation-js/core@0.7.18",
-      "npm:@citation-js/plugin-bibtex@0.7.18": "https://esm.sh/@citation-js/plugin-bibtex@0.7.18",
-      "npm:@citation-js/plugin-doi@0.7.18": "https://esm.sh/@citation-js/plugin-doi@0.7.18",
-      "npm:@citation-js/plugin-csl@0.7.18": "https://esm.sh/@citation-js/plugin-csl@0.7.18",
-      "npm:@citation-js/plugin-wikidata@0.7.18": "https://esm.sh/@citation-js/plugin-wikidata@0.7.18"
-    }
-  }
-  </script>
+  <script type="module" src="./entry.mjs"></script>
 </head>
 
 <body>
@@ -140,8 +110,7 @@
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="import-container"><script type="module" src="https://esm.sh/jsr/@celine/bibhtml@3.18.0"></script></div>
-  <!-- <div id="import-container"><script type="module" src="/bibhtml/mod.mjs"></script></div> -->
+  <div id="import-container"><script type="module" src="./mod.mjs"></script></div>
 
   <script id="import" type="module">
     celine.cell("import", () => {

@@ -1,3 +1,6 @@
 .DS_Store
 *.bak
 .claude
+dist/
+node_modules/
+bun.lock

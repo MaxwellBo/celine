@@ -1,8 +1,8 @@
-import { Cite } from 'npm:@citation-js/core@0.7.18'
-import 'npm:@citation-js/plugin-bibtex@0.7.18'
-import 'npm:@citation-js/plugin-doi@0.7.18'
-import 'npm:@citation-js/plugin-csl@0.7.18'
-import 'npm:@citation-js/plugin-wikidata@0.7.18'
+import { Cite } from '@citation-js/core'
+import '@citation-js/plugin-bibtex'
+import '@citation-js/plugin-doi'
+import '@citation-js/plugin-csl'
+import '@citation-js/plugin-wikidata'
 // import 'npm:@citation-js/plugin-hayagriva@0.1.1'
 
 /**

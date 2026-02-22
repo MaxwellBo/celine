@@ -2,6 +2,11 @@
   "name": "@celine/celine",
   "version": "6.0.1",
   "exports": "./mod.mjs",
+  "imports": {
+    "@observablehq/runtime": "npm:@observablehq/runtime@6.0.0",
+    "@observablehq/inspector": "npm:@observablehq/inspector@5.0.1",
+    "@observablehq/stdlib": "npm:@observablehq/stdlib@5.8.8"
+  },
   "tasks": {
     "dev": "deno run --watch mod.mjs"
   }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@celine/celine CDN starter</title>
+  <script type="module" src="./entry.mjs"></script>
+  <link rel="stylesheet" href="celine/cell.css" />
+  <link rel="stylesheet" href="libertine/libertine.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>@celine/celine CDN starter</h1>
+      <div class="authors">
+        <div class="author">
+          <span class="author-name"><a href="https://example.com">Jane Doe</a></span> 
+        </div>
+      </div>
+
+      <section class="abstract">
+        Abstract
+      </section>
+    </header>
+    <section>
+      <h2><a href="#section-1" id="section-1"></a>Section header</h2>
+      <p>
+        <script type="module" class="echo reflect" data-display="counter" contenteditable="true">
+celine.cell("counter", async function* () {
+  let i = 0;
+  while (true) {
+    await library.Promises.delay(1000);
+    yield i++;
+  }
+});</script>
+    </section>
+  </main>
+</body>
+</html>

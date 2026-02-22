@@ -2,5 +2,12 @@
   "name": "@celine/bibhtml",
   "version": "3.18.0",
   "license": "MIT",
-  "exports": "./mod.mjs"
+  "exports": "./mod.mjs",
+  "imports": {
+    "@citation-js/core": "npm:@citation-js/core@0.7.18",
+    "@citation-js/plugin-bibtex": "npm:@citation-js/plugin-bibtex@0.7.18",
+    "@citation-js/plugin-doi": "npm:@citation-js/plugin-doi@0.7.18",
+    "@citation-js/plugin-csl": "npm:@citation-js/plugin-csl@0.7.18",
+    "@citation-js/plugin-wikidata": "npm:@citation-js/plugin-wikidata@0.7.18"
+  }
 }

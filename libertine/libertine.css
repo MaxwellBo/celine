@@ -132,59 +132,6 @@ time {
   font-family: 'Libertinus Sans'
 }
 
-/* Silcrow styling */
-h1 > a[href^="#"], 
-h2 > a[href^="#"], 
-h3 > a[href^="#"], 
-h4 > a[href^="#"], 
-h5 > a[href^="#"], 
-h6 > a[href^="#"] {
-    position: relative;
-    transition: opacity 0.2s;
-    opacity: 0.5;
-    text-decoration: none;
-    font-size: smaller;
-    vertical-align: top;
-}
-
-h1 > a[href^="#"] {
-  left: -1.2rem;
-}
-h2 > a[href^="#"] {
-  left: -2.6rem;
-}
-h3 > a[href^="#"] {
-  left: -3.1rem;
-}
-h4 > a[href^="#"] {
-  left: -3.5rem;
-}
-h5 > a[href^="#"] {
-  left: -3.65rem;
-}
-h6 > a[href^="#"] {
-  left: -3.60rem;
-}
-
-h1 > a[href^="#"]:hover, 
-h2 > a[href^="#"]:hover, 
-h3 > a[href^="#"]:hover, 
-h4 > a[href^="#"]:hover, 
-h5 > a[href^="#"]:hover, 
-h6 > a[href^="#"]:hover {
-    opacity: 1;
-    text-decoration: none;
-}
-
-h1 > a[href^="#"]::before, 
-h2 > a[href^="#"]::before, 
-h3 > a[href^="#"]::before, 
-h4 > a[href^="#"]::before, 
-h5 > a[href^="#"]::before, 
-h6 > a[href^="#"]::before {
-    content: "§";
-}
-
 a:hover, *::part(bh-a):hover  {
   text-underline-offset: 2px;
 }
@@ -333,30 +280,88 @@ h6 {
   counter-increment: h6counter;
 }
 
+/* Silcrow styling */
+h1 > a[href^="#"], 
+h2 > a[href^="#"], 
+h3 > a[href^="#"], 
+h4 > a[href^="#"], 
+h5 > a[href^="#"], 
+h6 > a[href^="#"] {
+    position: relative;
+    transition: opacity 0.2s;
+    opacity: 0.5;
+    text-decoration: none;
+    font-size: smaller;
+    vertical-align: top;
+    left: calc(-5rem + 1ch)
+}
+
+h1 > a[href^="#"]:hover, 
+h2 > a[href^="#"]:hover, 
+h3 > a[href^="#"]:hover, 
+h4 > a[href^="#"]:hover, 
+h5 > a[href^="#"]:hover, 
+h6 > a[href^="#"]:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+h1 > a[href^="#"]::before, 
+h2 > a[href^="#"]::before, 
+h3 > a[href^="#"]::before, 
+h4 > a[href^="#"]::before, 
+h5 > a[href^="#"]::before, 
+h6 > a[href^="#"]::before {
+    content: "§";
+}
+h1 > a[href^="#"] {
+  left: -2ch;
+}
+
+
 h2::before {
   content: counter(h2counter);
-  padding-right: 1ch;
+  min-width: 3ch;
+}
+h2 > a[href^="#"] {
+  left: -4ch;
+
 }
 
 h3::before {
   content: counter(h2counter) "." counter(h3counter);
-  padding-right: 1ch;
+  min-width: 5ch;
+}
+h3 > a[href^="#"] {
+  left: -6ch;
+
 }
 
 h4::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter);
-  padding-right: 1ch;
+  min-width: 6ch;
+}
+h4 > a[href^="#"] {
+  left: -8ch;
 }
 
 h5::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter);
-  padding-right: 1ch;
+  min-width: 7ch;
 }
+h5 > a[href^="#"] {
+  left: -10ch;
+}
+
 
 h6::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter);
-  padding-right: 1ch;
+  min-width: 8ch;
 }
+h6 > a[href^="#"] {
+  left: -12ch;
+}
+
 
 /*
   Josh's Custom CSS Reset

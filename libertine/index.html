@@ -32,26 +32,7 @@
 
   <link rel="stylesheet" href="../libertine/libertine.css">
   <link rel="stylesheet" href="../celine/cell.css">
-  <!-- UNCOMMENT ME WHEN COPY PASTING -->
-  <!-- <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
-  <link 
-    rel="stylesheet"  -->
-    <!-- href="https://esm.sh/jsr/@celine/libertine@16.0.1/libertine.css" /> -->
-
-  <script type="module">
-    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.8.0';
-    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-    import * as htl from 'https://esm.run/htl@0.3.1';
-
-    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-    window.library = celine.library; /* @observablehq/stdlib */
-    window.Inputs = Inputs;
-    window.htl = htl;
-
-    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
-  </script>
+  <script type="module" src="./entry.mjs"></script>
 </head>
 <body>
   <main>
@@ -479,7 +460,7 @@ console.log("Hello, world!");</code>
 <div id="silcrow-container"><h1><a id="h1" href="#h1"></a>h1</h1>
 <h2><a id="h2" href="#h2"></a>h2</h2>
 <h3><a id="h3" href="#h3"></a>h3</h3>
-<h4><a id="h4" href="#h4"></a>h3</h4>
+<h4><a id="h4" href="#h4"></a>h4</h4>
 <h5><a id="h5" href="#h5"></a>h5</h5>
 <h6><a id="h6" href="#h6"></a>h6</h6>
 </div>

@@ -6,28 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
-  <script type="module">
-  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.1';
-  import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-  import * as htl from 'https://esm.run/htl@0.3.1';
-
-  window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-  window.library = celine.library; /* @observablehq/stdlib */
-  window.Inputs = Inputs;
-  window.htl = htl;
-
-  registerScriptReevaluationOnBlur(document, /*class=*/'echo');
-  </script>
+  <script type="module" src="./entry.mjs"></script>
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />
-  <!-- UNCOMMENT ME WHEN COPY PASTING -->
-  <!-- <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@6.0.1/cell.css" />
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" /> -->
-
   <meta name="theme-color" content="#ffffff">
 
   <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
@@ -222,7 +203,15 @@
 <div class="table-of-contents" id="toccontainer">
 </div>
 
-<h2><a href="#installation" id="installation"></a>Installation</h2>
+<h2><a href="#usage" id="usage"></a>Usage</h2>
+
+<h3><a href="#via-cdn" id="via-cdn"></a>via CDN</h3>
+
+<p>
+  Either use the <a href="cdn-starter.html">cdn-starter.html</a> template file
+</p>
+
+<span style="font-variant: all-small-caps;">OR</span>
 
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
@@ -240,7 +229,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
 &lt;/script&gt;
 </pre>
 
-<p>Link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
+<p>and link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
@@ -257,6 +246,51 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
   rel=&quot;stylesheet&quot; 
   href=&quot;https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css&quot; /&gt;
 </pre>
+
+
+<!-- <h3><a href="#with-bun" id="with-bun"></a>with Bun and Standalone HTML mode</h3>
+
+<p>
+  <a href="https://bun.com">Bun</a> supports a <a href="https://bun.com/docs/bundler/standalone-html">
+    Standalone HTML mode</a> that bundles a HTML file any assets it depends on into a single HTML file,
+  either by inlining scripts and CSS or by using <code>data:type/extension;base64</code> encodings.  
+</p>
+
+<p>
+  Bun can't inline scripts loaded from a CDN in so we need to use an additional
+  entry file. 
+</p>
+
+<p>
+  Either use the <a href="bun-starter.html">bun-starter.html</a> and
+  <a href="entry.mjs">entry.mjs</a> template files
+</p>
+
+<span style="font-variant: all-small-caps;">OR</span>
+
+<p>
+  Create an <code>entry.mjs</code> that contains:
+<pre><code>import { CelineModule, registerScriptReevaluationOnBlur } from './celine/mod.mjs';
+import * as Inputs from '@observablehq/inputs';
+import * as htl from 'htl';
+
+window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+window.library = celine.library; /* @observablehq/stdlib */
+window.Inputs = Inputs;
+window.htl = htl;
+
+registerScriptReevaluationOnBlur(document, /*class=*/'echo');</code></pre>
+
+  <p>
+    and then add:
+  </p>
+
+  <pre><code>&lt;script type="module" src="./entry.mjs"&gt;&lt;/script&gt;</code></pre>
+
+  <p>
+    to your HTML file's <code>&lt;head&gt;</code> block.
+  </p>
+</p> -->
 
 <h2><a href="#demo" id="demo"></a>Demo: Observable Plot + SQLite</h2>
 
