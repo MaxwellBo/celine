@@ -30,18 +30,18 @@ jobs:
 
       - name: Bundle entry scripts for browser
         run: |
-          mkdir -p dist/libertine dist/bibhtml
-          cp -r index.html overview.html bun-starter.html cdn-starter.html celine/ libertine/ bibhtml/ static/ og.png dist/
-          bun build entry.mjs --outfile dist/entry.mjs --target browser
-          bun build libertine/entry.mjs --outfile dist/libertine/entry.mjs --target browser
-          bun build bibhtml/entry.mjs --outfile dist/bibhtml/entry.mjs --target browser
-          bun build bibhtml/mod.mjs --outfile dist/bibhtml/mod.mjs --target browser
+          mkdir -p docs/libertine docs/bibhtml
+          cp -r index.html overview.html bun-starter.html cdn-starter.html celine/ libertine/ bibhtml/ static/ og.png docs/
+          bun build entry.mjs --outfile docs/entry.mjs --target browser
+          bun build libertine/entry.mjs --outfile docs/libertine/entry.mjs --target browser
+          bun build bibhtml/entry.mjs --outfile docs/bibhtml/entry.mjs --target browser
+          bun build bibhtml/mod.mjs --outfile docs/bibhtml/mod.mjs --target browser
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: docs
 
       - id: deployment
         uses: actions/deploy-pages@v4
