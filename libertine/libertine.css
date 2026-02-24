@@ -293,7 +293,6 @@ h6 > a[href^="#"] {
     text-decoration: none;
     font-size: smaller;
     vertical-align: top;
-    left: calc(-5rem + 1ch)
 }
 
 h1 > a[href^="#"]:hover, 
@@ -315,51 +314,49 @@ h6 > a[href^="#"]::before {
     content: "§";
 }
 h1 > a[href^="#"] {
-  left: -2ch;
+  left: -1.2rem;
 }
 
 
 h2::before {
   content: counter(h2counter);
-  min-width: 3ch;
+  padding-right: 1ch;
 }
 h2 > a[href^="#"] {
-  left: -4ch;
-
+  left: -2.6rem;
 }
 
 h3::before {
   content: counter(h2counter) "." counter(h3counter);
-  min-width: 5ch;
+  padding-right: 1ch;
 }
 h3 > a[href^="#"] {
-  left: -6ch;
-
+  left: -3.1rem;
 }
 
 h4::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter);
-  min-width: 6ch;
+  padding-right: 1ch;
 }
 h4 > a[href^="#"] {
-  left: -8ch;
+  left: -3.5rem;
 }
 
 h5::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter);
-  min-width: 7ch;
+  padding-right: 1ch;
 }
 h5 > a[href^="#"] {
-  left: -10ch;
+  left: -3.65rem;
 }
 
 
 h6::before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter);
-  min-width: 8ch;
+  padding-right: 1ch;
 }
 h6 > a[href^="#"] {
-  left: -12ch;
+  left: -3.60rem;
 }
 
 
