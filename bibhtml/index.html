@@ -36,6 +36,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="module" src="./entry.mjs"></script>
+  <script type="module" src="./mod.mjs"></script>
 </head>
 
 <body>
@@ -104,19 +105,16 @@
     </tbody>
   </table>
 
-  <h2>Installation</h2>
+  <h2><a href="#usage" id="usage"></a>Usage</h2>
+
+  <h3><a href="#via-cdn" id="via-cdn"></a>via CDN</h3>
 
   <p>
     Add the following script to your HTML file's <code>&lt;head&gt;</code> element:
   </p>
 
-  <div id="import-container"><script type="module" src="./mod.mjs"></script></div>
-
-  <script id="import" type="module">
-    celine.cell("import", () => {
-      return htl.html`<pre class='echo dark'>${document.getElementById('import-container').innerHTML}</pre>`
-    })
-  </script>
+  <pre class="echo dark">
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/bibhtml@3.18.0&quot;&gt;&lt;/script&gt;</pre>
 
   <h2>API</h2>
 
@@ -178,7 +176,7 @@
     <span id="inner-text-container">Citation.js<sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup></span> as a reference:
   </p>
 
-  <script id="inner-text-cell" type="module">
+  <script data-display="inner-text-cell" type="module">
     celine.cell("inner-text-cell", () => {
       const cloned = document.getElementById('inner-text-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -191,7 +189,7 @@
     We can change the formatting of the inline citation, say, to use parentheses: <span id="flex-1-container"><sup><bh-cite><a href="#willighagen2019">(?)</a></bh-cite></sup></span>
   </p>
 
-  <script id="flex-1-cell" type="module">
+  <script data-display="flex-1-cell" type="module">
     celine.cell("flex-1-cell", () => {
       const cloned = document.getElementById('flex-1-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -204,7 +202,7 @@
     not in the HTML document, the inner text of the element is displayed unchanged.
   </p>
 
-  <script id="missing-cell" type="module">
+  <script data-display="missing-cell" type="module">
     celine.cell("missing-cell", () => {
       const cloned = document.getElementById('missing-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -217,7 +215,7 @@
     <span id="flex-2-container"><bh-cite><a href="#mokhov2018">Mokhov et al. 2018</a></bh-cite></span>
   </p>
 
-  <script id="flex-2-cell" type="module">
+  <script data-display="flex-2-cell" type="module">
     celine.cell("flex-2-cell", () => {
       const cloned = document.getElementById('flex-2-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -231,7 +229,7 @@
     The <code>ref</code> attribute facilitates adding a bibliography to a HTML document full of existing hyperlinks that should remain unchanged.
   </p>
 
-  <script id="ref-cell" type="module">
+  <script data-display="ref-cell" type="module">
     celine.cell("ref-cell", () => {
       const cloned = document.getElementById('ref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -245,7 +243,7 @@
     Thus, <span id="deref-container"><bh-cite deref><cite><a href="#mokhov2018">Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
 
-  <script id="deref-cell" type="module">
+  <script data-display="deref-cell" type="module">
     celine.cell("deref-cell", () => {
       const cloned = document.getElementById('deref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -265,7 +263,7 @@
     <span id="jacobs2018house-container"><bh-cite replace="none" ref="#jacobs2018house"><cite><a href="https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html">Who wins when the House and the Senate are controlled by different parties?</a></cite></bh-cite></span>
   </p>
 
-  <script id="jacobs2018house-cell" type="module">
+  <script data-display="jacobs2018house-cell" type="module">
     celine.cell("jacobs2018house-cell", () => {
       const cloned = document.getElementById('jacobs2018house-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -278,7 +276,7 @@
     <span id="replace-reference-container"><bh-cite ref="mokhov2018" replace="reference"></bh-cite></span>
   </p>
 
-  <script id="replace-reference-cell" type="module">
+  <script data-display="replace-reference-cell" type="module">
     celine.cell("replace-reference-cell", () => {
       const cloned = document.getElementById('replace-reference-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -292,7 +290,7 @@
     <span id="shorthand-container"><bh-cite>willighagen2019</bh-cite></span>
   </p>
 
-  <script id="shorthand-cell" type="module">
+  <script data-display="shorthand-cell" type="module">
     celine.cell("shorthand-cell", () => {
       const cloned = document.getElementById('shorthand-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
@@ -349,7 +347,7 @@
 
   <h4>BibTeX</h4>
 
-  <script id="bibtex-cell" type="module">
+  <script data-display="bibtex-cell" type="module">
     celine.cell("bibtex-cell", () => {
       const reference = document.getElementById('crichton2021nota');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
@@ -366,7 +364,7 @@
     A <code>&lt;bh-reference&gt;</code> can contain unstructured text, and will display it unchanged. This format is useful when the reference is not in a machine readable format supported by <cite>@celine/bibhtml</cite> or Citation.js</li>. When reference information in a structured format is malformed, <cite>@celine/bibhtml</cite> will treat it as unstructured text and display it unchanged.
   </p>
 
-  <script id="text-cell" type="module">
+  <script data-display="text-cell" type="module">
     celine.cell("text-cell", () => {
       const reference = document.getElementById('jacobs2018house');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
@@ -379,7 +377,7 @@
 
   <h4>DOI</h4>
 
-  <script id="doi-cell" type="module">
+  <script data-display="doi-cell" type="module">
     celine.cell("doi-cell", () => {
       const reference = document.getElementById('mokhov2018');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
@@ -392,7 +390,7 @@
 
   <h4>Wikidata</h4>
 
-  <script id="wikidata-cell" type="module">
+  <script data-display="wikidata-cell" type="module">
     celine.cell("wikidata-cell", () => {
       const reference = document.getElementById('patashnik2007');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
@@ -410,7 +408,7 @@
     <a href="https://typst.app/docs/reference/model/bibliography/">Hayagriva</a> is a new bibliography file format designed for use with <a href="https://typst.app/">Typst</a>.
   </p>
 
-  <script id="hayagriva-cell" type="module">
+  <script data-display="hayagriva-cell" type="module">
     celine.cell("hayagriva-cell", () => {
       const reference = document.getElementById('dependence');
       return htl.html`<pre class='echo dark'>${reference.outerHTML}</pre>`
@@ -446,7 +444,7 @@
     <code>&lt;bh-cite&gt;</code> has an appropriate implementation of <code>disconnectedCallback</code> to remove the citation from the bibliography when the <code>&lt;bh-cite&gt;</code> element is removed from the DOM.
   </p>
 
-<script id="viewof toggle-citation" type="module">
+<script data-display="viewof toggle-citation" type="module">
   celine.viewof('toggle-citation', () => {
     return Inputs.toggle({
       label: 'Toggle citation',
@@ -455,7 +453,7 @@
   });
 </script>
 
-<script id="dynamic-citation" type="module" contenteditable="true">
+<script data-display="dynamic-citation" type="module" contenteditable="true">
   celine.cell('dynamic-citation', ['toggle-citation'], (toggleCitation) => {
   return toggleCitation 
       ? htl.html`<bh-cite><a href="#griesemer2020featherweight">[?]</bh-cite>` 
