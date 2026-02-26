@@ -50,7 +50,8 @@
   <div class="abstract">
     <p><cite>@celine/libertine</cite> is a <a href="https://dohliam.github.io/dropin-minimal-css/">drop-in stylesheet</a> based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a> font family.</p>
 
-    <p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers, and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
+    <p>Linux Libertine is common in academic typesetting - it's the <abbr title="lmao: 'Fonts used in the template CANNOT be substituted; margin adjustments are not allowed.'">mandatory</abbr> font for the <a href="https://www.acm.org/publications/proceedings-template">ACM LaTeX</a> conference paper theme, the default for <a href="https://typst.app/">Typst</a> and <a href="https://nota-lang.org/">Nota</a> papers,     and an alternate font for <a href="https://latex.vercel.app/">LaTeX.css</a>.
+    </p>
   </div>
 
   <table>
@@ -229,7 +230,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   Small caps
 </div>
 
-<script type="module" id="sscdisplay">
+<script type="module" id="sscdisplay" data-display="sscdisplay">
   celine.cell("sscdisplay", () => {
     const elem = document.getElementById("ssc");
     elem.removeAttribute("id");
@@ -241,7 +242,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   All small caps
 </div>
 
-<script type="module" id="ssacdisplay">
+<script type="module" id="ssacdisplay" data-display="ssacdisplay">
   celine.cell("ssacdisplay", () => {
     const elem = document.getElementById("sac");
     elem.removeAttribute("id");
@@ -253,7 +254,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   Small caps
 </div>
 
-<script type="module" id="ssscdisplay">
+<script type="module" id="ssscdisplay" data-display="ssscdisplay">
   celine.cell("ssscdisplay", () => {
     const elem = document.getElementById("sssc");
     elem.removeAttribute("id");
@@ -265,7 +266,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   All small caps
 </div>
 
-<script type="module" id="ssascdisplay">
+<script type="module" id="ssascdisplay" data-display="ssascdisplay">
   celine.cell("ssascdisplay", () => {
     const elem = document.getElementById("ssasc");
     elem.removeAttribute("id");
@@ -284,7 +285,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   </div>
 </div>
 
-<script type="module" id="innerauthors">
+<script type="module" id="innerauthors" data-display="innerauthors">
   celine.cell("innerauthors", () => {
     const elem = document.getElementById("authors");
     elem.removeAttribute("id");
@@ -297,7 +298,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   This is an abstract.
 </div>
 
-<script type="module" id="innerabstract">
+<script type="module" id="innerabstract" data-display="innerabstract">
   celine.cell("innerabstract", () => {
     const elem = document.getElementById("abstract");
     elem.removeAttribute("id");
@@ -313,7 +314,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   <a href="https://github.com"><img class="favicon" src="https://github.com/favicon.ico" /> GitHub</a>
 </div>
 
-<script type="module" id="favicon">
+<script type="module" id="favicon" data-display="favicon">
   celine.cell("favicon", () => {
     const elem = document.getElementById("favicon-group");
     elem.removeAttribute("id");
@@ -327,7 +328,7 @@ H<sub>2</sub>O, E = mc<sup>2</sup>
   <p>Add <code>.fullwidth</code> to any direct child of <code>&lt;main&gt;</code> to make it break out and span the full viewport width, while other content remains constrained to the default <code>max-width</code>.</p>
 </div>
 
-<script type="module" id="fullwidth-display">
+<script type="module" id="fullwidth-display" data-display="fullwidth-display">
   celine.cell("fullwidth-display", () => {
     const elem = document.getElementById("fullwidth-example");
     elem.removeAttribute("id");
@@ -390,7 +391,7 @@ console.log("Hello, world!");</code>
   will set <code>class="card-figure"</code> on the <code>&lt;figure&gt;</code> element. Thus, the <code>.card</code> class is also aliased to <code>.card-figure</code></a>
 </p>
 
-<script id="plot-example" class="echo reflect" type="module" contenteditable="true">
+<script id="plot-example" data-display="plot-example" class="echo reflect" type="module" contenteditable="true">
   import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
   celine.cell("plot-example", () => {
@@ -426,7 +427,7 @@ console.log("Hello, world!");</code>
 </div>
 
 
-<script type="module" id="aside-display">
+<script type="module" id="aside-display" data-display="aside-display">
   celine.cell("aside-display", () => {
     const elem = document.getElementById("aside-container");
     elem.removeAttribute("id");
@@ -449,7 +450,7 @@ console.log("Hello, world!");</code>
   </figcaption>
 </figure>
 
-<script type="module" id="blockquote-display">
+<script type="module" id="blockquote-display" data-display="blockquote-display">
   celine.cell("blockquote-display", () => {
     const elem = document.getElementById("blockquote-container");
     elem.removeAttribute("id");
@@ -467,7 +468,7 @@ console.log("Hello, world!");</code>
 <h6><a id="h6" href="#h6"></a>h6</h6>
 </div>
 
-<script type="module" id="silcrow-display">
+<script type="module" id="silcrow-display" data-display="silcrow-display">
   celine.cell("silcrow-display", () => {
     const elem = document.getElementById("silcrow-container");
     elem.removeAttribute("id");
@@ -490,7 +491,6 @@ console.log("Hello, world!");</code>
       margin: 0;
   }
 </style>
-</head>
 <div class="container">
   <div class="text-box" style="padding: 6px">
       <p>
