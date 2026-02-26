@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "bun ./index.html ./overview.html ./bibhtml/index.html ./libertine/index.html"
+  },
   "dependencies": {
     "@citation-js/core": "0.7.21",
     "@citation-js/plugin-bibtex": "0.7.21",

@@ -26,57 +26,16 @@ bun install
 Bun's built-in HTML dev server bundles and serves the pages with hot reloading:
 
 ```bash
-bun ./index.html            # root page at http://localhost:3000
-bun ./bibhtml/index.html    # bibhtml page
-bun ./libertine/index.html  # libertine page
+bun run dev
 ```
+
+This serves all pages concurrently:
+- `http://localhost:3000/` → `index.html`
+- `http://localhost:3000/overview` → `overview.html`
+- `http://localhost:3000/bibhtml/` → `bibhtml/index.html`
+- `http://localhost:3000/libertine/` → `libertine/index.html`
 
 The dev server resolves local imports from `celine/mod.mjs` and `bibhtml/mod.mjs` automatically, so changes to the source modules are reflected immediately.
-
-### Building standalone HTML
-
-Each HTML page can be compiled into a single self-contained file (all JS, CSS, fonts, and images inlined) using [Bun's standalone HTML](https://bun.sh/docs/bundler/standalone-html) feature:
-
-```bash
-bun run build.ts
-```
-
-This produces:
-```
-dist/
-├── index.html          # root page
-├── bibhtml/
-│   └── index.html      # bibhtml page
-└── libertine/
-    └── index.html      # libertine page
-```
-
-To preview the built files:
-```bash
-cd dist && bunx serve
-```
-
-### Project structure
-
-```
-├── entry.mjs                 # Root page entry (imports celine from source)
-├── index.html                # Root page
-├── overview.html             # Overview page
-├── build.ts                  # Standalone HTML build script
-├── celine/
-│   ├── mod.mjs               # @celine/celine source
-│   ├── cell.css              # Cell styling
-│   └── deno.json             # Package config + Deno import map
-├── bibhtml/
-│   ├── mod.mjs               # @celine/bibhtml source
-│   ├── entry.mjs             # Bibhtml page entry
-│   └── deno.json             # Package config + Deno import map
-├── libertine/
-│   ├── libertine.css         # Libertine stylesheet
-│   ├── entry.mjs             # Libertine page entry
-│   └── deno.json             # Package config
-└── static/                   # Shared static assets (favicons, images)
-```
 
 ### Publishing to JSR
 
