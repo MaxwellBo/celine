@@ -21,6 +21,14 @@ export const library = new stdlib.Library();
  */
 
 /**
+ * A cell to import from a notebook.
+ * - `"x"` — imports cell `"x"` with the same name.
+ * - `{name: "x", alias: "y"}` — imports cell `"x"` as local `"y"`.
+ * - `{name: "x", with: "local"}` — imports cell `"x"`, overriding it with local cell `"local"`.
+ * @typedef {string | {name: string, alias?: string, with?: string}} ImportSpecifier
+ */
+
+/**
  * A CelineModule is a wrapper around an Observable runtime, a derived Observable runtime module, and a document.
  * 
  * Its various cell constructors alter both the module and the document to create reactive cells.
@@ -305,6 +313,78 @@ export class CelineModule {
     this.silentCell(name, m);
     // @ts-ignore - some really scary stuff going on here
     return m;
+  }
+
+  /**
+   * Imports cells from an Observable notebook, mirroring Observable's
+   * {@link https://observablehq.com/documentation/notebooks/imports import} syntax.
+   *
+   * Each entry in `cells` can be:
+   * - **import**: `"x"` — imports cell `"x"`
+   * - **import-as**: `{name: "x", alias: "y"}` — imports cell `"x"` as local `"y"`
+   * - **import-with**: `{name: "x", with: "local"}` — imports cell `"x"`, overriding it with local cell `"local"`
+   *
+   * @example
+   * ```javascript
+   * const nb = "https://observablehq.com/@mjbo/celine-celine-import-target";
+   *
+   * await celine.import(nb, [
+   *   "importMeUnchanged",
+   *   {name: "renameMe", alias: "renamed"},
+   *   {name: "overrideMe", with: "myOverride"},
+   * ]);
+   * ```
+   * @param {string} source - Observable notebook URL or API URL (v=4 only)
+   * @param {ImportSpecifier[]} cells - Cells to import from the notebook
+   * @returns {Promise<void>}
+   */
+  async import(source, cells) {
+    const runtime = this.module._runtime;
+    const url = CelineModule._resolveNotebookUrl(source);
+    const define = (await import(url)).default;
+
+    let child = runtime.module(define);
+
+    const overrides = cells
+      .filter(cell => typeof cell === "object" && cell.with)
+      .map(cell => ({ name: cell.with, alias: cell.name }));
+
+    if (overrides.length > 0) {
+      child = child.derive(overrides, this.module);
+    }
+
+    for (const cell of cells) {
+      if (typeof cell === "string") {
+        this.module.variable().import(cell, child);
+      } else {
+        const { name, alias } = cell;
+        if (alias && alias !== name) {
+          this.module.variable().import(name, alias, child);
+        } else {
+          this.module.variable().import(name, child);
+        }
+      }
+    }
+  }
+
+  /**
+   * @private
+   * @param {string} source
+   * @returns {string}
+   */
+  static _resolveNotebookUrl(source) {
+    if (source.startsWith("https://observablehq.com/")) {
+      const path = source.slice("https://observablehq.com".length);
+      return `https://api.observablehq.com${path}.js?v=4`;
+    }
+    if (source.startsWith("https://api.observablehq.com/")) {
+      const url = new URL(source);
+      if (url.searchParams.get("v") !== "4") {
+        throw new Error(`Only v=4 Observable API URLs are supported. Got: ${source}`);
+      }
+      return source;
+    }
+    throw new Error(`Unsupported notebook URL. Expected https://observablehq.com/... or https://api.observablehq.com/...?v=4. Got: ${source}`);
   }
 }
 

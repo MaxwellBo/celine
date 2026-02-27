@@ -497,6 +497,40 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
+<h3><a href="#import" id="import"></a><code>await celine.import(source, cells)</code></h3>
+
+<p>The <code>import</code> method imports cells from <a href="https://observablehq.com/documentation/notebooks/">Observable Notebooks</a>, emulating Observable's <a href="https://observablehq.com/documentation/notebooks/imports">import syntax</a>. The <code>source</code> can be an Observable notebook URL (e.g. <a href="https://observablehq.com/@mjbo/celine-celine-import-target">https://observablehq.com/@mjbo/celine-celine-import-target</a>) or an API URL (e.g. <a href="https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4">https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4</a>).</p>
+
+<p>The target notebook <a href="https://observablehq.com/@mjbo/celine-celine-import-target">@mjbo/celine-celine-import-target</a> defines:</p>
+
+<pre>
+importMeUnchanged = "importMeUnchanged"
+renameMe = "renameMe"
+overrideMeWithANumber = 0
+out = overrideMeWithANumber * 10
+</pre>
+
+<p>which we can import, with aliases and overrides:</p>
+
+<script type="module" class="echo reflect" data-display="import" contenteditable="true">
+await celine.import(
+  "https://observablehq.com/@mjbo/celine-celine-import-target",
+  [ "importMeUnchanged",
+    {name: "renameMe", alias: "renamed"},
+    {name: "overrideMeWithANumber", with: "counter"},
+    "out" ]
+);
+
+celine.cell("import",
+  ["importMeUnchanged", "renamed", "overrideMeWithANumber", "out"],
+  (importMeUnchanged, renamed, overrideMeWithANumber, out) => {
+    return JSON.stringify({ importMeUnchanged, renamed, overrideMeWithANumber, out }, null, 2);
+  }
+);
+</script>
+
+Observe that the <code>overrideMeWithANumber</code> cell is overridden with the value of the <code>counter</code> cell, and the <code>out</code> cell is the product of <code>overrideMeWithANumber</code> and 10.
+
 <h3><a href="#library" id="library"></a><code>celine.library</code> / Observable standard library</h3>
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
