@@ -35,7 +35,7 @@ This serves all pages concurrently:
 - `http://localhost:3000/bibhtml/` → `bibhtml/index.html`
 - `http://localhost:3000/libertine/` → `libertine/index.html`
 
-The dev server resolves local imports from `celine/mod.mjs` and `bibhtml/mod.mjs` automatically, so changes to the source modules are reflected immediately.
+The dev server resolves local imports from `celine/mod.ts` and `bibhtml/mod.ts` automatically, so changes to the source modules are reflected immediately.
 
 ### Publishing to JSR
 

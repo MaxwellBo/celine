@@ -4,21 +4,15 @@ import * as stdlib from "@observablehq/stdlib";
 
 /**
  * For convenience, this module re-exports the Observable standard library.
- * @type {stdlib.Library}
  */
 export const library = new stdlib.Library();
 
-/**
- * @typedef {"hidden" | "visible"} ObserverVisibility
- */
+export type ObserverVisibility = "hidden" | "visible";
 
-/**
- * @typedef {Function | object} Definition
- */
+// deno-lint-ignore no-explicit-any
+export type Definition = ((...args: any[]) => any) | object;
 
-/**
- * @typedef {string[]} Inputs
- */
+export type Inputs = string[];
 
 /**
  * A cell to import from a notebook.
@@ -26,8 +20,8 @@ export const library = new stdlib.Library();
  * - `{name: "x", alias: "y"}` — imports cell `"x"` as local `"y"`.
  * - `{name: "x", with: "local"}` — imports cell `"x"`, overriding it with local cell `"local"`.
  * - `{name: "x", alias: "y", with: "local"}` — imports cell `"x"` as local `"y"`, overriding it with local cell `"local"`.
- * @typedef {string | {name: string, alias?: string, with?: string}} ImportSpecifier
  */
+export type ImportSpecifier = string | { name: string; alias?: string; with?: string };
 
 /**
  * A CelineModule is a wrapper around an Observable runtime, a derived Observable runtime module, and a document.
@@ -35,74 +29,38 @@ export const library = new stdlib.Library();
  * Its various cell constructors alter both the module and the document to create reactive cells.
  */
 export class CelineModule {
-  /**
-   * The document object to create elements in.
-   * @type {Document}
-   */
-  document;
+  document: Document;
 
-  /**
-   * The Observable runtime module to define variables in.
-   * @type {Runtime.Module}
-   */
-  module;
+  // deno-lint-ignore no-explicit-any
+  module: any;
 
-  /**
-   * For convenience, this class re-exports the Observable standard library.
-   * @type {stdlib.Library}
-   */
   library = library;
 
-  /**
-   * Creates a new CelineModule instance.
-   * @param {Document} document - The document object to create elements in
-   * @param {Runtime.Module} module - The Observable runtime module to define variables in.
-   */
-  constructor(document, module) {
+  // deno-lint-ignore no-explicit-any
+  constructor(document: Document, module: any) {
     this.document = document;
     this.module = module;
   }
 
   /**
-   * Creates a new CelineModule with a fresh Observable runtime.
    * @deprecated Use `usingNewObservableRuntimeAndModule` instead.
-   * @param {Document} document - The document object to create elements in
-   * @returns {CelineModule} A new CelineModule instance
    */
-  static usingNewObservableRuntime(document) {
+  static usingNewObservableRuntime(document: Document): CelineModule {
     return CelineModule.usingNewObservableRuntimeAndModule(document);
   }
 
-  /**
-   * Creates a new CelineModule with a fresh Observable runtime and module.
-   * @param {Document} document - The document object to create elements in
-   * @returns {CelineModule} A new CelineModule instance
-   */
-  static usingNewObservableRuntimeAndModule(document) {
+  static usingNewObservableRuntimeAndModule(document: Document): CelineModule {
     const runtime = new Runtime();
     const module = runtime.module();
     return new CelineModule(document, module);
   }
 
-  /**
-   * Creates a new CelineModule using an existing Observable module.
-   * This is just an alias of the default constructor.
-   * @param {Document} document - The document object to create elements in
-   * @param {Runtime.Module} module - The existing Observable runtime module to use
-   * @returns {CelineModule} A new CelineModule instance
-   */
-  static usingExistingObservableModule(document, module) {
+  // deno-lint-ignore no-explicit-any
+  static usingExistingObservableModule(document: Document, module: any): CelineModule {
     return new CelineModule(document, module);
   }
 
-  /**
-   * Creates an Inspector for observing cell output.
-   * @private
-   * @param {string} name - The data-display attribute of the element to attach an observer to
-   * @returns {Inspector} A new Inspector instance
-   * @throws {Error} Error if no element with a data-display attribute is found
-   */
-  observer(name) {
+  private observer(name: string): Inspector {
     const div = this.document.createElement("div");
     const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
 
@@ -117,7 +75,7 @@ export class CelineModule {
         2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
-    elementContainer.parentNode.insertBefore(div, elementContainer);
+    elementContainer.parentNode!.insertBefore(div, elementContainer);
     return new Inspector(div);
   }
 
@@ -145,11 +103,8 @@ export class CelineModule {
    *   return counter;
    * });
    * ```
-   * @param {string} name - The name of the cell
-   * @param {Inputs | Definition} inputsOrDefinition - Either array of input dependencies or the definition function
-   * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
-  cell(name, inputsOrDefinition, maybeDefinition) {
+  cell(name: string, inputsOrDefinition: Inputs | Definition, maybeDefinition?: Definition) {
     this._cell("visible", name, inputsOrDefinition, maybeDefinition);
   }
 
@@ -163,29 +118,16 @@ export class CelineModule {
    *   return "This string does NOT render above any element";
    * });
    * ```
-   * @param {string} name - The name of the cell
-   * @param {Inputs | Definition} inputsOrDefinition - Either array of input dependencies or the definition function
-   * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
-  silentCell(name, inputsOrDefinition, maybeDefinition) {
+  silentCell(name: string, inputsOrDefinition: Inputs | Definition, maybeDefinition?: Definition) {
     this._cell("hidden", name, inputsOrDefinition, maybeDefinition);
   }
 
-  /**
-   * Internal method for creating cells with specified visibility.
-   * @private
-   * @param {ObserverVisibility} observerVisibility - Whether the cell should be visible or hidden
-   * @param {string} name - The name of the cell
-   * @param {Inputs | Definition} inputsOrDefinition - Either array of input dependencies or the definition function
-   * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
-   */
-  _cell(observerVisibility, name, inputsOrDefinition, maybeDefinition) {
+  private _cell(observerVisibility: ObserverVisibility, name: string, inputsOrDefinition: Inputs | Definition, maybeDefinition?: Definition) {
     const observer = observerVisibility === "visible" ? this.observer(name) : undefined;
     const variable = this.module._scope.get(name) || this.module.variable(observer);
-    /** @type {Inputs} */
-    const inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
-    /** @type {Definition} */
-    const definition = Array.isArray(inputsOrDefinition) ? maybeDefinition : inputsOrDefinition;
+    const inputs: Inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
+    const definition: Definition = Array.isArray(inputsOrDefinition) ? maybeDefinition! : inputsOrDefinition;
 
     // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
     // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
@@ -209,22 +151,18 @@ export class CelineModule {
   
   /**
    * Renders a TeX string using the Observable stdlib.
-   * @param {TemplateStringsArray} strings - The template string array
-   * @param {...any} values - Values to interpolate
-   * @returns {Promise<object>} The rendered TeX object
    */
-  async tex(strings, ...values) {
+  // deno-lint-ignore no-explicit-any
+  async tex(strings: TemplateStringsArray, ...values: any[]): Promise<object> {
     const tex = await library.tex();
     return tex(strings, ...values);
   }
 
   /**
    * Renders a Markdown string using the Observable stdlib.
-   * @param {TemplateStringsArray} strings - The template string array
-   * @param {...any} values - Values to interpolate
-   * @returns {Promise<object>} The rendered Markdown object
    */
-  async md(strings, ...values) {
+  // deno-lint-ignore no-explicit-any
+  async md(strings: TemplateStringsArray, ...values: any[]): Promise<object> {
     const md = await library.md();
     return md(strings, ...values);
   }
@@ -248,11 +186,8 @@ export class CelineModule {
    *   return `Hello, ${name}!`;
    * });
    * ```
-   * @param {string} name - The name of the viewof cell
-   * @param {Inputs | Definition} inputsOrDefinition - Either array of input dependencies or the definition function
-   * @param {Definition} [maybeDefinition] - The definition function (when inputs are provided)
    */
-  viewof(name, inputsOrDefinition, maybeDefinition) {
+  viewof(name: string, inputsOrDefinition: Inputs | Definition, maybeDefinition?: Definition) {
     this._cell(
       "visible",
       `viewof ${name}`,
@@ -263,7 +198,7 @@ export class CelineModule {
       "hidden",
       name,
       [`viewof ${name}`],
-      (inpt) => library.Generators.input(inpt)
+      (inpt: unknown) => library.Generators.input(inpt)
     );
   }
 
@@ -288,12 +223,8 @@ export class CelineModule {
    *   return `↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`;
    * });
    * ```
-   * @template T
-   * @param {string} name - The name of the mutable cell
-   * @param {T} value - The initial value
-   * @returns {{ value: T }} A mutable object with getter/setter for the value
    */
-  mutable(name, value) {
+  mutable<T>(name: string, value: T): { value: T } {
     const m = Mutable(value);
     // @ts-ignore - some really scary stuff going on here
     this.cell(name, m);
@@ -303,12 +234,8 @@ export class CelineModule {
 
   /**
    * Like {@link mutable}, but doesn't render the value above the element container.
-   * @template T
-   * @param {string} name - The name of the mutable cell
-   * @param {T} value - The initial value
-   * @returns {{ value: T }} A mutable object with getter/setter for the value
    */
-  silentMutable(name, value) {
+  silentMutable<T>(name: string, value: T): { value: T } {
     const m = Mutable(value);
     // @ts-ignore - some really scary stuff going on here
     this.silentCell(name, m);
@@ -337,10 +264,8 @@ export class CelineModule {
    *   {name: "overrideAndRenameMe", alias: "renamedOverride", with: "myOverride"},
    * ]);
    * ```
-   * @param {string} source - Observable notebook URL or API URL (v=4 only)
-   * @param {ImportSpecifier[]} cells - Cells to import from the notebook
    */
-  import(source, cells) {
+  import(source: string, cells: ImportSpecifier[]) {
     const runtime = this.module._runtime;
     const url = CelineModule._resolveNotebookUrl(source);
 
@@ -349,11 +274,12 @@ export class CelineModule {
       return this.module._scope.get(localName) || this.module.variable();
     });
 
-    import(url).then(m => {
+    // deno-lint-ignore no-explicit-any
+    import(url).then((m: any) => {
       let child = runtime.module(m.default);
 
       const overrides = cells
-        .filter(cell => typeof cell === "object" && cell.with)
+        .filter((cell): cell is { name: string; alias?: string; with: string } => typeof cell === "object" && !!cell.with)
         .map(cell => ({ name: cell.with, alias: cell.name }));
 
       if (overrides.length > 0) {
@@ -376,12 +302,7 @@ export class CelineModule {
     });
   }
 
-  /**
-   * @private
-   * @param {string} source
-   * @returns {string}
-   */
-  static _resolveNotebookUrl(source) {
+  private static _resolveNotebookUrl(source: string): string {
     if (source.startsWith("https://observablehq.com/")) {
       const path = source.slice("https://observablehq.com".length);
       return `https://api.observablehq.com${path}.js?v=4`;
@@ -399,31 +320,28 @@ export class CelineModule {
 
 /**
  * Creates a mutable value wrapper with Observable integration.
- * @template T - The type of the mutable value
- * @param {T} value - The initial value
- * @returns {{ value: T }} A mutable object with getter/setter for the value
  */
-function Mutable(value) {
-  let change;
+function Mutable<T>(value: T): { value: T } {
+  // deno-lint-ignore no-explicit-any
+  let change: any;
   return Object.defineProperty(
-    library.Generators.observe((_) => {
+    // deno-lint-ignore no-explicit-any
+    library.Generators.observe((_: any) => {
       change = _;
       if (value !== undefined) change(value);
     }),
     "value",
     {
       get: () => value,
-      set: (x) => void change((value = x)),
+      set: (x: T) => void change((value = x)),
     }
   );
 }
 
 /**
- * @deprecated since 1.0.0 Use registerReevaluationOnBlur instead.
- * @param {Document} document - The document object
- * @param {string} className - The class name of script elements to watch
+ * @deprecated since 1.0.0 Use registerScriptReevaluationOnBlur instead.
  */
-export function reevaluateOnBlur(document, className) {
+export function reevaluateOnBlur(document: Document, className: string) {
   console.warn("The reevaluateOnBlur function is deprecated. Use registerScriptReevaluationOnBlur instead.");
   registerScriptReevaluationOnBlur(document, className);
 }
@@ -432,32 +350,25 @@ export function reevaluateOnBlur(document, className) {
  * Sets up automatic reevaluation of editable script elements on blur.
  * When a script element marked with the specified class loses focus,
  * it will be replaced with a new script element containing the updated content.
- * 
- * @param {Document} document - The document object containing the script elements
- * @param {string} className - The class name of script elements to watch
  */
-export function registerScriptReevaluationOnBlur(document, className) {
-  /**
-   * @param {Event} event - The blur event
-   */
-  function reevaluate(event) {
-    const old = /** @type {HTMLScriptElement} */ (event.target);
+export function registerScriptReevaluationOnBlur(document: Document, className: string) {
+  function reevaluate(event: Event) {
+    const old = event.target as HTMLScriptElement;
     const neww = document.createElement("script");
     neww.textContent = old.textContent;
 
     for (let i = 0; i < old.attributes.length; i++) {
       neww.setAttribute(old.attributes[i].name, old.attributes[i].value || "");
     }
-    // register the blur listener again (given we've made a new script element)
     neww.addEventListener("blur", reevaluate);
 
-    old.parentNode.insertBefore(neww, old);
-    old.parentNode.removeChild(old);
+    old.parentNode!.insertBefore(neww, old);
+    old.parentNode!.removeChild(old);
   }
 
   document
     .querySelectorAll(`script.${className}[contenteditable='true']`)
     .forEach((script) => {
-      script.addEventListener("blur", /** @type {EventListener} */ (reevaluate));
+      script.addEventListener("blur", reevaluate as EventListener);
     });
 }

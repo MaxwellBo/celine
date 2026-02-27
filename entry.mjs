@@ -1,4 +1,4 @@
-import { CelineModule, registerScriptReevaluationOnBlur } from './celine/mod.mjs';
+import { CelineModule, registerScriptReevaluationOnBlur } from './celine/mod.ts';
 import * as Inputs from '@observablehq/inputs';
 import * as htl from 'htl';
 

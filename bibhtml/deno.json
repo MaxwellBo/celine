@@ -1,8 +1,8 @@
 {
   "name": "@celine/bibhtml",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "license": "MIT",
-  "exports": "./mod.mjs",
+  "exports": "./mod.ts",
   "imports": {
     "@citation-js/core": "npm:@citation-js/core@0.7.21",
     "@citation-js/plugin-bibtex": "npm:@citation-js/plugin-bibtex@0.7.21",
