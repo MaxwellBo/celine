@@ -967,13 +967,14 @@ celine.viewof("save", () => {
   You can allow the user to create new cells:
 </p>
 
-<script type="module" class="echo reflect" data-display="viewof new-cell" contenteditable="true">
+<script type="module" id="viewof-new-cell" class="echo reflect" data-display="viewof new-cell" contenteditable="true">
 celine.viewof("new-cell", () => {
   return Inputs.button("New cell", {
     value: 0,
     reduce: (value) => {
       const script = document.createElement('script');
       script.id = `new-cell-${value}`;
+      script.dataset.display = `new-cell-${value}`;
       script.type = 'module';
       script.className = 'echo reflect';
       script.contentEditable = 'true';
@@ -982,7 +983,7 @@ celine.cell("new-cell-${value}", () => {
   return "Hello from new script!";
 });
 `;
-      (document.getElementById(`new-cell-${value - 1}`) || document.getElementById('viewof new-cell'))
+      (document.getElementById(`new-cell-${value - 1}`) || document.getElementById('viewof-new-cell'))
         .insertAdjacentElement('afterend', script);
       return value + 1;
     }
