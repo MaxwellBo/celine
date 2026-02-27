@@ -5,7 +5,7 @@ import * as stdlib from "@observablehq/stdlib";
 /**
  * For convenience, this module re-exports the Observable standard library.
  */
-export const library = new stdlib.Library();
+export const library: stdlib.Library = new stdlib.Library();
 
 export type ObserverVisibility = "hidden" | "visible";
 

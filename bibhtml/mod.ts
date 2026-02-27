@@ -108,7 +108,7 @@ export class BibhtmlCite extends HTMLElement {
     this.render();
   }
 
-  _handleMouseEnter = () => {
+  _handleMouseEnter = (): void => {
     if (this._tooltip) {
       this._tooltip.style.display = 'block';
       
@@ -119,7 +119,7 @@ export class BibhtmlCite extends HTMLElement {
     }
   }
 
-  _handleMouseLeave = () => {
+  _handleMouseLeave = (): void => {
     if (this._tooltip) {
       this._tooltip.style.display = 'none';
     }
@@ -292,8 +292,8 @@ export class BibhtmlReference extends HTMLElement {
 export class BibhtmlBibliography extends HTMLElement {
   static customElementName = 'bh-bibliography';
 
-  _refIdToReference = new Map<string, BibhtmlReference>();
-  _refIdToCitations = new Map<string, BibhtmlCite[]>();
+  _refIdToReference: Map<string, BibhtmlReference> = new Map();
+  _refIdToCitations: Map<string, BibhtmlCite[]> = new Map();
 
   connectedCallback() {
     this.render();
