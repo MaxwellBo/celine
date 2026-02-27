@@ -168,7 +168,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">6.0.1</a>, <time  id="updated">Oct 15 2024</time></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">6.1.0</a>, <time  id="updated">Feb 26 2026</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -216,7 +216,7 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
 <pre class="echo" style="margin-bottom: 1ch;">&lt;script type=&quot;module&quot;&gt;
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.1';
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.1.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -234,7 +234,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@6.0.1/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@6.1.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -497,7 +497,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#import" id="import"></a><code>await celine.import(source, cells)</code></h3>
+<h3><a href="#import" id="import"></a><code>celine.import(source, cells)</code></h3>
 
 <p>The <code>import</code> method imports cells from <a href="https://observablehq.com/documentation/notebooks/">Observable Notebooks</a>, emulating Observable's <a href="https://observablehq.com/documentation/notebooks/imports">import syntax</a>. The <code>source</code> can be an Observable notebook URL (e.g. <a href="https://observablehq.com/@mjbo/celine-celine-import-target">https://observablehq.com/@mjbo/celine-celine-import-target</a>) or an API URL (e.g. <a href="https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4">https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4</a>).</p>
 
@@ -513,7 +513,7 @@ out = overrideMeWithANumber * 10
 <p>which we can import, with aliases and overrides:</p>
 
 <script type="module" class="echo reflect" data-display="import" contenteditable="true">
-await celine.import(
+celine.import(
   "https://observablehq.com/@mjbo/celine-celine-import-target",
   [ "importMeUnchanged",
     {name: "renameMe", alias: "renamed"},

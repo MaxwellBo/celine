@@ -25,6 +25,7 @@ export const library = new stdlib.Library();
  * - `"x"` — imports cell `"x"` with the same name.
  * - `{name: "x", alias: "y"}` — imports cell `"x"` as local `"y"`.
  * - `{name: "x", with: "local"}` — imports cell `"x"`, overriding it with local cell `"local"`.
+ * - `{name: "x", alias: "y", with: "local"}` — imports cell `"x"` as local `"y"`, overriding it with local cell `"local"`.
  * @typedef {string | {name: string, alias?: string, with?: string}} ImportSpecifier
  */
 
@@ -323,48 +324,56 @@ export class CelineModule {
    * - **import**: `"x"` — imports cell `"x"`
    * - **import-as**: `{name: "x", alias: "y"}` — imports cell `"x"` as local `"y"`
    * - **import-with**: `{name: "x", with: "local"}` — imports cell `"x"`, overriding it with local cell `"local"`
+   * - **import-as-with**: `{name: "x", alias: "y", with: "local"}` — imports cell `"x"` as local `"y"`, overriding it with local cell `"local"`
    *
    * @example
    * ```javascript
    * const nb = "https://observablehq.com/@mjbo/celine-celine-import-target";
    *
-   * await celine.import(nb, [
+   * celine.import(nb, [
    *   "importMeUnchanged",
    *   {name: "renameMe", alias: "renamed"},
    *   {name: "overrideMe", with: "myOverride"},
+   *   {name: "overrideAndRenameMe", alias: "renamedOverride", with: "myOverride"},
    * ]);
    * ```
    * @param {string} source - Observable notebook URL or API URL (v=4 only)
    * @param {ImportSpecifier[]} cells - Cells to import from the notebook
-   * @returns {Promise<void>}
    */
-  async import(source, cells) {
+  import(source, cells) {
     const runtime = this.module._runtime;
     const url = CelineModule._resolveNotebookUrl(source);
-    const define = (await import(url)).default;
 
-    let child = runtime.module(define);
+    const variables = cells.map(cell => {
+      const localName = typeof cell === "string" ? cell : (cell.alias || cell.name);
+      return this.module._scope.get(localName) || this.module.variable();
+    });
 
-    const overrides = cells
-      .filter(cell => typeof cell === "object" && cell.with)
-      .map(cell => ({ name: cell.with, alias: cell.name }));
+    import(url).then(m => {
+      let child = runtime.module(m.default);
 
-    if (overrides.length > 0) {
-      child = child.derive(overrides, this.module);
-    }
+      const overrides = cells
+        .filter(cell => typeof cell === "object" && cell.with)
+        .map(cell => ({ name: cell.with, alias: cell.name }));
 
-    for (const cell of cells) {
-      if (typeof cell === "string") {
-        this.module.variable().import(cell, child);
-      } else {
-        const { name, alias } = cell;
-        if (alias && alias !== name) {
-          this.module.variable().import(name, alias, child);
-        } else {
-          this.module.variable().import(name, child);
-        }
+      if (overrides.length > 0) {
+        child = child.derive(overrides, this.module);
       }
-    }
+
+      cells.forEach((cell, i) => {
+        const variable = variables[i];
+        if (typeof cell === "string") {
+          variable.import(cell, child);
+        } else {
+          const { name, alias } = cell;
+          if (alias && alias !== name) {
+            variable.import(name, alias, child);
+          } else {
+            variable.import(name, child);
+          }
+        }
+      });
+    });
   }
 
   /**
