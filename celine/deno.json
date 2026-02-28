@@ -3,8 +3,7 @@
   "version": "7.0.0",
   "exports": {
     ".": "./mod.ts",
-    "./global": "./global.mjs",
-    "./cell.css": "./cell.css"
+    "./global": "./global.mjs"
   },
   "imports": {
     "@observablehq/runtime": "npm:@observablehq/runtime@6.0.0",
