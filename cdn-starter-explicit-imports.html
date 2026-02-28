@@ -9,23 +9,18 @@
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@7.0.1';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
     import * as htl from 'https://esm.run/htl@0.3.1';
-    
+
     window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
     window.library = celine.library; /* @observablehq/stdlib */
     window.Inputs = Inputs;
     window.htl = htl;
-    
+
     registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
 
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@7.0.1/cell.css" />
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/celine@7.0.1/cell.css" />
 
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css" />
- 
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css" />
 </head>
 <body>
   <main>
@@ -33,7 +28,7 @@
       <h1>@celine/celine CDN starter (explicit imports)</h1>
       <div class="authors">
         <div class="author">
-          <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span> 
+          <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span>
         </div>
       </div>
 
