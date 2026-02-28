@@ -209,9 +209,11 @@
       },
       "celine": {
         "dependencies": [
+          "npm:@observablehq/inputs@0.12.0",
           "npm:@observablehq/inspector@5.0.1",
           "npm:@observablehq/runtime@6.0.0",
-          "npm:@observablehq/stdlib@5.8.8"
+          "npm:@observablehq/stdlib@5.8.8",
+          "npm:htl@0.3.1"
         ]
       }
     }
