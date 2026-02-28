@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@celine/celine CDN starter (explicit imports)</title>
+
+  <script type="module">
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@7.0.0';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
+    
+    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+    window.library = celine.library; /* @observablehq/stdlib */
+    window.Inputs = Inputs;
+    window.htl = htl;
+    
+    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@7.0.0/cell.css" />
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css" />
+ 
+</head>
+<body>
+  <main>
+    <header>
+      <h1>@celine/celine CDN starter (explicit imports)</h1>
+      <div class="authors">
+        <div class="author">
+          <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span> 
+        </div>
+      </div>
+
+      <section class="abstract">
+        Abstract
+      </section>
+    </header>
+    <section>
+      <h2><a href="#section-1" id="section-1"></a>Section header</h2>
+      <p>
+        <script type="module" class="echo reflect" data-display="counter" contenteditable="true">
+celine.cell("counter", async function* () {
+  let i = 0;
+  while (true) {
+    await library.Promises.delay(1000);
+    yield i++;
+  }
+});
+        </script>
+      </p>
+    </section>
+  </main>
+</body>
+</html>

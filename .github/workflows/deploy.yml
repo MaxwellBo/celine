@@ -28,14 +28,20 @@ jobs:
 
       - run: bun install
 
-      - name: Bundle entry scripts for browser
+      - name: Bundle global scripts for browser
         run: |
           mkdir -p dist/libertine dist/bibhtml
-          cp -r index.html overview.html bun-starter.html cdn-starter.html celine/ libertine/ bibhtml/ static/ og.png dist/
-          bun build entry.mjs --outfile dist/entry.mjs --target browser
-          bun build libertine/entry.mjs --outfile dist/libertine/entry.mjs --target browser
-          bun build bibhtml/entry.mjs --outfile dist/bibhtml/entry.mjs --target browser
+          cp -r index.html overview.html bun-starter.html cdn-starter.html cdn-starter-explicit-imports.html cdn-starter-implicit-imports.html local-file-starter.html celine/ libertine/ bibhtml/ static/ og.png dist/
+          bun build global.mjs --outfile dist/global.mjs --target browser
+          bun build libertine/global.mjs --outfile dist/libertine/global.mjs --target browser
+          bun build bibhtml/global.mjs --outfile dist/bibhtml/global.mjs --target browser
           bun build bibhtml/mod.ts --outfile dist/bibhtml/mod.js --target browser
+          mkdir -p dist/local-file-starter
+          cp local-file-starter.html dist/local-file-starter/index.html
+          cp celine/celine.bundle.mjs dist/local-file-starter/celine.bundle.mjs
+          cp celine/cell.css dist/local-file-starter/cell.css
+          cp libertine/libertine.css dist/local-file-starter/libertine.css
+          (cd dist && zip -r local-file-starter.zip local-file-starter)
 
       - uses: actions/configure-pages@v5
 

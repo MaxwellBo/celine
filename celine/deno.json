@@ -1,11 +1,17 @@
 {
   "name": "@celine/celine",
   "version": "7.0.0",
-  "exports": "./mod.ts",
+  "exports": {
+    ".": "./mod.ts",
+    "./global": "./global.mjs",
+    "./cell.css": "./cell.css"
+  },
   "imports": {
     "@observablehq/runtime": "npm:@observablehq/runtime@6.0.0",
     "@observablehq/inspector": "npm:@observablehq/inspector@5.0.1",
-    "@observablehq/stdlib": "npm:@observablehq/stdlib@5.8.8"
+    "@observablehq/stdlib": "npm:@observablehq/stdlib@5.8.8",
+    "@observablehq/inputs": "npm:@observablehq/inputs@0.12.0",
+    "htl": "npm:htl@0.3.1"
   },
   "tasks": {
     "dev": "deno run --watch mod.ts"

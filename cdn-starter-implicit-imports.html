@@ -3,18 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@celine/celine CDN starter</title>
-  <script type="module" src="./global.mjs"></script>
-  <link rel="stylesheet" href="celine/cell.css" />
-  <link rel="stylesheet" href="libertine/libertine.css" />
+  <title>@celine/celine CDN starter (implicit imports)</title>
+
+  <script type="module" src="https://esm.sh/jsr/@celine/celine@7.0.0/global"></script>
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@7.0.0/cell.css" />
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css" />
+ 
 </head>
 <body>
   <main>
     <header>
-      <h1>@celine/celine CDN starter</h1>
+      <h1>@celine/celine CDN starter (implicit imports)</h1>
       <div class="authors">
         <div class="author">
-          <span class="author-name"><a href="https://example.com">Jane Doe</a></span> 
+          <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span> 
         </div>
       </div>
 
@@ -32,7 +40,9 @@ celine.cell("counter", async function* () {
     await library.Promises.delay(1000);
     yield i++;
   }
-});</script>
+});
+        </script>
+      </p>
     </section>
   </main>
 </body>

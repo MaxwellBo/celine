@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@celine/celine</title>
 
-  <script type="module" src="./entry.mjs"></script>
+  <script type="module" src="./global.mjs"></script>
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />
   <meta name="theme-color" content="#ffffff">
@@ -205,10 +205,10 @@
 
 <h2><a href="#usage" id="usage"></a>Usage</h2>
 
-<h3><a href="#via-cdn" id="via-cdn"></a>via CDN</h3>
+<h3><a href="#via-cdn" id="via-cdn"></a>via CDN, with explicit imports</h3>
 
 <p>
-  Either use the <a href="cdn-starter.html">cdn-starter.html</a> template file
+  Either use the <a href="cdn-starter-explicit-imports.html">cdn-starter-explicit-imports.html</a> template file
 </p>
 
 <span style="font-variant: all-small-caps;">OR</span>
@@ -247,6 +247,72 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
   href=&quot;https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css&quot; /&gt;
 </pre>
 
+<h3><a href="#via-cdn-implicit-imports" id="via-cdn-implicit-imports"></a>via CDN, with implicit imports</h3>
+
+<p>
+  Either use the <a href="cdn-starter-implicit-imports.html">cdn-starter-implicit-imports.html</a> template file
+</p>
+
+<span style="font-variant: all-small-caps;">OR</span>
+
+<p>
+  Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@7.0.0/global&quot;&gt;&lt;/script&gt;
+</pre>
+
+<p>and link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link 
+  rel=&quot;stylesheet&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/celine@7.0.0/cell.css&quot; /&gt;
+</pre>
+
+<p>
+You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a href="libertine/index.html">libertine.css</a>:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link 
+  rel=&quot;stylesheet&quot; 
+  href=&quot;https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css&quot; /&gt;
+</pre>
+
+<h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
+
+<p>
+  Either use the <a href="local-file-starter.zip" download="local-file-starter.zip">local-file-starter.zip</a> template bundle
+</p>
+
+<span style="font-variant: all-small-caps;">OR</span>
+
+<p>
+  Download <a href="celine/celine.bundle.mjs" download="celine.bundle.mjs">celine.bundle.mjs</a> and place it next to your HTML file, then add:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;script type=&quot;module&quot; src=&quot;./celine.bundle.mjs&quot;&gt;&lt;/script&gt;
+</pre>
+
+<p>
+  Download <a href="celine/cell.css" download="cell.css">cell.css</a> and link it locally:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./cell.css&quot; /&gt;
+</pre>
+
+<p>
+  You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a href="libertine/libertine.css" download="libertine.css">libertine.css</a>, locally:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./libertine.css&quot; /&gt;
+</pre>
+
 
 <!-- <h3><a href="#with-bun" id="with-bun"></a>with Bun and Standalone HTML mode</h3>
 
@@ -263,13 +329,13 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 
 <p>
   Either use the <a href="bun-starter.html">bun-starter.html</a> and
-  <a href="entry.mjs">entry.mjs</a> template files
+  <a href="global.mjs">global.mjs</a> template files
 </p>
 
 <span style="font-variant: all-small-caps;">OR</span>
 
 <p>
-  Create an <code>entry.mjs</code> that contains:
+  Create a <code>global.mjs</code> that contains:
 <pre><code>import { CelineModule, registerScriptReevaluationOnBlur } from './celine/mod.ts';
 import * as Inputs from '@observablehq/inputs';
 import * as htl from 'htl';
@@ -285,7 +351,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');</code></pre>
     and then add:
   </p>
 
-  <pre><code>&lt;script type="module" src="./entry.mjs"&gt;&lt;/script&gt;</code></pre>
+  <pre><code>&lt;script type="module" src="./global.mjs"&gt;&lt;/script&gt;</code></pre>
 
   <p>
     to your HTML file's <code>&lt;head&gt;</code> block.
