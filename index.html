@@ -263,6 +263,10 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 &lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@7.0.1/global&quot;&gt;&lt;/script&gt;
 </pre>
 
+<p>
+  This implicit entrypoint initializes and exposes <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a>, <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
+</p>
+
 <p>and link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
@@ -296,6 +300,10 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;script type=&quot;module&quot; src=&quot;./celine.bundle.mjs&quot;&gt;&lt;/script&gt;
 </pre>
+
+<p>
+  The local bundle includes and exposes the same libraries: <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a>, <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
+</p>
 
 <p>
   Download <a href="celine/cell.css" download="cell.css">cell.css</a> and link it locally:
