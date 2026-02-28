@@ -38,9 +38,8 @@ jobs:
           bun build bibhtml/mod.ts --outfile dist/bibhtml/mod.js --target browser
           mkdir -p dist/local-file-starter
           cp local-file-starter.html dist/local-file-starter/index.html
-          cp celine/celine.bundle.mjs dist/local-file-starter/celine.bundle.mjs
-          cp celine/cell.css dist/local-file-starter/cell.css
-          cp libertine/libertine.css dist/local-file-starter/libertine.css
+          cp -r celine dist/local-file-starter/celine
+          cp -r libertine dist/local-file-starter/libertine
           (cd dist && zip -r local-file-starter.zip local-file-starter)
 
       - uses: actions/configure-pages@v5
