@@ -1,6 +1,6 @@
 {
   "name": "@celine/celine",
-  "version": "6.2.0",
+  "version": "7.0.0",
   "exports": "./mod.ts",
   "imports": {
     "@observablehq/runtime": "npm:@observablehq/runtime@6.0.0",

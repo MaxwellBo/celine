@@ -5,7 +5,7 @@ import * as stdlib from "@observablehq/stdlib";
 /**
  * For convenience, this module re-exports the Observable standard library.
  */
-export const library: stdlib.Library = new stdlib.Library();
+export const library: typeof stdlib.Library = new stdlib.Library();
 
 export type ObserverVisibility = "hidden" | "visible";
 
@@ -50,7 +50,8 @@ export class CelineModule {
   }
 
   static usingNewObservableRuntimeAndModule(document: Document): CelineModule {
-    const runtime = new Runtime();
+    const runtime = new Runtime(library);
+    runtime.fileAttachments = stdlib.FileAttachments;
     const module = runtime.module();
     return new CelineModule(document, module);
   }

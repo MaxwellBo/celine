@@ -8,6 +8,14 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>7.0.0</title>
+    <link href="https://jsr.io/@celine/celine@7.0.0"/>
+    <id>https://jsr.io/@celine/celine@7.0.0</id>
+    <updated>2026-02-28T00:00:00Z</updated>
+    <summary>Breaking changes to Observable notebook imports: the runtime now initializes with Observable stdlib builtins (for names like DOM and width), and includes a runtime.fileAttachments compatibility extension for transitive notebook imports.</summary>
+  </entry>
+
+  <entry>
     <title>5.0.0</title>
     <link href="https://jsr.io/@celine/celine@5.0.0"/>
     <id>https://jsr.io/@celine/celine@5.0.0</id>

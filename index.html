@@ -531,6 +531,22 @@ celine.cell("import",
 
 Observe that the <code>overrideMeWithANumber</code> cell is overridden with the value of the <code>counter</code> cell, and the <code>out</code> cell is the product of <code>overrideMeWithANumber</code> and 10.
 
+<p>
+  Let's try and import something with a complex dependency tree:
+</p>
+
+<script data-display="d3import" type="module" class="echo reflect" contenteditable="true">
+celine.import(
+  "https://observablehq.com/@d3/interrupted-sinu-mollweide",
+  [{name: "map", alias: "landcoverMap"}]
+);
+
+celine.cell("d3import", ["landcoverMap"], (landcoverMap) => {
+  return landcoverMap;
+});
+</script>
+
+
 <h3><a href="#library" id="library"></a><code>celine.library</code> / Observable standard library</h3>
 
 <p>There are many useful utilities in the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>. Inspect the contents of the <code>celine.library</code> object:</p>
