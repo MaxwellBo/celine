@@ -76,7 +76,17 @@ export class CelineModule {
     }
 
     elementContainer.parentNode!.insertBefore(div, elementContainer);
-    return new Inspector(div);
+    const observer = new Inspector(div);
+    const errorLoggingObserver = {
+      pending: () => observer.pending?.(),
+      fulfilled: (value: unknown) => observer.fulfilled?.(value),
+      rejected: (error: unknown) => {
+        console.error(`[celine] Cell "${name}" rejected`, error);
+        observer.rejected?.(error);
+      },
+      _node: observer._node,
+    };
+    return errorLoggingObserver;
   }
 
   /**
