@@ -264,10 +264,10 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 </pre>
 
 <p>
-  This implicit entrypoint initializes and exposes <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a>, <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
+  This implicit entrypoint initializes and exposes <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a> (as <code>window.celine</code>), <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
 </p>
 
-<p>and link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
+<p>Link <a href="#.echo">cell.css</a> in your <code>&lt;head&gt;</code> block:</p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
@@ -302,7 +302,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 </pre>
 
 <p>
-  The local bundle includes and exposes the same libraries: <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a>, <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
+  The local bundle includes and exposes the same libraries: <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a> (as <code>window.celine</code>), <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
 </p>
 
 <p>
@@ -1147,6 +1147,25 @@ celine.cell("module", () => {
   <li><a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a></li>
   <li><a href="https://maxbo.me/a-html-file-is-all-you-need.html"><cite>Reactive HTML Notebooks</cite></a></li>
 </ul>
+
+<h2><a href="#for-llms" id="for-llms"></a>For LLMs</h2>
+
+<p>
+  You probably will need the API docs for <cite>@celine/celine</cite>'s recommended libraries too. They are as follows:
+
+  <ul>
+    <li><a href="https://raw.githubusercontent.com/observablehq/stdlib/refs/heads/main/README.md"><cite>@observablehq/stdlib README.md</cite></a></li>
+    <li><a href="https://raw.githubusercontent.com/observablehq/inputs/refs/heads/main/README.md"><cite>@observablehq/inputs README.md</cite></a></li>
+    <li><a href="https://raw.githubusercontent.com/observablehq/htl/refs/heads/main/README.md"><cite>htl README.md</cite></a></li>
+    <li><a href="https://raw.githubusercontent.com/observablehq/runtime/refs/heads/main/README.md"><cite>Observable Runtime README.md</cite></a></li>
+    <li><a href="https://raw.githubusercontent.com/observablehq/plot/refs/heads/main/README.md"><cite>Observable Plot README.md</cite></a></li>
+  </ul>
+
+  <p>
+    The <a href="https://observablehq.com/framework/">Observable Framework documentation</a> provides good documentation
+    for the <cite>@observablehq/stdlib</cite> as well.
+  </p>
+</p>
 
 <!-- <div style="text-align: center; margin-top: 4ch;">
 <pre style="max-width: 100%; overflow-x: auto;">
