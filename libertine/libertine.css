@@ -373,7 +373,7 @@ h6 > a[href^="#"] {
 body {
   -webkit-font-smoothing: antialiased;
 }
-img, picture, video, canvas, svg {
+img, picture, video, canvas {
   display: block;
   max-width: 100%;
 }
