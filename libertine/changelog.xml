@@ -8,6 +8,18 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>21.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@21.0.0"/>
+    <id>https://jsr.io/@celine/libertine@21.0.0</id>
+    <updated>2026-03-01T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> added default <code>&lt;del&gt;</code> and <code>&lt;ins&gt;</code> styling.
+      Deletions now render with a pink background and red text, while insertions use a green background and green text and remove the default underline.
+      If you previously relied on browser-default diff markup presentation, override these selectors in your own stylesheet.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>20.0.0</title>
     <link href="https://jsr.io/@celine/libertine@20.0.0"/>
     <id>https://jsr.io/@celine/libertine@20.0.0</id>

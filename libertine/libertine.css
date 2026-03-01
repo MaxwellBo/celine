@@ -135,6 +135,18 @@ output {
   font-family: monospace;
 }
 
+del {
+  background-color: #ffeaea;
+  color: #c02222;
+  text-decoration: line-through;
+}
+
+ins {
+  background-color: #eaffea;
+  color: #225c22;
+  text-decoration: none;
+}
+
 time {
   font-variant: small-caps;
   font-family: 'Libertinus Sans'
