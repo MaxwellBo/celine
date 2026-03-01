@@ -8,6 +8,20 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>20.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@20.0.0"/>
+    <id>https://jsr.io/@celine/libertine@20.0.0</id>
+    <updated>2026-03-01T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> refined <code>&lt;aside&gt;</code> paragraph spacing.
+      Direct child paragraphs now collapse outer margins at the edges of an aside:
+      <code>aside &gt; p:first-child { margin-block-start: 0; }</code> and
+      <code>aside &gt; p:last-child { margin-block-end: 0; }</code>.
+      If your aside content relied on those outer paragraph margins for vertical spacing, add explicit padding or spacing to the container.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>19.0.0</title>
     <link href="https://jsr.io/@celine/libertine@19.0.0"/>
     <id>https://jsr.io/@celine/libertine@19.0.0</id>
