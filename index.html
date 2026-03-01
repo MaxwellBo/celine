@@ -7,6 +7,18 @@
   <title>@celine/celine</title>
 
   <script type="module" src="./global.mjs"></script>
+  <script type="module">
+    import { renderChangelogTable } from "./changelog.mjs";
+    import celineChangelogUrl from "./celine/changelog.xml";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderChangelogTable({
+        feedUrl: celineChangelogUrl,
+        tableBodyId: "changelog-table-body",
+        limit: 10
+      });
+    });
+  </script>
   <link rel="stylesheet" href="celine/cell.css" />
   <link rel="stylesheet" href="libertine/libertine.css" />
   <meta name="theme-color" content="#ffffff">
@@ -244,7 +256,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@18.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h3><a href="#via-cdn-implicit-imports" id="via-cdn-implicit-imports"></a>via CDN, with implicit imports</h3>
@@ -282,7 +294,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@18.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
@@ -1113,26 +1125,6 @@ celine.cell("module", () => {
   <tbody id="changelog-table-body">
     <!-- rows get inserted here-->
   </tbody>
-  <script type="module">
-    fetch('celine/changelog.xml')
-      .then(response => response.text())
-      .then(data => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(data, 'application/xml');
-        const entries = Array.from(xmlDoc.getElementsByTagName('entry')).slice(0, 10);
-        let tableRows = '';
-        for (let entry of entries) {
-            const version = entry.getElementsByTagName('title')[0].textContent;
-            const link = entry.getElementsByTagName('link')[0].getAttribute('href');
-            const changes = entry.getElementsByTagName('summary')[0].textContent;
-            let date = entry.getElementsByTagName('updated')[0].textContent;
-            date = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-          tableRows += `<tr><td><a href="${link}">${version}</a></td><td>${date}</td><td>${changes}</td></tr>`;
-        }
-        document.getElementById('changelog-table-body').innerHTML = tableRows;
-      })
-      .catch(error => console.error('Error loading changelog:', error));
-  </script>
 </table>
 
 <h2><a href="#resources" id="resources"></a>Resources</h2>

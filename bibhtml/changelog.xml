@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>@celine/bibhtml changelog</title>
+  <link href="https://maxbo.me/celine/bibhtml/#changelog"/>
+  <author>
+    <name>Max Bo</name>
+  </author>
+  <id>https://maxbo.me/celine/bibhtml/changelog.xml</id>
+</feed>

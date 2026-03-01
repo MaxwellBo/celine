@@ -33,6 +33,18 @@
   <link rel="stylesheet" href="../libertine/libertine.css">
   <link rel="stylesheet" href="../celine/cell.css">
   <script type="module" src="./global.mjs"></script>
+  <script type="module">
+    import { renderChangelogTable } from "../changelog.mjs";
+    import libertineChangelogUrl from "./changelog.xml";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderChangelogTable({
+        feedUrl: libertineChangelogUrl,
+        tableBodyId: "changelog-table-body",
+        limit: 10
+      });
+    });
+  </script>
 </head>
 <body>
   <main>
@@ -75,7 +87,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/libertine">jsr.io/<wbr>@celine/<wbr>libertine</a> + <a href="https://jsr.io/@celine/libertine/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">17.0.0</a>, <time  id="updated">Feb 26 2026</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/libertine/versions" id="version">18.0.0</a>, <time  id="updated">Feb 26 2026</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__libertine")
@@ -99,7 +111,7 @@
 <pre class="echo" style="margin-bottom: 1ch;" id="import">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@17.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@18.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
@@ -518,7 +530,27 @@ print("Hello, world!")</code></pre>
   </div>
 </div>
 
-  
+<h2><a href="#changelog" id="changelog"></a>changelog.xml <a href="changelog.xml"><img src="../static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
+
+<p>
+  <cite>@celine/libertine</cite> uses <a href="https://semver.org/">Semantic Versioning 2.0.0</a>.
+</p>
+
+<p><i>Showing 10 most recent entries.</i></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Changes</th>
+    </tr>
+  </thead>
+  <tbody id="changelog-table-body">
+    <!-- rows get inserted here -->
+  </tbody>
+</table>
+
 </main>
 </body>
 </html>

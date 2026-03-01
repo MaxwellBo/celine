@@ -36,6 +36,18 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <script type="module" src="./global.mjs"></script>
+  <script type="module">
+    import { renderChangelogTable } from "../changelog.mjs";
+    import bibhtmlChangelogUrl from "./changelog.xml";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderChangelogTable({
+        feedUrl: bibhtmlChangelogUrl,
+        tableBodyId: "changelog-table-body",
+        limit: 10
+      });
+    });
+  </script>
   <script type="module" src="./mod.js"></script>
 </head>
 
@@ -556,6 +568,27 @@ dependence:
 
 <bh-bibliography format="apa">
 </bh-bibliography>
+
+<h2><a href="#changelog" id="changelog"></a>changelog.xml <a href="changelog.xml"><img src="../static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
+
+<p>
+  <cite>@celine/bibhtml</cite> uses <a href="https://semver.org/">Semantic Versioning 2.0.0</a>.
+</p>
+
+<p><i>Showing 10 most recent entries.</i></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Changes</th>
+    </tr>
+  </thead>
+  <tbody id="changelog-table-body">
+    <!-- rows get inserted here -->
+  </tbody>
+</table>
 
 <h2>How to cite</h2>
 

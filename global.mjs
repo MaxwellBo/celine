@@ -12,4 +12,11 @@ window.htl = htl;
 
 registerScriptReevaluationOnBlur(document, /*class=*/"echo");
 
-export { CelineModule, Inputs, celine, htl, library, registerScriptReevaluationOnBlur };
+export {
+  CelineModule,
+  Inputs,
+  celine,
+  htl,
+  library,
+  registerScriptReevaluationOnBlur
+};

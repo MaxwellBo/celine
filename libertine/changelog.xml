@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>@celine/libertine changelog</title>
+  <link href="https://maxbo.me/celine/libertine/#changelog"/>
+  <author>
+    <name>Max Bo</name>
+  </author>
+  <id>https://maxbo.me/celine/libertine/changelog.xml</id>
+</feed>
