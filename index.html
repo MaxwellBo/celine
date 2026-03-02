@@ -217,6 +217,50 @@
 
 <h2><a href="#usage" id="usage"></a>Usage</h2>
 
+<h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
+
+<p>
+  Either use the <a href="local-file-starter.zip" download="local-file-starter.zip">local-file-starter.zip</a> template bundle
+</p>
+
+<span style="font-variant: all-small-caps;">OR</span>
+
+<p>
+  Download <a href="celine/celine.bundle.mjs" download="celine.bundle.mjs">celine.bundle.mjs</a> and place it next to your HTML file, then add:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;script type=&quot;module&quot; src=&quot;./celine.bundle.mjs&quot;&gt;&lt;/script&gt;
+</pre>
+
+<p>
+  The local bundle includes and exposes the same libraries: <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a> (as <code>window.celine</code>), <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
+</p>
+
+<p>
+  Download <a href="celine/cell.css" download="cell.css">cell.css</a> and link it locally:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./cell.css&quot; /&gt;
+</pre>
+
+<p>
+  You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a href="libertine/libertine.css" download="libertine.css">libertine.css</a>, locally:
+</p>
+
+<pre class="echo" style="margin-bottom: 1ch;">
+&lt;link rel=&quot;stylesheet&quot; href=&quot;./libertine.css&quot; /&gt;
+</pre>
+
+<span style="font-variant: all-small-caps;">THEN I RECOMMEND</span>
+
+<p>
+  using <a href="https://bun.com/docs/bundler/standalone-html">Bun's Standalone HTML mode</a>, to package your local notebook and assets into one file,
+  with <code>bun build --compile --target=browser ./index.html --outdir=dist</code>
+</p>
+
+
 <h3><a href="#via-cdn" id="via-cdn"></a>via CDN, with explicit imports</h3>
 
 <p>
@@ -295,42 +339,6 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 &lt;link 
   rel=&quot;stylesheet&quot; 
   href=&quot;https://esm.sh/jsr/@celine/libertine@21.0.0/libertine.css&quot; /&gt;
-</pre>
-
-<h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
-
-<p>
-  Either use the <a href="local-file-starter.zip" download="local-file-starter.zip">local-file-starter.zip</a> template bundle
-</p>
-
-<span style="font-variant: all-small-caps;">OR</span>
-
-<p>
-  Download <a href="celine/celine.bundle.mjs" download="celine.bundle.mjs">celine.bundle.mjs</a> and place it next to your HTML file, then add:
-</p>
-
-<pre class="echo" style="margin-bottom: 1ch;">
-&lt;script type=&quot;module&quot; src=&quot;./celine.bundle.mjs&quot;&gt;&lt;/script&gt;
-</pre>
-
-<p>
-  The local bundle includes and exposes the same libraries: <a href="https://jsr.io/@celine/celine/doc"><cite>@celine/celine</cite></a> (as <code>window.celine</code>), <a href="https://observablehq.com/documentation/stdlib/library"><cite>@observablehq/stdlib</cite></a> (as <code>window.library</code>), <a href="https://github.com/observablehq/inputs"><cite>@observablehq/inputs</cite></a> (as <code>window.Inputs</code>), and <a href="https://github.com/observablehq/htl"><cite>htl</cite></a> (as <code>window.htl</code>).
-</p>
-
-<p>
-  Download <a href="celine/cell.css" download="cell.css">cell.css</a> and link it locally:
-</p>
-
-<pre class="echo" style="margin-bottom: 1ch;">
-&lt;link rel=&quot;stylesheet&quot; href=&quot;./cell.css&quot; /&gt;
-</pre>
-
-<p>
-  You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a href="libertine/libertine.css" download="libertine.css">libertine.css</a>, locally:
-</p>
-
-<pre class="echo" style="margin-bottom: 1ch;">
-&lt;link rel=&quot;stylesheet&quot; href=&quot;./libertine.css&quot; /&gt;
 </pre>
 
 
