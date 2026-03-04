@@ -31,7 +31,7 @@ jobs:
       - name: Bundle global scripts for browser
         run: |
           mkdir -p dist/libertine dist/bibhtml
-          cp -r index.html overview.html bun-starter.html cdn-starter.html cdn-starter-explicit-imports.html cdn-starter-implicit-imports.html local-file-starter.html changelog.mjs celine/ libertine/ bibhtml/ static/ og.png dist/
+          cp -r index.html overview.html cdn-starter.html cdn-starter-explicit-imports.html cdn-starter-implicit-imports.html local-file-starter.html changelog.mjs celine/ libertine/ bibhtml/ static/ og.png dist/
           bun build global.mjs --outfile dist/global.mjs --target browser
           bun build libertine/global.mjs --outfile dist/libertine/global.mjs --target browser
           bun build bibhtml/global.mjs --outfile dist/bibhtml/global.mjs --target browser
