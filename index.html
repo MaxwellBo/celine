@@ -9,7 +9,7 @@
   <script type="module" src="./global.mjs"></script>
   <script type="module">
     import { renderChangelogTable } from "./changelog.mjs";
-    import celineChangelogUrl from "./celine/changelog.xml";
+    const celineChangelogUrl = new URL("./celine/changelog.xml", import.meta.url).href;
 
     window.addEventListener("DOMContentLoaded", () => {
       renderChangelogTable({

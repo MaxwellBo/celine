@@ -35,7 +35,7 @@
   <script type="module" src="./global.mjs"></script>
   <script type="module">
     import { renderChangelogTable } from "../changelog.mjs";
-    import libertineChangelogUrl from "./changelog.xml";
+    const libertineChangelogUrl = new URL("./changelog.xml", import.meta.url).href;
 
     window.addEventListener("DOMContentLoaded", () => {
       renderChangelogTable({

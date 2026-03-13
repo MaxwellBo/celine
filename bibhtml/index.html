@@ -38,7 +38,7 @@
   <script type="module" src="./global.mjs"></script>
   <script type="module">
     import { renderChangelogTable } from "../changelog.mjs";
-    import bibhtmlChangelogUrl from "./changelog.xml";
+    const bibhtmlChangelogUrl = new URL("./changelog.xml", import.meta.url).href;
 
     window.addEventListener("DOMContentLoaded", () => {
       renderChangelogTable({
