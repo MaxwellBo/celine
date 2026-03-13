@@ -8,6 +8,18 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>22.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@22.0.0"/>
+    <id>https://jsr.io/@celine/libertine@22.0.0</id>
+    <updated>2026-03-12T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> <code>&lt;pre&gt;&lt;code&gt;</code> blocks no longer use the syntax-highlighting font by default.
+      You must now explicitly add the <code>highlight</code> class (i.e. <code>&lt;pre class="highlight"&gt;</code>) to opt into syntax-highlighting font styling.
+      If you previously relied on automatic syntax-font styling for code blocks, update your markup to include the <code>highlight</code> class where needed.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>21.0.0</title>
     <link href="https://jsr.io/@celine/libertine@21.0.0"/>
     <id>https://jsr.io/@celine/libertine@21.0.0</id>
