@@ -8,6 +8,17 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>23.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@23.0.0"/>
+    <id>https://jsr.io/@celine/libertine@23.0.0</id>
+    <updated>2026-03-20T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> <code>&lt;h2&gt;</code> headings no longer use <code>text-transform: uppercase</code>.
+      Section titles render in their source casing; if you relied on all-caps h2 styling, add <code>text-transform: uppercase</code> in your own stylesheet.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>22.0.0</title>
     <link href="https://jsr.io/@celine/libertine@22.0.0"/>
     <id>https://jsr.io/@celine/libertine@22.0.0</id>
