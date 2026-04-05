@@ -152,12 +152,21 @@ time {
   font-family: 'Libertinus Sans'
 }
 
-a:hover, *::part(bh-a):hover  {
+a,
+*::part(bh-a) {
+  text-decoration: none;
+}
+
+a:hover,
+*::part(bh-a):hover {
+  text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-a:active, *::part(bh-a):active  {
+a:active,
+*::part(bh-a):active {
   background-color: yellow;
+  text-decoration: underline;
   text-underline-offset: 3px;
 }
 
