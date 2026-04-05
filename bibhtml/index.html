@@ -201,6 +201,7 @@
     celine.cell("inner-text-cell", () => {
       const cloned = document.getElementById('inner-text-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -214,6 +215,7 @@
     celine.cell("flex-1-cell", () => {
       const cloned = document.getElementById('flex-1-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -227,6 +229,7 @@
     celine.cell("missing-cell", () => {
       const cloned = document.getElementById('missing-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -240,6 +243,7 @@
     celine.cell("flex-2-cell", () => {
       const cloned = document.getElementById('flex-2-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -254,6 +258,7 @@
     celine.cell("ref-cell", () => {
       const cloned = document.getElementById('ref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -268,6 +273,7 @@
     celine.cell("deref-cell", () => {
       const cloned = document.getElementById('deref-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -288,6 +294,7 @@
     celine.cell("jacobs2018house-cell", () => {
       const cloned = document.getElementById('jacobs2018house-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
@@ -301,6 +308,7 @@
     celine.cell("replace-reference-cell", () => {
       const cloned = document.getElementById('replace-reference-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script> -->
@@ -315,6 +323,7 @@
     celine.cell("shorthand-cell", () => {
       const cloned = document.getElementById('shorthand-container').cloneNode(true);
       cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
       return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
     })
   </script>
