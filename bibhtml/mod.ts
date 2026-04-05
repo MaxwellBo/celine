@@ -61,24 +61,34 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   static get observedAttributes(): string[] {
-    return ['replace', 'ref', 'deref'];
+    return ['marker', 'replacement', 'ref', 'deref'];
   }
 
   attributeChangedCallback(name: string, _oldValue: string | null, _newValue: string | null) {
-    if (name === 'deref' || name === 'ref' || name === 'replace') {
+    if (name === 'deref' || name === 'ref' || name === 'marker' || name === 'replacement') {
       this.render();
     }
   }
 
-  get replace(): string {
-    const REPLACEMENTS = ['number', 'none', ''];
+  get marker(): string {
+    const marker = this.getAttribute('marker');
+    return marker === null ? '?' : marker;
+  }
 
-    if (!REPLACEMENTS.includes(this.getAttribute('replace') || '')) {
-      console.warn(`Invalid value for the replace attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. Defaulting to "number".`);
+  get replacement(): string {
+    const REPLACEMENTS = ['number'];
+    const replacement = this.getAttribute('replacement');
+
+    if (replacement === null) {
       return "number";
     }
 
-    return this.getAttribute('replace') || "number";
+    if (!REPLACEMENTS.includes(replacement)) {
+      console.warn(`Invalid value for the replacement attribute in <${BibhtmlCite.customElementName}>. Valid values are ${REPLACEMENTS.join(', ')}. No replacement will be made.`);
+      return "";
+    }
+
+    return replacement;
   }
 
   /**
@@ -147,8 +157,8 @@ export class BibhtmlCite extends HTMLElement {
 
     a.setAttribute('role', 'doc-noteref'); // https://kb.daisy.org/publishing/docs/html/dpub-aria/doc-noteref.html
 
-    if (this.replace === "number") {
-      a.innerText = a.innerText.replace('?', (this._referenceIndex + 1).toString());
+    if (this.marker !== '' && this.replacement === "number") {
+      a.innerText = a.innerText.replace(this.marker, (this._referenceIndex + 1).toString());
     }
 
     // If deref, we need to get the URL from the citation of the reference

@@ -101,7 +101,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/bibhtml">jsr.io/<wbr>@celine/<wbr>bibhtml</a> + <a href="https://jsr.io/@celine/bibhtml/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">4.0.0</a>, <time  id="updated">Feb 26 2026</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">5.0.0</a>, <time  id="updated">Apr 5 2026</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__bibhtml")
@@ -126,7 +126,7 @@
   </p>
 
   <pre class="echo dark">
-&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/bibhtml@4.1.0&quot;&gt;&lt;/script&gt;</pre>
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/bibhtml@5.0.0&quot;&gt;&lt;/script&gt;</pre>
 
   <h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
 
@@ -188,7 +188,7 @@
     The <code>&lt;bh-cite&gt;</code> element:
     <ol>
       <li>Unhides the <code>&lt;bh-reference&gt;</code> targeted by the first inner <code>&lt;a&gt;</code> element, and adds a <a href="https://en.wikipedia.org/wiki/Backlink">backlink</a> to itself</li>
-      <li>Replaces the first <code>?</code> contained within the first inner <code>&lt;a&gt;</code> element with the reference number</li>
+      <li>Replaces the first marker in the first inner <code>&lt;a&gt;</code> element with the configured replacement; by default the marker is <code>?</code> and the replacement is the reference number</li>
     </ol>
   </p>
 
@@ -279,60 +279,6 @@
   </script>
 
   <p>
-    The <code>replace</code> attribute (which defaults to <code>"number"</code>) determines
-    what happens to the inner text of a <code>&lt;bh-cite&gt;</code> element.
-  </p>
-  <p>
-    When <code>replace="number"</code>, the first <code>?</code> in the inner text of the first inner <code>&lt;a&gt;</code> element is replaced with the reference number.
-  </p>
-  <p>
-    When <code>replace="none"</code>, no replacement is made. You will need to set <code>replace="none"</code> if the title of a work contains a <code>?</code> in it: 
-    <span id="jacobs2018house-container"><bh-cite replace="none" ref="#jacobs2018house"><cite><a href="https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html">Who wins when the House and the Senate are controlled by different parties?</a></cite></bh-cite></span>
-  </p>
-
-  <script data-display="jacobs2018house-cell" type="module">
-    celine.cell("jacobs2018house-cell", () => {
-      const cloned = document.getElementById('jacobs2018house-container').cloneNode(true);
-      cloned.querySelector('bh-cite').removeAttribute('id');
-      stripBibhtmlCiteRole(cloned);
-      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
-    })
-  </script>
-
-  <!-- <p>
-    When <code>replace="reference"</code>, the inner text is replaced with the reference text itself: 
-    <span id="replace-reference-container"><bh-cite ref="mokhov2018" replace="reference"></bh-cite></span>
-  </p>
-
-  <script data-display="replace-reference-cell" type="module">
-    celine.cell("replace-reference-cell", () => {
-      const cloned = document.getElementById('replace-reference-container').cloneNode(true);
-      cloned.querySelector('bh-cite').removeAttribute('id');
-      stripBibhtmlCiteRole(cloned);
-      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
-    })
-  </script> -->
-
-  <!-- <p>
-    <code>&lt;bh-cite&gt;</code> has <q>shorthand</q> syntax, where the inner text is the ID of the reference to cite: 
-    
-    <span id="shorthand-container"><bh-cite>willighagen2019</bh-cite></span>
-  </p>
-
-  <script data-display="shorthand-cell" type="module">
-    celine.cell("shorthand-cell", () => {
-      const cloned = document.getElementById('shorthand-container').cloneNode(true);
-      cloned.querySelector('bh-cite').removeAttribute('id');
-      stripBibhtmlCiteRole(cloned);
-      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
-    })
-  </script>
-
-  <p>
-    Shorthand syntax is discouraged: it does not gracefully degrade to a link.
-  </p> -->
-
-  <p>
     In summary:
   </p>
 
@@ -368,6 +314,74 @@
       </tr>
     </tbody>
   </table>
+
+  <p>
+    The <code>marker</code> attribute names the character to swap out. It defaults to <code>?</code>, but can be any other character, e.g. <code>n</code>:
+    <span id="replace-custom-container"><sup><bh-cite marker="n"><a href="#willighagen2019">[n]</a></bh-cite></sup></span>
+  </p>
+  
+  <script data-display="replace-custom-cell" type="module">
+    celine.cell("replace-custom-cell", () => {
+      const cloned = document.getElementById('replace-custom-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    When <code>marker=""</code>, no replacement is made. You will need to set <code>marker=""</code> if the title of a work contains a <code>?</code> in it:
+    <span id="jacobs2018house-container"><bh-cite marker="" ref="#jacobs2018house"><cite><a href="https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html">Who wins when the House and the Senate are controlled by different parties?</a></cite></bh-cite></span>
+  </p>
+
+  <script data-display="jacobs2018house-cell" type="module">
+    celine.cell("jacobs2018house-cell", () => {
+      const cloned = document.getElementById('jacobs2018house-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    The <code>replacement</code> attribute (which defaults to <code>"number"</code>) determines
+   what the marker named by <code>marker</code> is swapped for.
+  </p>
+  <p>
+    When <code>replacement="number"</code>, the first occurrence of the specified <code>marker</code> is replaced with the reference number.
+  </p>
+  <!-- <p>
+    When <code>replacement="reference"</code>, the inner text is replaced with the reference text itself: 
+    <span id="replace-reference-container"><bh-cite ref="mokhov2018" replacement="reference"></bh-cite></span>
+  </p>
+
+  <script data-display="replace-reference-cell" type="module">
+    celine.cell("replace-reference-cell", () => {
+      const cloned = document.getElementById('replace-reference-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
+    })
+  </script> -->
+
+  <!-- <p>
+    <code>&lt;bh-cite&gt;</code> has <q>shorthand</q> syntax, where the inner text is the ID of the reference to cite: 
+    
+    <span id="shorthand-container"><bh-cite>willighagen2019</bh-cite></span>
+  </p>
+
+  <script data-display="shorthand-cell" type="module">
+    celine.cell("shorthand-cell", () => {
+      const cloned = document.getElementById('shorthand-container').cloneNode(true);
+      cloned.querySelector('bh-cite').removeAttribute('id');
+      stripBibhtmlCiteRole(cloned);
+      return htl.html`<pre class='echo dark'>${cloned.innerHTML}</pre>`
+    })
+  </script>
+
+  <p>
+    Shorthand syntax is discouraged: it does not gracefully degrade to a link.
+  </p> -->
 
   <h3><code>&lt;bh-reference&gt;</code></h3>
 
