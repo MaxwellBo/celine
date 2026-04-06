@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>24.1.0</title>
+    <link href="https://jsr.io/@celine/libertine@24.1.0"/>
+    <id>https://jsr.io/@celine/libertine@24.1.0</id>
+    <updated>2026-04-06T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      Added hover tooltip functionality in <code>libertine.css</code>.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>24.0.0</title>
     <link href="https://jsr.io/@celine/libertine@24.0.0"/>
     <id>https://jsr.io/@celine/libertine@24.0.0</id>

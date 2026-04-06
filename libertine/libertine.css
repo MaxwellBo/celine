@@ -160,14 +160,14 @@ a,
 a:hover,
 *::part(bh-a):hover {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  /* text-underline-offset: 2px; */
 }
 
 a:active,
 *::part(bh-a):active {
   background-color: yellow;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  /* text-underline-offset: 3px; */
 }
 
 :target {
@@ -238,14 +238,6 @@ script, pre, style {
 
 .table-of-contents {
   font-family: 'Libertinus Sans', sans-serif;
-}
-
-.authors .author a {
-  text-decoration: none;
-}
-
-.authors a.author {
-  text-decoration: none;
 }
 
 .authors .author .author-name {
