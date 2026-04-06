@@ -52,7 +52,7 @@ export class BibhtmlCite extends HTMLElement {
     getBibliography().then(bib => bib.removeCitation(this.refId, this));
     // Remove tooltip if it exists
     if (this._tooltip && this._tooltip.parentNode) {
-      document.body.removeChild(this._tooltip);
+      this._tooltip.remove();
       this._tooltip = null;
     }
     // Clean up event listeners
@@ -119,15 +119,9 @@ export class BibhtmlCite extends HTMLElement {
   }
 
   _handleMouseEnter = (): void => {
-    if (this._tooltip) {
-      this._tooltip.style.display = 'block';
-      
-      // Position the tooltip underneath the citation link
-      const rect = this.getBoundingClientRect();
-      this._tooltip.style.left = `${rect.left}px`;
-      this._tooltip.style.top = `${rect.bottom}px`;
-    }
-  }
+    if (!this._tooltip) return;
+    this._tooltip.style.display = 'block';
+  };
 
   _handleMouseLeave = (): void => {
     if (this._tooltip) {
@@ -185,12 +179,20 @@ export class BibhtmlCite extends HTMLElement {
     const ref = bibliography._refIdToReference.get(this.refId);
     if (ref) {
       if (this._tooltip && this._tooltip.parentNode) {
-        document.body.removeChild(this._tooltip);
+        this._tooltip.remove();
       }
       
-      this._tooltip = document.createElement('span');
+      this._tooltip = document.createElement('div');
+      // Keep the tooltip local to the citation so layout is relative to the inline link.
       this._tooltip.innerHTML = ref.innerHTML || '';
+      this.style.position = 'relative';
+      this.style.display = 'inline-block';
       this._tooltip.style.position = 'absolute';
+      this._tooltip.style.display = 'block';
+      this._tooltip.style.left = '0';
+      this._tooltip.style.top = 'calc(100% + 2px)';
+      this._tooltip.style.width = 'min(300px, 80vw)';
+      this._tooltip.style.boxSizing = 'border-box';
       this._tooltip.style.backgroundColor = 'white';
       this._tooltip.style.border = '1px solid black';
       this._tooltip.style.padding = '5px';
@@ -198,10 +200,13 @@ export class BibhtmlCite extends HTMLElement {
       this._tooltip.style.zIndex = '1000';
       this._tooltip.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
       this._tooltip.style.borderRadius = '4px';
-      this._tooltip.style.maxWidth = '300px';
       this._tooltip.style.fontSize = '14px';
+      this._tooltip.style.whiteSpace = 'normal';
+      this._tooltip.style.overflowWrap = 'anywhere';
+      this._tooltip.style.wordBreak = 'break-word';
+      this._tooltip.style.pointerEvents = 'none';
       
-      document.body.appendChild(this._tooltip);
+      this.appendChild(this._tooltip);
       
       this.removeEventListener('mouseenter', this._handleMouseEnter);
       this.removeEventListener('mouseleave', this._handleMouseLeave);
