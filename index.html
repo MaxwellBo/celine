@@ -830,32 +830,19 @@ celine.cell("duck", async () => {
 </p>
 
 <p>
-  Here, a separate mutable counter records how many times another cell has been disposed:
+  Focus and then blur the following cell to see the count increment:
 </p>
 
-<script type="module" class="echo reflect" data-display="viewof reevaluate-invalidation-example" contenteditable="true">
-window.invalidationCount = celine.silentMutable("invalidation-count", 0);
-window.invalidationTrigger = celine.silentMutable("invalidation-trigger", 0);
-
-celine.viewof("reevaluate-invalidation-example", () => {
-  return Inputs.button("Reevaluate cell", {
-    reduce: () => ++window.invalidationTrigger.value
-  });
-});
-</script>
-
 <script type="module" class="echo reflect" data-display="invalidation-example" contenteditable="true">
-celine.cell("invalidation-example", ["invalidation-trigger", "invalidation"], (trigger, invalidation) => {
-  invalidation.then(() => ++window.invalidationCount.value);
-  return `Current run: ${trigger}. Click the button above to invalidate this cell.`;
+celine.cell("invalidation-example", ["invalidation"], (invalidation) => {
+  invalidation.then(() => window.invalidationCount.value++);
 });
 </script>
 
-<script type="module" class="echo reflect" data-display="invalidation-count-display" contenteditable="true">
-celine.cell("invalidation-count-display", ["invalidation-count"], (count) => {
-  return `Disposed ${count} times`;
-});
+<script type="module" class="echo reflect" data-display="invalidation-count" contenteditable="true">
+window.invalidationCount = celine.mutable("invalidation-count", 0);
 </script>
+
 
 <h4><a href="#now" id="now"></a><code>now</code></h4>
 
@@ -882,20 +869,13 @@ celine.cell("now-example", ["now"], (now) => {
 <script type="module" class="echo reflect" data-display="responsive-plot" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
-celine.cell("responsive-plot", ["width"], (width) => {
-  const data = [
-    {x: "A", y: 1},
-    {x: "B", y: 4},
-    {x: "C", y: 2},
-    {x: "D", y: 3}
-  ];
+celine.cell("responsive-plot", ["width"], async (width) => {
+  const alphabet = await celine.library.alphabet();
 
   return Plot.plot({
     width,
-    height: 180,
     marks: [
-      Plot.ruleY([0]),
-      Plot.barY(data, {x: "x", y: "y"})
+      Plot.barY(alphabet, {x: "letter", y: "frequency"})
     ]
   });
 });
@@ -908,10 +888,16 @@ celine.cell("responsive-plot", ["width"], (width) => {
 </p>
 
 <script type="module" class="echo reflect" data-display="visibility-example" contenteditable="true">
-celine.cell("visibility-example", ["visibility"], async (visibility) => {
+celine.cell("visibility-example", ["visibility"], async function* (visibility) {
+  yield "Waiting to become visible...";
   await visibility();
-  return "This cell waited to render until it became visible.";
-});
+  let i = 0;
+  while (true) {
+    yield `I became visible ${i} seconds ago!`;
+    await library.Promises.delay(1000);
+    i++;
+  }
+})
 </script>
 
 <h2><a href="#1st-party-pairings" id="1st-party-pairings"></a>1st-party library pairings</h2>
