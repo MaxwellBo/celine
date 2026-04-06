@@ -8,6 +8,17 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>24.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@24.0.0"/>
+    <id>https://jsr.io/@celine/libertine@24.0.0</id>
+    <updated>2026-04-05T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> default <code>&lt;a&gt;</code> links no longer use an underline; underline appears on hover and active instead.
+      If you relied on always-visible underlines for every link state, add <code>text-decoration: underline</code> (or your own link styling) in your stylesheet.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>23.0.0</title>
     <link href="https://jsr.io/@celine/libertine@23.0.0"/>
     <id>https://jsr.io/@celine/libertine@23.0.0</id>

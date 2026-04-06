@@ -1,6 +1,6 @@
 {
   "name": "@celine/libertine",
-  "version": "23.0.0",
+  "version": "24.0.0",
   "license": "MIT",
   "exports": "./mod.ts"
 }
