@@ -137,7 +137,7 @@ aside {
 }
 
 pre {
-  font: var(--mono-fonts);
+  font: var(--mono_fonts);
   padding: 1ch;
   overflow: auto;
   background-color: #f3f3f3;
@@ -263,7 +263,7 @@ code {
   border: 1px solid #eee;
   padding: 0 3px 0.5px;
   border-radius: 4px;
-  font: var(--mono-fonts);
+  font: var(--mono_fonts);
   font-weight: inherit; /* font shorthand resets weight */
 }
 
