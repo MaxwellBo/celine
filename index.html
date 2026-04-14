@@ -180,7 +180,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">6.1.0</a>, <time  id="updated">Feb 26 2026</time></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">7.1.0</a>, <time  id="updated">Apr 13 2026</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -228,7 +228,7 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
 <pre class="echo" style="margin-bottom: 1ch;">&lt;script type=&quot;module&quot;&gt;
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@7.0.1';
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@7.1.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -246,7 +246,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@7.0.1/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@7.1.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -272,7 +272,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
-&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@7.0.1/global&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@7.1.0/global&quot;&gt;&lt;/script&gt;
 </pre>
 
 <p>
@@ -284,7 +284,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@7.0.1/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@7.1.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -900,6 +900,37 @@ celine.cell("visibility-example", ["visibility"], async function* (visibility) {
 })
 </script>
 
+<h2><a href="#cell-css" id="cell-css"></a>cell.css</h2>
+
+<p>
+  A cell's output is rendered by <a href="https://github.com/observablehq/inspector"><cite>@observablehq/inspector</cite></a>.
+  <a href="celine/cell.css">cell.css</a> adds cell-state specific styles:
+</p>
+
+<h3><a href="#pending-state" id="pending-state"></a>Pending</h3>
+
+<p>
+  While a cell is waiting on a <code>Promise</code>, the inspector applies a <code>observablehq--running</code> class on the cell's output element.
+</p> 
+
+<script type="module" class="echo reflect" data-display="status-pending-demo" contenteditable="true">
+celine.cell("status-pending-demo", () => {
+  return new Promise(() => {});
+});
+</script>
+
+<h3><a href="#rejected-state" id="rejected-state"></a>Rejected</h3>
+
+<p>
+  If a cell's definition throws, or a returned <code>Promise</code> rejects, the inspector applies a <code>observablehq--error</code> class on the cell's output element.
+</p>
+
+<script type="module" class="echo reflect" data-display="status-rejected-demo" contenteditable="true">
+celine.cell("status-rejected-demo", () => {
+  throw new Error("This cell has thrown an error");
+});
+</script>
+
 <h2><a href="#1st-party-pairings" id="1st-party-pairings"></a>1st-party library pairings</h2>
 
 <!-- <h3><a href="#dfn" id="dfn">&lt;dfn&gt;: The Definition element</h3>
@@ -1258,7 +1289,7 @@ celine.cell("module", () => {
   <li><a href="https://hazel.org/">Hazel</a></li>
   <li><a href="https://nota-lang.org/">Nota</a></li>
   <li><a href="https://plutojl.org/">Pluto.jl</a></li>
-  <li><a href="https://antonz.org/in-browser-code-playgrounds/">In-browser code playgrounds</a> (Anton Zhiyanov)</li>
+  <li><a href="https://antonz.org/in-browser-code-playgrounds/">In-browser code playgrounds</a></li>
   <li><a href="https://soupault.net/">Soupault</a></li>
   <li><a href="https://gwern.net/gwtar"><cite>Gwtar: a static efficient single-file HTML format</cite></a> (Gwern Branwen)</li>
 </ul>

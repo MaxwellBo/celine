@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>7.1.0</title>
+    <link href="https://jsr.io/@celine/celine@7.1.0"/>
+    <id>https://jsr.io/@celine/celine@7.1.0</id>
+    <updated>2026-04-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <code>cell.css</code>: braille loading animation for cells in the pending (<code>observablehq--running</code>) state. Documentation adds a <code>cell.css</code> section with pending and rejected state examples.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>7.0.0</title>
     <link href="https://jsr.io/@celine/celine@7.0.0"/>
     <id>https://jsr.io/@celine/celine@7.0.0</id>

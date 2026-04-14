@@ -1,6 +1,6 @@
 {
   "name": "@celine/celine",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "exports": {
     ".": "./mod.ts",
     "./global": "./global.mjs"
