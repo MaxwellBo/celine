@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>25.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@25.0.0"/>
+    <id>https://jsr.io/@celine/libertine@25.0.0</id>
+    <updated>2026-04-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> monospace text now prefers bundled <cite>DejaVu Sans Mono</cite> (<code>@font-face</code> rules and <code>--monospace-font-family</code>); ship the <code>fonts/dejavu/</code> directory next to <code>libertine.css</code>. Inline <code>&lt;code&gt;</code> sets <code>font-weight: inherit</code> so weight follows surrounding text. The <code>.highlight</code> fallback stack uses the same monospace family variable.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>24.1.0</title>
     <link href="https://jsr.io/@celine/libertine@24.1.0"/>
     <id>https://jsr.io/@celine/libertine@24.1.0</id>

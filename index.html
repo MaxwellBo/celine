@@ -256,7 +256,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@24.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@25.0.0/libertine.css&quot; /&gt;
 </pre>
 
 <h3><a href="#via-cdn-implicit-imports" id="via-cdn-implicit-imports"></a>via CDN, with implicit imports</h3>
@@ -294,7 +294,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/libertine@24.1.0/libertine.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/libertine@25.0.0/libertine.css&quot; /&gt;
 </pre>
 
 
@@ -449,7 +449,7 @@ celine.cell("chinook", async () => {
 
 <p>All of the following <code>&lt;script&gt;</code>s are marked <code>contenteditable</code> and reevaluate on <abbr title="loss of focus">blur</abbr>.</p>
 
-<h3><a href="#cell" id="cell"></a><code>celine.cell(name, [inputs, ]definition)</code></h3>
+<h3><a href="#cell" id="cell"></a><code>celine.cell(name,<wbr> [inputs, ]definition)</code></h3>
 
 <p>The <code>cell</code> constructor declares a reactive cell called <code>"${name}"</code>.</p>
 
@@ -513,7 +513,7 @@ celine.cell("hue", async function* () {
 </script>
 
 
-<h3><a href="#viewof" id="viewof"></a><code>celine.viewof(name, [inputs, ]definition)</code></h3>
+<h3><a href="#viewof" id="viewof"></a><code>celine.viewof(name,<wbr> [inputs, ]definition)</code></h3>
 
 <p>The <code>viewof</code> constructor is a special constructor designed to work with <a href="https://github.com/observablehq/inputs"><cite>Observable Inputs</cite></a>.</p>
 
@@ -553,7 +553,7 @@ celine.cell("strength", ["password"], (password) => {
 <p>For further information on how to create custom inputs, see the <a href="https://observablehq.com/@observablehq/synchronized-inputs"><cite>Synchronized Inputs</cite></a> guide.</p>
 
 
-<h3><a href="#silent" id="silent"></a><code>celine.silentCell(name, [inputs, ]definition)</code></h3>
+<h3><a href="#silent" id="silent"></a><code>celine.silentCell(name,<wbr> [inputs, ]definition)</code></h3>
 
 <p>The <code>silentCell</code> constructor declares a cell that doesn't need an element annotated with <code>
 data-display="${name}"</code> declared in the HTML. It is useful for cells that are used as inputs to other cells, but whose values do not need to be displayed.</p>
@@ -566,7 +566,7 @@ celine.silentCell("silent", () => {
 </script>
 
 
-<h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name, value)</code> / <code>celine.silentMutable(name, value)</code></h3>
+<h3><a href="#mutable" id="mutable"></a><code>celine.mutable(name,<wbr> value)</code> / <code>celine.silentMutable(name,<wbr> value)</code></h3>
 
 <p>The <code>mutable</code> (and <code>silentMutable</code>) constructor declares a cell <em>and</em> returns a reference that can be mutated. Mutations propagate to cells that depend upon it.</p>
 
@@ -591,7 +591,7 @@ celine.cell("sword", ["ref"], (ref) => {
 </script>
 
 
-<h3><a href="#import" id="import"></a><code>celine.import(source, cells)</code></h3>
+<h3><a href="#import" id="import"></a><code>celine.import(source,<wbr> cells)</code></h3>
 
 <p>The <code>import</code> method imports cells from <a href="https://observablehq.com/documentation/notebooks/"><cite>Observable Notebooks</cite></a>, emulating Observable's <a href="https://observablehq.com/documentation/notebooks/imports"><cite>import syntax</cite></a>. The <code>source</code> can be an Observable notebook URL (e.g. <a href="https://observablehq.com/@mjbo/celine-celine-import-target">https://observablehq.com/@mjbo/celine-celine-import-target</a>) or an API URL (e.g. <a href="https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4">https://api.observablehq.com/@mjbo/celine-celine-import-target.js?v=4</a>).</p>
 

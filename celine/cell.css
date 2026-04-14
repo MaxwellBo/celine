@@ -16,7 +16,7 @@
 /** keep in sync with libertine.css */
 .echo {
   display: block;
-  font-family: "FontWithASyntaxHighlighterLightOwl", monospace;
+  font-family: "FontWithASyntaxHighlighterLightOwl", 'DejaVu Sans Mono', Menlo, Consolas, monospace;
   font-feature-settings: "colr", "calt";
   white-space: pre;
   font-size: 0.83rem;
@@ -31,7 +31,7 @@
 
 
 .echo.dark {
-  font-family: "FontWithASyntaxHighlighter", monospace;
+  font-family: "FontWithASyntaxHighlighter", 'DejaVu Sans Mono', Menlo, Consolas, monospace;
   background-color: #282828;
   color: #eee;
 }

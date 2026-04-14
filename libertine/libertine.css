@@ -1,7 +1,40 @@
 @import url('./fonts/Libertinus/documentation/libertinus.css');
 
+@font-face {
+  font-family: 'DejaVu Sans Mono';
+  src: url('./fonts/dejavu/DejaVuSansMono.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DejaVu Sans Mono';
+  src: url('./fonts/dejavu/DejaVuSansMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DejaVu Sans Mono';
+  src: url('./fonts/dejavu/DejaVuSansMono-Oblique.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DejaVu Sans Mono';
+  src: url('./fonts/dejavu/DejaVuSansMono-BoldOblique.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  --mono-fonts: 82%/1.5 Menlo, Consolas, monospace;
+  --monospace-font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --mono-fonts: 82%/1.5 var(--monospace-font-family);
 }
 
 @font-face {
@@ -230,6 +263,7 @@ code {
   padding: 0 3px 0.5px;
   border-radius: 4px;
   font: var(--mono-fonts);
+  font-weight: inherit; /* font shorthand resets weight */
 }
 
 script, pre, style {
@@ -275,7 +309,7 @@ pre code {
 
 /* keep in sync with cell.css */
 .highlight {
-  font-family: "FontWithASyntaxHighlighterLightOwl", monospace !important;
+  font-family: "FontWithASyntaxHighlighterLightOwl", var(--monospace-font-family) !important;
   font-feature-settings: "colr", "calt";
   font-size: 0.83rem;
   line-height: 1.42;

@@ -44,6 +44,8 @@ jobs:
           cp celine/celine.bundle.mjs celine/cell.css dist/local-file-starter/celine/
           cp libertine/libertine.css dist/local-file-starter/libertine/
           cp libertine/fonts/FontWithASyntaxHighlighter-Regular.woff2 libertine/fonts/FontWithASyntaxHighlighterLightOwl-Regular.woff2 dist/local-file-starter/libertine/fonts/
+          mkdir -p dist/local-file-starter/libertine/fonts/dejavu
+          cp libertine/fonts/dejavu/* dist/local-file-starter/libertine/fonts/dejavu/
           cp libertine/fonts/Libertinus/documentation/libertinus.css dist/local-file-starter/libertine/fonts/Libertinus/documentation/
           cp libertine/fonts/Libertinus/static/WOFF2/*.woff2 dist/local-file-starter/libertine/fonts/Libertinus/static/WOFF2/
           (cd dist && zip -r local-file-starter.zip local-file-starter)
