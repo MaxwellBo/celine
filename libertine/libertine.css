@@ -1,40 +1,8 @@
 @import url('./fonts/Libertinus/documentation/libertinus.css');
 
-@font-face {
-  font-family: 'DejaVu Sans Mono';
-  src: url('./fonts/dejavu/DejaVuSansMono.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DejaVu Sans Mono';
-  src: url('./fonts/dejavu/DejaVuSansMono-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DejaVu Sans Mono';
-  src: url('./fonts/dejavu/DejaVuSansMono-Oblique.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DejaVu Sans Mono';
-  src: url('./fonts/dejavu/DejaVuSansMono-BoldOblique.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
 /* keep in sync with cell.css */
 :root {
-  --monospace-font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --monospace-font-family: Menlo, Consolas, monospace;
   --mono_fonts: 82%/1.5 var(--monospace-font-family);
 }
 
