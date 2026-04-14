@@ -69,13 +69,13 @@
       <cite>@celine/bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
         Components</a>-based referencing system for HTML documents. It aims to provide a similar user experience to
       referencing in LaTeX/BibTeX<sup><bh-cite><a href="#patashnik2007">[?]</a></bh-cite></sup>. It's a thin wrapper around <a
-        href="https://citation.js.org/">Citation.js</a><sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup> and 
+        href="https://citation.js.org/"><cite>Citation.js</cite></a><sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup> and 
       gracefully degrades when citations and references are malformed or JavaScript is disabled. 
     </p>
     <p>
-      <cite>@celine/bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer">@citation-js/replacer</a>, <a
-      href="https://lab.avl.la/references-webcomponent/">References Web Component</a><sup><bh-cite><a href="#avellar2021">[?]</a></bh-cite></sup>, and <a
-      href="https://nota-lang.org/reference.html#def-section-2.4">Nota's
+      <cite>@celine/bibhtml</cite> takes significant inspiration from <a href="https://github.com/citation-js/replacer"><cite>@citation-js/replacer</cite></a>, <a
+      href="https://lab.avl.la/references-webcomponent/"><cite>References Web Component</cite></a><sup><bh-cite><a href="#avellar2021">[?]</a></bh-cite></sup>, and <a
+      href="https://nota-lang.org/reference.html#def-section-2.4"><cite>Nota</cite>'s
       citations</a><sup><bh-cite><a href="#crichton2021nota">[?]</a></bh-cite></sup>.
     </p>
   </section>
@@ -194,7 +194,7 @@
 
   <p>
     Thus, to cite
-    <span id="inner-text-container">Citation.js<sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup></span> as a reference:
+    <span id="inner-text-container"><cite>Citation.js</cite><sup><bh-cite><a href="#willighagen2019">[?]</a></bh-cite></sup></span> as a reference:
   </p>
 
   <script data-display="inner-text-cell" type="module">
@@ -264,7 +264,7 @@
   </script>
 
   <p>
-    The <code>deref</code> flag <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferences</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by Citation.js.
+    The <code>deref</code> flag <a href="https://en.wikipedia.org/wiki/Indirection"><q>dereferences</q></a> a citation, setting the <code>href</code> attribute of the inner <code>&lt;a&gt;</code> element to the URL associated with the reference as determined by <cite>Citation.js</cite>.
 
     Thus, <span id="deref-container"><bh-cite deref><cite><a href="#mokhov2018">Build Systems à la Carte</a></cite></bh-cite></span> is <q>dereferenced</q> to link to <a href="https://doi.org/10.1145/3236774">https://doi.org/10.1145/3236774</a>.
   </p>
@@ -310,7 +310,7 @@
         </tr>
       <tr>
         <td class="fwbish">&lt;bh-cite deref&gt;<wbr>&lt;a href=&quot;#refId&quot;&gt;<wbr>...</td>
-        <td>URL yielded by Citation.js</td>
+        <td>URL yielded by <cite>Citation.js</cite></td>
       </tr>
     </tbody>
   </table>
@@ -399,13 +399,13 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#crichton2021nota">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex">@citation-js/plugin-bibtex</a>.
+    This expands to reference <bh-cite><a href="#crichton2021nota">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-bibtex"><cite>@citation-js/plugin-bibtex</cite></a>.
   </p>
 
   <h3>Unstructured text</h3>
 
   <p>
-    A <code>&lt;bh-reference&gt;</code> can contain unstructured text, and will display it unchanged. This format is useful when the reference is not in a machine readable format supported by <cite>@celine/bibhtml</cite> or Citation.js</li>. When reference information in a structured format is malformed, <cite>@celine/bibhtml</cite> will treat it as unstructured text and display it unchanged.
+    A <code>&lt;bh-reference&gt;</code> can contain unstructured text, and will display it unchanged. This format is useful when the reference is not in a machine readable format supported by <cite>@celine/bibhtml</cite> or <cite>Citation.js</cite>. When reference information in a structured format is malformed, <cite>@celine/bibhtml</cite> will treat it as unstructured text and display it unchanged.
   </p>
 
   <script data-display="text-cell" type="module">
@@ -429,7 +429,7 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#mokhov2018">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi">@citation-js/plugin-doi</a>.
+    This expands to reference <bh-cite><a href="#mokhov2018">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-doi"><cite>@citation-js/plugin-doi</cite></a>.
   </p>
 
   <h4>Wikidata</h4>
@@ -442,14 +442,14 @@
   </script>
 
   <p>
-    This expands to reference <bh-cite><a href="#patashnik2007">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata">@citation-js/plugin-wikidata</a>.
+    This expands to reference <bh-cite><a href="#patashnik2007">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-wikidata"><cite>@citation-js/plugin-wikidata</cite></a>.
   </p>
 
 
   <!-- <h4>Hayagriva (Typst)</h4> -->
 <!-- 
   <p>
-    <a href="https://typst.app/docs/reference/model/bibliography/">Hayagriva</a> is a new bibliography file format designed for use with <a href="https://typst.app/">Typst</a>.
+    <a href="https://typst.app/docs/reference/model/bibliography/"><cite>Hayagriva</cite></a> is a new bibliography file format designed for use with <a href="https://typst.app/"><cite>Typst</cite></a>.
   </p>
 
   <script data-display="hayagriva-cell" type="module">
@@ -459,7 +459,7 @@
     })
   </script>
 
-  This expands to reference <bh-cite><a href="#dependence">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-hayagriva">@citation-js/plugin-hayagriva</a>. -->
+  This expands to reference <bh-cite><a href="#dependence">[?]</a></bh-cite>, and is backed by <a href="https://www.npmjs.com/package/@citation-js/plugin-hayagriva"><cite>@citation-js/plugin-hayagriva</cite></a>. -->
 
   <h3><code>&lt;bh-bibliography&gt;</code></h3>
 
@@ -595,7 +595,7 @@ dependence:
 <h2><a href="#changelog" id="changelog"></a>changelog.xml <a href="changelog.xml"><img src="../static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>
 
 <p>
-  <cite>@celine/bibhtml</cite> uses <a href="https://semver.org/">Semantic Versioning 2.0.0</a>.
+  <cite>@celine/bibhtml</cite> uses <a href="https://semver.org/"><cite>Semantic Versioning 2.0.0</cite></a>.
 </p>
 
 <p><i>Showing 10 most recent entries.</i></p>
