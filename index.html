@@ -907,7 +907,7 @@ celine.cell("visibility-example", ["visibility"], async function* (visibility) {
   <a href="celine/cell.css">cell.css</a> adds cell-state specific styles:
 </p>
 
-<h3><a href="#pending-state" id="pending-state"></a>Pending</h3>
+<h3><a href="#pending-state" id="pending-state"></a>Pending state styling</h3>
 
 <p>
   While a cell is waiting on a <code>Promise</code>, the inspector applies a <code>observablehq--running</code> class on the cell's output element.
@@ -919,7 +919,7 @@ celine.cell("status-pending-demo", () => {
 });
 </script>
 
-<h3><a href="#rejected-state" id="rejected-state"></a>Rejected</h3>
+<h3><a href="#rejected-state" id="rejected-state"></a>Rejected state styling</h3>
 
 <p>
   If a cell's definition throws, or a returned <code>Promise</code> rejects, the inspector applies a <code>observablehq--error</code> class on the cell's output element.
