@@ -32,9 +32,10 @@
   font-display: swap;
 }
 
+/* keep in sync with cell.css */
 :root {
   --monospace-font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
-  --mono-fonts: 82%/1.5 var(--monospace-font-family);
+  --mono_fonts: 82%/1.5 var(--monospace-font-family);
 }
 
 @font-face {

@@ -14,9 +14,14 @@
 }
 
 /** keep in sync with libertine.css */
+:root {
+  --monospace-font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --mono_fonts: 82%/1.5 var(--monospace-font-family);
+}
+
 .echo {
   display: block;
-  font-family: "FontWithASyntaxHighlighterLightOwl", 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  font-family: "FontWithASyntaxHighlighterLightOwl", var(--monospace-font-family);
   font-feature-settings: "colr", "calt";
   white-space: pre;
   font-size: 0.83rem;
@@ -31,7 +36,7 @@
 
 
 .echo.dark {
-  font-family: "FontWithASyntaxHighlighter", 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  font-family: "FontWithASyntaxHighlighter", var(--monospace-font-family);
   background-color: #282828;
   color: #eee;
 }
@@ -99,7 +104,26 @@ style.reflect::after {
     content: '\280B';
   }
 }
+
 .observablehq--running::before {
   content: '\280B';
   animation: braille-spin 1s linear infinite;
 }
+
+/* .observablehq:before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  height: 100%;
+  width: 4px;
+  transition: background-color .25s linear
+}
+
+.observablehq--error:before {
+  background-color: #e7040f
+}
+
+.observablehq--changed:before,.observablehq--running:before {
+  background-color: #a9b0bc;
+  transition: none
+} */
