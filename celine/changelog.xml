@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>8.0.0</title>
+    <link href="https://jsr.io/@celine/celine@8.0.0"/>
+    <id>https://jsr.io/@celine/celine@8.0.0</id>
+    <updated>2026-04-14T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> <code>cell.css</code> <code>--monospace-font-family</code> no longer prefers <cite>DejaVu Sans Mono</cite> (TTF webfonts are unreliable in Safari); it now matches <cite>libertine.css</cite> with <code>Menlo, Consolas, monospace</code>.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>7.2.0</title>
     <link href="https://jsr.io/@celine/celine@7.2.0"/>
     <id>https://jsr.io/@celine/celine@7.2.0</id>

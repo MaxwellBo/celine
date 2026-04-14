@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/libertine/changelog.xml</id>
 
   <entry>
+    <title>26.0.0</title>
+    <link href="https://jsr.io/@celine/libertine@26.0.0"/>
+    <id>https://jsr.io/@celine/libertine@26.0.0</id>
+    <updated>2026-04-14T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> <code>libertine.css</code> no longer registers <cite>DejaVu Sans Mono</cite> or lists it in <code>--monospace-font-family</code> (bundled TTF files are unreliable in Safari). Monospace UI falls back to <code>Menlo, Consolas, monospace</code>. The <code>fonts/dejavu/</code> directory remains in the package for optional local use.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>25.0.0</title>
     <link href="https://jsr.io/@celine/libertine@25.0.0"/>
     <id>https://jsr.io/@celine/libertine@25.0.0</id>

@@ -15,7 +15,7 @@
 
 /** keep in sync with libertine.css */
 :root {
-  --monospace-font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --monospace-font-family: Menlo, Consolas, monospace;
   --mono_fonts: 82%/1.5 var(--monospace-font-family);
 }
 
