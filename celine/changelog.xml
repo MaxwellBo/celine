@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>8.1.0</title>
+    <link href="https://jsr.io/@celine/celine@8.1.0"/>
+    <id>https://jsr.io/@celine/celine@8.1.0</id>
+    <updated>2026-04-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <code>registerScriptReevaluationOnBlur</code> now watches for later-added editable script cells so newly created cells reevaluate on blur.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>8.0.0</title>
     <link href="https://jsr.io/@celine/celine@8.0.0"/>
     <id>https://jsr.io/@celine/celine@8.0.0</id>

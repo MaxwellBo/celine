@@ -359,10 +359,25 @@ export function reevaluateOnBlur(document: Document, className: string) {
 
 /**
  * Sets up automatic reevaluation of editable script elements on blur.
- * When a script element marked with the specified class loses focus,
- * it will be replaced with a new script element containing the updated content.
+ * Initial and later-added script elements marked with the specified class
+ * are replaced with new script elements containing their updated content
+ * when they lose focus.
  */
 export function registerScriptReevaluationOnBlur(document: Document, className: string) {
+  const selector = `script.${className}[contenteditable='true']`;
+  const registered = new WeakSet<Element>();
+
+  function register(script: Element) {
+    if (registered.has(script)) return;
+    script.addEventListener("blur", reevaluate as EventListener);
+    registered.add(script);
+  }
+
+  function registerElementAndDescendants(element: Element) {
+    if (element.matches(selector)) register(element);
+    element.querySelectorAll(selector).forEach(register);
+  }
+
   function reevaluate(event: Event) {
     const old = event.target as HTMLScriptElement;
     const neww = document.createElement("script");
@@ -371,15 +386,28 @@ export function registerScriptReevaluationOnBlur(document: Document, className: 
     for (let i = 0; i < old.attributes.length; i++) {
       neww.setAttribute(old.attributes[i].name, old.attributes[i].value || "");
     }
-    neww.addEventListener("blur", reevaluate);
+    register(neww);
 
     old.parentNode!.insertBefore(neww, old);
     old.parentNode!.removeChild(old);
   }
 
-  document
-    .querySelectorAll(`script.${className}[contenteditable='true']`)
-    .forEach((script) => {
-      script.addEventListener("blur", reevaluate as EventListener);
-    });
+  document.querySelectorAll(selector).forEach(register);
+
+  new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "childList") {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) registerElementAndDescendants(node);
+        });
+      } else if (mutation.type === "attributes" && mutation.target instanceof Element) {
+        registerElementAndDescendants(mutation.target);
+      }
+    }
+  }).observe(document, {
+    attributes: true,
+    attributeFilter: ["class", "contenteditable"],
+    childList: true,
+    subtree: true,
+  });
 }

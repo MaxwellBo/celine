@@ -180,7 +180,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">8.0.0</a>, <time  id="updated">Apr 14 2026</time></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">8.1.0</a>, <time  id="updated">Apr 28 2026</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -228,7 +228,7 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
 <pre class="echo" style="margin-bottom: 1ch;">&lt;script type=&quot;module&quot;&gt;
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@8.0.0';
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@8.1.0';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -246,7 +246,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@8.0.0/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -272,7 +272,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
-&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@8.0.0/global&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/global&quot;&gt;&lt;/script&gt;
 </pre>
 
 <p>
@@ -284,7 +284,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@8.0.0/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -931,7 +931,9 @@ celine.cell("status-rejected-demo", () => {
 });
 </script>
 
-<h2><a href="#1st-party-pairings" id="1st-party-pairings"></a>1st-party library pairings</h2>
+<h2><a href="#recipes" id="recipes"></a>Recipes</h2>
+
+<h3><a href="#1st-party-pairings" id="1st-party-pairings"></a>1st-party library pairings</h3>
 
 <!-- <h3><a href="#dfn" id="dfn">&lt;dfn&gt;: The Definition element</h3>
 
@@ -939,7 +941,7 @@ celine.cell("status-rejected-demo", () => {
   HTML has a little known element, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn">&lt;dfn&gt;</a>, that can be used to define terms.
 </p> -->
 
-<h3><a href="#celine-libertine" id="celine-libertine"></a>@celine/libertine</h3>
+<h4><a href="#celine-libertine" id="celine-libertine"></a>@celine/libertine</h4>
 
 <p><cite>@celine/libertine</cite> provides a stylesheet based around the <a href="https://en.wikipedia.org/wiki/Linux_Libertine"><cite>Linux Libertine</cite></a> typeface, one common in academic typesetting.</p>
 
@@ -947,7 +949,7 @@ celine.cell("status-rejected-demo", () => {
   Information about it lives on a subpage, <a href="./libertine/index.html">/libertine</a>.
 </p>
 
-<h3><a href="#celine-bibhtml" id="celine-bibhtml"></a>@celine/bibhtml</h3>
+<h4><a href="#celine-bibhtml" id="celine-bibhtml"></a>@celine/bibhtml</h4>
 
 <p>
   <cite>@celine/bibhtml</cite> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components">Web
@@ -958,11 +960,11 @@ celine.cell("status-rejected-demo", () => {
 </p>
 
 
-<h2><a href="#3rd-party-library-pairings" id="#3rd-party-library-pairings"></a>3rd-party library pairings</h2>
+<h3><a href="#3rd-party-library-pairings" id="#3rd-party-library-pairings"></a>3rd-party library pairings</h3>
 <p>Some libraries that pair well with <cite>@celine/celine</cite> are:</p>
 
 
-<h3><a id="pyodide" href="#pyodide"></a>Pyodide</h3>
+<h4><a id="pyodide" href="#pyodide"></a>Pyodide</h4>
 
 <p><a href="https://pyodide.org/"><cite>Pyodide</cite></a> is a port of CPython to WebAssembly.</p>
 
@@ -980,7 +982,7 @@ x.mean()
 });
 </script>
 
-<h3><a id="webr" href="#webr"></a>WebR</h3>
+<h4><a id="webr" href="#webr"></a>WebR</h4>
 
 <p><a href="https://docs.r-wasm.org/webr/latest/"><cite>WebR</cite></a> is a version of the statistical language R compiled for the browser using WebAssembly, via Emscripten.</p>
 
@@ -998,7 +1000,7 @@ print(summary(fit))`);
 });
 </script>
 
-    <h3><a id="penrose" href="#penrose"></a>Penrose</h3>
+    <h4><a id="penrose" href="#penrose"></a>Penrose</h4>
 
     <p><a href="https://penrose.cs.cmu.edu/"><cite>Penrose</cite></a>, a system for creating beautiful diagrams just by typing notation in plain text.</p>
 
@@ -1183,9 +1185,9 @@ celine.viewof("save", () => {
     }
   });
 });
-</script>
+</script> -->
 
-<h2><a href="#new-cell" id="new-script"></a>Creating new cells</h2>
+<h3><a href="#new-cell" id="new-script"></a>Creating new cells</h3>
 
 <p>
   You can allow the user to create new cells:
@@ -1213,7 +1215,7 @@ celine.cell("new-cell-${value}", () => {
     }
   });
 });
-</script> -->
+</script>
 
 
 <!-- <h2><a href="#introspection" id="introspection"></a>Introspection</h2>
