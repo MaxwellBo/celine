@@ -472,8 +472,10 @@ async function isSyntaxValid(script: HTMLScriptElement): Promise<unknown | null>
 
   const source = script.textContent ?? "";
   const sentinelLine = source.split("\n").length + 2;
-  const sentinel = "#CELINE_SENTINEL_SYNTAX_ERROR";
-  const blob = new Blob([`${source}\n\n${sentinel}`], { type: "text/javascript" });
+  const sentinel = "__CELINE_SENTINEL_SYNTAX_ERROR__";
+  const blob = new Blob([
+    `${source}\n\nexport const ${sentinel} = 0;\nexport { ${sentinel} };`
+  ], { type: "text/javascript" });
   const url = URL.createObjectURL(blob);
 
   try {
@@ -488,11 +490,13 @@ async function isSyntaxValid(script: HTMLScriptElement): Promise<unknown | null>
       ? `${error.message}\n${error.stack ?? ""}`
       : String(error);
 
-    const stoppedAtSentinel = lineNumber === sentinelLine ||
-      text.includes(sentinel) ||
+    const reportedAtSentinelLine = lineNumber === sentinelLine ||
       text.includes(`${url}:${sentinelLine}:`) ||
       text.includes(`${url}:${sentinelLine}`) ||
       text.includes(`:${sentinelLine}:`);
+
+    const stoppedAtSentinel = reportedAtSentinelLine ||
+      text.includes(sentinel);
 
     return stoppedAtSentinel ? null : error;
   } finally {

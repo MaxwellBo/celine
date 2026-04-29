@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>9.1.0</title>
+    <link href="https://jsr.io/@celine/celine@9.1.0"/>
+    <id>https://jsr.io/@celine/celine@9.1.0</id>
+    <updated>2026-04-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      Editable module script syntax preflight now uses a duplicate-export sentinel so valid scripts are not mistaken for syntax errors on iOS/WebKit.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>9.0.0</title>
     <link href="https://jsr.io/@celine/celine@9.0.0"/>
     <id>https://jsr.io/@celine/celine@9.0.0</id>
