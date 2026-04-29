@@ -69,16 +69,39 @@ style.reflect::after {
   display: inline;
 }
 
-@keyframes observablehq-running-throb {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scaleY(0.92);
+@keyframes braille-spin {
+  0% {
+    content: '\280B';
   }
-
+  10% {
+    content: '\2819';
+  }
+  20% {
+    content: '\2839';
+  }
+  30% {
+    content: '\2838';
+  }
+  40% {
+    content: '\283C';
+  }
   50% {
-    opacity: 1;
-    transform: scaleY(1);
+    content: '\2834';
+  }
+  60% {
+    content: '\2826';
+  }
+  70% {
+    content: '\2827';
+  }
+  80% {
+    content: '\2807';
+  }
+  90% {
+    content: '\280F';
+  }
+  100% {
+    content: '\280B';
   }
 }
 
@@ -88,17 +111,15 @@ style.reflect::after {
 }
 
 .observablehq.observablehq--running::before {
-  content: '';
+  content: '\280B';
+  color: #6f7783;
   position: absolute;
-  left: -7px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  border-radius: 1px;
-  background-color: rgb(169, 176, 188);
-  transform-origin: center left;
+  right: 100%;
+  margin-right: 0.3em;
+  top: 50%;
+  transform: translateY(-50%);
   pointer-events: none;
-  animation: observablehq-running-throb 1.1s ease-in-out infinite;
+  animation: braille-spin 1s linear infinite;
 }
 
 .observablehq.observablehq--running:empty {

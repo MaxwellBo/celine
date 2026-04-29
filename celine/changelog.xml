@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>8.2.0</title>
+    <link href="https://jsr.io/@celine/celine@8.2.0"/>
+    <id>https://jsr.io/@celine/celine@8.2.0</id>
+    <updated>2026-04-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <code>cell.css</code>: cells in the pending (<code>observablehq--running</code>) state now show an animated Unicode braille spinner to the left of the cell instead of a vertical throbbing bar.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>8.1.1</title>
     <link href="https://jsr.io/@celine/celine@8.1.1"/>
     <id>https://jsr.io/@celine/celine@8.1.1</id>
