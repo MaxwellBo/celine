@@ -69,45 +69,41 @@ style.reflect::after {
   display: inline;
 }
 
-@keyframes braille-spin {
-  0% {
-    content: '\280B';
-  }
-  10% {
-    content: '\2819';
-  }
-  20% {
-    content: '\2839';
-  }
-  30% {
-    content: '\2838';
-  }
-  40% {
-    content: '\283C';
-  }
-  50% {
-    content: '\2834';
-  }
-  60% {
-    content: '\2826';
-  }
-  70% {
-    content: '\2827';
-  }
-  80% {
-    content: '\2807';
-  }
-  90% {
-    content: '\280F';
-  }
+@keyframes observablehq-running-throb {
+  0%,
   100% {
-    content: '\280B';
+    opacity: 0.35;
+    transform: scaleY(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 
-.observablehq--running::before {
-  content: '\280B';
-  animation: braille-spin 1s linear infinite;
+.observablehq.observablehq--running {
+  display: inline-block;
+  position: relative;
+}
+
+.observablehq.observablehq--running::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 1px;
+  background-color: rgb(169, 176, 188);
+  transform-origin: center left;
+  pointer-events: none;
+  animation: observablehq-running-throb 1.1s ease-in-out infinite;
+}
+
+.observablehq.observablehq--running:empty {
+  min-width: 1ch;
+  min-height: 1em;
 }
 
 /* .observablehq:before {
