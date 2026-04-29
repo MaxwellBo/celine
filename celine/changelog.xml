@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>8.1.1</title>
+    <link href="https://jsr.io/@celine/celine@8.1.1"/>
+    <id>https://jsr.io/@celine/celine@8.1.1</id>
+    <updated>2026-04-28T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      Saved notebooks now reuse existing Observable inspector output nodes when cells reevaluate, avoiding duplicate rendered outputs after reopening.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>8.1.0</title>
     <link href="https://jsr.io/@celine/celine@8.1.0"/>
     <id>https://jsr.io/@celine/celine@8.1.0</id>

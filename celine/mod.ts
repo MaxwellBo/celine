@@ -62,7 +62,6 @@ export class CelineModule {
   }
 
   private observer(name: string): Inspector {
-    const div = this.document.createElement("div");
     const elementContainer = this.document.querySelector(`[data-display="${name}"]`);
 
     if (!elementContainer) {
@@ -76,7 +75,20 @@ export class CelineModule {
         2) Use celine.silentCell instead of celine.cell if you don't want to display the cell's current value anywhere.`);
     }
 
-    elementContainer.parentNode!.insertBefore(div, elementContainer);
+    // Saved notebooks include the previous inspector output in the HTML. When
+    // reopening them, reuse that node instead of inserting a duplicate output.
+    const previousElement = elementContainer.previousElementSibling;
+    const savedOutputElement = previousElement?.tagName === "DIV" &&
+      previousElement.classList.contains("observablehq");
+
+    const div = savedOutputElement
+      ? previousElement as HTMLDivElement
+      : this.document.createElement("div");
+
+    if (!div.parentNode) {
+      elementContainer.parentNode!.insertBefore(div, elementContainer);
+    }
+
     const observer = new Inspector(div);
     const errorLoggingObserver = {
       pending: () => observer.pending?.(),
@@ -135,15 +147,21 @@ export class CelineModule {
   }
 
   private _cell(observerVisibility: ObserverVisibility, name: string, inputsOrDefinition: Inputs | Definition, maybeDefinition?: Definition) {
-    const observer = observerVisibility === "visible" ? this.observer(name) : undefined;
-    const variable = this.module._scope.get(name) || this.module.variable(observer);
+    const existingVariable = this.module._scope.get(name);
+
+    // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
+    // Observable represents "no observer" with a private Symbol. 
+    const variableHasNoObserver = existingVariable && typeof existingVariable._observer === 'symbol';
+    const needsObserver = observerVisibility === "visible" && (!existingVariable || variableHasNoObserver);
+    const observer = needsObserver
+      ? this.observer(name)
+      : undefined;
+    const variable = existingVariable || this.module.variable(observer);
     const inputs: Inputs = Array.isArray(inputsOrDefinition) ? inputsOrDefinition : [];
     const definition: Definition = Array.isArray(inputsOrDefinition) ? maybeDefinition! : inputsOrDefinition;
 
-    // https://github.com/observablehq/runtime/blob/622a1974087f03545b5e91c8625b46874e82e4df/src/variable.js#L11
-    // if a variable's observer is a symbol, it means it's a Symbol("no-observer")
-    // that means we need to redefine it
-    if (typeof variable._observer === 'symbol' && observer) {
+    // If a cell was previously silent but is now visible, redefine it with a real observer.
+    if (variableHasNoObserver && observer) {
       if (inputs && definition) {
         variable.redefine(name, inputs, definition);
       } else {

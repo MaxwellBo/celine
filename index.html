@@ -180,7 +180,7 @@
       <td class="width-auto"><a href="https://jsr.io/@celine/celine">jsr.io/<wbr>@celine/<wbr>celine</a> + <a href="https://jsr.io/@celine/celine/doc">/docs</a></td>
       <th>Version</th>
       <!-- these should be updated to the best of your ability -->
-      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">8.1.0</a>, <time  id="updated">Apr 28 2026</time></td>
+      <td class="width-min"><a href="https://jsr.io/@celine/celine/versions" id="version">8.1.1</a>, <time  id="updated">Apr 28 2026</time></td>
     </tr>
     <script type="module">
       fetch("https://npm.jsr.io/@jsr/celine__celine")
@@ -228,7 +228,7 @@
 <p>Add the following <code>&lt;script&gt;</code> element to your HTML file's <code>&lt;head&gt;</code> block:</p> 
 
 <pre class="echo" style="margin-bottom: 1ch;">&lt;script type=&quot;module&quot;&gt;
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@8.1.0';
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@8.1.1';
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
 import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -246,7 +246,7 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.1/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -272,7 +272,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 </p>
 
 <pre class="echo" style="margin-bottom: 1ch;">
-&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/global&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/celine@8.1.1/global&quot;&gt;&lt;/script&gt;
 </pre>
 
 <p>
@@ -284,7 +284,7 @@ You may want to include <cite>@celine/celine</cite>'s drop-in stylesheet, <a hre
 <pre class="echo" style="margin-bottom: 1ch;">
 &lt;link 
   rel=&quot;stylesheet&quot; 
-  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.0/cell.css&quot; /&gt;
+  href=&quot;https://esm.sh/jsr/@celine/celine@8.1.1/cell.css&quot; /&gt;
 </pre>
 
 <p>
@@ -1164,29 +1164,6 @@ celine.cell("bloom", async () => {
 </script>
 </details>
 
-<!-- <h2><a href="#saving" id="saving"></a>Saving modified notebooks</h2>
-
-<p>
-  If you make changes to <code>contenteditable</code> elements, you are able to save the notebook, with changes, as a new file.
-</p>
-
-<script data-display="viewof save" type="module" class="echo reflect" contenteditable="true">
-celine.viewof("save", () => {
-  return Inputs.button("Save", {
-    reduce: async () => {
-      const filename = prompt("Enter a filename", "index.html");
-      const content = document.documentElement.outerHTML;
-      const blob = new Blob([content], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.click();
-    }
-  });
-});
-</script> -->
-
 <h3><a href="#new-cell" id="new-script"></a>Creating new cells</h3>
 
 <p>
@@ -1212,6 +1189,29 @@ celine.cell("new-cell-${value}", () => {
       (document.getElementById(`new-cell-${value - 1}`) || document.getElementById('viewof-new-cell'))
         .insertAdjacentElement('afterend', script);
       return value + 1;
+    }
+  });
+});
+</script>
+
+<h3><a href="#saving" id="saving"></a>Saving modified notebooks</h3>
+
+<p>
+  If you make changes to <code>contenteditable</code> elements, you are able to save the notebook, with changes, as a new file.
+</p>
+
+<script data-display="viewof save" type="module" class="echo reflect" contenteditable="true">
+celine.viewof("save", () => {
+  return Inputs.button("Save", {
+    reduce: async () => {
+      const filename = prompt("Enter a filename", "index.html");
+      const content = document.documentElement.outerHTML;
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
     }
   });
 });
