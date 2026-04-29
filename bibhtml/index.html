@@ -101,7 +101,7 @@
         <th>JSR</th>
         <td class="width-auto"><a href="https://jsr.io/@celine/bibhtml">jsr.io/<wbr>@celine/<wbr>bibhtml</a> + <a href="https://jsr.io/@celine/bibhtml/doc">/docs</a></td>
         <th>Version</th>
-        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">5.1.0</a>, <time  id="updated">Apr 6 2026</time></td>
+        <td class="width-min"><a href="https://jsr.io/@celine/bibhtml/versions" id="version">6.0.0</a>, <time  id="updated">Apr 29 2026</time></td>
       </tr>
       <script type="module">
         fetch("https://npm.jsr.io/@jsr/celine__bibhtml")
@@ -126,7 +126,7 @@
   </p>
 
   <pre class="echo dark">
-&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/bibhtml@5.1.0&quot;&gt;&lt;/script&gt;</pre>
+&lt;script type=&quot;module&quot; src=&quot;https://esm.sh/jsr/@celine/bibhtml@6.0.0&quot;&gt;&lt;/script&gt;</pre>
 
   <h3><a href="#via-local-file" id="via-local-file"></a>via local file</h3>
 
@@ -159,6 +159,7 @@
   <pre class="echo dark">
 &lt;bh-cite&gt;&lt;a href=&quot;#willighagen2019&quot;&gt;[?]&lt;/a&gt;&lt;/bh-cite&gt;
 ...
+&lt;bh-bibliography format="apa"&gt;
 &lt;bh-reference id="willighagen2019"&gt;
   @article{willighagen2019,
   title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
@@ -174,8 +175,6 @@
   doi = {10.7717/peerj-cs.214}
   }
 &lt;/bh-reference&gt;
-...
-&lt;bh-bibliography format="apa"&gt;
 &lt;/bh-bibliography&gt;</pre>
 
   <p>
@@ -467,17 +466,16 @@
     The <code>&lt;bh-bibliography&gt;</code> finds <code>&lt;bh-reference&gt;</code>s and renders them in a formatted list (like at the <a href="#references">bottom of the page</a>). 
   </p>
   <p>
-    <code>&lt;/bh-bibliography&gt;</code> has simple calling semantics:
+    <code>&lt;bh-bibliography&gt;</code> has simple markup:
   </p>
   <br />
 
   <pre class="echo dark">
 &lt;bh-bibliography format="apa"&gt;
+  &lt;bh-reference id="refId"&gt;
+    ...
+  &lt;/bh-reference&gt;
 &lt;/bh-bibliography&gt;</pre>
-
-  <p style="border: 1px solid orange; background-color: #fff8e1; border-radius: 8px; padding: 10px; margin: 10px;">
-    Do not put <code>&lt;bh-reference&gt;</code> elements inside the <code>&lt;bh-bibliography&gt;</code> element. Everything will break.
-  </p>
 
     <p>The <code>format</code> attribute sets the citation style. Currently only 1 is supported, <code>"apa"</code>.</p>
     <p>References are rendered in the order they are cited by <code>&lt;bh-cite&gt;</code> elements, <i>not</i> the order they are declared in the HTML document.</p>
@@ -507,6 +505,7 @@
 
   <h2 id="references">References</h2>
 
+<bh-bibliography format="apa">
 <bh-reference id="willighagen2019">
   @article{willighagen2019,
   title = {Citation.js: a format-independent, modular bibliography tool for the browser and command line},
@@ -588,8 +587,6 @@ dependence:
 <bh-reference id="jacobs2018house">
   Jacobs, J., Mervosh, S., & Stevens, M. (2018, November 7). When the House and the Senate are controlled by different parties, who wins? The New York Times. Retrieved from <a href="https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html">https://www.nytimes.com/2018/11/07/us/politics/house-senate-difference-control.html</a>
 </bh-reference>
-
-<bh-bibliography format="apa">
 </bh-bibliography>
 
 <h2><a href="#changelog" id="changelog"></a>changelog.xml <a href="changelog.xml"><img src="../static/rss.svg" alt="RSS feed icon" style="width: 1ch; height: 1ch; vertical-align: middle; display: inline-block;"></a></h2>

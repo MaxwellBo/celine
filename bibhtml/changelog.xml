@@ -6,7 +6,16 @@
     <name>Max Bo</name>
   </author>
   <id>https://maxbo.me/celine/bibhtml/changelog.xml</id>
-  <updated>2026-04-05T00:00:00Z</updated>
+  <updated>2026-04-29T00:00:00Z</updated>
+  <entry>
+    <title>6.0.0</title>
+    <link href="https://jsr.io/@celine/bibhtml@6.0.0"/>
+    <id>https://jsr.io/@celine/bibhtml@6.0.0</id>
+    <updated>2026-04-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <code>&lt;bh-reference&gt;</code> elements now live inside <code>&lt;bh-bibliography&gt;</code>, which owns and rearranges them into citation order.
+    ]]></summary>
+  </entry>
   <entry>
     <title>5.1.0</title>
     <link href="https://jsr.io/@celine/bibhtml@5.1.0"/>

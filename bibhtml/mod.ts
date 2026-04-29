@@ -251,16 +251,22 @@ export class BibhtmlReference extends HTMLElement {
     this.render();
   }
 
-  connectedCallback() {
+  ensureCitation() {
+    this._originalContent ??= this.textContent;
+
     if (!this._citation && this._citationPromise == null) {
-      this._citationPromise = Cite.async(this.textContent).then((citation: unknown) => {
+      this._citationPromise = Cite.async(this._originalContent).then((citation: unknown) => {
         this._citation = citation;
         this.render();
         return getBibliography().then(bib => bib.render())
       }).catch((e: unknown) => {
-        console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this.textContent, e);
+        console.log(`Could not parse <${BibhtmlReference.customElementName}> innerText with Citation.js. See https://citation.js.org/ for valid formats. innerText was:`, this._originalContent, e);
       });
     }
+  }
+
+  connectedCallback() {
+    this.ensureCitation();
 
     if (!this._notifiedBibliography) {
       this._notifiedBibliography = true;
@@ -309,9 +315,11 @@ export class BibhtmlBibliography extends HTMLElement {
 
   _refIdToReference: Map<string, BibhtmlReference> = new Map();
   _refIdToCitations: Map<string, BibhtmlCite[]> = new Map();
+  _referencesInitialized = false;
+  _referencesInitializationPromise: Promise<void> | null = null;
 
   connectedCallback() {
-    this.render();
+    this.ensureReferencesInitialized().then(() => this.render());
   }
 
   static get observedAttributes(): string[] {
@@ -322,6 +330,33 @@ export class BibhtmlBibliography extends HTMLElement {
     if (name === 'format') {
       this.render();
     }
+  }
+
+  ensureReferencesInitialized(): Promise<void> {
+    if (this._referencesInitialized) {
+      return Promise.resolve();
+    }
+
+    if (this._referencesInitializationPromise) {
+      return this._referencesInitializationPromise;
+    }
+
+    this._referencesInitializationPromise = customElements.whenDefined(BibhtmlReference.customElementName).then(() => {
+      const references = Array.from(this.querySelectorAll(BibhtmlReference.customElementName)) as BibhtmlReference[];
+
+      for (const reference of references) {
+        if (!reference.id) {
+          continue;
+        }
+
+        reference.ensureCitation();
+        this._refIdToReference.set(reference.id, reference);
+      }
+
+      this._referencesInitialized = true;
+    });
+
+    return this._referencesInitializationPromise;
   }
 
   addReference(refId: string, reference: BibhtmlReference) {
@@ -346,6 +381,15 @@ export class BibhtmlBibliography extends HTMLElement {
   }
 
   render() {
+    if (!this.isConnected) {
+      return;
+    }
+
+    if (!this._referencesInitialized) {
+      this.ensureReferencesInitialized().then(() => this.render());
+      return;
+    }
+
     const ol = document.createElement('ol');
     ol.style.overflowWrap = 'break-word';
 
