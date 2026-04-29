@@ -105,21 +105,31 @@ style.reflect::after {
   }
 }
 
-.observablehq.observablehq--running {
+.observablehq.observablehq--running,
+.observablehq.observablehq--error {
   display: inline-block;
   position: relative;
+}
+
+.observablehq.observablehq--running::before,
+.observablehq.observablehq--error::before {
+  position: absolute;
+  right: 100%;
+  margin-right: 0.3em;
+  top: 50%;
+  transform: translate(1px, -50%);
+  pointer-events: none;
 }
 
 .observablehq.observablehq--running::before {
   content: '\280B';
   color: #6f7783;
-  position: absolute;
-  right: 100%;
-  margin-right: 0.3em;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
   animation: braille-spin 1s linear infinite;
+}
+
+.observablehq.observablehq--error::before {
+  content: '!';
+  color: #e7040f;
 }
 
 .observablehq.observablehq--running:empty {

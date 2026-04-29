@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>9.2.0</title>
+    <link href="https://jsr.io/@celine/celine@9.2.0"/>
+    <id>https://jsr.io/@celine/celine@9.2.0</id>
+    <updated>2026-04-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      Running and error cell status markers now use aligned left-side styling, with error cells showing an exclamation mark indicator.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>9.1.0</title>
     <link href="https://jsr.io/@celine/celine@9.1.0"/>
     <id>https://jsr.io/@celine/celine@9.1.0</id>
