@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "bun ./index.html ./overview.html ./bibhtml/index.html ./libertine/index.html"
+    "dev": "bun ./index.html ./overview.html ./bibhtml/index.html ./libertine/index.html",
+    "dev:no-overlay": "bun dev-without-bun-overlay.ts"
   },
   "dependencies": {
     "@citation-js/core": "0.7.21",

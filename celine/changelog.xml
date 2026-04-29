@@ -8,6 +8,16 @@
   <id>https://maxbo.me/celine/celine/changelog.xml</id>
 
   <entry>
+    <title>9.0.0</title>
+    <link href="https://jsr.io/@celine/celine@9.0.0"/>
+    <id>https://jsr.io/@celine/celine@9.0.0</id>
+    <updated>2026-04-29T00:00:00Z</updated>
+    <summary type="html"><![CDATA[
+      <strong>Breaking:</strong> Removed the deprecated <code>reevaluateOnBlur</code> export. Use <code>registerScriptReevaluationOnBlur</code> instead. Editable module scripts now preflight syntax errors before reevaluation and report them above the script.
+    ]]></summary>
+  </entry>
+
+  <entry>
     <title>8.2.0</title>
     <link href="https://jsr.io/@celine/celine@8.2.0"/>
     <id>https://jsr.io/@celine/celine@8.2.0</id>

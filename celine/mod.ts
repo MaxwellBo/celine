@@ -77,9 +77,11 @@ export class CelineModule {
 
     // Saved notebooks include the previous inspector output in the HTML. When
     // reopening them, reuse that node instead of inserting a duplicate output.
+    // Do not reuse `celine-syntax-error` hosts (script parse errors).
     const previousElement = elementContainer.previousElementSibling;
     const savedOutputElement = previousElement?.tagName === "DIV" &&
-      previousElement.classList.contains("observablehq");
+      previousElement.classList.contains("observablehq") &&
+      !previousElement.classList.contains(CELINE_SYNTAX_ERROR_CLASS);
 
     const div = savedOutputElement
       ? previousElement as HTMLDivElement
@@ -368,18 +370,11 @@ function Mutable<T>(value: T): { value: T } {
 }
 
 /**
- * @deprecated since 1.0.0 Use registerScriptReevaluationOnBlur instead.
- */
-export function reevaluateOnBlur(document: Document, className: string) {
-  console.warn("The reevaluateOnBlur function is deprecated. Use registerScriptReevaluationOnBlur instead.");
-  registerScriptReevaluationOnBlur(document, className);
-}
-
-/**
- * Sets up automatic reevaluation of editable script elements on blur.
- * Initial and later-added script elements marked with the specified class
- * are replaced with new script elements containing their updated content
- * when they lose focus.
+ * Re-runs editable scripts when they lose focus, and attaches the same behavior to
+ * matching scripts added to the document later.
+ *
+ * @param document The document to search (usually `globalThis.document`).
+ * @param className Scripts must match `script.{className}[contenteditable]`.
  */
 export function registerScriptReevaluationOnBlur(document: Document, className: string) {
   const selector = `script.${className}[contenteditable='true']`;
@@ -396,8 +391,15 @@ export function registerScriptReevaluationOnBlur(document: Document, className: 
     element.querySelectorAll(selector).forEach(register);
   }
 
-  function reevaluate(event: Event) {
+  async function reevaluate(event: Event) {
     const old = event.target as HTMLScriptElement;
+    const syntaxErrorDetected = await isSyntaxValid(old);
+
+    if (syntaxErrorDetected) {
+      showSyntaxError(document, old, syntaxErrorDetected);
+      return;
+    }
+
     const neww = document.createElement("script");
     neww.textContent = old.textContent;
 
@@ -408,10 +410,12 @@ export function registerScriptReevaluationOnBlur(document: Document, className: 
 
     old.parentNode!.insertBefore(neww, old);
     old.parentNode!.removeChild(old);
+    clearSyntaxError(neww);
   }
 
   document.querySelectorAll(selector).forEach(register);
 
+  // New nodes may appear after load (e.g. notebook or live-edited markup).
   new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       if (mutation.type === "childList") {
@@ -429,3 +433,70 @@ export function registerScriptReevaluationOnBlur(document: Document, className: 
     subtree: true,
   });
 }
+
+const CELINE_SYNTAX_ERROR_CLASS = "celine-syntax-error";
+
+function showSyntaxError(doc: Document, script: HTMLScriptElement, error: unknown) {
+  // Not the cell inspector root: dedicated host so saved notebooks / cell output reuse stays separate.
+  const previousElement = script.previousElementSibling;
+  const reuse = previousElement?.tagName === "DIV" &&
+    previousElement.classList.contains(CELINE_SYNTAX_ERROR_CLASS);
+
+  const host = reuse
+    ? previousElement as HTMLDivElement
+    : doc.createElement("div");
+
+  if (!reuse) {
+    host.classList.add(CELINE_SYNTAX_ERROR_CLASS);
+  }
+
+  if (!host.parentNode) {
+    script.parentNode!.insertBefore(host, script);
+  }
+
+  new Inspector(host).rejected?.(error);
+  console.error("[celine] Syntax error", error);
+}
+
+// One syntax-error host per editable script: previousElementSibling, class celine-syntax-error.
+function clearSyntaxError(script: Element | null): void {
+  const prev = script?.previousElementSibling;
+  if (prev?.classList.contains(CELINE_SYNTAX_ERROR_CLASS)) {
+    prev.remove();
+  }
+}
+
+
+async function isSyntaxValid(script: HTMLScriptElement): Promise<unknown | null> {
+  if (script.type.toLowerCase() !== "module") return null;
+
+  const source = script.textContent ?? "";
+  const sentinelLine = source.split("\n").length + 2;
+  const sentinel = "#CELINE_SENTINEL_SYNTAX_ERROR";
+  const blob = new Blob([`${source}\n\n${sentinel}`], { type: "text/javascript" });
+  const url = URL.createObjectURL(blob);
+
+  try {
+    await import(url);
+    return new Error("Module syntax check unexpectedly evaluated.");
+  } catch (error) {
+    const lineNumber = typeof (error as { lineNumber?: unknown })?.lineNumber === "number"
+      ? (error as { lineNumber: number }).lineNumber
+      : undefined;
+
+    const text = error instanceof Error
+      ? `${error.message}\n${error.stack ?? ""}`
+      : String(error);
+
+    const stoppedAtSentinel = lineNumber === sentinelLine ||
+      text.includes(sentinel) ||
+      text.includes(`${url}:${sentinelLine}:`) ||
+      text.includes(`${url}:${sentinelLine}`) ||
+      text.includes(`:${sentinelLine}:`);
+
+    return stoppedAtSentinel ? null : error;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
